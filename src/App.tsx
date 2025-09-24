@@ -7,7 +7,7 @@ export default function App() {
   const [decoded, setDecoded] = React.useState<SaveData | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile =  e.target!.files?.[0];
+    const selectedFile = e.target!.files?.[0];
     setFile(selectedFile ?? null);
 
     if (selectedFile) {
@@ -27,19 +27,17 @@ export default function App() {
     }
   };
 
-
   return (
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-start",
-      alignItems: "flex-start",
-      gap: "10px",
-    }}>
-      <h1 className="Title">Silksong Progress Tracker</h1>
-      <input type="file" onChange={handleFileChange} />
-      {file && <p>Selected file: {file.name}</p>}
-      {file && <p>{JSON.stringify(decoded)}</p>}
+    <div className="flex flex-col gap-10 p-6">
+      <h1 className="">Silksong Progress Tracker</h1>
+      <input
+        id="upload"
+        type="file"
+        onChange={handleFileChange}
+        className="rounded-xl self-start p-2"
+      />
+      {file ? <p>Selected file: {file.name}</p> : null}
+      {file ? <p>{JSON.stringify(decoded)}</p> : null}
     </div>
   );
 }
