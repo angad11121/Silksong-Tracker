@@ -21,6 +21,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
     "crypto-js": "^4.2.0",
+    "group-sub": "^1.0.0",
     "prettier": "^3.6.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"

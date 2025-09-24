@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 html,
 #root {
@@ -12,7 +12,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-image: url("../static/background.jpg");
+  background-image: url('../static/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -20,7 +20,7 @@ body {
   color: white;
 }
 
-input[type="file"] {
+input[type='file'] {
   @apply bg-[rgba(0,0,0,0.5)] text-sm text-stone-400 file:mr-5 file:py-1 file:px-3 file:border-1 file:rounded-md file:text-xs file:font-medium file:bg-stone-50 file:text-stone-700 hover:file:cursor-pointer hover:file:bg-blue-50 hover:file:text-blue-700;
 }
 

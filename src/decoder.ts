@@ -1,6 +1,6 @@
-import CryptoJS from "crypto-js";
-import { CSHARP_HEADER, AES_KEY_STRING } from "./constants.js";
-import type { SaveData } from "./types.ts";
+import CryptoJS from 'crypto-js';
+import { CSHARP_HEADER, AES_KEY_STRING } from './constants.js';
+import type { SaveData } from './types.ts';
 
 export function removeHeader(fileBytes: Uint8Array) {
   const noHeader = fileBytes.subarray(CSHARP_HEADER.length, fileBytes.length - 1);
@@ -16,7 +16,7 @@ export function removeHeader(fileBytes: Uint8Array) {
 
 export function decodeFile(fileBytes: Uint8Array): SaveData {
   const noHeader = removeHeader(fileBytes);
-  const b64String = new TextDecoder("latin1").decode(noHeader);
+  const b64String = new TextDecoder('latin1').decode(noHeader);
   const encryptedWords = CryptoJS.enc.Base64.parse(b64String);
   const cipherParams = CryptoJS.lib.CipherParams.create({ ciphertext: encryptedWords });
   const key = CryptoJS.enc.Utf8.parse(AES_KEY_STRING);
