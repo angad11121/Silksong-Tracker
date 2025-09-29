@@ -9,7 +9,7 @@ type ToolData = {
   };
 };
 
-type PlayerData = {
+export type PlayerData = {
   LastSetFieldName: string;
   version: string;
   RevisionBreak: number;
