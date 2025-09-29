@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'bun:test';
 import { SaveDataMetadata } from '@/metadata';
+import { calculatePercentageRequirements } from '@/percentage';
 
-import { type AugmentedSaveData, Saves, SavesEntries } from 'fixtures/saveFiles';
-import { calculatePercentageRequirements } from '@/percentage.ts';
+import { SavesEntries } from './fixtures/saveFiles';
 
 describe('Percentage Checking', () => {
   it('should total up to 100%', () => {
