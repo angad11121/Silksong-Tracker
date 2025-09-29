@@ -1,8 +1,6 @@
-// donotpush
-
 import type { SaveData } from './types';
 
-const Angad: SaveData = {
+const Angad1: SaveData = {
   playerData: {
     LastSetFieldName: 'AbyssBellSeenDocks',
     version: '1.0.28650',
@@ -6003,7 +6001,7 @@ const Angad: SaveData = {
   },
 };
 
-const PartMan: SaveData = {
+const PartMan1: SaveData = {
   playerData: {
     LastSetFieldName: 'disableInventory',
     version: '1.0.28561',
