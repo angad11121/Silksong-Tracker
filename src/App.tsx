@@ -1,22 +1,35 @@
-import React from 'react';
+import React, { type ChangeEvent, type ReactElement, useEffect, useState } from 'react';
 import { decodeFile } from './decoder.js';
-import { groupSub } from 'group-sub';
 
 import { type SaveData } from './types.ts';
 
+import { escapeHTML } from './utils.ts';
+
 const LOCAL_STORAGE_KEY = 'save';
 
-export default function App() {
-  const [file, setFile] = React.useState<File | null>(null);
-  const [decoded, setDecoded] = React.useState<SaveData | null>(() => {
+function RawDataDisplay({ data }: { data: SaveData | null }): ReactElement | null {
+  if (!data) return null;
+  return (
+    <div
+      className="p-4 bg-[rgba(0,0,0,0.8)] rounded-xl"
+      dangerouslySetInnerHTML={{
+        __html: escapeHTML(JSON.stringify(data, null, 2))
+          .replaceAll('\n', '<br/>')
+          .replaceAll(' ', '&nbsp;'),
+      }}
+    />
+  );
+}
+
+export default function App(): ReactElement {
+  const [file, setFile] = useState<File | null>(null);
+  const [decoded, setDecoded] = useState<SaveData | null>(() => {
     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (savedData) {
-      return JSON.parse(savedData);
-    }
+    if (savedData) return JSON.parse(savedData);
     return null;
   });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target!.files?.[0];
     setFile(selectedFile ?? null);
 
@@ -37,7 +50,7 @@ export default function App() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (decoded) localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(decoded));
     else localStorage.removeItem(LOCAL_STORAGE_KEY);
   }, [decoded]);
@@ -52,11 +65,7 @@ export default function App() {
         className="rounded-xl self-start p-2"
       />
       {file ? <p>Selected file: {file.name}</p> : null}
-      {decoded ? (
-        <div className="p-4 bg-[rgba(0,0,0,0.8)] rounded-xl">
-          {groupSub(JSON.stringify(decoded, null, 2), { '\n': <br />, ' ': <>&nbsp;</> })}
-        </div>
-      ) : null}
+      <RawDataDisplay data={decoded} />
     </div>
   );
 }

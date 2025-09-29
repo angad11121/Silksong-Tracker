@@ -1,3 +1,14 @@
+type ToolData = {
+  Name: string;
+  Data: {
+    IsUnlocked: boolean;
+    IsHidden: boolean;
+    HasBeenSeen: boolean;
+    HasBeenSelected: boolean;
+    AmountLeft: number;
+  };
+};
+
 type PlayerData = {
   LastSetFieldName: string;
   version: string;
@@ -1289,16 +1300,7 @@ type PlayerData = {
     savedData: { Name: string; Data: { EquippedTool: string; IsUnlocked: boolean } }[];
   };
   Tools: {
-    savedData: {
-      Name: string;
-      Data: {
-        IsUnlocked: boolean;
-        IsHidden: boolean;
-        HasBeenSeen: boolean;
-        HasBeenSelected: boolean;
-        AmountLeft: number;
-      };
-    }[];
+    savedData: ToolData[];
   };
   ToolLiquids: {
     savedData: {
