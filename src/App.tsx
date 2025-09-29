@@ -1,13 +1,13 @@
 import React, { type ChangeEvent, type ReactElement, useEffect, useState } from 'react';
 import { decodeFile } from './decoder.js';
-
-import { type SaveData } from './types.ts';
-
 import { escapeHTML } from './utils.ts';
+import { DisplayType } from './constants.ts';
+import type { SaveData, PlayerData } from './types.ts';
+import { displayPlayerData } from './dataDisplayer.ts';
 
 const LOCAL_STORAGE_KEY = 'save';
 
-function RawDataDisplay({ data }: { data: SaveData | null }): ReactElement | null {
+function RawDataDisplay({ data }: { data: SaveData | PlayerData }): ReactElement | null {
   if (!data) return null;
   return (
     <div
@@ -23,6 +23,7 @@ function RawDataDisplay({ data }: { data: SaveData | null }): ReactElement | nul
 
 export default function App(): ReactElement {
   const [file, setFile] = useState<File | null>(null);
+  const [displayType, setDisplayType] = useState<DisplayType>(DisplayType.Main);
   const [decoded, setDecoded] = useState<SaveData | null>(() => {
     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (savedData) return JSON.parse(savedData);
@@ -36,13 +37,13 @@ export default function App(): ReactElement {
     if (selectedFile) {
       const reader = new FileReader();
 
-      reader.onload = (event) => {
+      reader.onload = event => {
         const bytes = new Uint8Array(event.target!.result as ArrayBuffer);
         const result = decodeFile(bytes); // pass bytes
         setDecoded(result);
       };
 
-      reader.onerror = (err) => {
+      reader.onerror = err => {
         console.error('File read error', err);
       };
 
@@ -65,7 +66,7 @@ export default function App(): ReactElement {
         className="rounded-xl self-start p-2"
       />
       {file ? <p>Selected file: {file.name}</p> : null}
-      <RawDataDisplay data={decoded} />
+      {decoded ? <RawDataDisplay data={displayPlayerData(decoded, displayType)} /> : null}
     </div>
   );
 }
