@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["src/*"],
+      "fixtures/*": ["tests/fixtures/*"]
+    }
+  },
+  "include": ["./tests"],
+  "exclude": ["node_modules"]
+}
