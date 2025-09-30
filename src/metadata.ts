@@ -5,12 +5,16 @@ function percentIfTrue(value: boolean) {
   return value ? 1 : 0;
 }
 
+export type MetadataKey = keyof SaveData['playerData'];
+
+export type SaveDataEntry<Key extends MetadataKey> = {
+  labels: string[];
+  percentCalculator: ((data: SaveData['playerData'][Key]) => number) | number;
+  maxPercentage?: number;
+};
+
 export const SaveDataMetadata: Partial<{
-  [key in keyof SaveData['playerData']]: {
-    labels: string[];
-    percentCalculator: ((data: SaveData['playerData'][key]) => number) | number;
-    maxPercentage?: number;
-  };
+  [key in MetadataKey]: SaveDataEntry<key>;
 }> = {
   Tools: {
     labels: [DisplayType.Main],
@@ -60,7 +64,7 @@ export const SaveDataMetadata: Partial<{
   },
   silkMax: {
     labels: [DisplayType.Main],
-    percentCalculator: silkMax => (silkMax - 9) / 2,
+    percentCalculator: silkMax => silkMax - 9,
     maxPercentage: 9,
   },
   silkRegenMax: {
@@ -97,9 +101,3 @@ export const SaveDataMetadata: Partial<{
     maxPercentage: 1,
   },
 };
-
-console.log(
-  Object.values(SaveDataMetadata)
-    .map(prop => prop.maxPercentage ?? 0)
-    .reduce((a, b) => a + b),
-);

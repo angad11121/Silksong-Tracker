@@ -1,6 +1,9 @@
-import type { SaveData } from './types';
+import type { SaveData } from '@/types';
 
-const Angad1: SaveData = {
+export type AugmentedSaveData = SaveData & { name: string };
+
+export const Angad1: AugmentedSaveData = {
+  name: 'Angad1',
   playerData: {
     LastSetFieldName: 'AbyssBellSeenDocks',
     version: '1.0.28650',
@@ -6001,7 +6004,8 @@ const Angad1: SaveData = {
   },
 };
 
-const PartMan1: SaveData = {
+export const PartMan1: AugmentedSaveData = {
+  name: 'PartMan1',
   playerData: {
     LastSetFieldName: 'disableInventory',
     version: '1.0.28561',
@@ -14012,7 +14016,8 @@ const PartMan1: SaveData = {
   },
 };
 
-const PartMan2: SaveData = {
+export const PartMan2: AugmentedSaveData = {
+  name: 'PartMan2',
   playerData: {
     LastSetFieldName: 'travelling',
     version: '1.0.28714',
@@ -32133,3 +32138,9 @@ const PartMan2: SaveData = {
     },
   },
 };
+
+export const Saves: AugmentedSaveData[] = [Angad1, PartMan1, PartMan2];
+
+export const SavesEntries: Record<string, AugmentedSaveData> = Object.fromEntries(
+  Saves.map(save => [save.name, save]),
+);
