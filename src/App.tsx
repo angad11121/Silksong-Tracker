@@ -62,6 +62,7 @@ export default function App(): ReactElement {
       <input
         id="upload"
         type="file"
+        accept=".dat,.dat.bak"
         onChange={handleFileChange}
         className="rounded-xl self-start p-2"
       />
