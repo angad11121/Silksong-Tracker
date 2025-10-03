@@ -6,3 +6,10 @@ export const AES_KEY_STRING = 'UKu52ePUBwetZ9wNX88o54dnfKRu0T1l';
 export const enum DisplayType {
   Main = 'main',
 }
+
+export enum ToolType {
+  Red = 0,
+  Blue = 1,
+  Yellow = 2,
+  SilkSkill = 3,
+}
