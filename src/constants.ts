@@ -3,7 +3,7 @@ export const CSHARP_HEADER = new Uint8Array([
 ]);
 export const AES_KEY_STRING = 'UKu52ePUBwetZ9wNX88o54dnfKRu0T1l';
 
-export const enum DisplayType {
+export enum DisplayType {
   Main = 'main',
 }
 
