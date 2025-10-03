@@ -1,5 +1,6 @@
 import type { SaveData } from '@/types';
 import { DisplayType } from '@/ui/tabs/constants';
+import staticToolData from '@/data/tools.json';
 
 function percentIfTrue(value: boolean) {
   return value ? 1 : 0;
@@ -20,8 +21,7 @@ export const SaveDataMetadata: Partial<{
     labels: [DisplayType.PercentageData],
     percentCalculator: toolList => {
       return toolList.savedData.filter(savedDatum => {
-        if (['Extractor', 'Silk Snare'].includes(savedDatum.Name)) return false;
-        return !savedDatum.Data.IsHidden;
+        return staticToolData[savedDatum.Name]?.isCounted && !savedDatum.Data.IsHidden;
       }).length;
     },
     maxPercentage: 57,
@@ -56,7 +56,7 @@ export const SaveDataMetadata: Partial<{
     percentCalculator: percentIfTrue,
     maxPercentage: 1,
   },
-  HasBoundCrestUpgrader: {
+  hasChargeSlash: {
     labels: [DisplayType.PercentageData],
     percentCalculator: percentIfTrue,
     maxPercentage: 1,
