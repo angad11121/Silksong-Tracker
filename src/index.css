@@ -16,7 +16,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; 
+  background-attachment: fixed;
   color: white;
 }
 
@@ -42,4 +42,14 @@ p {
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+}
+
+button {
+  @apply bg-blue-500 text-white px-4 py-2 rounded-md;
+  &:hover {
+    @apply bg-blue-600;
+  }
+  &:focus {
+    @apply bg-blue-700;
+  }
 }
