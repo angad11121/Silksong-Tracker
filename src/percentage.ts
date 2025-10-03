@@ -1,5 +1,5 @@
-import type { SaveData } from './types.ts';
-import { SaveDataMetadata, type SaveDataEntry, type MetadataKey } from './metadata.ts';
+import type { SaveData } from '@/types';
+import { SaveDataMetadata, type SaveDataEntry, type MetadataKey } from '@/metadata';
 
 type NamedEntry<Key extends MetadataKey> = SaveDataEntry<Key> & { key: Key };
 

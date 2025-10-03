@@ -1,5 +1,5 @@
-import type { SaveData } from './types';
-import { DisplayType } from './constants';
+import type { SaveData } from '@/types';
+import { DisplayType } from '@/ui/tabs/constants';
 
 function percentIfTrue(value: boolean) {
   return value ? 1 : 0;
@@ -17,7 +17,7 @@ export const SaveDataMetadata: Partial<{
   [key in MetadataKey]: SaveDataEntry<key>;
 }> = {
   Tools: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: toolList => {
       return toolList.savedData.filter(savedDatum => {
         if (['Extractor', 'Silk Snare'].includes(savedDatum.Name)) return false;
@@ -26,54 +26,58 @@ export const SaveDataMetadata: Partial<{
     },
     maxPercentage: 57,
   },
-  HasSeenDash: { labels: [DisplayType.Main], percentCalculator: percentIfTrue, maxPercentage: 1 },
+  HasSeenDash: {
+    labels: [DisplayType.PercentageData],
+    percentCalculator: percentIfTrue,
+    maxPercentage: 1,
+  },
   HasSeenWalljump: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: percentIfTrue,
     maxPercentage: 1,
   },
   HasSeenSuperJump: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: percentIfTrue,
     maxPercentage: 1,
   },
   HasSeenNeedolin: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: percentIfTrue,
     maxPercentage: 1,
   },
   HasSeenHarpoon: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: percentIfTrue,
     maxPercentage: 1,
   },
   HasSeenEvaHeal: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: percentIfTrue,
     maxPercentage: 1,
   },
   HasBoundCrestUpgrader: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: percentIfTrue,
     maxPercentage: 1,
   },
   maxHealthBase: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: health => health - 5,
     maxPercentage: 5,
   },
   silkMax: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: silkMax => silkMax - 9,
     maxPercentage: 9,
   },
   silkRegenMax: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: hearts => hearts,
     maxPercentage: 3,
   },
   ToolEquips: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: crests => {
       return crests.savedData.filter(savedDatum =>
         ['Reaper', 'Wanderer', 'Warrior', 'Witch', 'Toolmaster', 'Spell'].includes(savedDatum.Name),
@@ -81,19 +85,23 @@ export const SaveDataMetadata: Partial<{
     },
     maxPercentage: 6,
   },
-  nailUpgrades: { labels: [DisplayType.Main], percentCalculator: level => level, maxPercentage: 4 },
+  nailUpgrades: {
+    labels: [DisplayType.PercentageData],
+    percentCalculator: level => level,
+    maxPercentage: 4,
+  },
   ToolPouchUpgrades: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: level => level,
     maxPercentage: 4,
   },
   ToolKitUpgrades: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: level => level,
     maxPercentage: 4,
   },
   Collectables: {
-    labels: [DisplayType.Main],
+    labels: [DisplayType.PercentageData],
     percentCalculator: collectables =>
       collectables.savedData.filter(
         collectable => collectable.Name === 'White Flower' && collectable.Data.Amount === 1,
