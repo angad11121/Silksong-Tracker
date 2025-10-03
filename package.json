@@ -14,7 +14,8 @@
     "@vitejs/plugin-react": "^5.0.3",
     "quickstamp": "^1.0.2",
     "tailwindcss": "^4.1.13",
-    "vite": "^7.1.7"
+    "vite": "^7.1.7",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "peerDependencies": {
     "typescript": "^5"

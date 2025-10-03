@@ -1,29 +1,12 @@
-import React, { type ChangeEvent, type ReactElement, useEffect, useState } from 'react';
-import { decodeFile } from './decoder.js';
-import { escapeHTML } from './utils.ts';
-import { DisplayType } from './constants.ts';
-import type { SaveData, PlayerData } from './types.ts';
-import { displayPlayerData } from './dataDisplayer.ts';
+import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react';
+import { decodeFile } from '@/decoder/decoder.js';
+import type { SaveData } from '@/types';
+import { DataRenderer } from './tabs';
 
 const LOCAL_STORAGE_KEY = 'save';
 
-function RawDataDisplay({ data }: { data: SaveData | PlayerData }): ReactElement | null {
-  if (!data) return null;
-  return (
-    <div
-      className="p-4 bg-[rgba(0,0,0,0.8)] rounded-xl"
-      dangerouslySetInnerHTML={{
-        __html: escapeHTML(JSON.stringify(data, null, 2))
-          .replaceAll('\n', '<br/>')
-          .replaceAll(' ', '&nbsp;'),
-      }}
-    />
-  );
-}
-
 export default function App(): ReactElement {
   const [file, setFile] = useState<File | null>(null);
-  const [displayType, setDisplayType] = useState<DisplayType>(DisplayType.Main);
   const [decoded, setDecoded] = useState<SaveData | null>(() => {
     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (savedData) return JSON.parse(savedData);
@@ -67,7 +50,7 @@ export default function App(): ReactElement {
         className="rounded-xl self-start p-2"
       />
       {file ? <p>Selected file: {file.name}</p> : null}
-      {decoded ? <RawDataDisplay data={displayPlayerData(decoded, displayType)} /> : null}
+      {decoded ? <DataRenderer data={decoded} /> : null}
     </div>
   );
 }
