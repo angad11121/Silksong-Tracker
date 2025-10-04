@@ -23,7 +23,6 @@ const TabRendererMetadata: Record<
   },
   [TabType.PercentageData]: {
     Renderer: PercentageDisplay,
-    hideTab: true,
     title: 'Percentage Data',
     id: TabType.PercentageData,
   },
@@ -36,11 +35,11 @@ const TabRendererMetadata: Record<
 };
 
 export function TabRenderer({ data }: { data: SaveData }): ReactElement {
-  const [tab, setTab] = useState<TabType>(TabType.RawData);
+  const [tab, setTab] = useState<TabType>(TabType.PercentageData);
   const { Renderer } = TabRendererMetadata[tab];
   return (
     <div>
-      
+
       <TabComponent
         tabs={Object.values(TabRendererMetadata)
           .filter(value => !value.hideTab)
@@ -48,6 +47,7 @@ export function TabRenderer({ data }: { data: SaveData }): ReactElement {
         selectedTab={tab}
         onSelect={setTab}
       />
+      <br />
       <Renderer data={data} />
     </div>
   );
