@@ -1,5 +1,4 @@
 import type { SaveData } from '@/types';
-import { TabType } from '@/ui/tabs/constants';
 import staticToolData from '@/data/tools.json';
 
 function percentIfTrue(value: boolean) {

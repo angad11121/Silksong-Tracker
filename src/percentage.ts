@@ -1,27 +1,30 @@
 import type { SaveData } from '@/types';
 import { SaveDataMetadata, type SaveDataEntry, type MetadataKey } from '@/metadata';
 
-type NamedEntry<Key extends MetadataKey> = SaveDataEntry<Key> & { key: Key };
-
 export const TOTAL_PERCENTAGE = 100;
+
+export function getPercentageFromEntry(key: MetadataKey, saveData: SaveData): number {
+  const entry = SaveDataMetadata[key]!;
+  if (typeof entry.percentCalculator === 'number') return entry.percentCalculator;
+  return entry.percentCalculator?.(saveData.playerData[key] as never) ?? 0;
+}
 
 export function calculatePercentageRequirements(saveData: SaveData): {
   current: number;
   pending: number;
-  canGet: NamedEntry<MetadataKey>[];
+  canGet: SaveDataEntry<MetadataKey>[];
 } {
   const allEntries = Object.entries(SaveDataMetadata)
-    .map(([key, value]) => {
-      return { key, ...value } as NamedEntry<MetadataKey> & { maxPercentage: number };
-    })
-    .filter(entry => entry.maxPercentage)
-    .map<NamedEntry<MetadataKey> & { maxPercentage: number; percentage: number }>(entry => {
-      const percentage =
-        typeof entry.percentCalculator === 'number'
-          ? entry.percentCalculator
-          : (entry.percentCalculator?.(saveData.playerData[entry.key]) ?? 0);
-      return { ...entry, percentage };
-    });
+    .filter(([_key, entry]) => entry.maxPercentage)
+    .map<SaveDataEntry<MetadataKey> & { maxPercentage: number; percentage: number }>(
+      ([key, entry]) => {
+        const percentage = getPercentageFromEntry(key as MetadataKey, saveData);
+        return { ...entry, percentage } as SaveDataEntry<MetadataKey> & {
+          maxPercentage: number;
+          percentage: number;
+        };
+      },
+    );
   const sumPercentage = allEntries.reduce((a, b) => a + b.percentage, 0);
   return {
     current: sumPercentage,

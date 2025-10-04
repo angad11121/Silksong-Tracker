@@ -6,17 +6,21 @@ export function SectionRenderer<ExtraCtx = null>({
   depth = 0,
   data,
   sections,
-  sectionTitleRenderer = section => (
+  SectionTitleRenderer = ({ section, children }) => (
     <>
       <h3>{section.title}</h3>
       <h4>{section.subtext}</h4>
+      {children}
     </>
   ),
 }: {
   depth?: number;
   data: SaveData;
   sections: (Section<ExtraCtx> | LeafSection)[];
-  sectionTitleRenderer?: (section: Section<ExtraCtx>) => ReactElement;
+  SectionTitleRenderer?: (props: {
+    section: Section<ExtraCtx>;
+    children: ReactElement;
+  }) => ReactElement;
 }): ReactElement {
   return (
     <div>
@@ -29,15 +33,14 @@ export function SectionRenderer<ExtraCtx = null>({
             {'render' in section ? (
               <>{section.render({ saveData: data, depth })}</>
             ) : (
-              <>
-                {sectionTitleRenderer(section)}
+              <SectionTitleRenderer section={section}>
                 <SectionRenderer
                   depth={depth + 1}
                   data={data}
                   sections={section.children}
-                  sectionTitleRenderer={sectionTitleRenderer}
+                  SectionTitleRenderer={SectionTitleRenderer}
                 />
-              </>
+              </SectionTitleRenderer>
             )}
           </div>
         );
