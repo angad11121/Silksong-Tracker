@@ -1,15 +1,15 @@
 import type { ReactElement } from 'react';
 import type { SaveData } from '@/types';
 
-export function MaskRenderer({
+export function SpoolRenderer({
   fragmentId,
   hasFragment,
-  maskHint,
+  spoolHint,
   data,
 }: {
   fragmentId: number;
   hasFragment: (saveData: SaveData) => boolean | undefined;
-  maskHint: string;
+  spoolHint: string;
   data: SaveData;
 }): ReactElement {
   const hasAcquiredFragment = hasFragment(data);
@@ -17,10 +17,10 @@ export function MaskRenderer({
     <div>
       <div>
         <img
-          src="static/assets/mask_shard.png"
-          height={20}
-          width={20}
-          alt="Mask Shard"
+          src="static/assets/spool_fragment.png"
+          height={24}
+          width={24}
+          alt="Spool Fragment"
           className="inline"
         />
         <small className="text-gray-300">#{fragmentId}:</small>&nbsp;
@@ -28,7 +28,7 @@ export function MaskRenderer({
           {hasAcquiredFragment ? 'Acquired' : 'Not Acquired'}
         </span>
       </div>
-      <div>{maskHint}</div>
+      <div>{spoolHint}</div>
     </div>
   );
 }
