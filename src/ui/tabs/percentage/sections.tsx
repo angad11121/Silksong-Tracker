@@ -4,6 +4,7 @@ import type { Section } from '@/ui/tabs/types';
 import { getQuest, getScene, type MetadataKey } from '@/metadata';
 import { ToolType } from '@/constants';
 import { MaskRenderer } from './MaskRenderer';
+import { SpoolRenderer } from './SpoolRenderer';
 
 export const AncestralArts: Record<
   string,
@@ -111,9 +112,8 @@ const MaskFragments: {
   },
   {
     fragmentId: 7,
-    hasFragment: save => getScene('Song_09', 'Heart_Piece', save)?.Value,
-    maskHint:
-      'Found in Cogwork Core. Found after the Cogwork Clapper room, in the bottom right of Cogwork Core.',
+    hasFragment: save => getScene('Song_09', 'Heart Piece', save)?.Value,
+    maskHint: 'Found in Cogwork Core. Head to the left and complete a small gauntlet.',
   },
   {
     fragmentId: 8,
@@ -128,7 +128,7 @@ const MaskFragments: {
   },
   {
     fragmentId: 10,
-    hasFragment: save => getScene('Library_05', 'Heart_Piece', save)?.Value,
+    hasFragment: save => getScene('Library_05', 'Heart Piece', save)?.Value,
     maskHint:
       'Found in the Whispering Vaults. Hit a hidden lever in the ceiling in a room near the bottom right.',
   },
@@ -187,6 +187,114 @@ const MaskFragments: {
   },
 ];
 
+const SpoolFragments: {
+  fragmentId: number;
+  hasFragment: (saveData: SaveData) => boolean | undefined;
+  spoolHint: string;
+}[] = [
+  {
+    fragmentId: 1,
+    hasFragment: save => getScene('Bone_11b', 'Silk Spool', save)?.Value,
+    spoolHint: 'Found in Mosshome, after a breakable wall in a room directly above Bone Bottom.',
+  },
+  {
+    fragmentId: 2,
+    hasFragment: save => getScene('Bone_East_13', 'Silk Spool', save)?.Value,
+    spoolHint: 'Found in Deep Docks, left -> down -> right from Forge Daughter.',
+  },
+  {
+    fragmentId: 3,
+    hasFragment: save => getScene('Dock_03c', 'Silk Spool', save)?.Value,
+    spoolHint:
+      'Found in the inner parts of Deep Docks. Requires Harpoon to unlock an area, then a platforming section to the right when you get near the lava.',
+  },
+  {
+    fragmentId: 4,
+    hasFragment: save => getScene('Greymoor_02', 'Silk Spool', save)?.Value,
+    spoolHint:
+      'Found in Greymoor, above the place where Shakra can give you the map. Unlocked by heading right from above Halfway Home.',
+  },
+  {
+    fragmentId: 5,
+    hasFragment: save => save.playerData.PurchasedBelltownSpoolSegment,
+    spoolHint:
+      'Complete the My Missing Courier quest in Bellhart, then buy from Frey. Tipp can be found in the drop left of Shellwood.',
+  },
+  {
+    fragmentId: 6,
+    hasFragment: save => getScene('Weave_11', 'Silk Spool', save)?.Value,
+    spoolHint:
+      'Found in Weavenest Atla. Climb up the room from the right wall of the lower end of the teleporter, then head left.',
+  },
+  {
+    fragmentId: 7,
+    hasFragment: save => getScene('Peak_01', 'Silk Spool', save)?.Value,
+    spoolHint:
+      'Found in Mount Fay, technically, but only accessible from the Slab. Head up from the large room where you normally head down to get to the Bellway from the Citadel passage.',
+  },
+  {
+    fragmentId: 8,
+    hasFragment: save => save.playerData.purchasedGrindleSpoolPiece,
+    spoolHint: 'Purchased from Grindle.',
+  },
+  {
+    fragmentId: 9,
+    hasFragment: save =>
+      getQuest('Save the Fleas', save)?.Data.IsCompleted ||
+      getQuest('Save the Fleas Pre', save)?.Data.IsCompleted,
+    spoolHint: 'Received from Fleamaster Mooshka after freeing 15 Fleas.',
+  },
+  {
+    fragmentId: 10,
+    hasFragment: save => getScene('Song_19_entrance', 'Silk Spool', save)?.Value,
+    spoolHint: 'Found at the Grand Gate. Climb up the balances to the very top.',
+  },
+  {
+    fragmentId: 11,
+    hasFragment: save => getScene('Hang_03_top', 'Silk Spool', save)?.Value,
+    spoolHint: 'Found at the top of a room in the High Halls.',
+  },
+  {
+    fragmentId: 12,
+    hasFragment: save => save.playerData.MerchantEnclaveSpoolPiece,
+    spoolHint: 'Purchased from Jubiliana in Songclave after completing The Lost Merchant.',
+  },
+  {
+    fragmentId: 13,
+    hasFragment: save => getScene('Cog_07', 'Silk Spool', save)?.Value,
+    spoolHint: 'Found in Cogwork Core, after the room in the lower right with the Cogwork Clapper.',
+  },
+  {
+    fragmentId: 14,
+    hasFragment: save => getScene('Ward_01', 'Silk Spool', save)?.Value,
+    spoolHint:
+      'Found in Whiteward, below the elevator. Take the lift down, go through Whiteward until you find the shaft, then head up, summon the lift, and drop down the shaft into the side channel as it passes you.',
+  },
+  {
+    fragmentId: 15,
+    hasFragment: save => getQuest('Save Sherma', save)?.Data.IsCompleted,
+    spoolHint: 'Complete the Balm for the Wounded quest in Songclave.',
+  },
+  {
+    fragmentId: 16,
+    hasFragment: save => getScene('Under_10', 'Silk Spool', save)?.Value,
+    spoolHint:
+      'Found in the Underworks, after a mini-gauntlet down and left from the Underworks Ventrica.',
+  },
+  {
+    fragmentId: 17,
+    hasFragment: save => getScene('Library_11b', 'Silk Spool', save)?.Value,
+    spoolHint:
+      'Found in the Underworks, at the very bottom of the room to the right of the Twelfth Architect.',
+  },
+  {
+    fragmentId: 18,
+    hasFragment: save => getScene('Arborium_09', 'Silk Spool', save)?.Value,
+    spoolHint:
+      "Found in the Memorium, in a platforming segment on the left side that's entered from below the Memorium Ventrica.",
+  },
+];
+
 export const SectionGenerator: Section<{
   maxPercentage: number;
   getPercentage: MetadataKey | ((saveData: SaveData) => number);
@@ -221,7 +329,18 @@ export const SectionGenerator: Section<{
         title: 'Silk Spools',
         subtext:
           'There are 18 spool fragments available, for a total of 9 extra spool extensions. All of them are required for 100% completion.',
-        children: [],
+        children: SpoolFragments.map(fragment => ({
+          title: fragment.spoolHint,
+          subtext: fragment.spoolHint,
+          render: ({ saveData }) => (
+            <SpoolRenderer
+              fragmentId={fragment.fragmentId}
+              hasFragment={fragment.hasFragment}
+              spoolHint={fragment.spoolHint}
+              data={saveData}
+            />
+          ),
+        })),
         ctx: {
           maxPercentage: 9,
           getPercentage: 'silkMax',
