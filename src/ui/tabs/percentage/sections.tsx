@@ -1,8 +1,9 @@
 import toolData from '@/data/tools.json';
 import type { PlayerData, SaveData } from '@/types';
 import type { Section } from '@/ui/tabs/types';
-import { type MetadataKey } from '@/metadata';
+import { getQuest, getScene, type MetadataKey } from '@/metadata';
 import { ToolType } from '@/constants';
+import { MaskRenderer } from './MaskRenderer';
 
 export const AncestralArts: Record<
   string,
@@ -69,6 +70,123 @@ function hasTool(tool: string, saveData: SaveData): boolean {
   return !foundTool.Data.IsHidden;
 }
 
+const MaskFragments: {
+  fragmentId: number;
+  hasFragment: (saveData: SaveData) => boolean | undefined;
+  maskHint: string;
+}[] = [
+  {
+    fragmentId: 1,
+    hasFragment: save => save.playerData.PurchasedBonebottomHeartPiece,
+    maskHint: 'Purchased from Pebb in Bone Bottom. Can be purchased from Grindle in Act III.',
+  },
+  {
+    fragmentId: 2,
+    hasFragment: save => getScene('Crawl_02', 'Heart Piece', save)?.Value,
+    maskHint:
+      "Found in the Wormways. There's a breakable wall at the bottom of the room to the left of the Craggler room.",
+  },
+  {
+    fragmentId: 3,
+    hasFragment: save => getScene('Bone_East_20', 'Heart Piece', save)?.Value,
+    maskHint: 'Found in Far Fields Top left exit of the Seamstress room.',
+  },
+  {
+    fragmentId: 4,
+    hasFragment: save => getScene('Shellwood_14', 'Heart Piece', save)?.Value,
+    maskHint:
+      'Found in Shellwood. Take the middle right exit in the room to the right of the Bellway.',
+  },
+  {
+    fragmentId: 5,
+    hasFragment: save => getScene('Dock_08', 'Heart Piece', save)?.Value,
+    maskHint:
+      'Found in the Deep Docks, accessed through The Marrow. Use Cling Grip to go above the usual entrance.',
+  },
+  {
+    fragmentId: 6,
+    hasFragment: save => getScene('Weave_05b', 'Heart Piece', save)?.Value,
+    maskHint:
+      'Found in Weavenest Atla. Take the teleporter down, then climb the wall on the right to get to the elevator shaft, then climb further.',
+  },
+  {
+    fragmentId: 7,
+    hasFragment: save => getScene('Song_09', 'Heart_Piece', save)?.Value,
+    maskHint:
+      'Found in Cogwork Core. Found after the Cogwork Clapper room, in the bottom right of Cogwork Core.',
+  },
+  {
+    fragmentId: 8,
+    hasFragment: save => save.playerData.MerchantEnclaveShellFragment,
+    maskHint: 'Purchased from Jubiliana in Songclave.',
+  },
+  {
+    fragmentId: 9,
+    hasFragment: save => getQuest('Beastfly Hunt', save)?.Data.IsCompleted,
+    maskHint:
+      'Promise the Grand Hunt wish in Bellhart and fight the Savage Beastfly in Far Fields.',
+  },
+  {
+    fragmentId: 10,
+    hasFragment: save => getScene('Library_05', 'Heart_Piece', save)?.Value,
+    maskHint:
+      'Found in the Whispering Vaults. Hit a hidden lever in the ceiling in a room near the bottom right.',
+  },
+  {
+    fragmentId: 11,
+    hasFragment: save => getScene('Bone_East_LavaChallenge', 'Heart Piece (1)', save)?.Value,
+    maskHint: 'Found in a deep lava gauntlet in a room in Far Fields.',
+  },
+  {
+    fragmentId: 12,
+    hasFragment: save => getScene('Peak_04c', 'Heart Piece', save)?.Value,
+    maskHint: 'Found in a column in the far left of Mount Fay.',
+  },
+  {
+    fragmentId: 13,
+    hasFragment: save => getScene('Coral_19b', 'Heart Piece', save)?.Value,
+    maskHint:
+      'Found in the Blasted Steps. Head to the far left (near the way to leave Pharloom), take a running start, and harpoon -> double jump -> dash onto a platform. Or use Silk Soar.',
+  },
+  {
+    fragmentId: 14,
+    hasFragment: save => getScene('Wisp_07', 'Heart Piece', save)?.Value,
+    maskHint: 'Found in the right end of the Wisp Thicket.',
+  },
+  {
+    fragmentId: 15,
+    hasFragment: save => getScene('Shadow_13', 'Heart Piece', save)?.Value,
+    maskHint: 'Found in Bilewater, in a room infested with Slubberlugs.',
+  },
+  {
+    fragmentId: 16,
+    hasFragment: save => getScene('Slab_17', 'Heart Piece', save)?.Value,
+    maskHint:
+      "Found in a platforming room locked behind the Apostate's Key in the top right portion of the Slab. The Apostate's Key can be acquired in the left side of the Putrified Ducts.",
+  },
+  {
+    fragmentId: 17,
+    hasFragment: save => getQuest('Sprintmaster Race', save)?.Data.IsCompleted,
+    maskHint: 'Defeat Sprintmaster Swift in three races.',
+  },
+  {
+    fragmentId: 18,
+    hasFragment: save => getQuest('Destroy Thread Cores', save)?.Data.IsCompleted,
+    maskHint: 'Complete the Dark Hearts quest in Bellhart.',
+  },
+  {
+    fragmentId: 19,
+    hasFragment: save => getScene('Peak_06', 'Heart Piece', save)?.Value,
+    maskHint: 'Found at the top of the Brightvein in Mount Fay.',
+  },
+  {
+    fragmentId: 20,
+    hasFragment: save => getQuest('Ant Trapper', save)?.Data.IsCompleted,
+    maskHint:
+      'Defeat Gurr the Outcast after claiming the quest in Bellhart after unlocking the Frontier.',
+  },
+];
+
 export const SectionGenerator: Section<{
   maxPercentage: number;
   getPercentage: MetadataKey | ((saveData: SaveData) => number);
@@ -81,8 +199,19 @@ export const SectionGenerator: Section<{
       {
         title: 'Masks',
         subtext:
-          'There are 20 Mask Shards available. All of them are required for 100% completion.',
-        children: [],
+          'There are 20 Mask Fragments available. All of them are required for 100% completion.',
+        children: MaskFragments.map(fragment => ({
+          title: fragment.maskHint,
+          subtext: fragment.maskHint,
+          render: ({ saveData }) => (
+            <MaskRenderer
+              fragmentId={fragment.fragmentId}
+              hasFragment={fragment.hasFragment}
+              maskHint={fragment.maskHint}
+              data={saveData}
+            />
+          ),
+        })),
         ctx: {
           maxPercentage: 5,
           getPercentage: 'maxHealthBase',

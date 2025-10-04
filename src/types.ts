@@ -1316,16 +1316,7 @@ export type PlayerData = {
   SeenToolEquipPrompt: boolean;
   SeenToolUsePrompt: boolean;
   QuestCompletionData: {
-    savedData: {
-      Name: string;
-      Data: {
-        HasBeenSeen: boolean;
-        IsAccepted: boolean;
-        CompletedCount: number;
-        IsCompleted: boolean;
-        WasEverCompleted: boolean;
-      };
-    }[];
+    savedData: Quest[];
   };
   QuestRumourData: { savedData: unknown[] };
   ShellShards: number;
@@ -1378,6 +1369,17 @@ export type PlayerData = {
   StoryEvents: { EventType: number; SceneName: string; PlayTime: number }[];
 };
 
+export type Quest = {
+  Name: string;
+  Data: {
+    HasBeenSeen: boolean;
+    IsAccepted: boolean;
+    CompletedCount: number;
+    IsCompleted: boolean;
+    WasEverCompleted: boolean;
+  };
+};
+
 type EnemyJournalKillData = {
   Name: string;
   Record: { Kills: number; HasBeenSeen: boolean };
@@ -1393,8 +1395,10 @@ type PersistentBool = PersistentValue<boolean>;
 type PersistentInt = PersistentValue<number>;
 type GeoRock = PersistentValue<number>;
 
+export type Scene = PersistentBool;
+
 type SceneData = {
-  persistentBools: { serializedList: PersistentBool[] };
+  persistentBools: { serializedList: Scene[] };
   persistentInts: { serializedList: PersistentInt[] };
   geoRocks: { serializedList: GeoRock[] };
 };
