@@ -1,4 +1,4 @@
-import type { SaveData } from '@/types';
+import type { Quest, SaveData, Scene } from '@/types';
 import staticToolData from '@/data/tools.json';
 
 function percentIfTrue(value: boolean) {
@@ -91,3 +91,18 @@ export const SaveDataMetadata: Partial<{
     maxPercentage: 1,
   },
 };
+
+export function getScene(sceneName: string, sceneId: string, saveData: SaveData): Scene | null {
+  return (
+    saveData.sceneData.persistentBools.serializedList.find(
+      scene => scene.SceneName === sceneName && scene.ID === sceneId,
+    ) ?? null
+  );
+}
+
+export function getQuest(questName: string, saveData: SaveData): Quest | null {
+  return (
+    saveData.playerData.QuestCompletionData.savedData.find(quest => quest.Name === questName) ??
+    null
+  );
+}
