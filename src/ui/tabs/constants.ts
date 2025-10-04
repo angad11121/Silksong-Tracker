@@ -3,7 +3,3 @@ export enum TabType {
   PercentageData = 'PercentageData',
   MementoData = 'MementoData',
 }
-
-export enum DisplayType {
-  PercentageData = 'PercentageData',
-}

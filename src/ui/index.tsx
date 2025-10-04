@@ -1,7 +1,7 @@
 import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react';
 import { decodeFile } from '@/decoder/decoder.js';
 import type { SaveData } from '@/types';
-import { DataRenderer } from './tabs';
+import { TabRenderer } from './tabs';
 
 const LOCAL_STORAGE_KEY = 'save';
 
@@ -50,7 +50,7 @@ export default function App(): ReactElement {
         className="rounded-xl self-start p-2"
       />
       {file ? <p>Selected file: {file.name}</p> : null}
-      {decoded ? <DataRenderer data={decoded} /> : null}
+      {decoded ? <TabRenderer data={decoded} /> : null}
     </div>
   );
 }

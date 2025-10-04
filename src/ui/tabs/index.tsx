@@ -7,7 +7,7 @@ import { PercentageDisplay } from './percentage';
 import { MementoDisplay } from './memento';
 import { TabComponent } from '../components/TabComponent';
 
-const TabRenderers: Record<
+const TabRendererMetadata: Record<
   TabType,
   {
     Renderer: ({ data }: { data: SaveData }) => ReactNode;
@@ -35,13 +35,14 @@ const TabRenderers: Record<
   },
 };
 
-export function DataRenderer({ data }: { data: SaveData }): ReactElement {
+export function TabRenderer({ data }: { data: SaveData }): ReactElement {
   const [tab, setTab] = useState<TabType>(TabType.RawData);
-  const { Renderer } = TabRenderers[tab];
+  const { Renderer } = TabRendererMetadata[tab];
   return (
     <div>
+      
       <TabComponent
-        tabs={Object.values(TabRenderers)
+        tabs={Object.values(TabRendererMetadata)
           .filter(value => !value.hideTab)
           .map(value => value.id)}
         selectedTab={tab}

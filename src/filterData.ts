@@ -1,11 +1,6 @@
 import type { SaveData, PlayerData } from '@/types';
-import { DisplayType } from '@/ui/tabs/constants';
-import { SaveDataMetadata } from '@/metadata';
+import { TabType } from '@/ui/tabs/constants';
 
-export function filterPlayerData(data: SaveData, displayType: DisplayType): PlayerData {
-  return Object.fromEntries(
-    Object.entries(data.playerData).filter(([key, value]) => {
-      return SaveDataMetadata[key as keyof typeof SaveDataMetadata]?.labels.includes(displayType);
-    }),
-  ) as PlayerData;
+export function filterPlayerData(data: SaveData, tabType: TabType): PlayerData {
+  return data.playerData;
 }
