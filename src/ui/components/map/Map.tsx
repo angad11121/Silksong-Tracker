@@ -9,7 +9,6 @@ const MIN_ZOOM = 0.2;
 const MAX_ZOOM = 1.5;
 const MARKER_SIZE = 12;
 
-// Fixed container dimensions with preserved aspect ratio
 const CONTAINER_WIDTH = 400;
 const CONTAINER_HEIGHT = Math.round(CONTAINER_WIDTH * (MAP_DIMENSIONS.y / MAP_DIMENSIONS.x));
 
@@ -26,29 +25,18 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     height: CONTAINER_HEIGHT,
   });
 
-  // Calculate center position based on first marker
   const getCenterPosition = useCallback(() => {
     const { width, height } = containerDimensions;
 
     if (markers.length === 0) {
-      // Center the map itself when no markers
       const centerX = width / 2 - (MAP_DIMENSIONS.x * zoom) / 2;
       const centerY = height / 2 - (MAP_DIMENSIONS.y * zoom) / 2;
       return { x: centerX, y: centerY };
     }
 
-    const marker = markers[0];
-    if (!marker) {
-      // Center the map itself when no valid marker
-      const centerX = width / 2 - (MAP_DIMENSIONS.x * zoom) / 2;
-      const centerY = height / 2 - (MAP_DIMENSIONS.y * zoom) / 2;
-      return { x: centerX, y: centerY };
-    }
-
-    // Calculate position to center the marker
+    const marker = markers[0]!;
     const centerX = width / 2 - marker.location.x * zoom;
     const centerY = height / 2 - marker.location.y * zoom;
-
     return { x: centerX, y: centerY };
   }, [markers, zoom, containerDimensions]);
 
@@ -69,7 +57,6 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
       resizeObserver.observe(outerContainerRef.current);
     }
 
-    // Initial update
     updateDimensions();
 
     return () => {
@@ -84,19 +71,32 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
   }, [getCenterPosition]);
 
   // Handle wheel zoom
-  const handleWheel = useCallback(
-    (e: React.WheelEvent) => {
-      e.preventDefault();
-      const delta = e.deltaY * -0.005;
-      const newZoom = Math.min(Math.max(zoom + delta, MIN_ZOOM), MAX_ZOOM);
-      setZoom(newZoom);
-    },
-    [zoom],
-  );
+  const handleWheel = useCallback((e: WheelEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const delta = e.deltaY * -0.005;
+    setZoom(currentZoom => {
+      const newZoom = Math.min(Math.max(currentZoom + delta, MIN_ZOOM), MAX_ZOOM);
+      return newZoom;
+    });
+  }, []);
 
-  // Handle drag start
+  // Add wheel event listener with { passive: false } to prevent default scrolling
+  useEffect(() => {
+    const mapContainer = containerRef.current;
+    if (!mapContainer) return;
+
+    mapContainer.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      mapContainer.removeEventListener('wheel', handleWheel);
+    };
+  }, [handleWheel]);
+
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
       setIsDragging(true);
       setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
     },
@@ -107,6 +107,8 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
       if (!isDragging) return;
+      e.preventDefault();
+      e.stopPropagation();
       setPosition({
         x: e.clientX - dragStart.x,
         y: e.clientY - dragStart.y,
@@ -115,28 +117,63 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     [isDragging, dragStart],
   );
 
-  // Handle drag end
   const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Handle touch events for mobile
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.touches.length === 1) {
+        const touch = e.touches[0]!;
+        setIsDragging(true);
+        setDragStart({ x: touch.clientX - position.x, y: touch.clientY - position.y });
+      }
+    },
+    [position],
+  );
+
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!isDragging || e.touches.length !== 1) return;
+      const touch = e.touches[0]!;
+      setPosition({
+        x: touch.clientX - dragStart.x,
+        y: touch.clientY - dragStart.y,
+      });
+    },
+    [isDragging, dragStart],
+  );
+
+  const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
   }, []);
 
   return (
     <div
       ref={outerContainerRef}
-      className="border-1 border-gray-500 rounded-lg resize overflow-auto min-w-80 min-h-60 m-8"
+      className="border-1 border-gray-500 rounded-lg resize overflow-hidden min-w-80 min-h-60 m-8"
       style={{
         width: CONTAINER_WIDTH,
         height: CONTAINER_HEIGHT,
+        overscrollBehavior: 'contain',
       }}
     >
       <div
         ref={containerRef}
-        className="relative overflow-hidden bg-gray-900 cursor-grab active:cursor-grabbing h-full w-full"
-        onWheel={handleWheel}
+        className="relative overflow-hidden bg-gray-900 cursor-grab active:cursor-grabbing h-full w-full touch-none"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         {/* Map Image */}
         <div
@@ -177,7 +214,6 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
                 onMouseLeave={() => setHoveredMarker(null)}
                 onClick={e => {
                   e.stopPropagation();
-                  // Center on this marker
                   const newX = containerDimensions.width / 2 - marker.location.x * zoom;
                   const newY = containerDimensions.height / 2 - marker.location.y * zoom;
                   setPosition({ x: newX, y: newY });
@@ -229,14 +265,12 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
             className="w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 shadow-lg transition-all"
             onClick={() => {
               setZoom(DEFAULT_ZOOM);
-              // Position will be updated by useEffect when zoom changes
             }}
           >
             ⌂
           </button>
         </div>
 
-        {/* Zoom Indicator */}
         <div className="absolute bottom-4 right-4 px-3 py-1 bg-black bg-opacity-50 text-white text-sm rounded">
           {Math.round(zoom * 100)}%
         </div>
