@@ -4,6 +4,7 @@ type LocationList = Record<
 >;
 
 export const Locations = {
+  BoneBottom: { x: 1134, y: 2646 },
   ForgeDaughter: { x: 2797, y: 2733 },
   Grindle: { x: 722, y: 1532 },
   HalfwayHome: { x: 2972, y: 2041 },

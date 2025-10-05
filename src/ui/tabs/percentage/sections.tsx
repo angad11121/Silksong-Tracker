@@ -1,10 +1,10 @@
 import toolData from '@/data/tools.json';
-import { hasTool, getScene, type MetadataKey, getQuest } from '@/metadata';
 import { ToolType } from '@/constants';
-import { AncestralArts, MaskFragments, SpoolFragments } from '@/info';
-import { Renderer, RendererType } from './renderers';
+import { hasTool, getScene, type MetadataKey, getQuest } from '@/metadata';
+import { AncestralArts, MaskFragments, SpoolFragments } from '@/info/items';
 import { Locations } from '@/info/locations';
 import { getPercentageFromEntry } from '@/percentage';
+import { Renderer, RendererType } from '@/ui/tabs/percentage/renderers';
 
 import type { SaveData } from '@/types';
 import type { Section } from '@/ui/tabs/types';

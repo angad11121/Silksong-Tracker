@@ -1,6 +1,7 @@
 // Information regarding stuff like mask shards and spool fragments
 
 import { getQuest, getScene } from '@/metadata';
+import { Locations } from '@/info/locations';
 import type { PlayerData, SaveData } from '@/types';
 import type { MapLocation } from '@/ui/components/map/types';
 
@@ -88,11 +89,11 @@ export const MaskFragments: {
     markers: [
       {
         label: 'Purchased from Pebb in Bone Bottom.',
-        location: { x: 1134, y: 2646 },
+        location: Locations.BoneBottom,
       },
       {
         label: 'Purchased from Grindle in Act III.',
-        location: { x: 722, y: 1532 },
+        location: Locations.Grindle,
       },
     ],
   },
