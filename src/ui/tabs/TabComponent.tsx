@@ -1,4 +1,4 @@
-import type { TabType } from '@/ui/tabs/constants';
+import { type TabType, TabRendererMetadata } from '@/ui/tabs/constants';
 import {
   useCallback,
   useEffect,
@@ -47,7 +47,7 @@ export function TabComponent({
             tabRefs.current[tab] = el!;
           }}
         >
-          {tab}
+          {TabRendererMetadata[tab].title}
         </button>
       ))}
     </nav>
