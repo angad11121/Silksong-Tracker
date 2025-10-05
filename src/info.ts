@@ -77,7 +77,7 @@ export const MaskFragments: {
   {
     id: 3,
     check: save => getScene('Bone_East_20', 'Heart Piece', save)?.Value,
-    hint: 'Found in Far Fields Top left exit of the Seamstress room.',
+    hint: 'Found in Far Fields, from the top left exit of the Seamstress room.',
   },
   {
     id: 4,
