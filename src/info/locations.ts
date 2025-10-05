@@ -12,5 +12,6 @@ export const Locations = {
   },
   Mort: { x: 3610, y: 2480 },
   Pinstress: { x: 402, y: 1724 },
+  RuinedChapel: { x: 758, y: 2680 },
   TwelfthArchitect: { x: 2694, y: 1426 },
 } satisfies LocationList;

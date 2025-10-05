@@ -3,10 +3,11 @@ import { hasTool, getScene, type MetadataKey, getQuest } from '@/metadata';
 import { ToolType } from '@/constants';
 import { AncestralArts, MaskFragments, SpoolFragments } from '@/info';
 import { Renderer, RendererType } from './renderers';
+import { Locations } from '@/info/locations';
+import { getPercentageFromEntry } from '@/percentage';
 
 import type { SaveData } from '@/types';
 import type { Section } from '@/ui/tabs/types';
-import { Locations } from '@/info/locations';
 
 const PercentTools = Object.values(toolData).filter(tool => tool.isCounted);
 
@@ -190,8 +191,29 @@ export const SectionGenerator: Section<{
       },
       {
         title: 'Everbloom',
-        subtext: 'The Everbloom is required for 100% completion.',
-        children: [],
+        subtext:
+          'The Everbloom is acquired by talking to the Snail Shamans after acquiring three Hearts in Act III.',
+        children: [
+          {
+            title: 'Everbloom',
+            subtext: 'Complete the quest in the Ruined Chapel.',
+            render: ({ saveData, entry }) => (
+              <Renderer
+                id={null}
+                check={getPercentageFromEntry('Collectables', saveData) === 1}
+                hint={entry.subtext}
+                data={saveData}
+                markers={[
+                  {
+                    label: 'Complete the quest here after acquiring three Hearts.',
+                    location: Locations.RuinedChapel,
+                  },
+                ]}
+                type={RendererType.Everbloom}
+              />
+            ),
+          },
+        ],
         ctx: {
           maxPercentage: 1,
           getPercentage: 'Collectables',

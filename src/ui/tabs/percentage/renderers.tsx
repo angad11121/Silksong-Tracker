@@ -4,6 +4,7 @@ import SilkHeart from '@/assets/silk_heart.png';
 import CraftingKit from '@/assets/crafting_kit.png';
 import ToolPouch from '@/assets/tool_pouch.png';
 import NeedleStrike from '@/assets/needle_strike.png';
+import Everbloom from '@/assets/everbloom.png';
 
 import { useState, type ReactElement } from 'react';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
@@ -16,6 +17,7 @@ export enum RendererType {
   CraftingKit = 'crafting_kit',
   ToolPouch = 'tool_pouch',
   NeedleStrike = 'needle_strike',
+  Everbloom = 'everbloom',
 }
 
 const Images: Record<RendererType, () => ReactElement> = {
@@ -36,6 +38,9 @@ const Images: Record<RendererType, () => ReactElement> = {
   ),
   [RendererType.NeedleStrike]: () => (
     <img src={NeedleStrike} height={72} width={72} alt="" className="inline" />
+  ),
+  [RendererType.Everbloom]: () => (
+    <img src={Everbloom} height={30} width={30} alt="" className="inline" />
   ),
 };
 
@@ -66,7 +71,9 @@ export function Renderer({
           <>
             <small className="text-gray-300">#{id}:</small>&nbsp;
           </>
-        ) : null}
+        ) : (
+          ' '
+        )}
         <span className={hasAcquired ? 'text-green-500' : 'text-red-500'}>
           {hasAcquired ? 'Acquired' : 'Not Acquired'}
         </span>
