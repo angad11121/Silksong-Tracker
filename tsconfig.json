@@ -27,10 +27,10 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
     "paths": {
+      "@/assets/*": ["./static/assets/*"],
       "@/data/*": ["./data/*"],
       "@/*": ["./src/*"]
     }
-  }
-  ,
-  "include": ["**/*.d.ts", "src", "data", "tests"],
+  },
+  "include": ["**/*.d.ts", "src", "data", "tests"]
 }

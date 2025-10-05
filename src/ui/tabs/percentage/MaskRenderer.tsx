@@ -1,3 +1,5 @@
+import MaskShard from '@/assets/mask_shard.png';
+
 import type { ReactElement } from 'react';
 import type { SaveData } from '@/types';
 
@@ -16,13 +18,7 @@ export function MaskRenderer({
   return (
     <div>
       <div>
-        <img
-          src="static/assets/mask_shard.png"
-          height={20}
-          width={20}
-          alt="Mask Shard"
-          className="inline"
-        />
+        <img src={MaskShard} height={20} width={20} alt="Mask Shard" className="inline" />
         <small className="text-gray-300">#{fragmentId}:</small>&nbsp;
         <span className={hasAcquiredFragment ? 'text-green-500' : 'text-red-500'}>
           {hasAcquiredFragment ? 'Acquired' : 'Not Acquired'}
