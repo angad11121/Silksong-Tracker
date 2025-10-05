@@ -16,6 +16,8 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
   const containerRef = useRef<HTMLDivElement>(null);
   const outerContainerRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
+  const zoomRef = useRef(DEFAULT_ZOOM);
+  const rafRef = useRef<number | undefined>(undefined);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -70,15 +72,31 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     setPosition(centerPos);
   }, [getCenterPosition]);
 
-  // Handle wheel zoom
+  // Update zoom ref when zoom state changes
+  useEffect(() => {
+    zoomRef.current = zoom;
+  }, [zoom]);
+
+  // Handle wheel zoom with throttling
   const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const delta = e.deltaY * -0.005;
-    setZoom(currentZoom => {
-      const newZoom = Math.min(Math.max(currentZoom + delta, MIN_ZOOM), MAX_ZOOM);
-      return newZoom;
-    });
+
+    const delta = e.deltaY * -0.004;
+    const newZoom = Math.min(Math.max(zoomRef.current + delta, MIN_ZOOM), MAX_ZOOM);
+
+    if (newZoom !== zoomRef.current) {
+      // Cancel any pending update
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+
+      // Schedule update on next frame
+      rafRef.current = requestAnimationFrame(() => {
+        setZoom(newZoom);
+        rafRef.current = undefined;
+      });
+    }
   }, []);
 
   // Add wheel event listener with { passive: false } to prevent default scrolling
@@ -90,6 +108,11 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
 
     return () => {
       mapContainer.removeEventListener('wheel', handleWheel);
+      // Cancel any pending RAF on cleanup
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = undefined;
+      }
     };
   }, [handleWheel]);
 
@@ -195,56 +218,60 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
           />
 
           {/* Markers */}
-          {markers.map((marker, index) => (
-            <div key={`${marker.label}-${index}`} className="absolute">
-              <button
-                className={`absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-lg transition-all duration-200 hover:scale-125 focus:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                  hoveredMarker === marker.label ? 'scale-125' : ''
-                }`}
-                style={{
-                  left: marker.location.x,
-                  top: marker.location.y,
-                  width: MARKER_SIZE,
-                  height: MARKER_SIZE,
-                  backgroundImage: marker.marker ? `url(${MAP_MARKERS[marker.marker]})` : undefined,
-                  backgroundSize: 'cover',
-                  backgroundColor: marker.marker ? 'transparent' : '#ef4444',
-                }}
-                onMouseEnter={() => setHoveredMarker(marker.label)}
-                onMouseLeave={() => setHoveredMarker(null)}
-                onClick={e => {
-                  e.stopPropagation();
-                  const newX = containerDimensions.width / 2 - marker.location.x * zoom;
-                  const newY = containerDimensions.height / 2 - marker.location.y * zoom;
-                  setPosition({ x: newX, y: newY });
-                }}
-              >
-                {!marker.marker && (
-                  <img
-                    src={MAP_MARKERS[marker.marker ?? 'hornet']}
-                    alt="Marker"
-                    className="w-full h-full rounded-full object-cover"
-                    draggable={false}
-                  />
-                )}
-              </button>
+          {markers.map((marker, index) => {
+            const markerData = MAP_MARKERS[marker.marker ?? 'hornet'];
 
-              {/* Tooltip */}
-              {hoveredMarker === marker.label && (
-                <div
-                  className="absolute z-50 px-2 py-1 text-sm text-white bg-gray-800 rounded shadow-lg pointer-events-none whitespace-nowrap"
+            return (
+              <div key={`${marker.label}-${index}`} className="absolute">
+                <button
+                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-lg transition-all duration-200 hover:scale-125 focus:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                    hoveredMarker === marker.label ? 'scale-125' : ''
+                  }`}
                   style={{
-                    left: marker.location.x + MARKER_SIZE,
-                    top: marker.location.y - MARKER_SIZE,
-                    transform: 'translateY(-50%)',
+                    left: marker.location.x,
+                    top: marker.location.y,
+                    width: markerData.width,
+                    height: markerData.height,
+                    backgroundImage: marker.marker ? `url(${markerData.src})` : undefined,
+                    backgroundSize: 'cover',
+                    backgroundColor: marker.marker ? 'transparent' : '#ef4444',
+                  }}
+                  onMouseEnter={() => setHoveredMarker(marker.label)}
+                  onMouseLeave={() => setHoveredMarker(null)}
+                  onClick={e => {
+                    e.stopPropagation();
+                    const newX = containerDimensions.width / 2 - marker.location.x * zoom;
+                    const newY = containerDimensions.height / 2 - marker.location.y * zoom;
+                    setPosition({ x: newX, y: newY });
                   }}
                 >
-                  {marker.label}
-                  <div className="absolute left-0 top-1/2 transform -translate-x-1 -translate-y-1/2 w-2 h-2 bg-gray-800 rotate-45" />
-                </div>
-              )}
-            </div>
-          ))}
+                  {!marker.marker && (
+                    <img
+                      {...markerData}
+                      alt="Marker"
+                      className="w-full h-full rounded-full object-cover"
+                      draggable={false}
+                    />
+                  )}
+                </button>
+
+                {/* Tooltip */}
+                {hoveredMarker === marker.label && (
+                  <div
+                    className="absolute z-50 px-2 py-1 text-sm text-white bg-gray-800 rounded shadow-lg pointer-events-none whitespace-nowrap"
+                    style={{
+                      left: marker.location.x + MARKER_SIZE,
+                      top: marker.location.y - MARKER_SIZE,
+                      transform: 'translateY(-50%)',
+                    }}
+                  >
+                    {marker.label}
+                    <div className="absolute left-0 top-1/2 transform -translate-x-1 -translate-y-1/2 w-2 h-2 bg-gray-800 rotate-45" />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* Zoom Controls */}
@@ -272,7 +299,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
         </div>
 
         <div className="absolute bottom-4 right-4 px-3 py-1 bg-black bg-opacity-50 text-white text-sm rounded">
-          {Math.round(zoom * 100)}%
+          {Math.round(zoom * 5 * 100)}%
         </div>
       </div>
     </div>

@@ -9,11 +9,11 @@ import type { MapMarker } from './types';
 
 export const MAP_DIMENSIONS = { x: 5000, y: 3643 };
 
-export const MAP_MARKERS: Record<MapMarker, string> = {
-  hornet: HornetMarker,
-  shell: ShellMarker,
-  ring: RingMarker,
-  hunt: HuntMarker,
-  dark: DarkMarker,
-  bronze: BronzeMarker,
+export const MAP_MARKERS: Record<MapMarker, { src: string; height: number; width: number }> = {
+  hornet: { src: HornetMarker, height: 32, width: 23 },
+  shell: { src: ShellMarker, height: 24, width: 24 },
+  ring: { src: RingMarker, height: 24, width: 24 },
+  hunt: { src: HuntMarker, height: 24, width: 24 },
+  dark: { src: DarkMarker, height: 24, width: 24 },
+  bronze: { src: BronzeMarker, height: 24, width: 24 },
 };
