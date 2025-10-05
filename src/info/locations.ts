@@ -11,5 +11,6 @@ export const Locations = {
     Fleatopia: { x: 4399, y: 863 },
   },
   Mort: { x: 3610, y: 2480 },
+  Pinstress: { x: 402, y: 1724 },
   TwelfthArchitect: { x: 2694, y: 1426 },
 } satisfies LocationList;

@@ -161,7 +161,28 @@ export const SectionGenerator: Section<{
       {
         title: 'Needle Strike',
         subtext: 'The Needle Strike is required for 100% completion.',
-        children: [],
+        children: [
+          {
+            title: 'Needle Strike',
+            subtext:
+              'The Needle Strike is acquired by talking to the Pinstress in the Blasted Steps. The Great Conchflies must be fought to access her.',
+            render: ({ saveData, entry }) => (
+              <Renderer
+                id={null}
+                check={saveData => saveData.playerData.hasChargeSlash}
+                hint={entry.subtext}
+                data={saveData}
+                markers={[
+                  {
+                    label: 'Speak with the Pinstress.',
+                    location: Locations.Pinstress,
+                  },
+                ]}
+                type={RendererType.NeedleStrike}
+              />
+            ),
+          },
+        ],
         ctx: {
           maxPercentage: 1,
           getPercentage: 'hasChargeSlash',

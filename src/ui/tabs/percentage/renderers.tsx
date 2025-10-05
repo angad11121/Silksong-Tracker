@@ -3,19 +3,11 @@ import SpoolFragment from '@/assets/spool_fragment.png';
 import SilkHeart from '@/assets/silk_heart.png';
 import CraftingKit from '@/assets/crafting_kit.png';
 import ToolPouch from '@/assets/tool_pouch.png';
+import NeedleStrike from '@/assets/needle_strike.png';
 
 import { useState, type ReactElement } from 'react';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
 import type { SaveData } from '@/types';
-
-type CheckAcquired = ((data: SaveData) => boolean | undefined) | boolean | undefined;
-type Props = {
-  id: number;
-  check: CheckAcquired;
-  hint: string;
-  data: SaveData;
-  markers: MapLocation[];
-};
 
 export enum RendererType {
   Mask = 'mask',
@@ -23,6 +15,7 @@ export enum RendererType {
   SilkHeart = 'silk_heart',
   CraftingKit = 'crafting_kit',
   ToolPouch = 'tool_pouch',
+  NeedleStrike = 'needle_strike',
 }
 
 const Images: Record<RendererType, () => ReactElement> = {
@@ -41,6 +34,9 @@ const Images: Record<RendererType, () => ReactElement> = {
   [RendererType.ToolPouch]: () => (
     <img src={ToolPouch} height={36} width={36} alt="" className="inline" />
   ),
+  [RendererType.NeedleStrike]: () => (
+    <img src={NeedleStrike} height={72} width={72} alt="" className="inline" />
+  ),
 };
 
 export function Renderer({
@@ -50,8 +46,13 @@ export function Renderer({
   hint,
   data,
   markers,
-}: Props & {
-  type: 'mask' | 'spool' | 'silk_heart' | 'crafting_kit' | 'tool_pouch';
+}: {
+  id: number | null;
+  check: ((data: SaveData) => boolean | undefined) | boolean | undefined;
+  hint: string;
+  data: SaveData;
+  markers: MapLocation[];
+  type: RendererType;
 }): ReactElement {
   const hasAcquired = typeof check === 'function' ? check(data) : check;
   const [showMap, setShowMap] = useState(false);
@@ -61,7 +62,11 @@ export function Renderer({
     <div>
       <div>
         <Image />
-        <small className="text-gray-300">#{id}:</small>&nbsp;
+        {typeof id === 'number' ? (
+          <>
+            <small className="text-gray-300">#{id}:</small>&nbsp;
+          </>
+        ) : null}
         <span className={hasAcquired ? 'text-green-500' : 'text-red-500'}>
           {hasAcquired ? 'Acquired' : 'Not Acquired'}
         </span>
