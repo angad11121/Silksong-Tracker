@@ -62,12 +62,7 @@ export function Tooltip({
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: 'tooltip' });
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    hover,
-    focus,
-    dismiss,
-    role,
-  ]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss, role]);
 
   if (disabled) {
     return children;

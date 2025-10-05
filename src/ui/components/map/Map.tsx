@@ -4,6 +4,7 @@ import { Tooltip } from '../Tooltip';
 
 import { useState, useEffect, useRef, useCallback, type ReactElement } from 'react';
 import type { MapLocation } from './types';
+import { useOnce } from '../../hooks/useOnce';
 
 const DEFAULT_ZOOM = 0.8;
 const MIN_ZOOM = 0.2;
@@ -66,11 +67,10 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     };
   }, []);
 
-  // Center map on first marker when markers change or zoom changes
-  useEffect(() => {
+  useOnce(() => {
     const centerPos = getCenterPosition();
     setPosition(centerPos);
-  }, [getCenterPosition]);
+  });
 
   // Update zoom ref when zoom state changes
   useEffect(() => {
@@ -78,26 +78,43 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
   }, [zoom]);
 
   // Handle wheel zoom with throttling
-  const handleWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleWheel = useCallback(
+    (e: WheelEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    const delta = e.deltaY * -0.004;
-    const newZoom = Math.min(Math.max(zoomRef.current + delta, MIN_ZOOM), MAX_ZOOM);
+      const delta = e.deltaY * -0.004;
+      const newZoom = Math.min(Math.max(zoomRef.current + delta, MIN_ZOOM), MAX_ZOOM);
 
-    if (newZoom !== zoomRef.current) {
-      // Cancel any pending update
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
+      if (newZoom !== zoomRef.current && containerRef.current) {
+        // Get mouse position relative to the container
+        const rect = containerRef.current.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // Cancel any pending update
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+        }
+
+        // Schedule update on next frame
+        rafRef.current = requestAnimationFrame(() => {
+          // Calculate the point on the map that the mouse is currently over
+          const mapPointX = (mouseX - position.x) / zoomRef.current;
+          const mapPointY = (mouseY - position.y) / zoomRef.current;
+
+          // Calculate new position so the same map point stays under the mouse
+          const newPositionX = mouseX - mapPointX * newZoom;
+          const newPositionY = mouseY - mapPointY * newZoom;
+
+          setZoom(newZoom);
+          setPosition({ x: newPositionX, y: newPositionY });
+          rafRef.current = undefined;
+        });
       }
-
-      // Schedule update on next frame
-      rafRef.current = requestAnimationFrame(() => {
-        setZoom(newZoom);
-        rafRef.current = undefined;
-      });
-    }
-  }, []);
+    },
+    [position],
+  );
 
   // Add wheel event listener with { passive: false } to prevent default scrolling
   useEffect(() => {
