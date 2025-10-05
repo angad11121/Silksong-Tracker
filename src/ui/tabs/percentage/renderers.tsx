@@ -2,8 +2,9 @@ import MaskShard from '@/assets/mask_shard.png';
 import SpoolFragment from '@/assets/spool_fragment.png';
 import SilkHeart from '@/assets/silk_heart.png';
 
-import type { ReactElement } from 'react';
+import { useState, type ReactElement } from 'react';
 import type { SaveData } from '@/types';
+import { MapIcon, SilksongMap } from '@/ui/components/map';
 
 type CheckAcquired = ((data: SaveData) => boolean | undefined) | boolean | undefined;
 type Props = {
@@ -14,13 +15,15 @@ type Props = {
 };
 
 const SIZE = {
-  [MaskShard]: 20,
-  [SpoolFragment]: 24,
-  [SilkHeart]: 24,
+  [MaskShard]: 30,
+  [SpoolFragment]: 36,
+  [SilkHeart]: 36,
 } as const;
 
 function BaseRenderer({ id, img, check, hint, data }: Props & { img: string }): ReactElement {
   const hasAcquired = typeof check === 'function' ? check(data) : check;
+  const [showMap, setShowMap] = useState(false);
+
   return (
     <div>
       <div>
@@ -29,8 +32,22 @@ function BaseRenderer({ id, img, check, hint, data }: Props & { img: string }): 
         <span className={hasAcquired ? 'text-green-500' : 'text-red-500'}>
           {hasAcquired ? 'Acquired' : 'Not Acquired'}
         </span>
+        <button
+          onClick={() => setShowMap(!showMap)}
+          className="mx-2 cursor-pointer bg-[rgba(255,255,255,0.4)] rounded-full p-1"
+          title="Toggle Map"
+          data-unstyled
+        >
+          <MapIcon alt="Toggle Map" className="inline" />
+        </button>
       </div>
       <div>{hint}</div>
+      {showMap ? (
+        <>
+          <SilksongMap markers={[{ label: hint, location: { x: 2500, y: 1800 } }]} />
+          <hr className="text-gray-500" />
+        </>
+      ) : null}
     </div>
   );
 }

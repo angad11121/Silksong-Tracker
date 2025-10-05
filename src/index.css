@@ -44,7 +44,7 @@ p {
   white-space: normal;
 }
 
-button {
+button:not([data-unstyled]) {
   @apply bg-blue-500 text-white px-4 py-2 rounded-md mx-4 my-2;
   &:hover {
     @apply bg-blue-600;

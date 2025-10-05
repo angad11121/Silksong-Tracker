@@ -28,7 +28,7 @@ const TabRendererMetadata: Record<
   },
   [TabType.MementoData]: {
     Renderer: MementoDisplay,
-    hideTab: true,
+    // hideTab: true, // donotpush
     title: 'Memento Data',
     id: TabType.MementoData,
   },
@@ -39,7 +39,6 @@ export function TabRenderer({ data }: { data: SaveData }): ReactElement {
   const { Renderer } = TabRendererMetadata[tab];
   return (
     <div>
-
       <TabComponent
         tabs={Object.values(TabRendererMetadata)
           .filter(value => !value.hideTab)
