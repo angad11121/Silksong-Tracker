@@ -1,6 +1,8 @@
 import MaskShard from '@/assets/mask_shard.png';
 import SpoolFragment from '@/assets/spool_fragment.png';
 import SilkHeart from '@/assets/silk_heart.png';
+import CraftingKit from '@/assets/crafting_kit.png';
+import ToolPouch from '@/assets/tool_pouch.png';
 
 import { useState, type ReactElement } from 'react';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
@@ -15,27 +17,50 @@ type Props = {
   markers: MapLocation[];
 };
 
-const SIZE = {
-  [MaskShard]: 30,
-  [SpoolFragment]: 36,
-  [SilkHeart]: 36,
-} as const;
+export enum RendererType {
+  Mask = 'mask',
+  Spool = 'spool',
+  SilkHeart = 'silk_heart',
+  CraftingKit = 'crafting_kit',
+  ToolPouch = 'tool_pouch',
+}
 
-function BaseRenderer({
+const Images: Record<RendererType, () => ReactElement> = {
+  [RendererType.Mask]: () => (
+    <img src={MaskShard} height={30} width={30} alt="" className="inline" />
+  ),
+  [RendererType.Spool]: () => (
+    <img src={SpoolFragment} height={36} width={36} alt="" className="inline" />
+  ),
+  [RendererType.SilkHeart]: () => (
+    <img src={SilkHeart} height={36} width={36} alt="" className="inline" />
+  ),
+  [RendererType.CraftingKit]: () => (
+    <img src={CraftingKit} height={30} width={30} alt="" className="inline" />
+  ),
+  [RendererType.ToolPouch]: () => (
+    <img src={ToolPouch} height={36} width={36} alt="" className="inline" />
+  ),
+};
+
+export function Renderer({
   id,
-  img,
+  type,
   check,
   hint,
   data,
   markers,
-}: Props & { img: string }): ReactElement {
+}: Props & {
+  type: 'mask' | 'spool' | 'silk_heart' | 'crafting_kit' | 'tool_pouch';
+}): ReactElement {
   const hasAcquired = typeof check === 'function' ? check(data) : check;
   const [showMap, setShowMap] = useState(false);
+  const Image = Images[type];
 
   return (
     <div>
       <div>
-        <img src={img} height={SIZE[img]} width={SIZE[img]} alt="Mask Shard" className="inline" />
+        <Image />
         <small className="text-gray-300">#{id}:</small>&nbsp;
         <span className={hasAcquired ? 'text-green-500' : 'text-red-500'}>
           {hasAcquired ? 'Acquired' : 'Not Acquired'}
@@ -60,16 +85,4 @@ function BaseRenderer({
       ) : null}
     </div>
   );
-}
-
-export function MaskRenderer(props: Props) {
-  return <BaseRenderer img={MaskShard} {...props} />;
-}
-
-export function SpoolRenderer(props: Props) {
-  return <BaseRenderer img={SpoolFragment} {...props} />;
-}
-
-export function SilkHeartRenderer(props: Props) {
-  return <BaseRenderer img={SilkHeart} {...props} />;
 }

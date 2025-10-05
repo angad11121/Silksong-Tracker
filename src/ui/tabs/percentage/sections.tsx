@@ -1,11 +1,12 @@
 import toolData from '@/data/tools.json';
-import { hasTool, getScene, type MetadataKey } from '@/metadata';
+import { hasTool, getScene, type MetadataKey, getQuest } from '@/metadata';
 import { ToolType } from '@/constants';
 import { AncestralArts, MaskFragments, SpoolFragments } from '@/info';
-import { MaskRenderer, SilkHeartRenderer, SpoolRenderer } from './renderers';
+import { Renderer, RendererType } from './renderers';
 
 import type { SaveData } from '@/types';
 import type { Section } from '@/ui/tabs/types';
+import { Locations } from '@/info/locations';
 
 const PercentTools = Object.values(toolData).filter(tool => tool.isCounted);
 
@@ -25,7 +26,9 @@ export const SectionGenerator: Section<{
         children: MaskFragments.map(fragment => ({
           title: fragment.hint,
           subtext: fragment.hint,
-          render: ({ saveData }) => <MaskRenderer {...fragment} data={saveData} />,
+          render: ({ saveData }) => (
+            <Renderer {...fragment} data={saveData} type={RendererType.Mask} />
+          ),
         })),
         ctx: {
           maxPercentage: 5,
@@ -39,7 +42,9 @@ export const SectionGenerator: Section<{
         children: SpoolFragments.map(fragment => ({
           title: fragment.hint,
           subtext: fragment.hint,
-          render: ({ saveData }) => <SpoolRenderer {...fragment} data={saveData} />,
+          render: ({ saveData }) => (
+            <Renderer {...fragment} data={saveData} type={RendererType.Spool} />
+          ),
         })),
         ctx: {
           maxPercentage: 9,
@@ -54,7 +59,7 @@ export const SectionGenerator: Section<{
             title: 'Silk Heart #1',
             subtext: 'A Silk Heart is awarded for defeating the Bell Beast.',
             render: ({ saveData, entry }) => (
-              <SilkHeartRenderer
+              <Renderer
                 id={1}
                 check={
                   getScene('Memory_Silk_Heart_BellBeast', 'glow_rim_Remasker', saveData)?.Value
@@ -62,6 +67,7 @@ export const SectionGenerator: Section<{
                 hint={entry.subtext}
                 data={saveData}
                 markers={[]}
+                type={RendererType.SilkHeart}
               />
             ),
           },
@@ -69,7 +75,7 @@ export const SectionGenerator: Section<{
             title: 'Silk Heart #2',
             subtext: 'A Silk Heart is awarded for defeating Lace in the Cradle.',
             render: ({ saveData, entry }) => (
-              <SilkHeartRenderer
+              <Renderer
                 id={2}
                 check={
                   getScene('Memory_Silk_Heart_LaceTower', 'glow_rim_Remasker', saveData)?.Value
@@ -77,6 +83,7 @@ export const SectionGenerator: Section<{
                 hint={entry.subtext}
                 data={saveData}
                 markers={[]}
+                type={RendererType.SilkHeart}
               />
             ),
           },
@@ -85,12 +92,13 @@ export const SectionGenerator: Section<{
             subtext:
               'A Silk Heart is awarded for defeating the Unravelled in a secret area in Whiteward.',
             render: ({ saveData, entry }) => (
-              <SilkHeartRenderer
+              <Renderer
                 id={3}
                 check={getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value}
                 hint={entry.subtext}
                 data={saveData}
                 markers={[]}
+                type={RendererType.SilkHeart}
               />
             ),
           },
@@ -227,7 +235,90 @@ export const SectionGenerator: Section<{
             title: 'Crafting Kits',
             subtext:
               'There are four Crafting Kits available. All of them are required for 100% completion.',
-            children: [],
+            children: [
+              {
+                title: 'Crafting Kit #1',
+                subtext: 'A Crafting Kit can be purchased from Forge Daughter for 180 rosaries.',
+                render: ({ saveData, entry }) => (
+                  <Renderer
+                    id={1}
+                    check={saveData => saveData.playerData.PurchasedForgeToolKit}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Purchased from Forge Daughter for 180 rosaries.',
+                        location: Locations.ForgeDaughter,
+                      },
+                    ]}
+                    type={RendererType.CraftingKit}
+                  />
+                ),
+              },
+              {
+                title: 'Crafting Kit #2',
+                subtext:
+                  "A Crafting Kit is rewarded by Creige in Greymoor's Halfway Home for completing the Crawbug Clearing quest.",
+                render: ({ saveData, entry }) => (
+                  <Renderer
+                    id={2}
+                    check={saveData =>
+                      getQuest('Crow Feathers', saveData)?.Data.IsCompleted ||
+                      getQuest('Crow Feathers Pre', saveData)?.Data.IsCompleted
+                    }
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Hand over 25 Ragpelts to Creig after accepting the quest.',
+                        location: Locations.HalfwayHome,
+                      },
+                    ]}
+                    type={RendererType.CraftingKit}
+                  />
+                ),
+              },
+              {
+                title: 'Crafting Kit #3',
+                subtext:
+                  'A Crafting Kit can be purchased from the Twelfth Architect in the Underworks for 450 rosaries.',
+                render: ({ saveData, entry }) => (
+                  <Renderer
+                    id={3}
+                    check={saveData => saveData.playerData.PurchasedArchitectToolKit}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Purchased from the Twelfth Architect for 450 rosaries.',
+                        location: Locations.TwelfthArchitect,
+                      },
+                    ]}
+                    type={RendererType.CraftingKit}
+                  />
+                ),
+              },
+              {
+                title: 'Crafting Kit #4',
+                subtext:
+                  'A Crafting Kit can be purchased from Grindle in the Blasted Steps for 700 rosaries.',
+                render: ({ saveData, entry }) => (
+                  <Renderer
+                    id={4}
+                    check={saveData => saveData.playerData.purchasedGrindleToolKit}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Purchased from Grindle for 700 rosaries.',
+                        location: Locations.Grindle,
+                      },
+                    ]}
+                    type={RendererType.CraftingKit}
+                  />
+                ),
+              },
+            ],
             ctx: {
               getPercentage: 'ToolKitUpgrades',
               maxPercentage: 4,
@@ -237,7 +328,96 @@ export const SectionGenerator: Section<{
             title: 'Tool Pouch Upgrades',
             subtext:
               'There are four Tool Pouch upgrades available. All of them are required for 100% completion.',
-            children: [],
+            children: [
+              {
+                title: 'Tool Pouch Upgrade #1',
+                subtext:
+                  'A Tool Pouch can be won from Loddie in the Marrow by hitting 15 targets in a row. It can be picked up from a table in the same room in Act III.',
+                render: ({ saveData, entry }) => (
+                  <Renderer
+                    id={1}
+                    check={saveData =>
+                      !!getScene<number>('Bone_12', 'Pin Challenge', saveData) ||
+                      getScene('Bone_12', 'Ladybug Craft Pickup', saveData)?.Value
+                    }
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label:
+                          'Won from Loddie by hitting 15 targets in a row. It can be picked up from a table in the same room in Act III.',
+                        location: { x: 2106, y: 2539 },
+                      },
+                    ]}
+                    type={RendererType.ToolPouch}
+                  />
+                ),
+              },
+              {
+                title: 'Tool Pouch Upgrade #2',
+                subtext:
+                  "A Tool Pouch can be purchased from Mort in the Pilgrim's Rest in Far Fields for 220 rosaries.",
+                render: ({ saveData, entry }) => (
+                  <Renderer
+                    id={2}
+                    check={saveData => saveData.playerData.PurchasedPilgrimsRestToolPouch}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Purchased from Mort for 220 rosaries.',
+                        location: Locations.Mort,
+                      },
+                    ]}
+                    type={RendererType.ToolPouch}
+                  />
+                ),
+              },
+              // Mooshka in Fleatopia
+              {
+                title: 'Tool Pouch Upgrade #3',
+                subtext: 'Mooshka gives you a Tool Pouch upgrade after moving to Fleatopia.',
+                render: ({ saveData, entry }) => (
+                  <Renderer
+                    id={3}
+                    check={saveData =>
+                      getScene('Aqueduct_05', 'Caravan Troupe Leader Fleatopia NPC', saveData)
+                        ?.Value
+                    }
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Move the Flea Caravan to Fleatopia.',
+                        location: Locations.Mooshka.Fleatopia,
+                      },
+                    ]}
+                    type={RendererType.ToolPouch}
+                  />
+                ),
+              },
+              // Nuu in Halfway Home
+              {
+                title: 'Tool Pouch Upgrade #4',
+                subtext:
+                  'Given by Nuu in Halfway Home in Greymoor after completing the Bugs of Pharloom quest.',
+                render: ({ saveData, entry }) => (
+                  <Renderer
+                    id={4}
+                    check={saveData => getQuest('Journal', saveData)?.Data.IsCompleted}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Given by Nuu after completing the Bugs of Pharloom quest.',
+                        location: Locations.HalfwayHome,
+                      },
+                    ]}
+                    type={RendererType.ToolPouch}
+                  />
+                ),
+              },
+            ],
             ctx: {
               getPercentage: 'ToolPouchUpgrades',
               maxPercentage: 4,

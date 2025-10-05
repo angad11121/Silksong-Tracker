@@ -99,12 +99,18 @@ export function hasTool(tool: string, saveData: SaveData): boolean {
   return !foundTool.Data.IsHidden;
 }
 
-export function getScene(sceneName: string, sceneId: string, saveData: SaveData): Scene | null {
-  return (
-    saveData.sceneData.persistentBools.serializedList.find(
+export function getScene<T extends number | boolean = boolean>(
+  sceneName: string,
+  sceneId: string,
+  saveData: SaveData,
+): Scene<T> | null {
+  return (saveData.sceneData.persistentBools.serializedList.find(
+    scene => scene.SceneName === sceneName && scene.ID === sceneId,
+  ) ??
+    saveData.sceneData.persistentInts.serializedList.find(
       scene => scene.SceneName === sceneName && scene.ID === sceneId,
-    ) ?? null
-  );
+    ) ??
+    null) as Scene<T> | null;
 }
 
 export function getQuest(questName: string, saveData: SaveData): Quest | null {

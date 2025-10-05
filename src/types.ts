@@ -1395,10 +1395,12 @@ type PersistentBool = PersistentValue<boolean>;
 type PersistentInt = PersistentValue<number>;
 type GeoRock = PersistentValue<number>;
 
-export type Scene = PersistentBool;
+export type Scene<T extends number | boolean = boolean> =
+  | (T extends boolean ? PersistentBool : never)
+  | (T extends number ? PersistentInt : never);
 
 type SceneData = {
-  persistentBools: { serializedList: Scene[] };
+  persistentBools: { serializedList: PersistentBool[] };
   persistentInts: { serializedList: PersistentInt[] };
   geoRocks: { serializedList: GeoRock[] };
 };
