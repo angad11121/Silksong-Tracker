@@ -42,23 +42,18 @@ Silksong-Tracker/
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v18+ recommended)
-- npm or bun
+- bun
 
 ### Installation
 
 ```bash
-npm install
-# or
 bun install
 ```
 
 ### Running the App
 
 ```bash
-npm run dev
-# or
-bun run dev
+bun run build
 ```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser to view the tracker.
@@ -68,7 +63,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser to view the 
 Unit tests are located in the `tests/` directory. Run tests with:
 
 ```bash
-npm test
+bun test
 ```
 
 ## Contributing
