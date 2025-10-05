@@ -22,25 +22,25 @@ export enum RendererType {
 
 const Images: Record<RendererType, () => ReactElement> = {
   [RendererType.Mask]: () => (
-    <img src={MaskShard} height={30} width={30} alt="" className="inline" />
+    <img src={MaskShard} height={30} width={30} alt="Mask Shard" className="inline" />
   ),
   [RendererType.Spool]: () => (
-    <img src={SpoolFragment} height={36} width={36} alt="" className="inline" />
+    <img src={SpoolFragment} height={36} width={36} alt="Spool Fragment" className="inline" />
   ),
   [RendererType.SilkHeart]: () => (
-    <img src={SilkHeart} height={36} width={36} alt="" className="inline" />
+    <img src={SilkHeart} height={36} width={36} alt="Silk Heart" className="inline" />
   ),
   [RendererType.CraftingKit]: () => (
-    <img src={CraftingKit} height={30} width={30} alt="" className="inline" />
+    <img src={CraftingKit} height={30} width={30} alt="Crafting Kit" className="inline" />
   ),
   [RendererType.ToolPouch]: () => (
-    <img src={ToolPouch} height={36} width={36} alt="" className="inline" />
+    <img src={ToolPouch} height={36} width={36} alt="Tool Pouch" className="inline" />
   ),
   [RendererType.NeedleStrike]: () => (
-    <img src={NeedleStrike} height={72} width={72} alt="" className="inline" />
+    <img src={NeedleStrike} height={72} width={72} alt="Needle Strike" className="inline" />
   ),
   [RendererType.Everbloom]: () => (
-    <img src={Everbloom} height={30} width={30} alt="" className="inline" />
+    <img src={Everbloom} height={30} width={30} alt="Everbloom" className="inline" />
   ),
 };
 
