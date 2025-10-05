@@ -6,6 +6,13 @@ import ToolPouch from '@/assets/tool_pouch.png';
 import NeedleStrike from '@/assets/needle_strike.png';
 import Everbloom from '@/assets/everbloom.png';
 
+import CrestReaper from '@/assets/crests/reaper.png';
+import CrestWanderer from '@/assets/crests/architect.png';
+import CrestBeast from '@/assets/crests/beast.png';
+import CrestWitch from '@/assets/crests/witch.png';
+import CrestArchitect from '@/assets/crests/architect.png';
+import CrestShaman from '@/assets/crests/shaman.png';
+
 import { useState, type ReactElement } from 'react';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
 import type { SaveData } from '@/types';
@@ -18,6 +25,13 @@ export enum RendererType {
   ToolPouch = 'tool_pouch',
   NeedleStrike = 'needle_strike',
   Everbloom = 'everbloom',
+
+  Crest_Reaper = 'crest_reaper',
+  Crest_Wanderer = 'crest_wanderer',
+  Crest_Beast = 'crest_beast',
+  Crest_Witch = 'crest_witch',
+  Crest_Architect = 'crest_architect',
+  Crest_Shaman = 'crest_shaman',
 }
 
 const Images: Record<RendererType, () => ReactElement> = {
@@ -42,6 +56,25 @@ const Images: Record<RendererType, () => ReactElement> = {
   [RendererType.Everbloom]: () => (
     <img src={Everbloom} height={30} width={30} alt="Everbloom" className="inline" />
   ),
+
+  [RendererType.Crest_Reaper]: () => (
+    <img src={CrestReaper} height={72} width={72} alt="Reaper Crest" className="inline" />
+  ),
+  [RendererType.Crest_Wanderer]: () => (
+    <img src={CrestWanderer} height={72} width={72} alt="Wanderer Crest" className="inline" />
+  ),
+  [RendererType.Crest_Beast]: () => (
+    <img src={CrestBeast} height={72} width={72} alt="Beast Crest" className="inline" />
+  ),
+  [RendererType.Crest_Witch]: () => (
+    <img src={CrestWitch} height={72} width={72} alt="Witch Crest" className="inline" />
+  ),
+  [RendererType.Crest_Architect]: () => (
+    <img src={CrestArchitect} height={72} width={72} alt="Architect Crest" className="inline" />
+  ),
+  [RendererType.Crest_Shaman]: () => (
+    <img src={CrestShaman} height={72} width={72} alt="Shaman Crest" className="inline" />
+  ),
 };
 
 export function Renderer({
@@ -52,7 +85,7 @@ export function Renderer({
   data,
   markers,
 }: {
-  id: number | null;
+  id: number | string | null;
   check: ((data: SaveData) => boolean | undefined) | boolean | undefined;
   hint: string;
   data: SaveData;
@@ -67,7 +100,7 @@ export function Renderer({
     <div>
       <div>
         <Image />
-        {typeof id === 'number' ? (
+        {typeof id === 'number' || typeof id === 'string' ? (
           <>
             <small className="text-gray-300">#{id}:</small>&nbsp;
           </>

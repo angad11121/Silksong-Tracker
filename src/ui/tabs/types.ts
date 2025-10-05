@@ -17,7 +17,7 @@ export type LeafSection = {
 
 export type Section<ExtraData = null> = {
   title: string;
-  subtext: string;
+  subtext: string | null;
   children: (Section<ExtraData> | LeafSection)[];
   ctx: ExtraData;
 };

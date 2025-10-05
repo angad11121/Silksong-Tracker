@@ -1,7 +1,7 @@
 import toolData from '@/data/tools.json';
 import { ToolType } from '@/constants';
 import { hasTool, getScene, type MetadataKey, getQuest } from '@/metadata';
-import { AncestralArts, MaskFragments, SpoolFragments } from '@/info/items';
+import { AncestralArts, Crests, MaskFragments, SpoolFragments } from '@/info/items';
 import { Locations } from '@/info/locations';
 import { getPercentageFromEntry } from '@/percentage';
 import { Renderer, RendererType } from '@/ui/tabs/percentage/renderers';
@@ -141,7 +141,50 @@ export const SectionGenerator: Section<{
         title: 'Weapon Crests',
         subtext:
           'All Weapon Crests are required for 100% completion. Hunter Crest upgrades are not required, but are acquired during Sylphsong regardless.',
-        children: [],
+        children: [
+          RendererType.Crest_Reaper,
+          RendererType.Crest_Wanderer,
+          RendererType.Crest_Beast,
+          RendererType.Crest_Witch,
+          RendererType.Crest_Architect,
+          RendererType.Crest_Shaman,
+        ].map(type => {
+          const crest = Crests.find(crest => crest.id === type)!;
+
+          return {
+            title: `Crest of the ${crest.name}`,
+            subtext: null,
+            children: [
+              {
+                title: crest.name,
+                subtext: crest.hint,
+                render: ({ saveData }) => (
+                  <Renderer
+                    id={null}
+                    check={saveData =>
+                      saveData.playerData.ToolEquips.savedData.some(
+                        gameCrest => gameCrest.Name === crest.gameId,
+                      )
+                    }
+                    hint={crest.hint}
+                    data={saveData}
+                    markers={crest.markers}
+                    type={type}
+                  />
+                ),
+              },
+            ],
+            ctx: {
+              maxPercentage: 1,
+              getPercentage: saveData =>
+                saveData.playerData.ToolEquips.savedData.some(
+                  gameCrest => gameCrest.Name === crest.gameId,
+                )
+                  ? 1
+                  : 0,
+            },
+          };
+        }),
         ctx: {
           maxPercentage: 6,
           getPercentage: 'ToolEquips',
