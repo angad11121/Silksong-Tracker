@@ -53,10 +53,10 @@ bun install
 ### Running the App
 
 ```bash
-bun run build
+bun dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser to view the tracker.
+Open [http://localhost:5173](http://localhost:5173) in your browser to view the tracker. Use `bun run build` to create a production build.
 
 ## Testing
 
