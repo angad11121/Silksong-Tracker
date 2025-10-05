@@ -43,7 +43,7 @@ export default function App(): ReactElement {
 
   return (
     <>
-      <div className="flex flex-col gap-10 p-6">
+      <div className="flex flex-col gap-10 p-6 max-w-screen-lg mx-auto">
         <h1 className="">Silksong Progress Tracker</h1>
         <input
           id="upload"
