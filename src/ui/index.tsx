@@ -1,7 +1,9 @@
 import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react';
+
 import { decodeFile } from '@/decoder/decoder.js';
+import { TabRenderer } from '@/ui/tabs';
+import { Footer } from '@/ui/components/Footer';
 import type { SaveData } from '@/types';
-import { TabRenderer } from './tabs';
 
 const LOCAL_STORAGE_KEY = 'save';
 
@@ -40,17 +42,20 @@ export default function App(): ReactElement {
   }, [decoded]);
 
   return (
-    <div className="flex flex-col gap-10 p-6">
-      <h1 className="">Silksong Progress Tracker</h1>
-      <input
-        id="upload"
-        type="file"
-        accept=".dat,.dat.bak"
-        onChange={handleFileChange}
-        className="rounded-xl self-start p-2"
-      />
-      {file ? <p>Selected file: {file.name}</p> : null}
-      {decoded ? <TabRenderer data={decoded} /> : null}
-    </div>
+    <>
+      <div className="flex flex-col gap-10 p-6">
+        <h1 className="">Silksong Progress Tracker</h1>
+        <input
+          id="upload"
+          type="file"
+          accept=".dat,.dat.bak"
+          onChange={handleFileChange}
+          className="rounded-xl self-start p-2"
+        />
+        {file ? <p>Selected file: {file.name}</p> : null}
+        {decoded ? <TabRenderer data={decoded} /> : null}
+      </div>
+      <Footer />
+    </>
   );
 }
