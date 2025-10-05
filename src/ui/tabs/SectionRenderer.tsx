@@ -31,7 +31,7 @@ export function SectionRenderer<ExtraCtx = null>({
               <>&nbsp;</>
             ))}
             {'render' in section ? (
-              <>{section.render({ saveData: data, depth })}</>
+              <>{section.render({ saveData: data, depth, entry: section })}</>
             ) : (
               <SectionTitleRenderer section={section}>
                 <SectionRenderer

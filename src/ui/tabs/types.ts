@@ -4,7 +4,15 @@ import type { SaveData } from '@/types';
 export type LeafSection = {
   title: string;
   subtext: string;
-  render: ({ saveData, depth }: { saveData: SaveData; depth: number }) => ReactNode;
+  render: ({
+    saveData,
+    depth,
+    entry,
+  }: {
+    saveData: SaveData;
+    depth: number;
+    entry: LeafSection;
+  }) => ReactNode;
 };
 
 export type Section<ExtraData = null> = {

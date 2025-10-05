@@ -92,6 +92,13 @@ export const SaveDataMetadata: Partial<{
   },
 };
 
+export function hasTool(tool: string, saveData: SaveData): boolean {
+  const tools = saveData.playerData.Tools.savedData;
+  const foundTool = tools.find(t => t.Name === tool);
+  if (!foundTool) return false;
+  return !foundTool.Data.IsHidden;
+}
+
 export function getScene(sceneName: string, sceneId: string, saveData: SaveData): Scene | null {
   return (
     saveData.sceneData.persistentBools.serializedList.find(
