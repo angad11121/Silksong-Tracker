@@ -23,25 +23,31 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [isZooming, setIsZooming] = useState(false);
+  const zoomTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const [containerDimensions, setContainerDimensions] = useState({
     width: CONTAINER_WIDTH,
     height: CONTAINER_HEIGHT,
   });
 
-  const getCenterPosition = useCallback(() => {
-    const { width, height } = containerDimensions;
+  const getCenterPosition = useCallback(
+    (zoomOverride?: number) => {
+      const zoomVal = zoomOverride ?? zoom;
+      const { width, height } = containerDimensions;
 
-    if (markers.length === 0) {
-      const centerX = width / 2 - (MAP_DIMENSIONS.x * zoom) / 2;
-      const centerY = height / 2 - (MAP_DIMENSIONS.y * zoom) / 2;
+      if (markers.length === 0) {
+        const centerX = width / 2 - (MAP_DIMENSIONS.x * zoomVal) / 2;
+        const centerY = height / 2 - (MAP_DIMENSIONS.y * zoomVal) / 2;
+        return { x: centerX, y: centerY };
+      }
+
+      const marker = markers[0]!;
+      const centerX = width / 2 - marker.location.x * zoomVal;
+      const centerY = height / 2 - marker.location.y * zoomVal;
       return { x: centerX, y: centerY };
-    }
-
-    const marker = markers[0]!;
-    const centerX = width / 2 - marker.location.x * zoom;
-    const centerY = height / 2 - marker.location.y * zoom;
-    return { x: centerX, y: centerY };
-  }, [markers, zoom, containerDimensions]);
+    },
+    [markers, zoom, containerDimensions],
+  );
 
   // Update container dimensions when resized
   useEffect(() => {
@@ -87,6 +93,17 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
       const newZoom = Math.min(Math.max(zoomRef.current + delta, MIN_ZOOM), MAX_ZOOM);
 
       if (newZoom !== zoomRef.current && containerRef.current) {
+        // Set zooming state
+        setIsZooming(true);
+
+        // Clear existing timeout and set new one
+        if (zoomTimeoutRef.current) {
+          clearTimeout(zoomTimeoutRef.current);
+        }
+        zoomTimeoutRef.current = setTimeout(() => {
+          setIsZooming(false);
+        }, 150);
+
         // Get mouse position relative to the container
         const rect = containerRef.current.getBoundingClientRect();
         const mouseX = e.clientX - rect.left;
@@ -129,6 +146,10 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = undefined;
+      }
+      // Clear zoom timeout on cleanup
+      if (zoomTimeoutRef.current) {
+        clearTimeout(zoomTimeoutRef.current);
       }
     };
   }, [handleWheel]);
@@ -230,8 +251,6 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
             alt="Game Map"
             className="w-full h-full object-cover pointer-events-none"
             draggable={false}
-            onLoad={() => console.log('Map image loaded successfully')}
-            onError={e => console.error('Map image failed to load:', e)}
           />
         </div>
 
@@ -251,13 +270,17 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
                 <button
                   data-unstyled
                   className={
-                    'absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg transition-all duration-200 focus:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:scale-120'
+                    'absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg focus:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-400'
                   }
                   style={{
                     left: markerScreenX,
                     top: markerScreenY,
                     width: markerData.width * iconScaleModifier,
                     height: markerData.height * iconScaleModifier,
+                    transition:
+                      isZooming || isDragging
+                        ? 'none'
+                        : 'left 0.15s ease-out, top 0.15s ease-out, width 0.15s ease-out, height 0.15s ease-out',
                   }}
                   onClick={e => {
                     e.stopPropagation();
@@ -283,21 +306,26 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
         {/* Zoom Controls */}
         <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
           <button
+            title="Zoom In"
             className="w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center text-xl font-bold text-gray-700 shadow-lg transition-all"
             onClick={() => setZoom(Math.min(zoom * 1.2, MAX_ZOOM))}
           >
             +
           </button>
           <button
+            title="Zoom Out"
             className="w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center text-xl font-bold text-gray-700 shadow-lg transition-all"
             onClick={() => setZoom(Math.max(zoom / 1.2, MIN_ZOOM))}
           >
-            −
+            -
           </button>
           <button
+            title="Reset Zoom"
             className="w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 shadow-lg transition-all"
             onClick={() => {
+              zoomRef.current = DEFAULT_ZOOM;
               setZoom(DEFAULT_ZOOM);
+              setPosition(getCenterPosition(DEFAULT_ZOOM));
             }}
           >
             ⌂
