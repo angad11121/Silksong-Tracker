@@ -61,6 +61,7 @@ export const SectionGenerator: Section<{
                 }
                 hint={entry.subtext}
                 data={saveData}
+                markers={[]}
               />
             ),
           },
@@ -75,6 +76,7 @@ export const SectionGenerator: Section<{
                 }
                 hint={entry.subtext}
                 data={saveData}
+                markers={[]}
               />
             ),
           },
@@ -88,6 +90,7 @@ export const SectionGenerator: Section<{
                 check={getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value}
                 hint={entry.subtext}
                 data={saveData}
+                markers={[]}
               />
             ),
           },

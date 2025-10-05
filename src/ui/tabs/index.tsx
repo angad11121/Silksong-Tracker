@@ -28,7 +28,7 @@ const TabRendererMetadata: Record<
   },
   [TabType.MementoData]: {
     Renderer: MementoDisplay,
-    // hideTab: true, // donotpush
+    hideTab: true,
     title: 'Memento Data',
     id: TabType.MementoData,
   },

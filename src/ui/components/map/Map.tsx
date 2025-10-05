@@ -1,9 +1,9 @@
 import MapImage from '@/assets/map/map.png';
 import { MAP_DIMENSIONS, MAP_MARKERS } from './constants';
+import { Tooltip } from '../Tooltip';
 
 import { useState, useEffect, useRef, useCallback, type ReactElement } from 'react';
 import type { MapLocation } from './types';
-import { useOnce } from '../../hooks/useOnce';
 
 const DEFAULT_ZOOM = 0.8;
 const MIN_ZOOM = 0.2;
@@ -22,7 +22,6 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [hoveredMarker, setHoveredMarker] = useState<string | null>(null);
   const [containerDimensions, setContainerDimensions] = useState({
     width: CONTAINER_WIDTH,
     height: CONTAINER_HEIGHT,
@@ -227,52 +226,39 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
           const markerScreenX = position.x + marker.location.x * zoom;
           const markerScreenY = position.y + marker.location.y * zoom;
 
-          const iconScaleModifier = Math.sqrt(zoomRef.current ?? zoom);
+          const iconScaleModifier = 2 * Math.sqrt(zoomRef.current ?? zoom);
 
           return (
             <div key={`${marker.label}-${index}`} className="absolute">
-              <button
-                data-unstyled
-                className={`absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg transition-all duration-200 focus:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-400 scale-200 hover:scale-250`}
-                style={{
-                  left: markerScreenX,
-                  top: markerScreenY,
-                  width: markerData.width * iconScaleModifier,
-                  height: markerData.height * iconScaleModifier,
-                }}
-                onMouseEnter={() => setHoveredMarker(marker.label)}
-                onMouseLeave={() => setHoveredMarker(null)}
-                onClick={e => {
-                  e.stopPropagation();
-                  const newX = containerDimensions.width / 2 - marker.location.x * zoom;
-                  const newY = containerDimensions.height / 2 - marker.location.y * zoom;
-                  setPosition({ x: newX, y: newY });
-                }}
-              >
-                {!marker.marker && (
-                  <img
-                    {...markerData}
-                    alt="Marker"
-                    className="w-full h-full rounded-full object-cover"
-                    draggable={false}
-                  />
-                )}
-              </button>
-
-              {/* Tooltip */}
-              {hoveredMarker === marker.label && (
-                <div
-                  className="absolute z-50 px-2 py-1 text-sm text-white bg-gray-800 rounded shadow-lg pointer-events-none whitespace-nowrap"
+              <Tooltip content={marker.label} placement="top" delay={200}>
+                <button
+                  data-unstyled
+                  className={
+                    'absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg transition-all duration-200 focus:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:scale-120'
+                  }
                   style={{
-                    left: markerScreenX + MARKER_SIZE,
-                    top: markerScreenY - MARKER_SIZE,
-                    transform: 'translateY(-50%)',
+                    left: markerScreenX,
+                    top: markerScreenY,
+                    width: markerData.width * iconScaleModifier,
+                    height: markerData.height * iconScaleModifier,
+                  }}
+                  onClick={e => {
+                    e.stopPropagation();
+                    const newX = containerDimensions.width / 2 - marker.location.x * zoom;
+                    const newY = containerDimensions.height / 2 - marker.location.y * zoom;
+                    setPosition({ x: newX, y: newY });
                   }}
                 >
-                  {marker.label}
-                  <div className="absolute left-0 top-1/2 transform -translate-x-1 -translate-y-1/2 w-2 h-2 bg-gray-800 rotate-45" />
-                </div>
-              )}
+                  {!marker.marker && (
+                    <img
+                      {...markerData}
+                      alt="Marker"
+                      className="w-full h-full rounded-full object-cover"
+                      draggable={false}
+                    />
+                  )}
+                </button>
+              </Tooltip>
             </div>
           );
         })}
