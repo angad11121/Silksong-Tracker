@@ -6,6 +6,43 @@ import { useState, useEffect, useRef, useCallback, type ReactElement } from 'rea
 import type { MapLocation } from './types';
 import { useOnce } from '../../hooks/useOnce';
 
+function Delim(): ReactElement {
+  return <hr className="my-2 text-gray-500" />;
+}
+
+type CombinedMarker = {
+  labels: string[];
+  marker?: string;
+  location: { x: number; y: number };
+  originalCount: number;
+};
+
+function groupMarkersByLocation(markers: MapLocation[]): CombinedMarker[] {
+  const locationMap = new Map<string, CombinedMarker>();
+
+  for (const marker of markers) {
+    const locationKey = `${marker.location.x},${marker.location.y}`;
+    const existing = locationMap.get(locationKey);
+
+    if (existing) {
+      existing.labels.push(marker.label);
+      existing.originalCount++;
+      if (!existing.marker && marker.marker) {
+        existing.marker = marker.marker;
+      }
+    } else {
+      locationMap.set(locationKey, {
+        labels: [marker.label],
+        marker: marker.marker,
+        location: marker.location,
+        originalCount: 1,
+      });
+    }
+  }
+
+  return Array.from(locationMap.values());
+}
+
 const DEFAULT_ZOOM = 0.8;
 const MIN_ZOOM = 0.2;
 const MAX_ZOOM = 1.5;
@@ -14,6 +51,9 @@ const CONTAINER_WIDTH = 400;
 const CONTAINER_HEIGHT = Math.round(CONTAINER_WIDTH * (MAP_DIMENSIONS.y / MAP_DIMENSIONS.x));
 
 export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactElement {
+  // Group markers by location to combine overlapping ones
+  const combinedMarkers = groupMarkersByLocation(markers);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const outerContainerRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
@@ -34,18 +74,18 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
       const zoomVal = zoomOverride ?? zoom;
       const { width, height } = containerDimensions;
 
-      if (markers.length === 0) {
+      if (combinedMarkers.length === 0) {
         const centerX = width / 2 - (MAP_DIMENSIONS.x * zoomVal) / 2;
         const centerY = height / 2 - (MAP_DIMENSIONS.y * zoomVal) / 2;
         return { x: centerX, y: centerY };
       }
 
-      const marker = markers[0]!;
+      const marker = combinedMarkers[0]!;
       const centerX = width / 2 - marker.location.x * zoomVal;
       const centerY = height / 2 - marker.location.y * zoomVal;
       return { x: centerX, y: centerY };
     },
-    [markers, zoom, containerDimensions],
+    [combinedMarkers, zoom, containerDimensions],
   );
 
   // Update container dimensions when resized
@@ -277,8 +317,8 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
         </div>
 
         {/* Markers - positioned outside the transformed container */}
-        {markers.map((marker, index) => {
-          const markerData = MAP_MARKERS[marker.marker ?? 'hornet'];
+        {combinedMarkers.map((marker, index) => {
+          const markerData = MAP_MARKERS[(marker.marker ?? 'hornet') as keyof typeof MAP_MARKERS];
 
           // Calculate marker position in screen coordinates
           const markerScreenX = position.x + marker.location.x * zoom;
@@ -286,9 +326,24 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
 
           const iconScaleModifier = 2 * Math.sqrt(zoomRef.current ?? zoom);
 
+          // Create tooltip content with Delim separators for multiple labels
+          const tooltipContent =
+            marker.labels.length > 1
+              ? marker.labels.reduce((acc, label, idx) => {
+                  if (idx === 0) return label;
+                  return (
+                    <>
+                      {acc}
+                      <Delim />
+                      {label}
+                    </>
+                  );
+                }, '' as any)
+              : marker.labels[0];
+
           return (
-            <div key={`${marker.label}-${index}`} className="absolute">
-              <Tooltip content={marker.label} placement="top" delay={200}>
+            <div key={`${marker.labels.join('-')}-${index}`} className="absolute">
+              <Tooltip content={tooltipContent} placement="top" delay={200}>
                 <button
                   data-unstyled
                   className={
