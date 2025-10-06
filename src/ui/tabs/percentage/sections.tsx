@@ -154,7 +154,49 @@ export const SectionGenerator: Section<{
       {
         title: 'Ancestral Arts',
         subtext: 'All Ancestral Arts are required for 100% completion.',
-        children: [],
+        children: [
+          RendererType.SwiftStep,
+          RendererType.ClingGrip,
+          RendererType.Needolin,
+          RendererType.Clawline,
+          RendererType.SilkSoar,
+          RendererType.Sylphsong,
+        ].map(art => {
+          const data = AncestralArts[art]!;
+          return {
+            title: data.name,
+            subtext: null,
+            children: [
+              {
+                title: data.name,
+                subtext: data.desc,
+                render: ({ saveData }) => (
+                  <Renderer
+                    id={null}
+                    check={saveData =>
+                      typeof data.has === 'function'
+                        ? data.has(saveData) === data.percentage
+                        : !!saveData.playerData[data.has]
+                    }
+                    hint={data.desc}
+                    data={saveData}
+                    markers={data.markers}
+                    type={art}
+                  />
+                ),
+              },
+            ],
+            ctx: {
+              maxPercentage: data.percentage,
+              getPercentage: saveData =>
+                typeof data.has === 'function'
+                  ? data.has(saveData)
+                  : !!saveData.playerData[data.has]
+                    ? 1
+                    : 0,
+            },
+          };
+        }),
         ctx: {
           maxPercentage: 6,
           getPercentage: saveData =>

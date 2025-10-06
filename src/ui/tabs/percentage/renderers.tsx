@@ -3,8 +3,15 @@ import SpoolFragment from '@/assets/spool_fragment.png';
 import SilkHeart from '@/assets/silk_heart.png';
 import CraftingKit from '@/assets/crafting_kit.png';
 import ToolPouch from '@/assets/tool_pouch.png';
-import NeedleStrike from '@/assets/needle_strike.png';
 import Everbloom from '@/assets/everbloom.png';
+
+import SwiftStep from '@/assets/arts/swift_step.png';
+import ClingGrip from '@/assets/arts/cling_grip.png';
+import Needolin from '@/assets/arts/needolin.png';
+import Clawline from '@/assets/arts/clawline.png';
+import SilkSoar from '@/assets/arts/silk_soar.png';
+import Sylphsong from '@/assets/arts/sylphsong.png';
+import NeedleStrike from '@/assets/arts/needle_strike.png';
 
 import CrestReaper from '@/assets/crests/reaper.png';
 import CrestWanderer from '@/assets/crests/architect.png';
@@ -29,8 +36,15 @@ export enum RendererType {
   SilkHeart = 'silk_heart',
   CraftingKit = 'crafting_kit',
   ToolPouch = 'tool_pouch',
-  NeedleStrike = 'needle_strike',
   Everbloom = 'everbloom',
+
+  SwiftStep = 'swift_step',
+  ClingGrip = 'cling_grip',
+  Needolin = 'needolin',
+  Clawline = 'clawline',
+  SilkSoar = 'silk_soar',
+  Sylphsong = 'sylphsong',
+  NeedleStrike = 'needle_strike',
 
   Crest_Reaper = 'crest_reaper',
   Crest_Wanderer = 'crest_wanderer',
@@ -55,11 +69,24 @@ const Images: Record<RendererType, () => ReactElement> = {
   [RendererType.SilkHeart]: () => (
     <img src={SilkHeart} height={36} width={36} alt="Silk Heart" className="inline" />
   ),
-  [RendererType.CraftingKit]: () => (
-    <img src={CraftingKit} height={30} width={30} alt="Crafting Kit" className="inline" />
+
+  [RendererType.SwiftStep]: () => (
+    <img src={SwiftStep} height={72} width={72} alt="Swift Step" className="inline" />
   ),
-  [RendererType.ToolPouch]: () => (
-    <img src={ToolPouch} height={36} width={36} alt="Tool Pouch" className="inline" />
+  [RendererType.ClingGrip]: () => (
+    <img src={ClingGrip} height={72} width={72} alt="Cling Grip" className="inline" />
+  ),
+  [RendererType.Needolin]: () => (
+    <img src={Needolin} height={72} width={72} alt="Needolin" className="inline" />
+  ),
+  [RendererType.Clawline]: () => (
+    <img src={Clawline} height={72} width={72} alt="Clawline" className="inline" />
+  ),
+  [RendererType.SilkSoar]: () => (
+    <img src={SilkSoar} height={72} width={72} alt="Silk Soar" className="inline" />
+  ),
+  [RendererType.Sylphsong]: () => (
+    <img src={Sylphsong} height={72} width={72} alt="Sylphsong" className="inline" />
   ),
   [RendererType.NeedleStrike]: () => (
     <img src={NeedleStrike} height={72} width={72} alt="Needle Strike" className="inline" />
@@ -118,6 +145,13 @@ const Images: Record<RendererType, () => ReactElement> = {
       alt="Pale Steel Needle"
       className="inline -rotate-90 mx-12.5 -my-12"
     />
+  ),
+
+  [RendererType.CraftingKit]: () => (
+    <img src={CraftingKit} height={30} width={30} alt="Crafting Kit" className="inline" />
+  ),
+  [RendererType.ToolPouch]: () => (
+    <img src={ToolPouch} height={36} width={36} alt="Tool Pouch" className="inline" />
   ),
 };
 
