@@ -37,7 +37,11 @@ export function SectionRenderer<ExtraCtx = null>({
                 <SectionRenderer
                   depth={depth + 1}
                   data={data}
-                  sections={section.children}
+                  sections={
+                    typeof section.children === 'function'
+                      ? section.children(data)
+                      : section.children
+                  }
                   SectionTitleRenderer={SectionTitleRenderer}
                 />
               </SectionTitleRenderer>

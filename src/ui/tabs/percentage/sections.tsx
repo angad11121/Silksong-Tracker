@@ -1,7 +1,7 @@
 import toolData from '@/data/tools.json';
 import { ToolType } from '@/constants';
 import { hasTool, getScene, type MetadataKey, getQuest } from '@/metadata';
-import { AncestralArts, Crests, MaskFragments, SpoolFragments } from '@/info/items';
+import { AncestralArts, Crests, MaskFragments, NeedleUpgrades, SpoolFragments } from '@/info/items';
 import { Locations } from '@/info/locations';
 import { getPercentageFromEntry } from '@/percentage';
 import { Renderer, RendererType } from '@/ui/tabs/percentage/renderers';
@@ -111,8 +111,41 @@ export const SectionGenerator: Section<{
       },
       {
         title: 'Needle Upgrades',
-        subtext: 'All four Needle Upgrades are required for 100% completion.',
-        children: [],
+        subtext:
+          'All four Needle Upgrades are required for 100% completion. The Needle can only be upgraded by visiting Pinmaster Plinney in Bellhart.',
+        children: saveData => {
+          const doneUpgrades = NeedleUpgrades.options.filter(upgrade => upgrade.check(saveData));
+          const leftUpgrades = NeedleUpgrades.options.filter(
+            upgrade => !doneUpgrades.includes(upgrade),
+          );
+          const allUpgrades = [
+            ...doneUpgrades.map(entry => ({ ...entry, done: true })),
+            ...leftUpgrades.map(entry => ({ ...entry, done: false })),
+          ];
+
+          return NeedleUpgrades.levels.map((level, index) => {
+            const upgrade = allUpgrades[index]!;
+
+            return {
+              title: level.name,
+              subtext: level.desc,
+              render: ({ saveData }) => (
+                <Renderer
+                  id={level.name}
+                  check={upgrade.check}
+                  hint={upgrade.desc}
+                  markers={
+                    typeof upgrade.markers === 'function'
+                      ? upgrade.markers(saveData)
+                      : upgrade.markers
+                  }
+                  data={saveData}
+                  type={level.type as string as RendererType}
+                />
+              ),
+            };
+          });
+        },
         ctx: {
           maxPercentage: 4,
           getPercentage: 'nailUpgrades',
@@ -422,9 +455,11 @@ export const SectionGenerator: Section<{
                 render: ({ saveData, entry }) => (
                   <Renderer
                     id={1}
-                    check={saveData =>
-                      !!getScene<number>('Bone_12', 'Pin Challenge', saveData) ||
-                      getScene('Bone_12', 'Ladybug Craft Pickup', saveData)?.Value
+                    check={
+                      saveData =>
+                        !!getScene<number>('Bone_12', 'Pin Challenge', saveData) ||
+                        getScene('Bone_12', 'Ladybug Craft Pickup', saveData)?.Value
+                      // saveData.playerData.pinGalleriesCompleted >= 1, maybe?
                     }
                     hint={entry.subtext}
                     data={saveData}

@@ -13,7 +13,13 @@ import CrestWitch from '@/assets/crests/witch.png';
 import CrestArchitect from '@/assets/crests/architect.png';
 import CrestShaman from '@/assets/crests/shaman.png';
 
+import Needle_1 from '@/assets/needle/1.png';
+import Needle_2 from '@/assets/needle/2.png';
+import Needle_3 from '@/assets/needle/3.png';
+import Needle_4 from '@/assets/needle/4.png';
+
 import { useState, type ReactElement } from 'react';
+import { NeedleLevel } from '@/info/items';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
 import type { SaveData } from '@/types';
 
@@ -32,6 +38,11 @@ export enum RendererType {
   Crest_Witch = 'crest_witch',
   Crest_Architect = 'crest_architect',
   Crest_Shaman = 'crest_shaman',
+
+  Needle_1 = NeedleLevel.Sharpened,
+  Needle_2 = NeedleLevel.Shining,
+  Needle_3 = NeedleLevel.Hivesteel,
+  Needle_4 = NeedleLevel.PaleSteel,
 }
 
 const Images: Record<RendererType, () => ReactElement> = {
@@ -75,6 +86,39 @@ const Images: Record<RendererType, () => ReactElement> = {
   [RendererType.Crest_Shaman]: () => (
     <img src={CrestShaman} height={72} width={72} alt="Shaman Crest" className="inline" />
   ),
+
+  [RendererType.Needle_1]: () => (
+    <img
+      src={Needle_1}
+      width={16}
+      alt="Sharpened Needle"
+      className="inline -rotate-90 mx-12.5 -my-12"
+    />
+  ),
+  [RendererType.Needle_2]: () => (
+    <img
+      src={Needle_2}
+      width={16}
+      alt="Shining Needle"
+      className="inline -rotate-90 mx-12.5 -my-12"
+    />
+  ),
+  [RendererType.Needle_3]: () => (
+    <img
+      src={Needle_3}
+      width={16}
+      alt="Hivesteel Needle"
+      className="inline -rotate-90 mx-12.5 -my-12"
+    />
+  ),
+  [RendererType.Needle_4]: () => (
+    <img
+      src={Needle_4}
+      width={16}
+      alt="Pale Steel Needle"
+      className="inline -rotate-90 mx-12.5 -my-12"
+    />
+  ),
 };
 
 export function Renderer({
@@ -102,7 +146,7 @@ export function Renderer({
         <Image />
         {typeof id === 'number' || typeof id === 'string' ? (
           <>
-            <small className="text-gray-300">#{id}:</small>&nbsp;
+            <small className="text-gray-300">{typeof id === 'number' ? `#${id}` : id}:</small>&nbsp;
           </>
         ) : (
           ' '
