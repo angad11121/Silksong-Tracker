@@ -801,8 +801,8 @@ export const NeedleUpgrades: {
       ],
     },
     {
-      desc: 'A Pale Oil can be found after solving a block puzzle in the Whispering Vaults. (TODO)',
-      check: saveData => !'TODO',
+      desc: 'A Pale Oil can be found after solving a block puzzle in the Whispering Vaults.',
+      check: saveData => getScene('Library_05', 'Collectable Item Pickup', saveData)?.Value,
       markers: [
         {
           label: 'Solve the puzzle in the Whispering Vaults.',
