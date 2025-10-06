@@ -4,6 +4,7 @@ type LocationList = Record<
 >;
 
 export const Locations = {
+  ApostateKey: { x: 3509, y: 837 },
   Bellhart: { x: 2160, y: 2174 },
   BoneBottom: { x: 1134, y: 2646 },
   ForgeDaughter: { x: 2797, y: 2733 },
@@ -17,5 +18,6 @@ export const Locations = {
   Mossdruid: { x: 1379, y: 2396 },
   Pinstress: { x: 402, y: 1724 },
   RuinedChapel: { x: 758, y: 2680 },
+  Songclave: { x: 3100, y: 817 },
   TwelfthArchitect: { x: 2694, y: 1426 },
 } satisfies LocationList;
