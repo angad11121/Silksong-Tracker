@@ -9,7 +9,6 @@ import { useOnce } from '../../hooks/useOnce';
 const DEFAULT_ZOOM = 0.8;
 const MIN_ZOOM = 0.2;
 const MAX_ZOOM = 1.5;
-const MARKER_SIZE = 12;
 
 const CONTAINER_WIDTH = 400;
 const CONTAINER_HEIGHT = Math.round(CONTAINER_WIDTH * (MAP_DIMENSIONS.y / MAP_DIMENSIONS.x));
@@ -182,6 +181,29 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     setIsDragging(false);
   }, []);
 
+  // Handle zoom from center (for +/- buttons)
+  const handleZoomFromCenter = useCallback(
+    (newZoom: number) => {
+      if (newZoom === zoom) return;
+
+      // Get center point of the container
+      const centerX = containerDimensions.width / 2;
+      const centerY = containerDimensions.height / 2;
+
+      // Calculate the point on the map that is currently at the center
+      const mapPointX = (centerX - position.x) / zoom;
+      const mapPointY = (centerY - position.y) / zoom;
+
+      // Calculate new position so the same map point stays at the center
+      const newPositionX = centerX - mapPointX * newZoom;
+      const newPositionY = centerY - mapPointY * newZoom;
+
+      setZoom(newZoom);
+      setPosition({ x: newPositionX, y: newPositionY });
+    },
+    [zoom, position, containerDimensions],
+  );
+
   // Handle touch events for mobile
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
@@ -308,14 +330,14 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
           <button
             title="Zoom In"
             className="w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center text-xl font-bold text-gray-700 shadow-lg transition-all"
-            onClick={() => setZoom(Math.min(zoom * 1.2, MAX_ZOOM))}
+            onClick={() => handleZoomFromCenter(Math.min(zoom * 1.2, MAX_ZOOM))}
           >
             +
           </button>
           <button
             title="Zoom Out"
             className="w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center text-xl font-bold text-gray-700 shadow-lg transition-all"
-            onClick={() => setZoom(Math.max(zoom / 1.2, MIN_ZOOM))}
+            onClick={() => handleZoomFromCenter(Math.max(zoom / 1.2, MIN_ZOOM))}
           >
             -
           </button>
