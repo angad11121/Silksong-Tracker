@@ -1,20 +1,22 @@
 import toolData from '@/data/tools.json';
 import { ToolType } from '@/constants';
-import { hasTool, getScene, type MetadataKey, getQuest } from '@/metadata';
+import { hasTool, getScene, type MetadataKey, getQuest, SaveDataMetadata } from '@/metadata';
 import { AncestralArts, Crests, MaskFragments, NeedleUpgrades, SpoolFragments } from '@/info/items';
 import { Locations } from '@/info/locations';
 import { getPercentageFromEntry } from '@/percentage';
-import { Renderer, RendererType } from '@/ui/tabs/percentage/renderers';
+import { Renderer, RendererType } from '@/ui/components/renderers';
 
 import type { SaveData } from '@/types';
-import type { Section } from '@/ui/tabs/types';
+import type { LeafSection, Section } from '@/ui/tabs/types';
 
 const PercentTools = Object.values(toolData).filter(tool => tool.isCounted);
 
-export const SectionGenerator: Section<{
+export type PercentageSectionCtx = {
   maxPercentage: number;
   getPercentage: MetadataKey | ((saveData: SaveData) => number);
-}>[] = [
+};
+
+export const SectionGenerator: Section<PercentageSectionCtx>[] = [
   {
     title: '100% Completion',
     subtext:
@@ -27,6 +29,7 @@ export const SectionGenerator: Section<{
         children: MaskFragments.map(fragment => ({
           title: fragment.hint,
           subtext: fragment.hint,
+          has: fragment.check,
           render: ({ saveData }) => (
             <Renderer {...fragment} data={saveData} type={RendererType.Mask} />
           ),
@@ -43,6 +46,7 @@ export const SectionGenerator: Section<{
         children: SpoolFragments.map(fragment => ({
           title: fragment.hint,
           subtext: fragment.hint,
+          has: fragment.check,
           render: ({ saveData }) => (
             <Renderer {...fragment} data={saveData} type={RendererType.Spool} />
           ),
@@ -59,12 +63,12 @@ export const SectionGenerator: Section<{
           {
             title: 'Silk Heart #1',
             subtext: 'A Silk Heart is awarded for defeating the Bell Beast.',
+            has: saveData =>
+              getScene('Memory_Silk_Heart_BellBeast', 'glow_rim_Remasker', saveData)?.Value,
             render: ({ saveData, entry }) => (
               <Renderer
                 id={1}
-                check={
-                  getScene('Memory_Silk_Heart_BellBeast', 'glow_rim_Remasker', saveData)?.Value
-                }
+                check={entry.has}
                 hint={entry.subtext}
                 data={saveData}
                 markers={[
@@ -80,12 +84,12 @@ export const SectionGenerator: Section<{
           {
             title: 'Silk Heart #2',
             subtext: 'A Silk Heart is awarded for defeating Lace in the Cradle.',
+            has: saveData =>
+              getScene('Memory_Silk_Heart_LaceTower', 'glow_rim_Remasker', saveData)?.Value,
             render: ({ saveData, entry }) => (
               <Renderer
                 id={2}
-                check={
-                  getScene('Memory_Silk_Heart_LaceTower', 'glow_rim_Remasker', saveData)?.Value
-                }
+                check={entry.has}
                 hint={entry.subtext}
                 data={saveData}
                 markers={[
@@ -102,10 +106,12 @@ export const SectionGenerator: Section<{
             title: 'Silk Heart #3',
             subtext:
               'A Silk Heart is awarded for defeating the Unravelled in a secret area in Whiteward.',
+            has: saveData =>
+              getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value,
             render: ({ saveData, entry }) => (
               <Renderer
                 id={3}
-                check={getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value}
+                check={entry.has}
                 hint={entry.subtext}
                 data={saveData}
                 markers={[
@@ -148,6 +154,7 @@ export const SectionGenerator: Section<{
             return {
               title: level.name,
               subtext: level.desc,
+              has: () => upgrade.done,
               render: ({ saveData }) => (
                 <Renderer
                   id={level.name}
@@ -189,14 +196,14 @@ export const SectionGenerator: Section<{
               {
                 title: data.name,
                 subtext: data.desc,
-                render: ({ saveData }) => (
+                has: saveData =>
+                  typeof data.has === 'function'
+                    ? data.has(saveData) === data.percentage
+                    : !!saveData.playerData[data.has],
+                render: ({ saveData, entry }) => (
                   <Renderer
                     id={null}
-                    check={saveData =>
-                      typeof data.has === 'function'
-                        ? data.has(saveData) === data.percentage
-                        : !!saveData.playerData[data.has]
-                    }
+                    check={entry.has}
                     hint={data.desc}
                     data={saveData}
                     markers={data.markers}
@@ -232,9 +239,9 @@ export const SectionGenerator: Section<{
         },
       },
       {
-        title: 'Weapon Crests',
+        title: 'Crests',
         subtext:
-          'All Weapon Crests are required for 100% completion. Hunter Crest upgrades are not required, but are acquired during Sylphsong regardless.',
+          'All Crests are required for 100% completion. Hunter Crest upgrades are not required, but are acquired during Sylphsong regardless.',
         children: [
           RendererType.Crest_Reaper,
           RendererType.Crest_Wanderer,
@@ -252,14 +259,14 @@ export const SectionGenerator: Section<{
               {
                 title: crest.name,
                 subtext: crest.hint,
-                render: ({ saveData }) => (
+                has: saveData =>
+                  saveData.playerData.ToolEquips.savedData.some(
+                    gameCrest => gameCrest.Name === crest.gameId,
+                  ),
+                render: ({ saveData, entry }) => (
                   <Renderer
                     id={null}
-                    check={saveData =>
-                      saveData.playerData.ToolEquips.savedData.some(
-                        gameCrest => gameCrest.Name === crest.gameId,
-                      )
-                    }
+                    check={entry.has}
                     hint={crest.hint}
                     data={saveData}
                     markers={crest.markers}
@@ -619,3 +626,17 @@ export const SectionGenerator: Section<{
     },
   },
 ];
+
+export function getPercentageSection(
+  keys: string[],
+  saveData: SaveData,
+): Section<PercentageSectionCtx> | LeafSection | null {
+  return keys.reduce<Section<PercentageSectionCtx> | LeafSection | null>((acc, key) => {
+    if (!acc) return null;
+    if ('children' in acc) {
+      const children = typeof acc.children === 'function' ? acc.children(saveData) : acc.children;
+      return children.find(child => child.title === key) ?? null;
+    }
+    return null;
+  }, SectionGenerator[0]!);
+}

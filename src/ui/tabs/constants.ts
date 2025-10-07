@@ -1,6 +1,6 @@
 import { RawDataDisplay } from './data';
 import { PercentageDisplay } from './percentage';
-import { MementoDisplay } from './memento';
+import { TrueCompletionDisplay } from './trueCompletion';
 
 import type { SaveData } from '@/types';
 import type { ReactNode } from 'react';
@@ -8,7 +8,7 @@ import type { ReactNode } from 'react';
 export enum TabType {
   RawData = 'RawData',
   PercentageData = 'PercentageData',
-  MementoData = 'MementoData',
+  TrueCompletionData = 'TrueCompletionData',
 }
 
 export const TabRendererMetadata: Record<
@@ -30,10 +30,9 @@ export const TabRendererMetadata: Record<
     title: 'Percentage',
     id: TabType.PercentageData,
   },
-  [TabType.MementoData]: {
-    Renderer: MementoDisplay,
-    hideTab: true,
-    title: 'Memento Data',
-    id: TabType.MementoData,
+  [TabType.TrueCompletionData]: {
+    Renderer: TrueCompletionDisplay,
+    title: 'True Completion',
+    id: TabType.TrueCompletionData,
   },
 };

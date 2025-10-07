@@ -4,6 +4,7 @@ import type { SaveData } from '@/types';
 export type LeafSection = {
   title: string;
   subtext: string;
+  has?: (saveData: SaveData) => boolean | undefined;
   render: ({
     saveData,
     depth,

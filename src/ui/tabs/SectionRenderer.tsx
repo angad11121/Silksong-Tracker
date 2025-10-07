@@ -8,9 +8,9 @@ export function SectionRenderer<ExtraCtx = null>({
   sections,
   parent,
   SectionTitleRenderer = ({ section, children }) => (
-    <details open>
+    <details open className="p-4 bg-[#0006] rounded-xl">
       <summary>
-        <h3>{section.title}</h3>
+        <h3 className="inline mx-2 pt-2">{section.title}</h3>
         <h4>{section.subtext}</h4>
       </summary>
       {children}
