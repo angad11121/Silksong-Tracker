@@ -50,9 +50,15 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
       mapPercentageSection(getPercentageSection(['Silk Hearts'], saveData)!, () => ({
         subtext: 'There are 3 Silk Hearts available.',
       })),
-      mapPercentageSection(getPercentageSection(['Ancestral Arts'], saveData)!),
-      mapPercentageSection(getPercentageSection(['Crests'], saveData)!),
-      mapPercentageSection(getPercentageSection(['Needle Upgrades'], saveData)!),
+      mapPercentageSection(getPercentageSection(['Ancestral Arts'], saveData)!, () => ({
+        subtext: 'There are 6 Ancestral Arts available.',
+      })),
+      mapPercentageSection(getPercentageSection(['Crests'], saveData)!, () => ({
+        subtext: '7 Crests are available to be bound.',
+      })),
+      mapPercentageSection(getPercentageSection(['Needle Upgrades'], saveData)!, () => ({
+        subtext: '4 Needle upgrades can be found throughout the game.',
+      })),
     ],
     ctx: {
       maxCount: 'auto',
