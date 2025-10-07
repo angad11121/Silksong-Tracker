@@ -60,7 +60,7 @@ export default function App(): ReactElement {
             <>
               <span className="text-md text-stone-400 bg-[#0008] px-4 py-2 rounded-md">
                 Profile {decoded.playerData.profileID} (
-                {Math.floor(decoded.playerData.completionPercentage * 100)}%)
+                {Math.floor(decoded.playerData.completionPercentage)}%)
               </span>
               <button onClick={() => setDecoded(null)}>Clear</button>
             </>
