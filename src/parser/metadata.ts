@@ -1,5 +1,5 @@
-import type { Quest, SaveData, Scene } from '@/parser/types';
 import { Tools } from '@/info';
+import type { Quest, SaveData, Scene } from '@/parser/types';
 
 function percentIfTrue(value: boolean) {
   return value ? 1 : 0;

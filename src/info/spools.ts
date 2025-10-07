@@ -155,10 +155,10 @@ export const SpoolFragments: {
   {
     id: 12,
     check: save => save.playerData.MerchantEnclaveSpoolPiece,
-    hint: 'Purchased from Jubiliana in Songclave for 500 rosaries after completing The Lost Merchant.',
+    hint: 'Purchased from Jubilana in Songclave for 500 rosaries after completing The Lost Merchant.',
     markers: [
       {
-        label: 'Purchased from Jubiliana for 500 rosaries.',
+        label: 'Purchased from Jubilana for 500 rosaries.',
         location: Locations.Songclave,
       },
     ],

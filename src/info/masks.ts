@@ -106,10 +106,10 @@ export const MaskFragments: {
   {
     id: 8,
     check: save => save.playerData.MerchantEnclaveShellFragment,
-    hint: 'Purchased from Jubiliana in Songclave for 750 rosaries.',
+    hint: 'Purchased from Jubilana in Songclave for 750 rosaries.',
     markers: [
       {
-        label: 'Purchased from Jubiliana for 750 rosaries.',
+        label: 'Purchased from Jubilana for 750 rosaries.',
         location: Locations.Songclave,
       },
     ],
