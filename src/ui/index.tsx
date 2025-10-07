@@ -43,7 +43,7 @@ export default function App(): ReactElement {
 
   return (
     <>
-      <div className="flex flex-col gap-10 p-6 max-w-screen-lg mx-auto">
+      <div className="flex flex-col gap-10 p-6 max-w-screen-lg mx-auto min-h-screen">
         <h1 className="">Silksong Progress Tracker</h1>
         <input
           id="upload"
@@ -54,8 +54,8 @@ export default function App(): ReactElement {
         />
         {file ? <p>Selected file: {file.name}</p> : null}
         {decoded ? <TabRenderer data={decoded} /> : null}
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }

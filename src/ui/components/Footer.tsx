@@ -6,25 +6,28 @@ function Delim(): ReactElement {
 
 export function Footer(): ReactElement {
   return (
-    <div className="flex justify-center items-center text-xs text-gray-200 p-4">
-      This is a fan project and has no affiliation with Team Cherry or Hollow Knight: Silksong. All
-      rights belong to their respective owners.
-      <Delim />
-      <a
-        href="https://github.com/angad11121/Silksong-Tracker"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        GitHub
-      </a>
-      <Delim />
-      <a
-        href="https://github.com/angad11121/Silksong-Tracker/tree/main/PRIVACY.md"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Privacy Policy
-      </a>
-    </div>
+    <>
+      <div data-spacer className="flex-grow" />
+      <div className="flex self-center justify-center items-center text-xs text-gray-200 p-4 bg-[rgba(0,0,0,0.5)] rounded-xl">
+        This is a fan project and has no affiliation with Team Cherry or Hollow Knight: Silksong.
+        All rights belong to their respective owners.
+        <Delim />
+        <a
+          href="https://github.com/angad11121/Silksong-Tracker"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        <Delim />
+        <a
+          href="https://github.com/angad11121/Silksong-Tracker/tree/main/PRIVACY.md"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Privacy Policy
+        </a>
+      </div>
+    </>
   );
 }
