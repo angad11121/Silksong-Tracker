@@ -29,6 +29,7 @@ import { useState, type ReactElement } from 'react';
 import { NeedleLevel } from '@/info/items';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
 import type { SaveData } from '@/types';
+import { Tooltip } from './Tooltip';
 
 export enum RendererType {
   Mask = 'mask',
@@ -189,14 +190,15 @@ export function Renderer({
           {hasAcquired ? 'Acquired' : 'Not Acquired'}
         </span>
         {markers?.length > 0 ? (
-          <button
-            onClick={() => setShowMap(!showMap)}
-            className="mx-2 cursor-pointer bg-[rgba(255,255,255,0.4)] rounded-full p-1"
-            title="Toggle Map"
-            data-unstyled
-          >
-            <MapIcon alt="Toggle Map" className="inline" />
-          </button>
+          <Tooltip content={showMap ? 'Hide Map' : 'Show Map'}>
+            <button
+              onClick={() => setShowMap(!showMap)}
+              className="mx-2 cursor-pointer bg-[#eee6] hover:bg-[#eee8] hover:scale-110 duration-200 rounded-full p-1"
+              data-unstyled
+            >
+              <MapIcon alt={showMap ? 'Hide Map' : 'Show Map'} className="inline" />
+            </button>
+          </Tooltip>
         ) : null}
       </div>
       <div>{hint}</div>

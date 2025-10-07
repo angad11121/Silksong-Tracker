@@ -21,7 +21,9 @@ body {
 }
 
 input[type='file'] {
-  @apply bg-[#0008] text-sm text-stone-400 file:mr-5 file:py-1 file:px-3 file:border-1 file:rounded-md file:text-xs file:font-medium file:bg-stone-50 file:text-stone-700 hover:file:cursor-pointer hover:file:bg-rose-50 hover:file:text-rose-700;
+  @apply invisible file:visible w-30;
+  @apply file:mr-5 file:py-2 file:px-4 file:border-1 file:rounded-md file:text-sm file:font-medium file:bg-stone-50 file:text-stone-700;
+  @apply hover:file:cursor-pointer hover:file:bg-rose-50 hover:file:text-rose-700;
 }
 
 h1 {
@@ -45,12 +47,15 @@ p {
 }
 
 button:not([data-unstyled]) {
-  @apply bg-rose-600 text-white px-4 py-2 rounded-md mx-4 my-2;
+  @apply bg-rose-600 text-white px-4 py-2 rounded-md mx-4 my-2 cursor-pointer;
   &:hover {
     @apply bg-rose-700;
   }
-  &:focus {
+  &:active {
     @apply bg-rose-800;
+  }
+  &:focus {
+    @apply border-white;
   }
 }
 

@@ -106,10 +106,10 @@ export function Tooltip({
                 right: '',
                 bottom: '',
                 [arrowStaticSide!]: '-4px',
-                borderTopWidth: arrowStaticSide === 'bottom' ? '1px' : '0',
-                borderRightWidth: arrowStaticSide === 'left' ? '1px' : '0',
-                borderBottomWidth: arrowStaticSide === 'top' ? '1px' : '0',
-                borderLeftWidth: arrowStaticSide === 'right' ? '1px' : '0',
+                borderTopWidth: arrowStaticSide === 'top' ? '1px' : '0',
+                borderRightWidth: arrowStaticSide === 'right' ? '1px' : '0',
+                borderBottomWidth: arrowStaticSide === 'bottom' ? '1px' : '0',
+                borderLeftWidth: arrowStaticSide === 'left' ? '1px' : '0',
               }}
             />
           </div>

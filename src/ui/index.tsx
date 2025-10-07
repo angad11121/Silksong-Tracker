@@ -47,14 +47,26 @@ export default function App(): ReactElement {
       <Preload />
       <div className="flex flex-col gap-10 p-6 max-w-screen-lg mx-auto min-h-screen">
         <h1 className="">Silksong Progress Tracker</h1>
-        <input
-          id="upload"
-          type="file"
-          accept=".dat,.dat.bak"
-          onChange={handleFileChange}
-          className="rounded-xl self-start p-2"
-        />
-        {decoded ? <TabRenderer data={decoded} /> : null}
+        <div className="flex gap-4 items-center">
+          <input
+            id="upload"
+            type="file"
+            accept=".dat,.dat.bak"
+            value=""
+            onChange={handleFileChange}
+            className="rounded-xl p-2"
+          />
+          {decoded ? (
+            <>
+              <span className="text-md text-stone-400 bg-[#0008] px-4 py-2 rounded-md">
+                Profile {decoded.playerData.profileID} (
+                {Math.floor(decoded.playerData.completionPercentage * 100)}%)
+              </span>
+              <button onClick={() => setDecoded(null)}>Clear</button>
+            </>
+          ) : null}
+        </div>
+        <TabRenderer data={decoded} />
         <Footer />
       </div>
     </>

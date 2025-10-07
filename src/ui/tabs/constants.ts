@@ -1,3 +1,4 @@
+import { HelpDisplay } from './help';
 import { RawDataDisplay } from './data';
 import { HuntersJournalDisplay } from './huntersJournal';
 import { PercentageDisplay } from './percentage';
@@ -7,6 +8,7 @@ import type { SaveData } from '@/types';
 import type { ReactNode } from 'react';
 
 export enum TabType {
+  Help = 'Help',
   RawData = 'RawData',
   PercentageData = 'PercentageData',
   TrueCompletionData = 'TrueCompletionData',
@@ -22,6 +24,11 @@ export const TabRendererMetadata: Record<
     id: TabType;
   }
 > = {
+  [TabType.Help]: {
+    Renderer: HelpDisplay,
+    title: 'How to Use',
+    id: TabType.Help,
+  },
   [TabType.RawData]: {
     Renderer: RawDataDisplay,
     title: 'Raw Data',
@@ -29,7 +36,7 @@ export const TabRendererMetadata: Record<
   },
   [TabType.PercentageData]: {
     Renderer: PercentageDisplay,
-    title: 'Percentage',
+    title: 'Main %',
     id: TabType.PercentageData,
   },
   [TabType.TrueCompletionData]: {
