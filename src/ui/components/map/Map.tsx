@@ -1,4 +1,5 @@
-import MapImage from '@/assets/map/map.png';
+import MapImage from '@/assets/map/map.jpg';
+import LiteMapImage from '@/assets/map/map_lite.jpg';
 import { MAP_DIMENSIONS, MAP_MARKERS } from './constants';
 import { Tooltip } from '../Tooltip';
 
@@ -364,10 +365,8 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
           }}
         >
           <img
-            src={MapImage}
-            alt="Game Map"
-            className="w-full h-full object-cover pointer-events-none"
-            draggable={false}
+            style={{ backgroundImage: `url(${MapImage}), url(${LiteMapImage})` }}
+            className="w-full h-full object-cover bg-cover pointer-events-none"
           />
         </div>
 

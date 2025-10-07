@@ -3,6 +3,7 @@ import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react'
 import { decodeFile } from '@/decoder/decoder.js';
 import { TabRenderer } from '@/ui/tabs';
 import { Footer } from '@/ui/components/Footer';
+import { Preload } from '@/ui/preload';
 import type { SaveData } from '@/types';
 
 const LOCAL_STORAGE_KEY = 'save';
@@ -43,6 +44,7 @@ export default function App(): ReactElement {
 
   return (
     <>
+      <Preload />
       <div className="flex flex-col gap-10 p-6 max-w-screen-lg mx-auto min-h-screen">
         <h1 className="">Silksong Progress Tracker</h1>
         <input
