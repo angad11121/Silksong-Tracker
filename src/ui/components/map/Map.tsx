@@ -47,8 +47,10 @@ const DEFAULT_ZOOM = 0.8;
 const MIN_ZOOM = 0.2;
 const MAX_ZOOM = 1.5;
 
-const CONTAINER_WIDTH = 400;
-const CONTAINER_HEIGHT = Math.round(CONTAINER_WIDTH * (MAP_DIMENSIONS.y / MAP_DIMENSIONS.x));
+const DEFAULT_CONTAINER_WIDTH = 700;
+const DEFAULT_CONTAINER_HEIGHT = Math.round(
+  DEFAULT_CONTAINER_WIDTH * (MAP_DIMENSIONS.y / MAP_DIMENSIONS.x),
+);
 
 export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactElement {
   // Group markers by location to combine overlapping ones
@@ -65,8 +67,8 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
   const [isZooming, setIsZooming] = useState(false);
   const zoomTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const [containerDimensions, setContainerDimensions] = useState({
-    width: CONTAINER_WIDTH,
-    height: CONTAINER_HEIGHT,
+    width: DEFAULT_CONTAINER_WIDTH,
+    height: DEFAULT_CONTAINER_HEIGHT,
   });
 
   const getCenterPosition = useCallback(
@@ -281,8 +283,8 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
       ref={outerContainerRef}
       className="border-1 border-gray-500 rounded-lg resize overflow-hidden min-w-80 min-h-60 m-8"
       style={{
-        width: CONTAINER_WIDTH,
-        height: CONTAINER_HEIGHT,
+        width: DEFAULT_CONTAINER_WIDTH,
+        height: DEFAULT_CONTAINER_HEIGHT,
         overscrollBehavior: 'contain',
       }}
     >

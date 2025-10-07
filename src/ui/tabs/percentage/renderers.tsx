@@ -201,10 +201,10 @@ export function Renderer({
       </div>
       <div>{hint}</div>
       {showMap ? (
-        <>
+        <div className="flex flex-col items-center">
           <SilksongMap markers={markers} />
           <hr className="text-gray-500" />
-        </>
+        </div>
       ) : null}
     </div>
   );
