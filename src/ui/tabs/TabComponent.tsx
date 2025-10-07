@@ -37,7 +37,7 @@ export function TabComponent({
   }, [focusedIndex]);
 
   return (
-    <nav onKeyDown={handleKeyDown}>
+    <nav onKeyDown={handleKeyDown} className="flex gap-1 ml-6 px-2">
       {tabs.map(tab => (
         <button
           key={tab}
@@ -46,8 +46,13 @@ export function TabComponent({
           ref={el => {
             tabRefs.current[tab] = el!;
           }}
+          data-unstyled
+          className={`border-white border-1 bg-black border-b-0 rounded-t-md px-4 py-1 ${tab === selectedTab ? 'font-bold relative' : ''}`}
         >
           {TabRendererMetadata[tab].title}
+          {tab === selectedTab ? (
+            <div className="absolute -bottom-1 left-0 w-full h-1 bg-black"></div>
+          ) : null}
         </button>
       ))}
     </nav>

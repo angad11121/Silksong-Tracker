@@ -29,32 +29,28 @@ export function SectionRenderer<ExtraCtx = null>({
 }): ReactElement {
   return (
     <div>
-      {sections.map(section => {
-        return (
-          <div key={section.title}>
-            {Array.from({ length: depth }, () => (
-              <>&nbsp;</>
-            ))}
-            {'render' in section ? (
-              <>{section.render({ saveData: data, depth, entry: section })}</>
-            ) : (
-              <SectionTitleRenderer section={section} parent={parent ?? null}>
-                <SectionRenderer
-                  depth={depth + 1}
-                  data={data}
-                  parent={section}
-                  sections={
-                    typeof section.children === 'function'
-                      ? section.children(data)
-                      : section.children
-                  }
-                  SectionTitleRenderer={SectionTitleRenderer}
-                />
-              </SectionTitleRenderer>
-            )}
-          </div>
-        );
-      })}
+      {sections.map(section => (
+        <div key={section.title}>
+          {Array.from({ length: depth }, () => (
+            <>&nbsp;</>
+          ))}
+          {'render' in section ? (
+            <>{section.render({ saveData: data, depth, entry: section })}</>
+          ) : (
+            <SectionTitleRenderer section={section} parent={parent ?? null}>
+              <SectionRenderer
+                depth={depth + 1}
+                data={data}
+                parent={section}
+                sections={
+                  typeof section.children === 'function' ? section.children(data) : section.children
+                }
+                SectionTitleRenderer={SectionTitleRenderer}
+              />
+            </SectionTitleRenderer>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

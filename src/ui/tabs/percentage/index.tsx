@@ -21,7 +21,7 @@ export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
         return (
           <details
             open={currentPercentage < maxPercentage || !parent}
-            className="p-4 bg-[rgba(0,0,0,0.5)] rounded-xl"
+            className={parent ? 'p-4 bg-[rgba(0,0,0,0.5)] rounded-xl' : undefined}
           >
             <summary>
               <h3 className="inline mx-2 pt-2">
