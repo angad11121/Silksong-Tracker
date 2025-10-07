@@ -377,7 +377,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 PercentTools.filter(tool => tool.type === ToolType.Red).filter(tool =>
                   hasTool(tool.id, saveData),
                 ).length,
-              maxPercentage: 21,
+              maxPercentage: 18,
             },
           },
           {
@@ -389,7 +389,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 PercentTools.filter(tool => tool.type === ToolType.Blue).filter(tool =>
                   hasTool(tool.id, saveData),
                 ).length,
-              maxPercentage: 18,
+              maxPercentage: 21,
             },
           },
           {
