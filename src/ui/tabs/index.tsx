@@ -15,10 +15,7 @@ export function TabRenderer({ data }: { data: SaveData | null }): ReactElement {
     return [
       ...Object.values(TabRendererMetadata)
         .filter(value => !value.hideTab)
-        .map(value => value.id)
-        .filter(tab => tab !== TabType.RawData),
-      null,
-      TabType.RawData,
+        .map(value => value.id),
     ];
   }, [data]);
 

@@ -9,10 +9,12 @@ import type { ReactNode } from 'react';
 
 export enum TabType {
   Help = 'Help',
-  RawData = 'RawData',
+
   PercentageData = 'PercentageData',
   TrueCompletionData = 'TrueCompletionData',
   HuntersJournalData = 'HuntersJournalData',
+
+  RawData = 'RawData',
 }
 
 export const TabRendererMetadata: Record<

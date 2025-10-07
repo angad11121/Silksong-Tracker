@@ -7,7 +7,7 @@ export function TabComponent({
   onSelect,
 }: {
   selectedTab: TabType;
-  tabs: (TabType | null)[];
+  tabs: TabType[];
   onSelect: (tab: TabType) => void;
 }): ReactElement {
   const tabRefs = useRef<Partial<Record<TabType, HTMLButtonElement>>>({});
@@ -34,8 +34,9 @@ export function TabComponent({
 
   return (
     <nav onKeyDown={handleKeyDown} className="flex gap-1 mx-6 px-2">
-      {tabs.map(tab =>
-        tab ? (
+      {tabs.map((tab, index) => (
+        <>
+          {index === tabs.length - 1 ? <span className="grow" /> : null}
           <button
             key={tab}
             tabIndex={tab === tabs[focusedIndex] ? 0 : -1}
@@ -51,10 +52,8 @@ export function TabComponent({
               <div className="absolute left-0 w-full bg-black" style={{ height: 1, bottom: -1 }} />
             ) : null}
           </button>
-        ) : (
-          <span className="grow" />
-        ),
-      )}
+        </>
+      ))}
     </nav>
   );
 }
