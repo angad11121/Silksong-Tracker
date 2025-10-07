@@ -67,7 +67,12 @@ export const SectionGenerator: Section<{
                 }
                 hint={entry.subtext}
                 data={saveData}
-                markers={[]}
+                markers={[
+                  {
+                    label: 'Defeat the Bell Beast.',
+                    location: { x: 1363, y: 2441 },
+                  },
+                ]}
                 type={RendererType.SilkHeart}
               />
             ),
@@ -83,7 +88,12 @@ export const SectionGenerator: Section<{
                 }
                 hint={entry.subtext}
                 data={saveData}
-                markers={[]}
+                markers={[
+                  {
+                    label: 'Defeat Lace.',
+                    location: { x: 2526, y: 328 },
+                  },
+                ]}
                 type={RendererType.SilkHeart}
               />
             ),
@@ -98,7 +108,16 @@ export const SectionGenerator: Section<{
                 check={getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value}
                 hint={entry.subtext}
                 data={saveData}
-                markers={[]}
+                markers={[
+                  {
+                    label: "Acquire the Surgeon's Key.",
+                    location: { x: 2624, y: 1214 },
+                  },
+                  {
+                    label: 'Defeat the Unravelled.',
+                    location: { x: 2156, y: 1355 },
+                  },
+                ]}
                 type={RendererType.SilkHeart}
               />
             ),
