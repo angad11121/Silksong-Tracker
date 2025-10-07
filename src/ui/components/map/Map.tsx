@@ -1,11 +1,13 @@
+import { useState, useEffect, useRef, useCallback, type ReactElement } from 'react';
+import { useOnce } from '@/ui/hooks/useOnce';
+
 import MapImage from '@/assets/map/map.jpg';
 import LiteMapImage from '@/assets/map/map_lite.jpg';
-import { MAP_DIMENSIONS, MAP_MARKERS } from './constants';
-import { Tooltip } from '../Tooltip';
 
-import { useState, useEffect, useRef, useCallback, type ReactElement } from 'react';
+import { Tooltip } from '@/ui/components/Tooltip';
+import { MAP_DIMENSIONS, MAP_MARKERS } from './constants';
 import type { MapLocation, MapMarker } from './types';
-import { useOnce } from '../../hooks/useOnce';
+import { MAP_CONTROLS_STYLES } from './styles';
 
 function Delim(): ReactElement {
   return <hr className="my-2 text-gray-500" />;
@@ -13,14 +15,16 @@ function Delim(): ReactElement {
 
 type CombinedMarker = {
   labels: string[];
-  marker?: MapMarker;
+  marker: MapMarker;
   location: { x: number; y: number };
-  originalCount: number;
   outOfBounds?: boolean;
 };
 
 function groupMarkersByLocation(markers: MapLocation[]): CombinedMarker[] {
-  const locationMap = new Map<string, CombinedMarker>();
+  const locationMap = new Map<
+    string,
+    Omit<CombinedMarker, 'marker'> & Partial<Pick<CombinedMarker, 'marker'>>
+  >();
 
   for (const marker of markers) {
     const locationKey = `${marker.location.x},${marker.location.y}`;
@@ -28,7 +32,6 @@ function groupMarkersByLocation(markers: MapLocation[]): CombinedMarker[] {
 
     if (existing) {
       existing.labels.push(marker.label);
-      existing.originalCount++;
       if (!existing.marker && marker.marker) {
         existing.marker = marker.marker;
       }
@@ -37,12 +40,14 @@ function groupMarkersByLocation(markers: MapLocation[]): CombinedMarker[] {
         labels: [marker.label],
         marker: marker.marker,
         location: marker.location,
-        originalCount: 1,
       });
     }
   }
 
-  return Array.from(locationMap.values());
+  return [...locationMap.values()].map(({ marker, ...rest }) => ({
+    ...rest,
+    marker: marker ?? 'hornet',
+  }));
 }
 
 const DEFAULT_ZOOM = 0.8;
@@ -280,57 +285,68 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     setIsDragging(false);
   }, []);
 
-  const checkMarkerVisibility = useCallback((marker: CombinedMarker) => {
-    const markerScreenX = position.x + marker.location.x * zoom;
-    const markerScreenY = position.y + marker.location.y * zoom;
-    return markerScreenX >= 0 && markerScreenX <= containerDimensions.width && markerScreenY >= 0 && markerScreenY <= containerDimensions.height;
-  }, [position, zoom, containerDimensions]);
+  const checkMarkerVisibility = useCallback(
+    (marker: CombinedMarker) => {
+      const markerScreenX = position.x + marker.location.x * zoom;
+      const markerScreenY = position.y + marker.location.y * zoom;
+      return (
+        markerScreenX >= 0 &&
+        markerScreenX <= containerDimensions.width &&
+        markerScreenY >= 0 &&
+        markerScreenY <= containerDimensions.height
+      );
+    },
+    [position, zoom, containerDimensions],
+  );
 
-  const translateLocationsForOutofBoundsMarkers = useCallback((marker: CombinedMarker) => {
-    if (checkMarkerVisibility(marker)) return marker;
+  const translateLocationsForOutofBoundsMarkers = useCallback(
+    (marker: CombinedMarker) => {
+      if (checkMarkerVisibility(marker)) return marker;
 
-    // Calculate marker's screen position
-    const markerScreenX = position.x + marker.location.x * zoom;
-    const markerScreenY = position.y + marker.location.y * zoom;
+      // Calculate marker's screen position
+      const markerScreenX = position.x + marker.location.x * zoom;
+      const markerScreenY = position.y + marker.location.y * zoom;
 
-    // Center of the container
-    const centerX = containerDimensions.width / 2;
-    const centerY = containerDimensions.height / 2;
+      // Center of the container
+      const centerX = containerDimensions.width / 2;
+      const centerY = containerDimensions.height / 2;
 
-    // Vector from center to marker
-    const dx = markerScreenX - centerX;
-    const dy = markerScreenY - centerY;
+      // Vector from center to marker
+      const dx = markerScreenX - centerX;
+      const dy = markerScreenY - centerY;
 
-    // Find the scale needed to bring the marker just inside the container
-    // Compute the maximum allowed dx/dy so marker is inside bounds
-    const markerData = MAP_MARKERS[marker.marker ?? 'hornet']; // optional: keep a small margin from the edge
-    const offset = Math.max(markerData.height, markerData.width) * 1.1;
-    const maxX = centerX - 10 - zoom * (offset);
-    const maxY = centerY - 10 - zoom * (offset);
+      // Find the scale needed to bring the marker just inside the container
+      // Compute the maximum allowed dx/dy so marker is inside bounds
+      const markerData = MAP_MARKERS[marker.marker];
+      const offset = Math.max(markerData.height, markerData.width) * 1.1;
+      const maxX = centerX - 10 - zoom * offset;
+      const maxY = centerY - 10 - zoom * offset;
 
-    // If dx or dy is zero, avoid division by zero
-    let scale = 1;
-    if (dx !== 0 || dy !== 0) {
-      // Compute the scale needed to bring the marker to the edge
-      const scaleX = Math.abs(dx) > maxX ? maxX / Math.abs(dx) : 1;
-      const scaleY = Math.abs(dy) > maxY ? maxY / Math.abs(dy) : 1;
-      scale = Math.min(scaleX, scaleY, 1);
-    }
+      // If dx or dy is zero, avoid division by zero
+      let scale = 1;
+      if (dx !== 0 || dy !== 0) {
+        // Compute the scale needed to bring the marker to the edge
+        const scaleX = Math.abs(dx) > maxX ? maxX / Math.abs(dx) : 1;
+        const scaleY = Math.abs(dy) > maxY ? maxY / Math.abs(dy) : 1;
+        scale = Math.min(scaleX, scaleY, 1);
+      }
 
-    // New screen position
-    const newScreenX = centerX + dx * scale;
-    const newScreenY = centerY + dy * scale;
+      // New screen position
+      const newScreenX = centerX + dx * scale;
+      const newScreenY = centerY + dy * scale;
 
-    // Convert back to map coordinates and return the translated value
-    return {
-      ...marker,
-      location: {
-        x: (newScreenX - position.x) / zoom,
-        y: (newScreenY - position.y) / zoom,
-      },
-      outOfBounds: true,
-    };
-  }, [combinedMarkers, checkMarkerVisibility, containerDimensions]);
+      // Convert back to map coordinates and return the translated value
+      return {
+        ...marker,
+        location: {
+          x: (newScreenX - position.x) / zoom,
+          y: (newScreenY - position.y) / zoom,
+        },
+        outOfBounds: true,
+      };
+    },
+    [combinedMarkers, checkMarkerVisibility, containerDimensions],
+  );
 
   return (
     <div
@@ -372,45 +388,53 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
 
         {/* Markers - positioned outside the transformed container */}
         {combinedMarkers.map((trueMarker, index) => {
-          const markerData = MAP_MARKERS[(trueMarker.marker ?? 'hornet') as keyof typeof MAP_MARKERS];
+          const markerData = MAP_MARKERS[trueMarker.marker];
 
-          // Calculate marker position in screen coordinates
           const marker = translateLocationsForOutofBoundsMarkers(trueMarker);
           const markerScreenX = position.x + marker.location.x * zoom;
           const markerScreenY = position.y + marker.location.y * zoom;
 
           const iconScaleModifier = 2 * Math.sqrt(zoomRef.current ?? zoom);
 
-          // Create tooltip content with Delim separators for multiple labels
-          const tooltipContent =
-            marker.labels.length > 1
-              ? marker.labels.reduce((acc, label, idx) => {
-                if (idx === 0) return label;
-                return (
-                  <>
-                    {acc}
-                    <Delim />
-                    {label}
-                  </>
-                );
-              }, '' as any)
-              : marker.labels[0];
-
-          const outOfBoundsSize = marker.outOfBounds ? Math.max(markerData.height, markerData.width) * 0.9 : 0;
+          const outOfBoundsSize = marker.outOfBounds
+            ? Math.max(markerData.height, markerData.width) * 0.9
+            : 0;
+          const triangleSize = outOfBoundsSize * iconScaleModifier * 0.2;
 
           return (
             <div key={`${marker.labels.join('-')}-${index}`} className="absolute">
-              <Tooltip content={tooltipContent} placement="top" delay={200}>
+              <Tooltip
+                content={
+                  marker.labels.length > 1
+                    ? marker.labels.reduce((acc, label, idx) => {
+                        if (idx === 0) return label;
+                        return (
+                          <>
+                            {acc}
+                            <Delim />
+                            {label}
+                          </>
+                        );
+                      }, '' as any)
+                    : marker.labels[0]
+                }
+                placement="top"
+                delay={200}
+              >
                 <button
                   data-unstyled
                   className={
-                    'absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full hover:scale-110 shadow-lg focus:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400 ' + (marker.outOfBounds ? 'bg-[#111C] rounded-max' : '')
+                    'absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full hover:scale-110 shadow-lg focus:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400 ' +
+                    (marker.outOfBounds ? 'bg-[#111C] rounded-max' : '')
                   }
                   style={{
                     left: markerScreenX,
                     top: markerScreenY,
-                    width: (marker.outOfBounds ? outOfBoundsSize : markerData.width) * iconScaleModifier,
-                    height: (marker.outOfBounds ? outOfBoundsSize : markerData.height) * iconScaleModifier,
+                    width:
+                      (marker.outOfBounds ? outOfBoundsSize : markerData.width) * iconScaleModifier,
+                    height:
+                      (marker.outOfBounds ? outOfBoundsSize : markerData.height) *
+                      iconScaleModifier,
                     transition:
                       isZooming || isDragging
                         ? 'none'
@@ -419,30 +443,38 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
                   }}
                   onClick={e => {
                     e.stopPropagation();
-                    // this value didnt work properly for out of bounds markers
                     const newX = containerDimensions.width / 2 - trueMarker.location.x * zoom;
                     const newY = containerDimensions.height / 2 - trueMarker.location.y * zoom;
                     setPosition({ x: newX, y: newY });
                   }}
-                >{marker.outOfBounds &&
-                  <div className='absolute top-0 left-0 h-full w-full flex items-center justify-start border-2 rounded-full border-rose-700 -z-1' style={{
-                    transform: `rotate(${Math.atan2(trueMarker.location.y - marker.location.y, trueMarker.location.x - marker.location.x) * 180 / Math.PI}deg)`
-                  }}>
-                    <div className="absolute border-transparent border-l-rose-700 w-0 h-0" style={{
-                      right: -outOfBoundsSize * iconScaleModifier * 0.15,
-                      borderLeftWidth: outOfBoundsSize * iconScaleModifier * 0.15,
-                      borderTopWidth: outOfBoundsSize * iconScaleModifier * 0.15,
-                      borderBottomWidth: outOfBoundsSize * iconScaleModifier * 0.15,
-                    }} />
-                  </div>}
-                  {!marker.marker && (
+                >
+                  {marker.outOfBounds ? (
+                    <div
+                      className="absolute top-0 left-0 h-full w-full flex items-center justify-start rounded-full border-rose-700 -z-1"
+                      style={{
+                        transform: `rotate(${(Math.atan2(trueMarker.location.y - marker.location.y, trueMarker.location.x - marker.location.x) * 180) / Math.PI}deg)`,
+                        borderWidth: 2 * iconScaleModifier,
+                      }}
+                    >
+                      <div
+                        className="absolute border-transparent border-l-rose-700 w-0 h-0"
+                        style={{
+                          right: -triangleSize,
+                          borderLeftWidth: triangleSize,
+                          borderTopWidth: triangleSize,
+                          borderBottomWidth: triangleSize,
+                        }}
+                      />
+                    </div>
+                  ) : null}
+                  {marker.marker ? (
                     <img
                       {...markerData}
                       alt="Marker"
                       className="w-full h-full rounded-full object-contain"
                       draggable={false}
                     />
-                  )}
+                  ) : null}
                 </button>
               </Tooltip>
             </div>
@@ -453,21 +485,21 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
         <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
           <button
             title="Zoom In"
-            className="w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center text-xl font-bold text-gray-700 shadow-lg transition-all"
+            className={MAP_CONTROLS_STYLES}
             onClick={() => handleZoomFromCenter(Math.min(zoom * 1.2, MAX_ZOOM))}
           >
             +
           </button>
           <button
             title="Zoom Out"
-            className="w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center text-xl font-bold text-gray-700 shadow-lg transition-all"
+            className={MAP_CONTROLS_STYLES}
             onClick={() => handleZoomFromCenter(Math.max(zoom / 1.2, MIN_ZOOM))}
           >
             -
           </button>
           <button
             title="Reset Zoom"
-            className="w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 shadow-lg transition-all"
+            className={MAP_CONTROLS_STYLES}
             onClick={() => {
               zoomRef.current = DEFAULT_ZOOM;
               setZoom(DEFAULT_ZOOM);
@@ -478,7 +510,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
           </button>
         </div>
 
-        <div className="absolute bottom-4 right-4 px-3 py-1 bg-black bg-opacity-50 text-white text-sm rounded">
+        <div className="absolute bottom-4 right-4 px-3 py-1 bg-[#0008] text-white text-sm rounded">
           {Math.round((zoom / MIN_ZOOM) * 100)}%
         </div>
       </div>
