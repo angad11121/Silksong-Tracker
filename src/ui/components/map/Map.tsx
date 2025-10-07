@@ -349,7 +349,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
                 <button
                   data-unstyled
                   className={
-                    'absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg focus:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-400'
+                    'absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full hover:scale-110 shadow-lg focus:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400'
                   }
                   style={{
                     left: markerScreenX,
