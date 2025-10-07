@@ -3,7 +3,7 @@ import { MAP_DIMENSIONS, MAP_MARKERS } from './constants';
 import { Tooltip } from '../Tooltip';
 
 import { useState, useEffect, useRef, useCallback, type ReactElement } from 'react';
-import type { MapLocation } from './types';
+import type { MapLocation, MapMarker } from './types';
 import { useOnce } from '../../hooks/useOnce';
 
 function Delim(): ReactElement {
@@ -12,9 +12,10 @@ function Delim(): ReactElement {
 
 type CombinedMarker = {
   labels: string[];
-  marker?: string;
+  marker?: MapMarker;
   location: { x: number; y: number };
   originalCount: number;
+  outOfBounds?: boolean;
 };
 
 function groupMarkersByLocation(markers: MapLocation[]): CombinedMarker[] {
@@ -278,6 +279,58 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     setIsDragging(false);
   }, []);
 
+  const checkMarkerVisibility = useCallback((marker: CombinedMarker) => {
+    const markerScreenX = position.x + marker.location.x * zoom;
+    const markerScreenY = position.y + marker.location.y * zoom;
+    return markerScreenX >= 0 && markerScreenX <= containerDimensions.width && markerScreenY >= 0 && markerScreenY <= containerDimensions.height;
+  }, [position, zoom, containerDimensions]);
+
+  const translateLocationsForOutofBoundsMarkers = useCallback((marker: CombinedMarker) => {
+    if (checkMarkerVisibility(marker)) return marker;
+
+    // Calculate marker's screen position
+    const markerScreenX = position.x + marker.location.x * zoom;
+    const markerScreenY = position.y + marker.location.y * zoom;
+
+    // Center of the container
+    const centerX = containerDimensions.width / 2;
+    const centerY = containerDimensions.height / 2;
+
+    // Vector from center to marker
+    const dx = markerScreenX - centerX;
+    const dy = markerScreenY - centerY;
+
+    // Find the scale needed to bring the marker just inside the container
+    // Compute the maximum allowed dx/dy so marker is inside bounds
+    const markerData = MAP_MARKERS[marker.marker ?? 'hornet']; // optional: keep a small margin from the edge
+    // 2px for
+    const maxX = centerX - zoom * (markerData.width);
+    const maxY = centerY - zoom * (markerData.height);
+
+    // If dx or dy is zero, avoid division by zero
+    let scale = 1;
+    if (dx !== 0 || dy !== 0) {
+      // Compute the scale needed to bring the marker to the edge
+      const scaleX = Math.abs(dx) > maxX ? maxX / Math.abs(dx) : 1;
+      const scaleY = Math.abs(dy) > maxY ? maxY / Math.abs(dy) : 1;
+      scale = Math.min(scaleX, scaleY, 1);
+    }
+
+    // New screen position
+    const newScreenX = centerX + dx * scale;
+    const newScreenY = centerY + dy * scale;
+
+    // Convert back to map coordinates and return the translated value
+    return {
+      ...marker,
+      location: {
+        x: (newScreenX - position.x) / zoom,
+        y: (newScreenY - position.y) / zoom,
+      },
+      outOfBounds: true,
+    };
+  }, [combinedMarkers, checkMarkerVisibility, containerDimensions]);
+
   return (
     <div
       ref={outerContainerRef}
@@ -290,7 +343,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     >
       <div
         ref={containerRef}
-        className="relative overflow-hidden bg-gray-900 cursor-grab active:cursor-grabbing h-full w-full touch-none"
+        className="relative overflow-hidden bg-[#010101] cursor-grab active:cursor-grabbing h-full w-full touch-none"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -319,10 +372,11 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
         </div>
 
         {/* Markers - positioned outside the transformed container */}
-        {combinedMarkers.map((marker, index) => {
-          const markerData = MAP_MARKERS[(marker.marker ?? 'hornet') as keyof typeof MAP_MARKERS];
+        {combinedMarkers.map((trueMarker, index) => {
+          const markerData = MAP_MARKERS[(trueMarker.marker ?? 'hornet') as keyof typeof MAP_MARKERS];
 
           // Calculate marker position in screen coordinates
+          const marker = translateLocationsForOutofBoundsMarkers(trueMarker);
           const markerScreenX = position.x + marker.location.x * zoom;
           const markerScreenY = position.y + marker.location.y * zoom;
 
@@ -332,16 +386,18 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
           const tooltipContent =
             marker.labels.length > 1
               ? marker.labels.reduce((acc, label, idx) => {
-                  if (idx === 0) return label;
-                  return (
-                    <>
-                      {acc}
-                      <Delim />
-                      {label}
-                    </>
-                  );
-                }, '' as any)
+                if (idx === 0) return label;
+                return (
+                  <>
+                    {acc}
+                    <Delim />
+                    {label}
+                  </>
+                );
+              }, '' as any)
               : marker.labels[0];
+
+              const outOfBoundsSize = marker.outOfBounds ? Math.max(markerData.height, markerData.width) * 0.9 : 0;
 
           return (
             <div key={`${marker.labels.join('-')}-${index}`} className="absolute">
@@ -349,22 +405,24 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
                 <button
                   data-unstyled
                   className={
-                    'absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full hover:scale-110 shadow-lg focus:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400'
+                    'absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full hover:scale-110 shadow-lg focus:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400 ' + (marker.outOfBounds ? 'bg-[#111C] rounded-max' : '')
                   }
                   style={{
                     left: markerScreenX,
                     top: markerScreenY,
-                    width: markerData.width * iconScaleModifier,
-                    height: markerData.height * iconScaleModifier,
+                    width: (marker.outOfBounds ? outOfBoundsSize : markerData.width) * iconScaleModifier,
+                    height: (marker.outOfBounds ? outOfBoundsSize : markerData.height) * iconScaleModifier,
                     transition:
                       isZooming || isDragging
                         ? 'none'
                         : 'left 0.15s ease-out, top 0.15s ease-out, width 0.15s ease-out, height 0.15s ease-out',
+                        padding: marker.outOfBounds ? 2 * iconScaleModifier : undefined,
                   }}
                   onClick={e => {
                     e.stopPropagation();
-                    const newX = containerDimensions.width / 2 - marker.location.x * zoom;
-                    const newY = containerDimensions.height / 2 - marker.location.y * zoom;
+                    // this value didnt work properly for out of bounds markers
+                    const newX = containerDimensions.width / 2 - trueMarker.location.x * zoom;
+                    const newY = containerDimensions.height / 2 - trueMarker.location.y * zoom;
                     setPosition({ x: newX, y: newY });
                   }}
                 >
@@ -372,7 +430,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
                     <img
                       {...markerData}
                       alt="Marker"
-                      className="w-full h-full rounded-full object-cover"
+                      className="w-full h-full rounded-full object-contain"
                       draggable={false}
                     />
                   )}
