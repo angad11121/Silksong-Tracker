@@ -459,8 +459,8 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
                       <div
                         className="absolute border-transparent border-l-rose-700 w-0 h-0"
                         style={{
-                          right: -triangleSize,
-                          borderLeftWidth: triangleSize,
+                          right: -1.5 * triangleSize,
+                          borderLeftWidth: 1.5 * triangleSize,
                           borderTopWidth: triangleSize,
                           borderBottomWidth: triangleSize,
                         }}
