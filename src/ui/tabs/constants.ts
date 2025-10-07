@@ -1,4 +1,5 @@
 import { RawDataDisplay } from './data';
+import { HuntersJournalDisplay } from './huntersJournal';
 import { PercentageDisplay } from './percentage';
 import { TrueCompletionDisplay } from './trueCompletion';
 
@@ -9,6 +10,7 @@ export enum TabType {
   RawData = 'RawData',
   PercentageData = 'PercentageData',
   TrueCompletionData = 'TrueCompletionData',
+  HuntersJournalData = 'HuntersJournalData',
 }
 
 export const TabRendererMetadata: Record<
@@ -34,5 +36,10 @@ export const TabRendererMetadata: Record<
     Renderer: TrueCompletionDisplay,
     title: 'True Completion',
     id: TabType.TrueCompletionData,
+  },
+  [TabType.HuntersJournalData]: {
+    Renderer: HuntersJournalDisplay,
+    title: "Hunter's Journal",
+    id: TabType.HuntersJournalData,
   },
 };
