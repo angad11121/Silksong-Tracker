@@ -52,7 +52,6 @@ export default function App(): ReactElement {
           onChange={handleFileChange}
           className="rounded-xl self-start p-2"
         />
-        {file ? <p>Selected file: {file.name}</p> : null}
         {decoded ? <TabRenderer data={decoded} /> : null}
         <Footer />
       </div>

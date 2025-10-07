@@ -203,7 +203,7 @@ export function Renderer({
       {showMap ? (
         <div className="flex flex-col items-center">
           <SilksongMap markers={markers} />
-          <hr className="text-gray-500" />
+          <hr className="text-gray-500 self-stretch" />
         </div>
       ) : null}
     </div>
