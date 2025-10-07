@@ -44,8 +44,8 @@ function groupMarkersByLocation(markers: MapLocation[]): CombinedMarker[] {
 }
 
 const DEFAULT_ZOOM = 0.8;
-const MIN_ZOOM = 0.2;
-const MAX_ZOOM = 1.5;
+const MIN_ZOOM = 0.16;
+const MAX_ZOOM = 1.6;
 
 const DEFAULT_CONTAINER_WIDTH = 700;
 const DEFAULT_CONTAINER_HEIGHT = Math.round(
@@ -281,7 +281,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
   return (
     <div
       ref={outerContainerRef}
-      className="border-1 border-gray-500 rounded-lg resize overflow-hidden min-w-80 min-h-60 m-8"
+      className="border-1 border-gray-500 rounded-lg resize overflow-hidden min-w-80 min-h-60 m-8 max-w-full"
       style={{
         width: DEFAULT_CONTAINER_WIDTH,
         height: DEFAULT_CONTAINER_HEIGHT,
@@ -412,7 +412,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
         </div>
 
         <div className="absolute bottom-4 right-4 px-3 py-1 bg-black bg-opacity-50 text-white text-sm rounded">
-          {Math.round(zoom * 5 * 100)}%
+          {Math.round((zoom / MIN_ZOOM) * 100)}%
         </div>
       </div>
     </div>
