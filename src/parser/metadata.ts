@@ -1,4 +1,4 @@
-import type { Quest, SaveData, Scene } from '@/types';
+import type { Quest, SaveData, Scene } from '@/parser/types';
 import staticToolData from '@/data/tools.json';
 
 function percentIfTrue(value: boolean) {

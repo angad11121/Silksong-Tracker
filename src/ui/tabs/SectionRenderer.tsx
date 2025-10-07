@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import type { SaveData } from '@/types';
+import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 
 export function SectionRenderer<ExtraCtx = null>({

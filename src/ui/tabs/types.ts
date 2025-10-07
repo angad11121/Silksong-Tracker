@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { SaveData } from '@/types';
+import type { SaveData } from '@/parser/types';
 
 export type LeafSection = {
   title: string;

@@ -1,7 +1,7 @@
+import { getPercentageSection, type PercentageSectionCtx } from '@/ui/tabs/percentage/sections';
+import { getPercentageFromEntry } from '@/parser/percentage';
 import type { LeafSection, Section } from '@/ui/tabs/types';
-import type { SaveData } from '@/types';
-import { getPercentageSection, type PercentageSectionCtx } from '../percentage/sections';
-import { getPercentageFromEntry } from '../../../percentage';
+import type { SaveData } from '@/parser/types';
 
 export type TrueCompletionSectionCtx = {
   maxCount: number | 'auto';

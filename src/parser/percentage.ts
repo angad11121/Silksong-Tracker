@@ -1,5 +1,5 @@
-import type { SaveData } from '@/types';
-import { SaveDataMetadata, type SaveDataEntry, type MetadataKey } from '@/metadata';
+import type { SaveData } from '@/parser/types';
+import { SaveDataMetadata, type SaveDataEntry, type MetadataKey } from '@/parser/metadata';
 
 export const TOTAL_PERCENTAGE = 100;
 

@@ -1,9 +1,9 @@
-import type { SaveData } from '@/types';
+import type { SaveData } from '@/parser/types';
 import { TabType } from '@/ui/tabs/constants';
 import { useState, type ReactElement, useMemo } from 'react';
 
-import { TabComponent } from './TabComponent';
-import { TabRendererMetadata } from './constants';
+import { TabComponent } from '@/ui/tabs/TabComponent';
+import { TabRendererMetadata } from '@/ui/tabs/constants';
 
 export function TabRenderer({ data }: { data: SaveData | null }): ReactElement {
   const [_tab, setTab] = useState<TabType>(TabType.PercentageData);

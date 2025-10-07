@@ -1,4 +1,4 @@
-import type { SaveData } from '@/types';
+import type { SaveData } from '@/parser/types';
 
 export type AugmentedSaveData = SaveData & { name: string };
 

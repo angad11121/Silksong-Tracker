@@ -1,5 +1,5 @@
 import { type ReactElement } from 'react';
-import type { SaveData } from '@/types';
+import type { SaveData } from '@/parser/types';
 import { escapeHTML } from '@/utils';
 
 export function RawDataDisplay({ data }: { data: SaveData }): ReactElement | null {

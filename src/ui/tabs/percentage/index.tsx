@@ -1,8 +1,8 @@
 import type { ReactElement } from 'react';
-import type { SaveData } from '@/types';
-import { SectionRenderer } from '../SectionRenderer';
-import { SectionGenerator } from './sections';
-import { getPercentageFromEntry } from '@/percentage';
+import type { SaveData } from '@/parser/types';
+import { SectionRenderer } from '@/ui/tabs/SectionRenderer';
+import { SectionGenerator } from '@/ui/tabs/percentage/sections';
+import { getPercentageFromEntry } from '@/parser/percentage';
 
 export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
   return (

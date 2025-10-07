@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'bun:test';
-import { SaveDataMetadata } from '@/metadata';
-import { calculatePercentageRequirements } from '@/percentage';
+import { SaveDataMetadata } from '@/parser/metadata';
+import { calculatePercentageRequirements } from '@/parser/percentage';
 
 import { SavesEntries } from './fixtures/saveFiles';
 

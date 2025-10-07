@@ -28,7 +28,7 @@ import Needle_4 from '@/assets/needle/4.png';
 import { useState, type ReactElement } from 'react';
 import { NeedleLevel } from '@/info/items';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
-import type { SaveData } from '@/types';
+import type { SaveData } from '@/parser/types';
 import { Tooltip } from './Tooltip';
 
 export enum RendererType {

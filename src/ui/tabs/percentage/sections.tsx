@@ -1,12 +1,12 @@
 import toolData from '@/data/tools.json';
-import { ToolType } from '@/constants';
-import { hasTool, getScene, type MetadataKey, getQuest, SaveDataMetadata } from '@/metadata';
+import { ToolType } from '@/info/constants';
+import { hasTool, getScene, type MetadataKey, getQuest, SaveDataMetadata } from '@/parser/metadata';
 import { AncestralArts, Crests, MaskFragments, NeedleUpgrades, SpoolFragments } from '@/info/items';
 import { Locations } from '@/info/locations';
-import { getPercentageFromEntry } from '@/percentage';
+import { getPercentageFromEntry } from '@/parser/percentage';
 import { Renderer, RendererType } from '@/ui/components/renderers';
 
-import type { SaveData } from '@/types';
+import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 
 const PercentTools = Object.values(toolData).filter(tool => tool.isCounted);

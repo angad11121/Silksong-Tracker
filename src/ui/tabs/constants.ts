@@ -4,7 +4,7 @@ import { HuntersJournalDisplay } from './huntersJournal';
 import { PercentageDisplay } from './percentage';
 import { TrueCompletionDisplay } from './trueCompletion';
 
-import type { SaveData } from '@/types';
+import type { SaveData } from '@/parser/types';
 import type { ReactNode } from 'react';
 
 export enum TabType {

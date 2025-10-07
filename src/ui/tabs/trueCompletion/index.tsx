@@ -1,8 +1,8 @@
 import type { ReactElement } from 'react';
-import { SectionRenderer } from '../SectionRenderer';
-import { SectionGenerator, type TrueCompletionSectionCtx } from './sections';
-import type { SaveData } from '@/types';
-import type { LeafSection, Section } from '../types';
+import { SectionRenderer } from '@/ui/tabs/SectionRenderer';
+import { SectionGenerator, type TrueCompletionSectionCtx } from '@/ui/tabs/trueCompletion/sections';
+import type { SaveData } from '@/parser/types';
+import type { LeafSection, Section } from '@/ui/tabs/types';
 
 function calculateCurrentCount(
   section: Section<TrueCompletionSectionCtx> | LeafSection,

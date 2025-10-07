@@ -1,8 +1,8 @@
 // Information regarding stuff like mask shards and spool fragments
 
-import { getQuest, getScene } from '@/metadata';
+import { getQuest, getScene } from '@/parser/metadata';
 import { Locations } from '@/info/locations';
-import type { PlayerData, SaveData } from '@/types';
+import type { PlayerData, SaveData } from '@/parser/types';
 import type { MapLocation } from '@/ui/components/map/types';
 
 export const AncestralArts: Record<

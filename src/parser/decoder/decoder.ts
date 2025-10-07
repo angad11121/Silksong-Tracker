@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
-import { CSHARP_HEADER, AES_KEY_STRING } from '@/decoder/constants.js';
-import type { SaveData } from '@/types.ts';
+import { CSHARP_HEADER, AES_KEY_STRING } from '@/parser/decoder/constants';
+import type { SaveData } from '@/parser/types';
 
 export function removeHeader(fileBytes: Uint8Array) {
   const noHeader = fileBytes.subarray(CSHARP_HEADER.length, fileBytes.length - 1);

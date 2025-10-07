@@ -1,10 +1,10 @@
 import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react';
 
-import { decodeFile } from '@/decoder/decoder.js';
+import { decodeFile } from '@/parser/decoder/decoder';
 import { TabRenderer } from '@/ui/tabs';
 import { Footer } from '@/ui/components/Footer';
 import { Preload } from '@/ui/preload';
-import type { SaveData } from '@/types';
+import type { SaveData } from '@/parser/types';
 
 const LOCAL_STORAGE_KEY = 'save';
 
