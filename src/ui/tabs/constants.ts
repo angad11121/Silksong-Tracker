@@ -31,11 +31,7 @@ export const TabRendererMetadata: Record<
     title: 'How to Use',
     id: TabType.Help,
   },
-  [TabType.RawData]: {
-    Renderer: RawDataDisplay,
-    title: 'Raw Data',
-    id: TabType.RawData,
-  },
+
   [TabType.PercentageData]: {
     Renderer: PercentageDisplay,
     title: 'Main %',
@@ -50,5 +46,11 @@ export const TabRendererMetadata: Record<
     Renderer: HuntersJournalDisplay,
     title: "Hunter's Journal",
     id: TabType.HuntersJournalData,
+  },
+
+  [TabType.RawData]: {
+    Renderer: RawDataDisplay,
+    title: 'Raw Data',
+    id: TabType.RawData,
   },
 };
