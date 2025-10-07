@@ -304,9 +304,9 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     // Find the scale needed to bring the marker just inside the container
     // Compute the maximum allowed dx/dy so marker is inside bounds
     const markerData = MAP_MARKERS[marker.marker ?? 'hornet']; // optional: keep a small margin from the edge
-    // 2px for
-    const maxX = centerX - zoom * (markerData.width);
-    const maxY = centerY - zoom * (markerData.height);
+    const offset = Math.max(markerData.height, markerData.width) * 1.1;
+    const maxX = centerX - 10 - zoom * (offset);
+    const maxY = centerY - 10 - zoom * (offset);
 
     // If dx or dy is zero, avoid division by zero
     let scale = 1;
@@ -396,7 +396,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
               }, '' as any)
               : marker.labels[0];
 
-              const outOfBoundsSize = marker.outOfBounds ? Math.max(markerData.height, markerData.width) * 0.9 : 0;
+          const outOfBoundsSize = marker.outOfBounds ? Math.max(markerData.height, markerData.width) * 0.9 : 0;
 
           return (
             <div key={`${marker.labels.join('-')}-${index}`} className="absolute">
@@ -415,7 +415,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
                       isZooming || isDragging
                         ? 'none'
                         : 'left 0.15s ease-out, top 0.15s ease-out, width 0.15s ease-out, height 0.15s ease-out',
-                        padding: marker.outOfBounds ? 2 * iconScaleModifier : undefined,
+                    padding: marker.outOfBounds ? 2 * iconScaleModifier : undefined,
                   }}
                   onClick={e => {
                     e.stopPropagation();
@@ -424,7 +424,17 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
                     const newY = containerDimensions.height / 2 - trueMarker.location.y * zoom;
                     setPosition({ x: newX, y: newY });
                   }}
-                >
+                >{marker.outOfBounds &&
+                  <div className='absolute top-0 left-0 h-full w-full flex items-center justify-start border-2 rounded-full border-rose-700 -z-1' style={{
+                    transform: `rotate(${Math.atan2(trueMarker.location.y - marker.location.y, trueMarker.location.x - marker.location.x) * 180 / Math.PI}deg)`
+                  }}>
+                    <div className="absolute border-transparent border-l-rose-700 w-0 h-0" style={{
+                      right: -outOfBoundsSize * iconScaleModifier * 0.15,
+                      borderLeftWidth: outOfBoundsSize * iconScaleModifier * 0.15,
+                      borderTopWidth: outOfBoundsSize * iconScaleModifier * 0.15,
+                      borderBottomWidth: outOfBoundsSize * iconScaleModifier * 0.15,
+                    }} />
+                  </div>}
                   {!marker.marker && (
                     <img
                       {...markerData}
