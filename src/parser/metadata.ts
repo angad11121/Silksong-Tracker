@@ -1,5 +1,5 @@
 import type { Quest, SaveData, Scene } from '@/parser/types';
-import staticToolData from '@/data/tools.json';
+import { Tools } from '@/info';
 
 function percentIfTrue(value: boolean) {
   return value ? 1 : 0;
@@ -18,7 +18,7 @@ export const SaveDataMetadata: Partial<{
   Tools: {
     percentCalculator: toolList => {
       return toolList.savedData.filter(savedDatum => {
-        return staticToolData[savedDatum.Name]?.isCounted && !savedDatum.Data.IsHidden;
+        return Tools[savedDatum.Name]?.isCounted && !savedDatum.Data.IsHidden;
       }).length;
     },
     maxPercentage: 57,

@@ -1,7 +1,13 @@
-import toolData from '@/data/tools.json';
-import { ToolType } from '@/info/constants';
-import { hasTool, getScene, type MetadataKey, getQuest, SaveDataMetadata } from '@/parser/metadata';
-import { AncestralArts, Crests, MaskFragments, NeedleUpgrades, SpoolFragments } from '@/info/items';
+import {
+  AncestralArts,
+  Crests,
+  MaskFragments,
+  NeedleUpgrades,
+  SpoolFragments,
+  ToolType,
+  Tools,
+} from '@/info/index';
+import { hasTool, getScene, type MetadataKey, getQuest } from '@/parser/metadata';
 import { Locations } from '@/info/locations';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { Renderer, RendererType } from '@/ui/components/renderers';
@@ -9,7 +15,7 @@ import { Renderer, RendererType } from '@/ui/components/renderers';
 import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 
-const PercentTools = Object.values(toolData).filter(tool => tool.isCounted);
+const PercentTools = Object.values(Tools).filter(tool => tool.isCounted);
 
 export type PercentageSectionCtx = {
   maxPercentage: number;
@@ -370,7 +376,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         children: [
           {
             title: 'Red Tools',
-            subtext: 'Red tools are mainly used offensively as weapons.',
+            subtext: 'Red tools are mainly used actively for combat.',
             children: [],
             ctx: {
               getPercentage: saveData =>
@@ -382,7 +388,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           },
           {
             title: 'Blue Tools',
-            subtext: 'Blue tools are mainly used defensively or for combat utility.',
+            subtext: 'Blue tools are mainly used passively for combat utility.',
             children: [],
             ctx: {
               getPercentage: saveData =>
@@ -394,7 +400,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           },
           {
             title: 'Yellow Tools',
-            subtext: 'Yellow tools are mainly used as exploration and general utility tools.',
+            subtext: 'Yellow tools are mainly used as passive movement and utility tools.',
             children: [],
             ctx: {
               getPercentage: saveData =>

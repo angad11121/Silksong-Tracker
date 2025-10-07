@@ -26,7 +26,7 @@ import Needle_3 from '@/assets/needle/3.png';
 import Needle_4 from '@/assets/needle/4.png';
 
 import { useState, type ReactElement } from 'react';
-import { NeedleLevel } from '@/info/items';
+import { NeedleLevel } from '@/info/needle';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
 import type { SaveData } from '@/parser/types';
 import { Tooltip } from './Tooltip';
