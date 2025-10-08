@@ -61,6 +61,7 @@ export const Tools: Record<
     type: ToolType;
     isCounted: boolean;
     isUpgrade?: string;
+    upgradesTo?: string;
     desc: string;
     markers: MapLocation[];
   }
@@ -100,7 +101,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Collect the Shard Pendant here.',
-        location: { x: 1579, y: 2529 }, // donotpush keep
+        location: { x: 1579, y: 2529 },
       },
     ],
   },
@@ -126,7 +127,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Constructed for one Craftmetal.',
-        location: { x: 2249, y: 571 }, // donotpush keep
+        location: { x: 2249, y: 571 },
       },
     ],
   },
@@ -160,7 +161,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Collected in the Coral Tower.',
-        location: { x: 360, y: 1192 }, // donotpush keep
+        location: { x: 360, y: 1192 },
       },
     ],
   },
@@ -175,7 +176,7 @@ export const Tools: Record<
       {
         label:
           'In Act III, hit all four of the targets in the room with a single Curveclaw shot. A Mottled Ant will spawn in the room; offer it your Curveclaw. If you bench and return, the Curvesickle will be available to pick up.',
-        location: { x: 3570, y: 2562 }, // donotpush keep
+        location: { x: 3570, y: 2562 },
       },
     ],
   },
@@ -184,6 +185,7 @@ export const Tools: Record<
     displayName: 'Curveclaw',
     type: 0,
     isCounted: true,
+    upgradesTo: 'Curve Claws Upgraded',
     desc: 'Purchase the Curveclaw from the Mottled Hunter in the Far Fields for 140 rosaries. In Act II, this can be acquired from the room above.',
     markers: [
       {
@@ -215,6 +217,7 @@ export const Tools: Record<
     displayName: 'Claw Mirror',
     type: 1,
     isCounted: true,
+    upgradesTo: 'Dazzle Bind Upgraded',
     desc: 'Received after defeating Trobbio in the Whispering Vaults.',
     markers: [
       {
@@ -387,6 +390,7 @@ export const Tools: Record<
     displayName: "Druid's Eye",
     type: 1,
     isCounted: true,
+    upgradesTo: 'Mosscreep Tool 2',
     desc: 'Received as the reward for completing the Berry Picking quest (collect three Mossberries) for the Moss Druid in Mosshome.',
     markers: [
       ...Mossberries,
@@ -401,6 +405,7 @@ export const Tools: Record<
     displayName: "Druid's Eyes",
     type: 1,
     isCounted: true,
+    isUpgrade: 'Mosscreep Tool 1',
     desc: 'Received as the reward from the Moss Druid in Mosshome for collecting all seven Mossberries across Pharloom.',
     markers: [
       ...Mossberries,
@@ -786,7 +791,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Free Grindle from the cell. He escapes on his own in Act II.',
-        location: { x: 2106, y: 2539 }, // donotpush keep
+        location: { x: 2106, y: 2539 },
       },
     ],
   },
@@ -799,7 +804,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Complete the Muckroach Guts wish for Crull and Benjie.',
-        location: { x: 3474, y: 1732 }, // donotpush keep
+        location: { x: 3474, y: 1732 },
       },
     ],
   },
