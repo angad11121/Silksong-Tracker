@@ -28,8 +28,9 @@ import Needle_4 from '@/assets/needle/4.png';
 import { useState, type ReactElement } from 'react';
 import { NeedleLevel } from '@/info/needle';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
+import { Tooltip } from '@/ui/components/Tooltip';
 import type { SaveData } from '@/parser/types';
-import { Tooltip } from './Tooltip';
+import type { CustomHas } from '@/ui/tabs/types';
 
 export enum RendererType {
   Mask = 'mask',
@@ -165,7 +166,7 @@ export function Renderer({
   markers,
 }: {
   id: number | string | null;
-  check: ((data: SaveData) => boolean | undefined) | boolean | undefined;
+  check: ((data: SaveData) => boolean | CustomHas | undefined) | boolean | CustomHas | undefined;
   hint: string;
   data: SaveData;
   markers: MapLocation[];
@@ -186,8 +187,20 @@ export function Renderer({
         ) : (
           ' '
         )}
-        <span className={hasAcquired ? 'text-green-500' : 'text-red-500'}>
-          {hasAcquired ? 'Acquired' : 'Not Acquired'}
+        <span
+          className={
+            typeof hasAcquired === 'boolean' || typeof hasAcquired === 'undefined'
+              ? hasAcquired
+                ? 'text-green-500'
+                : 'text-red-500'
+              : 'text-yellow-500'
+          }
+        >
+          {typeof hasAcquired === 'boolean' || typeof hasAcquired === 'undefined'
+            ? hasAcquired
+              ? 'Acquired'
+              : 'Not Acquired'
+            : hasAcquired}
         </span>
         {markers?.length > 0 ? (
           <Tooltip content={showMap ? 'Hide Map' : 'Show Map'}>

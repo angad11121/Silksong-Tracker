@@ -5,9 +5,9 @@ import MapImage from '@/assets/map/map.jpg';
 import LiteMapImage from '@/assets/map/map_lite.jpg';
 
 import { Tooltip } from '@/ui/components/Tooltip';
-import { MAP_DIMENSIONS, MAP_MARKERS } from './constants';
-import type { MapLocation, MapMarker } from './types';
-import { MAP_CONTROLS_STYLES } from './styles';
+import { MAP_DIMENSIONS, MAP_MARKERS } from '@/ui/components/map/constants';
+import { MAP_CONTROLS_STYLES } from '@/ui/components/map/styles';
+import type { MapLocation, MapMarker } from '@/ui/components/map/types';
 
 function Delim(): ReactElement {
   return <hr className="my-2 text-gray-500" />;

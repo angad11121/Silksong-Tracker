@@ -1,10 +1,15 @@
 import type { ReactNode } from 'react';
 import type { SaveData } from '@/parser/types';
 
+export enum CustomHas {
+  ToolUpgrade = 'Upgraded',
+  MissingUpgrade = 'Can be upgraded',
+}
+
 export type LeafSection = {
   title: string;
   subtext: string;
-  has?: (saveData: SaveData) => boolean | undefined;
+  has?: (saveData: SaveData) => boolean | CustomHas | undefined;
   render: ({
     saveData,
     depth,

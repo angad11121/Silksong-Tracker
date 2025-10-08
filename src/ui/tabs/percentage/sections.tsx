@@ -3,6 +3,7 @@ import {
   Crests,
   MaskFragments,
   NeedleUpgrades,
+  SilkshotVariants,
   SpoolFragments,
   ToolType,
   Tools,
@@ -12,8 +13,13 @@ import { Locations } from '@/info/locations';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { Renderer, RendererType } from '@/ui/components/renderers';
 
+import RedTool from '@/assets/tools/red_tool.png';
+import BlueTool from '@/assets/tools/blue_tool.png';
+import YellowTool from '@/assets/tools/yellow_tool.png';
+
 import type { SaveData } from '@/parser/types';
-import type { LeafSection, Section } from '@/ui/tabs/types';
+import { CustomHas, type LeafSection, type Section } from '@/ui/tabs/types';
+import type { ReactElement } from 'react';
 
 const PercentTools = Object.values(Tools).filter(tool => tool.isCounted);
 
@@ -21,6 +27,85 @@ export type PercentageSectionCtx = {
   maxPercentage: number;
   getPercentage: MetadataKey | ((saveData: SaveData) => number);
 };
+
+const ToolImgs: Partial<Record<ToolType, () => ReactElement>> = {
+  [ToolType.Red]: () => (
+    <img src={RedTool} height={36} width={36} alt="Red Tool" className="inline" />
+  ),
+  [ToolType.Blue]: () => (
+    <img src={BlueTool} height={36} width={36} alt="Blue Tool" className="inline" />
+  ),
+  [ToolType.Yellow]: () => (
+    <img src={YellowTool} height={36} width={36} alt="Yellow Tool" className="inline" />
+  ),
+};
+
+function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
+  return {
+    title: tool.displayName,
+    subtext: tool.desc,
+    has: saveData =>
+      hasTool(tool.id, saveData) ||
+      (tool.upgradesTo && hasTool(tool.upgradesTo!, saveData) ? CustomHas.ToolUpgrade : false) ||
+      (tool.isUpgrade && hasTool(tool.isUpgrade!, saveData) ? CustomHas.MissingUpgrade : false),
+    render: ({ saveData, entry }) => (
+      <Renderer
+        id={tool.upgradesTo || tool.isUpgrade ? tool.displayName : null}
+        data={saveData}
+        type={tool.img ?? ToolImgs[tool.type]!}
+        check={entry.has}
+        hint={tool.desc}
+        markers={tool.markers}
+      />
+    ),
+  };
+}
+
+function renderToolChildren(type: ToolType): Section<PercentageSectionCtx>[] {
+  return [
+    ...Object.values(Tools)
+      .filter(tool => tool.type === type)
+      .filter(tool => tool.isCounted)
+      .filter(tool => !tool.isUpgrade)
+      .filter(tool => !tool.displayName.includes('Silkshot'))
+      .map<Section<PercentageSectionCtx>>(tool => ({
+        title: tool.upgradesTo ? Tools[tool.upgradesTo]!.displayName : tool.displayName,
+        subtext: null,
+        children: [
+          getToolChild(tool),
+          ...(tool.upgradesTo ? [getToolChild(Tools[tool.upgradesTo]!)] : []),
+        ],
+        ctx: {
+          maxPercentage: 1,
+          getPercentage: saveData =>
+            hasTool(tool.id, saveData) ||
+            (tool.upgradesTo ? hasTool(tool.upgradesTo!, saveData) : false)
+              ? 1
+              : 0,
+        },
+      })),
+    ...(type === ToolType.Red
+      ? [
+          {
+            title: 'Silkshot',
+            subtext:
+              'The Ruined Tool can be upgraded by three different characters, each of whom produces a slightly different Silkshot.',
+            children: saveData => {
+              const hasSilkshot = SilkshotVariants.find(variant => hasTool(variant, saveData));
+              return hasSilkshot
+                ? [getToolChild(Tools[hasSilkshot]!)]
+                : SilkshotVariants.map(variant => getToolChild(Tools[variant]!));
+            },
+            ctx: {
+              maxPercentage: 1,
+              getPercentage: saveData =>
+                SilkshotVariants.some(variant => hasTool(variant, saveData)) ? 1 : 0,
+            },
+          } satisfies Section<PercentageSectionCtx>,
+        ]
+      : []),
+  ].sort((a, b) => a.title.localeCompare(b.title));
+}
 
 export const SectionGenerator: Section<PercentageSectionCtx>[] = [
   {
@@ -300,33 +385,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
       {
         title: 'Silk Skills',
         subtext: 'All Silk Skills are required for 100% completion.',
-        children: Object.values(Tools)
-          .filter(tool => tool.type === ToolType.SilkSkill)
-          .map(tool => ({
-            title: tool.displayName,
-            subtext: null,
-            children: [
-              {
-                title: tool.displayName,
-                subtext: tool.desc,
-                has: saveData => hasTool(tool.id, saveData),
-                render: ({ saveData }) => (
-                  <Renderer
-                    id={null}
-                    check={saveData => hasTool(tool.id, saveData)}
-                    hint={tool.desc}
-                    data={saveData}
-                    markers={tool.markers}
-                    type={tool.img!}
-                  />
-                ),
-              },
-            ],
-            ctx: {
-              maxPercentage: 1,
-              getPercentage: saveData => (hasTool(tool.id, saveData) ? 1 : 0),
-            },
-          })),
+        children: renderToolChildren(ToolType.SilkSkill),
         ctx: {
           maxPercentage: 6,
           getPercentage: saveData =>
@@ -403,7 +462,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           {
             title: 'Red Tools',
             subtext: 'Red tools are mainly used actively for combat.',
-            children: [],
+            children: renderToolChildren(ToolType.Red),
             ctx: {
               getPercentage: saveData =>
                 PercentTools.filter(tool => tool.type === ToolType.Red).filter(tool =>
@@ -415,7 +474,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           {
             title: 'Blue Tools',
             subtext: 'Blue tools are mainly used passively for combat utility.',
-            children: [],
+            children: renderToolChildren(ToolType.Blue),
             ctx: {
               getPercentage: saveData =>
                 PercentTools.filter(tool => tool.type === ToolType.Blue).filter(tool =>
@@ -427,7 +486,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           {
             title: 'Yellow Tools',
             subtext: 'Yellow tools are mainly used as passive movement and utility tools.',
-            children: [],
+            children: renderToolChildren(ToolType.Yellow),
             ctx: {
               getPercentage: saveData =>
                 PercentTools.filter(tool => tool.type === ToolType.Yellow).filter(tool =>

@@ -1,5 +1,5 @@
 import type { MapLocation } from '@/ui/components/map';
-import { Locations } from './locations';
+import { Locations } from '@/info/locations';
 import type { ReactElement } from 'react';
 
 import Parry from '@/assets/tools/parry.png';
@@ -979,3 +979,5 @@ export const Tools: Record<
     ],
   },
 };
+
+export const SilkshotVariants = ['WebShot Architect', 'WebShot Forge', 'WebShot Weaver'];
