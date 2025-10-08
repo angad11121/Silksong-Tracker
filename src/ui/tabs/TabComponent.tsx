@@ -36,7 +36,7 @@ export function TabComponent({
     <nav onKeyDown={handleKeyDown} className="flex gap-1 mx-6 px-2">
       {tabs.map((tab, index) => (
         <>
-          {index === tabs.length - 1 ? <span className="grow" /> : null}
+          {index > 0 && index === tabs.length - 1 ? <span className="grow" /> : null}
           <button
             key={tab}
             tabIndex={tab === tabs[focusedIndex] ? 0 : -1}
