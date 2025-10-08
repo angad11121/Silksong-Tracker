@@ -57,6 +57,9 @@ button:not([data-unstyled]) {
   &:focus {
     @apply border-white;
   }
+  &[disabled] {
+    @apply bg-rose-400 text-white cursor-not-allowed;
+  }
 }
 
 a {

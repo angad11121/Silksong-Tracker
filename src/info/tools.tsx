@@ -19,34 +19,37 @@ export enum ToolType {
 const Mossberries: MapLocation[] = [
   {
     label: 'Collect a Mossberry here.',
-    location: { x: 1395, y: 4268 },
+    location: { x: 908, y: 2779 },
   },
-  { label: 'Hit the Mossberry on the ceiling here.', location: { x: 1636, y: 4163 } },
+  {
+    label: 'Hit the Mossberry on the ceiling here.',
+    location: { x: 1065, y: 2710 },
+  },
   {
     label: 'Collect the Mossberry from the Aknid in the hidden room here.',
-    location: { x: 2074, y: 3712 },
+    location: { x: 1350, y: 2417 },
   },
   {
     label: 'Collect the Mossberry from the Aknid above Bone Bottom here.',
-    location: { x: 1729, y: 3948 },
+    location: { x: 1126, y: 2570 },
   },
   {
     label: 'Collect the Mossberry from the Aknid above Bonegrave here.',
-    location: { x: 856, y: 4016 },
+    location: { x: 557, y: 2615 },
   },
   {
     label: 'Collect the Mossberry here.',
-    location: { x: 1574, y: 4402 },
+    location: { x: 1025, y: 2866 },
   },
   {
     label: 'Collect the Mossberry here.',
-    location: { x: 4440, y: 1118 },
+    location: { x: 2891, y: 728 },
   },
 ];
 
-const RuinedTool = {
+const RuinedTool: MapLocation = {
   label: 'The Ruined Tool can be found in Weavenest Murglin.',
-  location: { x: 6676, y: 2492 },
+  location: { x: 4346, y: 1622 },
 };
 
 export const Tools: Record<
@@ -71,7 +74,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Collect the Barbed Wire here.',
-        location: { x: 3540, y: 1939 },
+        location: { x: 2305, y: 1262 },
       },
     ],
   },
@@ -84,7 +87,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Pick up the Warding Bell here.',
-        location: { x: 5242, y: 4170 },
+        location: { x: 3413, y: 2715 },
       },
     ],
   },
@@ -97,7 +100,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Collect the Shard Pendant here.',
-        location: { x: 1579, y: 2529 },
+        location: { x: 1579, y: 2529 }, // donotpush keep
       },
     ],
   },
@@ -123,7 +126,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Constructed for one Craftmetal.',
-        location: { x: 2249, y: 571 },
+        location: { x: 2249, y: 571 }, // donotpush keep
       },
     ],
   },
@@ -157,7 +160,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Collected in the Coral Tower.',
-        location: { x: 360, y: 1192 },
+        location: { x: 360, y: 1192 }, // donotpush keep
       },
     ],
   },
@@ -172,7 +175,7 @@ export const Tools: Record<
       {
         label:
           'In Act III, hit all four of the targets in the room with a single Curveclaw shot. A Mottled Ant will spawn in the room; offer it your Curveclaw. If you bench and return, the Curvesickle will be available to pick up.',
-        location: { x: 3570, y: 2562 },
+        location: { x: 3570, y: 2562 }, // donotpush keep
       },
     ],
   },
@@ -185,11 +188,11 @@ export const Tools: Record<
     markers: [
       {
         label: 'Purchase the Curveclaw from the Mottled Hunter in the Far Fields for 140 rosaries.',
-        location: { x: 4282, y: 3558 },
+        location: { x: 2788, y: 2316 },
       },
       {
         label: 'In Act II, this can be acquired from the gauntlet room.',
-        location: { x: 4452, y: 3505 },
+        location: { x: 2898, y: 2282 },
       },
     ],
   },
@@ -203,7 +206,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Received after defeating Tormented Trobbio.',
-        location: { x: 4473, y: 1706 },
+        location: { x: 2912, y: 1111 },
       },
     ],
   },
@@ -216,7 +219,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Received after defeating Trobbio.',
-        location: { x: 4473, y: 1706 },
+        location: { x: 2912, y: 1111 },
       },
     ],
   },
@@ -229,7 +232,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Found on a corpse.',
-        location: { x: 1205, y: 3494 },
+        location: { x: 785, y: 2275 },
       },
     ],
   },
@@ -242,7 +245,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Acquired from Alchemist Zylotol temporarily during quests.',
-        location: { x: 797, y: 3512 },
+        location: { x: 519, y: 2286 },
       },
     ],
   },
@@ -271,7 +274,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Pick up the Flintslate here.',
-        location: { x: 4735, y: 4192 },
+        location: { x: 3083, y: 2729 },
       },
     ],
   },
@@ -284,7 +287,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Bought from the Mottled Hunter for 260 rosaries.',
-        location: { x: 4282, y: 3558 },
+        location: { x: 2788, y: 2316 },
       },
     ],
   },
@@ -297,7 +300,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Break the nest to find the Longpin.',
-        location: { x: 3076, y: 3288 },
+        location: { x: 2003, y: 2141 },
       },
     ],
   },
@@ -323,7 +326,7 @@ export const Tools: Record<
     markers: [
       {
         label: "Received from Alchemist Zylotol after completing the Alchemist's Assistant quest.",
-        location: { x: 797, y: 3512 },
+        location: { x: 519, y: 2286 },
       },
     ],
   },
@@ -336,7 +339,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Fight the two Memoria in the room to obtain the Voltvessels.',
-        location: { x: 4611, y: 854 },
+        location: { x: 3002, y: 556 },
       },
     ],
   },
@@ -349,7 +352,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Reward for completing the Broodfeast Wish for the Huntress.',
-        location: { x: 5557, y: 1335 },
+        location: { x: 3618, y: 869 },
       },
     ],
   },
@@ -362,7 +365,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Pick up the Wreath of Purity here.',
-        location: { x: 6293, y: 1216 },
+        location: { x: 4097, y: 792 },
       },
     ],
   },
@@ -375,7 +378,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Gamble against Lumble the Lucky to win the Magnetite Dice. Or wait for Act II.',
-        location: { x: 815, y: 2521 },
+        location: { x: 531, y: 1641 },
       },
     ],
   },
@@ -443,7 +446,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Received after defeating Phantom.',
-        location: { x: 4970, y: 2377 },
+        location: { x: 3236, y: 1548 },
       },
     ],
   },
@@ -456,7 +459,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Can be crafted for one Craftmetal.',
-        location: { x: 3637, y: 2916 },
+        location: { x: 2368, y: 1898 },
       },
     ],
   },
@@ -469,11 +472,11 @@ export const Tools: Record<
     markers: [
       {
         label: "Find Pinstress's note in the Blasted Steps.",
-        location: { x: 619, y: 2652 },
+        location: { x: 403, y: 1727 },
       },
       {
         label: 'Received after defeating the Pinstress.',
-        location: { x: 1610, y: 933 },
+        location: { x: 1048, y: 607 },
       },
     ],
   },
@@ -484,12 +487,12 @@ export const Tools: Record<
     isCounted: true,
     desc: 'Received from Greyroot for the Rite of the Pollip quest.',
     markers: [
-      { label: 'Pollip Heart', location: { x: 2969, y: 3211 } },
-      { label: 'Pollip Heart', location: { x: 2666, y: 3188 } },
-      { label: 'Pollip Heart', location: { x: 2346, y: 2992 } },
-      { label: 'Pollip Heart', location: { x: 2892, y: 3104 } },
-      { label: 'Pollip Heart', location: { x: 2585, y: 2990 } },
-      { label: 'Pollip Heart', location: { x: 2562, y: 2790 } },
+      { label: 'Pollip Heart', location: { x: 1933, y: 2090 } },
+      { label: 'Pollip Heart', location: { x: 1736, y: 2076 } },
+      { label: 'Pollip Heart', location: { x: 1527, y: 1948 } },
+      { label: 'Pollip Heart', location: { x: 1883, y: 2021 } },
+      { label: 'Pollip Heart', location: { x: 1683, y: 1947 } },
+      { label: 'Pollip Heart', location: { x: 1668, y: 1816 } },
       {
         label: 'Received from Greyroot after giving it five Pollip Hearts.',
         location: Locations.Greyroot,
@@ -505,7 +508,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Pick up the Quick Sling here.',
-        location: { x: 5896, y: 1865 },
+        location: { x: 3839, y: 1214 },
       },
     ],
   },
@@ -518,7 +521,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Pick up the Injector Band here.',
-        location: { x: 3992, y: 1924 },
+        location: { x: 2599, y: 1253 },
       },
     ],
   },
@@ -531,27 +534,27 @@ export const Tools: Record<
     markers: [
       {
         label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
-        location: { x: 2946, y: 1380 },
+        location: { x: 1918, y: 898 },
       },
       {
         label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
-        location: { x: 4716, y: 1723 },
+        location: { x: 3070, y: 1122 },
       },
       {
         label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
-        location: { x: 4685, y: 1060 },
+        location: { x: 3050, y: 690 },
       },
       {
         label: 'Revive the Second Sentinel.',
-        location: { x: 3781, y: 1302 },
+        location: { x: 2462, y: 848 },
       },
       {
         label: 'Encounter the Second Sentinel.',
-        location: { x: 3881, y: 1655 },
+        location: { x: 2527, y: 1077 },
       },
       {
         label: 'Encounter the Second Sentinel.',
-        location: { x: 4392, y: 1212 },
+        location: { x: 2859, y: 789 },
       },
       {
         label: "Accept the Second Sentinel's challenge.",
@@ -559,7 +562,7 @@ export const Tools: Record<
       },
       {
         label: 'Defeat the Second Sentinel.',
-        location: { x: 3718, y: 1080 },
+        location: { x: 2421, y: 703 },
       },
     ],
   },
@@ -572,7 +575,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Break the wall next to the bench.',
-        location: { x: 719, y: 1561 },
+        location: { x: 468, y: 1016 },
       },
     ],
   },
@@ -586,7 +589,7 @@ export const Tools: Record<
       {
         label:
           'Requires a Simple Key. Use a secret entrance in the ceiling and break a wall to the left of the steam chamber, then break the rosary string machine.',
-        location: { x: 3466, y: 1126 },
+        location: { x: 2257, y: 733 },
       },
     ],
   },
@@ -612,7 +615,7 @@ export const Tools: Record<
     markers: [
       {
         label: "Pick up the Delver's Drill here.",
-        location: { x: 3155, y: 2699 },
+        location: { x: 2054, y: 1757 },
       },
     ],
   },
@@ -639,7 +642,7 @@ export const Tools: Record<
       {
         label:
           "Meet Shakra in Bilewater after claiming the Trail's End Wish after collecting all maps.",
-        location: { x: 7145, y: 1458 },
+        location: { x: 4652, y: 949 },
       },
     ],
   },
@@ -652,7 +655,7 @@ export const Tools: Record<
     markers: [
       {
         label: "Found in the same location as the Dead Bug's Purse, on a corpse.",
-        location: { x: 1205, y: 3494 },
+        location: { x: 785, y: 2275 },
       },
     ],
   },
@@ -670,11 +673,11 @@ export const Tools: Record<
       },
       {
         label: 'Double jump off the chest to a secret passage in the ceiling.',
-        location: { x: 2147, y: 1685 },
+        location: { x: 1398, y: 1097 },
       },
       {
         label: 'Defeat the First Sinner.',
-        location: { x: 2266, y: 1737 },
+        location: { x: 1475, y: 1131 },
       },
     ],
   },
@@ -690,7 +693,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Bind the Pale Nails here.',
-        location: { x: 3909, y: 73 },
+        location: { x: 2545, y: 48 },
       },
     ],
   },
@@ -704,7 +707,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Bound in Weavenest Karn.',
-        location: { x: 66, y: 3692 },
+        location: { x: 43, y: 2404 },
       },
     ],
   },
@@ -717,7 +720,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Jump up a ledge in the ceiling to reach a room with the Silk Snare.',
-        location: { x: 2012, y: 4289 },
+        location: { x: 1310, y: 2792 },
       },
     ],
   },
@@ -731,7 +734,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Bind the Silkspear here.',
-        location: { x: 1828, y: 3636 },
+        location: { x: 1190, y: 2367 },
       },
     ],
   },
@@ -757,7 +760,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Sprint across the room to receive the Silkspeed Anklets.',
-        location: { x: 7009, y: 4279 },
+        location: { x: 4563, y: 2786 },
       },
     ],
   },
@@ -783,7 +786,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Free Grindle from the cell. He escapes on his own in Act II.',
-        location: { x: 2106, y: 2539 },
+        location: { x: 2106, y: 2539 }, // donotpush keep
       },
     ],
   },
@@ -796,7 +799,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Complete the Muckroach Guts wish for Crull and Benjie.',
-        location: { x: 3474, y: 1732 },
+        location: { x: 3474, y: 1732 }, // donotpush keep
       },
     ],
   },
@@ -838,11 +841,11 @@ export const Tools: Record<
     markers: [
       {
         label: 'Complete the Craw gauntlet to unlock balloons.',
-        location: { x: 6070, y: 3172 },
+        location: { x: 3952, y: 2065 },
       },
       {
         label: 'Bind Thread Storm.',
-        location: { x: 6034, y: 2785 },
+        location: { x: 3928, y: 1813 },
       },
     ],
   },
@@ -855,11 +858,11 @@ export const Tools: Record<
     markers: [
       {
         label: 'Complete the Craw gauntlet to unlock balloons.',
-        location: { x: 6070, y: 3172 },
+        location: { x: 3952, y: 2065 },
       },
       {
         label: 'Pick up the Threefold Pin behind the wall.',
-        location: { x: 6112, y: 2987 },
+        location: { x: 3979, y: 1945 },
       },
     ],
   },
@@ -914,7 +917,7 @@ export const Tools: Record<
       RuinedTool,
       {
         label: 'Repaired using a Craftmetal.',
-        location: { x: 1640, y: 572 },
+        location: { x: 1068, y: 372 },
       },
     ],
   },
@@ -940,7 +943,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Rewarded for defeating the double Moss Mother fight.',
-        location: { x: 1219, y: 4414 },
+        location: { x: 794, y: 2874 },
       },
     ],
   },
@@ -953,7 +956,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Rewarded for defeating the Father of the Flame.',
-        location: { x: 3228, y: 2686 },
+        location: { x: 2102, y: 1749 },
       },
     ],
   },
@@ -966,7 +969,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Rewarded for defeating the Voltvyrm.',
-        location: { x: 1232, y: 1782 },
+        location: { x: 802, y: 1160 },
       },
     ],
   },
