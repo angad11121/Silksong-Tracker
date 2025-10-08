@@ -149,13 +149,13 @@ export function HelpDisplay(): ReactElement {
         <img
           src={ShowMapImage}
           alt="Show Map"
-          width={2140 / 3}
+          width={600}
           className="border-4 border-white rounded-lg"
         />
         <img
           src={VisibleMapImage}
           alt="Visible Map"
-          width={2140 / 3}
+          width={600}
           className="border-4 border-white rounded-lg"
         />
       </div>
