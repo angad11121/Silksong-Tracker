@@ -84,7 +84,7 @@ export const MemoryLockets: {
   {
     id: 4,
     desc: 'In a secret room in Bilewater, beyond a steam pipe.',
-    has: saveData => getScene('Shadow_20', 'Collectable_Item_Pickup', saveData)?.Value,
+    has: saveData => getScene('Shadow_20', 'Collectable Item Pickup', saveData)?.Value,
     markers: [
       {
         label: 'Enter the secret room and collect the Memory Locket.',

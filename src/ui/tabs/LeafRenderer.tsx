@@ -165,7 +165,7 @@ const Images: Record<LeafRendererType, () => ReactElement> = {
     <img src={ToolPouch} height={36} width={36} alt="Tool Pouch" className="inline" />
   ),
 
-  [RendererType.MemoryLocket]: () => (
+  [LeafRendererType.MemoryLocket]: () => (
     <img src={MemoryLocket} height={48} width={48} alt="Memory Locket" className="inline" />
   ),
 };
