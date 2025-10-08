@@ -29,11 +29,12 @@ import Needle_4 from '@/assets/needle/4.png';
 import { useState, type ReactElement } from 'react';
 import { NeedleLevel } from '@/info/needle';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
+import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
 import { Tooltip } from '@/ui/components/Tooltip';
 import type { SaveData } from '@/parser/types';
 import type { CustomHas } from '@/ui/tabs/types';
 
-export enum RendererType {
+export enum LeafRendererType {
   Mask = 'mask',
   Spool = 'spool',
   SilkHeart = 'silk_heart',
@@ -63,65 +64,64 @@ export enum RendererType {
   Needle_4 = NeedleLevel.PaleSteel,
 }
 
-const Images: Record<RendererType, () => ReactElement> = {
-  [RendererType.Mask]: () => (
+const Images: Record<LeafRendererType, () => ReactElement> = {
+  [LeafRendererType.Mask]: () => (
     <img src={MaskShard} height={30} width={30} alt="Mask Shard" className="inline" />
   ),
-  [RendererType.Spool]: () => (
+  [LeafRendererType.Spool]: () => (
     <img src={SpoolFragment} height={36} width={36} alt="Spool Fragment" className="inline" />
   ),
-  [RendererType.SilkHeart]: () => (
+  [LeafRendererType.SilkHeart]: () => (
     <img src={SilkHeart} height={36} width={36} alt="Silk Heart" className="inline" />
   ),
 
-  [RendererType.SwiftStep]: () => (
+  [LeafRendererType.SwiftStep]: () => (
     <img src={SwiftStep} height={72} width={72} alt="Swift Step" className="inline" />
   ),
-  [RendererType.ClingGrip]: () => (
+  [LeafRendererType.ClingGrip]: () => (
     <img src={ClingGrip} height={72} width={72} alt="Cling Grip" className="inline" />
   ),
-  [RendererType.Needolin]: () => (
+  [LeafRendererType.Needolin]: () => (
     <img src={Needolin} height={72} width={72} alt="Needolin" className="inline" />
   ),
-  [RendererType.Clawline]: () => (
+  [LeafRendererType.Clawline]: () => (
     <img src={Clawline} height={72} width={72} alt="Clawline" className="inline" />
   ),
-  [RendererType.SilkSoar]: () => (
+  [LeafRendererType.SilkSoar]: () => (
     <img src={SilkSoar} height={72} width={72} alt="Silk Soar" className="inline" />
   ),
-  [RendererType.Sylphsong]: () => (
+  [LeafRendererType.Sylphsong]: () => (
     <img src={Sylphsong} height={72} width={72} alt="Sylphsong" className="inline" />
   ),
-  [RendererType.NeedleStrike]: () => (
+  [LeafRendererType.NeedleStrike]: () => (
     <img src={NeedleStrike} height={72} width={72} alt="Needle Strike" className="inline" />
   ),
-  [RendererType.Everbloom]: () => (
+  [LeafRendererType.Everbloom]: () => (
     <img src={Everbloom} height={30} width={30} alt="Everbloom" className="inline" />
   ),
-
-  [RendererType.Crest_Hunter]: () => (
+  [LeafRendererType.Crest_Hunter]: () => (
     <img src={CrestHunter} height={72} width={72} alt="Hunter Crest" className="inline" />
   ),
-  [RendererType.Crest_Reaper]: () => (
+  [LeafRendererType.Crest_Reaper]: () => (
     <img src={CrestReaper} height={72} width={72} alt="Reaper Crest" className="inline" />
   ),
-  [RendererType.Crest_Wanderer]: () => (
+  [LeafRendererType.Crest_Wanderer]: () => (
     <img src={CrestWanderer} height={72} width={72} alt="Wanderer Crest" className="inline" />
   ),
-  [RendererType.Crest_Beast]: () => (
+  [LeafRendererType.Crest_Beast]: () => (
     <img src={CrestBeast} height={72} width={72} alt="Beast Crest" className="inline" />
   ),
-  [RendererType.Crest_Witch]: () => (
+  [LeafRendererType.Crest_Witch]: () => (
     <img src={CrestWitch} height={72} width={72} alt="Witch Crest" className="inline" />
   ),
-  [RendererType.Crest_Architect]: () => (
+  [LeafRendererType.Crest_Architect]: () => (
     <img src={CrestArchitect} height={72} width={72} alt="Architect Crest" className="inline" />
   ),
-  [RendererType.Crest_Shaman]: () => (
+  [LeafRendererType.Crest_Shaman]: () => (
     <img src={CrestShaman} height={72} width={72} alt="Shaman Crest" className="inline" />
   ),
 
-  [RendererType.Needle_1]: () => (
+  [LeafRendererType.Needle_1]: () => (
     <img
       src={Needle_1}
       width={16}
@@ -129,7 +129,7 @@ const Images: Record<RendererType, () => ReactElement> = {
       className="inline -rotate-90 mx-12.5 -my-12"
     />
   ),
-  [RendererType.Needle_2]: () => (
+  [LeafRendererType.Needle_2]: () => (
     <img
       src={Needle_2}
       width={16}
@@ -137,7 +137,7 @@ const Images: Record<RendererType, () => ReactElement> = {
       className="inline -rotate-90 mx-12.5 -my-12"
     />
   ),
-  [RendererType.Needle_3]: () => (
+  [LeafRendererType.Needle_3]: () => (
     <img
       src={Needle_3}
       width={16}
@@ -145,7 +145,7 @@ const Images: Record<RendererType, () => ReactElement> = {
       className="inline -rotate-90 mx-12.5 -my-12"
     />
   ),
-  [RendererType.Needle_4]: () => (
+  [LeafRendererType.Needle_4]: () => (
     <img
       src={Needle_4}
       width={16}
@@ -154,15 +154,15 @@ const Images: Record<RendererType, () => ReactElement> = {
     />
   ),
 
-  [RendererType.CraftingKit]: () => (
+  [LeafRendererType.CraftingKit]: () => (
     <img src={CraftingKit} height={30} width={30} alt="Crafting Kit" className="inline" />
   ),
-  [RendererType.ToolPouch]: () => (
+  [LeafRendererType.ToolPouch]: () => (
     <img src={ToolPouch} height={36} width={36} alt="Tool Pouch" className="inline" />
   ),
 };
 
-export function Renderer({
+export function LeafRenderer({
   id,
   type,
   check,
@@ -175,7 +175,7 @@ export function Renderer({
   hint: string;
   data: SaveData;
   markers: MapLocation[];
-  type: RendererType | (() => ReactElement);
+  type: LeafRendererType | (() => ReactElement);
 }): ReactElement {
   const hasAcquired = typeof check === 'function' ? check(data) : check;
   const [showMap, setShowMap] = useState(false);
@@ -219,7 +219,9 @@ export function Renderer({
           </Tooltip>
         ) : null}
       </div>
-      <div>{hint}</div>
+      <div>
+        <SpoilerRenderer content={hint} />
+      </div>
       {showMap ? (
         <div className="flex flex-col items-center">
           <SilksongMap markers={markers} />

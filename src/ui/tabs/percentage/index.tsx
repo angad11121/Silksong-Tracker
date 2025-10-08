@@ -3,6 +3,7 @@ import type { SaveData } from '@/parser/types';
 import { SectionRenderer } from '@/ui/tabs/SectionRenderer';
 import { SectionGenerator } from '@/ui/tabs/percentage/sections';
 import { getPercentageFromEntry } from '@/parser/percentage';
+import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
 
 export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
   return (
@@ -31,7 +32,7 @@ export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
           >
             <summary>
               <h3 className="inline mx-2 pt-2">
-                {section.title} (
+                <SpoilerRenderer content={section.title} /> (
                 {currentPercentage === maxPercentage ? (
                   <span className="text-green-500">{maxPercentage}%</span>
                 ) : (
@@ -41,7 +42,9 @@ export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
                 )}
                 )
               </h3>
-              <h4>{section.subtext}</h4>
+              <h4>
+                <SpoilerRenderer content={section.subtext} />
+              </h4>
             </summary>
             {children}
           </details>
