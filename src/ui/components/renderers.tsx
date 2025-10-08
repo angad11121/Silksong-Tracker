@@ -13,6 +13,7 @@ import SilkSoar from '@/assets/arts/silk_soar.png';
 import Sylphsong from '@/assets/arts/sylphsong.png';
 import NeedleStrike from '@/assets/arts/needle_strike.png';
 
+import CrestHunter from '@/assets/crests/hunter.png';
 import CrestReaper from '@/assets/crests/reaper.png';
 import CrestWanderer from '@/assets/crests/architect.png';
 import CrestBeast from '@/assets/crests/beast.png';
@@ -48,6 +49,7 @@ export enum RendererType {
   Sylphsong = 'sylphsong',
   NeedleStrike = 'needle_strike',
 
+  Crest_Hunter = 'crest_hunter',
   Crest_Reaper = 'crest_reaper',
   Crest_Wanderer = 'crest_wanderer',
   Crest_Beast = 'crest_beast',
@@ -97,6 +99,9 @@ const Images: Record<RendererType, () => ReactElement> = {
     <img src={Everbloom} height={30} width={30} alt="Everbloom" className="inline" />
   ),
 
+  [RendererType.Crest_Hunter]: () => (
+    <img src={CrestHunter} height={72} width={72} alt="Hunter Crest" className="inline" />
+  ),
   [RendererType.Crest_Reaper]: () => (
     <img src={CrestReaper} height={72} width={72} alt="Reaper Crest" className="inline" />
   ),

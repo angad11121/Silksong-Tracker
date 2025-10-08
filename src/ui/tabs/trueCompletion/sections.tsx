@@ -2,6 +2,7 @@ import { getPercentageSection, type PercentageSectionCtx } from '@/ui/tabs/perce
 import { getPercentageFromEntry } from '@/parser/percentage';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 import type { SaveData } from '@/parser/types';
+import { Renderer, RendererType } from '../../components/renderers';
 
 export type TrueCompletionSectionCtx = {
   maxCount: number | 'auto';
@@ -10,7 +11,7 @@ export type TrueCompletionSectionCtx = {
 
 function mapPercentageSection<T extends Section<PercentageSectionCtx> | LeafSection>(
   section: T,
-  override?: (section: T) => Partial<T>,
+  override?: (section: T) => Partial<T | Section<TrueCompletionSectionCtx>>,
 ): Section<TrueCompletionSectionCtx> | LeafSection {
   if ('ctx' in section) {
     return {
@@ -53,9 +54,53 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
       mapPercentageSection(getPercentageSection(['Ancestral Arts'], saveData)!, () => ({
         subtext: 'There are 6 Ancestral Arts available.',
       })),
-      mapPercentageSection(getPercentageSection(['Crests'], saveData)!, () => ({
-        subtext: '7 Crests are available to be bound.',
-      })),
+      {
+        title: 'Crests and Memory Lockets',
+        subtext: 'There are 7 Crests and 20 Memory Lockets available.',
+        children: [
+          mapPercentageSection(
+            getPercentageSection(['Crests'], saveData)! as Section<PercentageSectionCtx>,
+            ({ children }) => ({
+              children: [
+                {
+                  title: 'Crest of the Hunter',
+                  subtext: null,
+                  children: [
+                    {
+                      title: 'Crest of the Hunter',
+                      subtext: 'The Crest of the Hunter is acquired at the start of the game.',
+                      has: () => true,
+                      render: ({ saveData, entry }) => (
+                        <Renderer
+                          id={null}
+                          check={entry.has}
+                          hint="The Crest of the Hunter is acquired at the start of the game."
+                          data={saveData}
+                          markers={[]}
+                          type={RendererType.Crest_Hunter}
+                        />
+                      ),
+                    },
+                  ],
+                  ctx: { maxCount: 1, getCount: 'auto' },
+                },
+                ...((typeof children === 'function' ? children(saveData) : children) as (
+                  | Section<TrueCompletionSectionCtx>
+                  | LeafSection
+                )[]),
+              ],
+              ctx: { maxCount: 7, getCount: 'auto' },
+            }),
+          ),
+          {
+            title: 'Memory Lockets',
+            subtext: 'There are 20 Memory Lockets available.',
+            children: [],
+            ctx: { maxCount: 20, getCount: 'auto' },
+          },
+        ],
+        ctx: { maxCount: 27, getCount: 'auto' },
+      },
       mapPercentageSection(getPercentageSection(['Needle Upgrades'], saveData)!, () => ({
         subtext: '4 Needle upgrades can be found throughout the game.',
       })),
