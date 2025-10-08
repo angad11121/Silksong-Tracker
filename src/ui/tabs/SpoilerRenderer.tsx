@@ -1,5 +1,5 @@
 import { useState, type ReactElement } from 'react';
-import { Tooltip } from '../components/Tooltip';
+import { Tooltip } from '@/ui/components/Tooltip';
 const currentSpoilerLevel = 1;
 export function SpoilerRenderer({ content }: { content: string | null }): ReactElement {
   return (

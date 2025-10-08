@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
+import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
 import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
-import { SpoilerRenderer } from './SpoilerRenderer';
 
 export function SectionRenderer<ExtraCtx = null>({
   depth = 0,
@@ -38,7 +38,7 @@ export function SectionRenderer<ExtraCtx = null>({
       {sections.map(section => (
         <>
           {(!('render' in section) || sections.length > 1) && parent ? <br /> : null}
-          <div key={section.title} className={`pl-1`}>
+          <div key={section.title} className="pl-1">
             {'render' in section ? (
               <>{section.render({ saveData: data, depth, entry: section })}</>
             ) : (

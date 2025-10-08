@@ -1,9 +1,9 @@
 import type { ReactElement } from 'react';
-import type { SaveData } from '@/parser/types';
 import { SectionRenderer } from '@/ui/tabs/SectionRenderer';
 import { SectionGenerator } from '@/ui/tabs/percentage/sections';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
+import type { SaveData } from '@/parser/types';
 
 export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
   return (

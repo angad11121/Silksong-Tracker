@@ -1,7 +1,7 @@
 import { getPercentageSection, type PercentageSectionCtx } from '@/ui/tabs/percentage/sections';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { MemoryLockets } from '@/info/lockets';
-import { Renderer, RendererType } from '@/ui/components/renderers';
+import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 import type { SaveData } from '@/parser/types';
 
@@ -72,13 +72,13 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
                       subtext: 'The Crest of the Hunter is acquired at the start of the game.',
                       has: () => true,
                       render: ({ saveData, entry }) => (
-                        <Renderer
+                        <LeafRenderer
                           id={null}
                           check={entry.has}
                           hint="The Crest of the Hunter is acquired at the start of the game."
                           data={saveData}
                           markers={[]}
-                          type={RendererType.Crest_Hunter}
+                          type={LeafRendererType.Crest_Hunter}
                         />
                       ),
                     },
@@ -98,10 +98,10 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
             subtext: 'There are 20 Memory Lockets available.',
             children: MemoryLockets.map(locket => ({
               has: locket.has,
-              title: locket.desc,
-              subtext: null,
+              title: 'Memory Locket',
+              subtext: locket.desc,
               render: ({ saveData, entry }) => (
-                <Renderer
+                <LeafRenderer
                   id={locket.id}
                   check={entry.has}
                   hint={locket.desc}
@@ -109,7 +109,7 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
                   markers={
                     typeof locket.markers === 'function' ? locket.markers(saveData) : locket.markers
                   }
-                  type={RendererType.MemoryLocket}
+                  type={LeafRendererType.MemoryLocket}
                 />
               ),
             })),
