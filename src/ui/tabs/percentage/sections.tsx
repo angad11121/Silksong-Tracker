@@ -300,7 +300,33 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
       {
         title: 'Silk Skills',
         subtext: 'All Silk Skills are required for 100% completion.',
-        children: [],
+        children: Object.values(Tools)
+          .filter(tool => tool.type === ToolType.SilkSkill)
+          .map(tool => ({
+            title: tool.displayName,
+            subtext: null,
+            children: [
+              {
+                title: tool.displayName,
+                subtext: tool.desc,
+                has: saveData => hasTool(tool.id, saveData),
+                render: ({ saveData }) => (
+                  <Renderer
+                    id={null}
+                    check={saveData => hasTool(tool.id, saveData)}
+                    hint={tool.desc}
+                    data={saveData}
+                    markers={tool.markers}
+                    type={tool.img!}
+                  />
+                ),
+              },
+            ],
+            ctx: {
+              maxPercentage: 1,
+              getPercentage: saveData => (hasTool(tool.id, saveData) ? 1 : 0),
+            },
+          })),
         ctx: {
           maxPercentage: 6,
           getPercentage: saveData =>
@@ -568,7 +594,6 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                   />
                 ),
               },
-              // Mooshka in Fleatopia
               {
                 title: 'Tool Pouch Upgrade #3',
                 subtext: 'Mooshka gives you a Tool Pouch upgrade after moving to Fleatopia.',
@@ -591,7 +616,6 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                   />
                 ),
               },
-              // Nuu in Halfway Home
               {
                 title: 'Tool Pouch Upgrade #4',
                 subtext:

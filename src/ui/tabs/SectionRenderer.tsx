@@ -7,6 +7,7 @@ export function SectionRenderer<ExtraCtx = null>({
   data,
   sections,
   parent,
+  hasSiblings,
   SectionTitleRenderer = ({ section, children }) => (
     <details open className="p-4 bg-[#0006] rounded-xl">
       <summary>
@@ -21,35 +22,39 @@ export function SectionRenderer<ExtraCtx = null>({
   data: SaveData;
   sections: (Section<ExtraCtx> | LeafSection)[];
   parent?: Section<ExtraCtx> | null;
+  hasSiblings?: boolean;
   SectionTitleRenderer?: (props: {
     section: Section<ExtraCtx>;
     children: ReactElement;
+    depth: number;
     parent: Section<ExtraCtx> | null;
   }) => ReactElement;
 }): ReactElement {
   return (
     <div>
       {sections.map(section => (
-        <div key={section.title}>
-          {Array.from({ length: depth }, () => (
-            <>&nbsp;</>
-          ))}
-          {'render' in section ? (
-            <>{section.render({ saveData: data, depth, entry: section })}</>
-          ) : (
-            <SectionTitleRenderer section={section} parent={parent ?? null}>
-              <SectionRenderer
-                depth={depth + 1}
-                data={data}
-                parent={section}
-                sections={
-                  typeof section.children === 'function' ? section.children(data) : section.children
-                }
-                SectionTitleRenderer={SectionTitleRenderer}
-              />
-            </SectionTitleRenderer>
-          )}
-        </div>
+        <>
+          {!('render' in section) || sections.length > 1 ? <br /> : null}
+          <div key={section.title} style={{ paddingLeft: depth * 4 }}>
+            {'render' in section ? (
+              <>{section.render({ saveData: data, depth, entry: section })}</>
+            ) : (
+              <SectionTitleRenderer section={section} depth={depth} parent={parent ?? null}>
+                <SectionRenderer
+                  depth={depth + 1}
+                  data={data}
+                  parent={section}
+                  sections={
+                    typeof section.children === 'function'
+                      ? section.children(data)
+                      : section.children
+                  }
+                  SectionTitleRenderer={SectionTitleRenderer}
+                />
+              </SectionTitleRenderer>
+            )}
+          </div>
+        </>
       ))}
     </div>
   );

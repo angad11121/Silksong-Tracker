@@ -10,7 +10,7 @@ export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
       sections={SectionGenerator}
       depth={0}
       data={data}
-      SectionTitleRenderer={({ section, children, parent }) => {
+      SectionTitleRenderer={({ section, children, depth, parent }) => {
         const getPercentage = section.ctx.getPercentage;
         const currentPercentage =
           typeof getPercentage === 'function'
@@ -21,7 +21,13 @@ export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
         return (
           <details
             open={currentPercentage < maxPercentage || !parent}
-            className={parent ? 'p-4 bg-[#0006] rounded-xl' : 'p-4'}
+            className={
+              parent
+                ? depth >= 2
+                  ? 'p-2 bg-[#0006] rounded-xl'
+                  : 'p-4 bg-[#0006] rounded-xl'
+                : 'p-4'
+            }
           >
             <summary>
               <h3 className="inline mx-2 pt-2">

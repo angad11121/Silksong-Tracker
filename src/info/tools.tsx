@@ -1,5 +1,13 @@
 import type { MapLocation } from '@/ui/components/map';
 import { Locations } from './locations';
+import type { ReactElement } from 'react';
+
+import Parry from '@/assets/tools/parry.png';
+import SilkBomb from '@/assets/tools/silk_bomb.png';
+import SilkBossNeedle from '@/assets/tools/silk_boss_needle.png';
+import SilkCharge from '@/assets/tools/silk_charge.png';
+import SilkSpear from '@/assets/tools/silk_spear.png';
+import ThreadSphere from '@/assets/tools/thread_sphere.png';
 
 export enum ToolType {
   Red = 0,
@@ -45,6 +53,7 @@ export const Tools: Record<
   string,
   {
     id: string;
+    img?: () => ReactElement;
     displayName: string;
     type: ToolType;
     isCounted: boolean;
@@ -427,6 +436,7 @@ export const Tools: Record<
   Parry: {
     id: 'Parry',
     displayName: 'Cross Stitch',
+    img: () => <img src={Parry} height={48} width={48} alt="Cross Stitch" className="inline" />,
     type: 3,
     isCounted: true,
     desc: 'Received after defeating Phantom in the Exhaust Organ.',
@@ -649,6 +659,7 @@ export const Tools: Record<
   'Silk Bomb': {
     id: 'Silk Bomb',
     displayName: 'Rune Rage',
+    img: () => <img src={SilkBomb} height={48} width={48} alt="Rune Rage" className="inline" />,
     type: 3,
     isCounted: true,
     desc: 'Defeat the First Sinner in a secret room in the Slab to unlock Rune Rage.',
@@ -670,6 +681,9 @@ export const Tools: Record<
   'Silk Boss Needle': {
     id: 'Silk Boss Needle',
     displayName: 'Pale Nails',
+    img: () => (
+      <img src={SilkBossNeedle} height={48} width={48} alt="Pale Nails" className="inline" />
+    ),
     type: 3,
     isCounted: true,
     desc: 'Return to the Cradle in Act III to pick up the Pale Nails.',
@@ -683,6 +697,7 @@ export const Tools: Record<
   'Silk Charge': {
     id: 'Silk Charge',
     displayName: 'Sharpdart',
+    img: () => <img src={SilkCharge} height={48} width={48} alt="Sharpdart" className="inline" />,
     type: 3,
     isCounted: true,
     desc: 'Bind the Sharpdart in Weavenest Karn.',
@@ -708,13 +723,14 @@ export const Tools: Record<
   },
   'Silk Spear': {
     id: 'Silk Spear',
-    displayName: 'Silk Spear',
+    displayName: 'Silkspear',
+    img: () => <img src={SilkSpear} height={48} width={48} alt="Silkspear" className="inline" />,
     type: 3,
     isCounted: true,
     desc: 'Bound in Mosshome.',
     markers: [
       {
-        label: 'Bind the Silk Spear here.',
+        label: 'Bind the Silkspear here.',
         location: { x: 1828, y: 3636 },
       },
     ],
@@ -813,6 +829,9 @@ export const Tools: Record<
   'Thread Sphere': {
     id: 'Thread Sphere',
     displayName: 'Thread Storm',
+    img: () => (
+      <img src={ThreadSphere} height={48} width={48} alt="Thread Storm" className="inline" />
+    ),
     type: 3,
     isCounted: true,
     desc: 'Complete the Craw gauntlet in Greymoor to unlock balloons that can be pogoed to reach the top.',

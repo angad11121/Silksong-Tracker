@@ -169,11 +169,11 @@ export function Renderer({
   hint: string;
   data: SaveData;
   markers: MapLocation[];
-  type: RendererType;
+  type: RendererType | (() => ReactElement);
 }): ReactElement {
   const hasAcquired = typeof check === 'function' ? check(data) : check;
   const [showMap, setShowMap] = useState(false);
-  const Image = Images[type];
+  const Image = typeof type === 'function' ? type : Images[type];
 
   return (
     <div>
