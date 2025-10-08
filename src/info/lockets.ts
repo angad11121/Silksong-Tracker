@@ -3,8 +3,6 @@ import { Locations } from '@/info/locations';
 import type { SaveData } from '@/parser/types';
 import type { MapLocation } from '@/ui/components/map';
 
-// donotpush REF DATA
-
 const Flintbeetles: { key: MetadataKey; getMarker: (saveData: SaveData) => MapLocation[] }[] = [
   {
     key: 'rockRollerDefeated_bone01',
@@ -107,7 +105,7 @@ export const MemoryLockets: {
   },
   {
     id: 6,
-    desc: 'Held by a corpse at the bottom of a magma-filled area found behind a breakable wall in the lower Deep Docks.',
+    desc: 'Held by a corpse behind a breakable wall in the lower Deep Docks.',
     has: saveData => getScene('Dock_13', 'Collectable Item Pickup', saveData)?.Value,
     markers: [
       {
@@ -162,11 +160,11 @@ export const MemoryLockets: {
   },
   {
     id: 11,
-    desc: 'In a cage at the end of the spiky corridor before Chapel of the Beast.',
+    desc: 'In a cage at the end of the corridor before the Chapel of the Beast.',
     has: saveData => getScene('Ant_20', 'Collectable Item Pickup', saveData)?.Value,
     markers: [
       {
-        label: 'In a cage at the end of the spiky corridor before Chapel of the Beast.',
+        label: 'In a cage.',
         location: { x: 3252, y: 2458 },
       },
     ],

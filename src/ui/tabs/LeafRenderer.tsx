@@ -26,6 +26,8 @@ import Needle_2 from '@/assets/needle/2.png';
 import Needle_3 from '@/assets/needle/3.png';
 import Needle_4 from '@/assets/needle/4.png';
 
+import MemoryLocket from '@/assets/memory_locket.png';
+
 import { useState, type ReactElement } from 'react';
 import { NeedleLevel } from '@/info/needle';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
@@ -62,6 +64,8 @@ export enum LeafRendererType {
   Needle_2 = NeedleLevel.Shining,
   Needle_3 = NeedleLevel.Hivesteel,
   Needle_4 = NeedleLevel.PaleSteel,
+
+  MemoryLocket = 'memory_locket',
 }
 
 const Images: Record<LeafRendererType, () => ReactElement> = {
@@ -159,6 +163,10 @@ const Images: Record<LeafRendererType, () => ReactElement> = {
   ),
   [LeafRendererType.ToolPouch]: () => (
     <img src={ToolPouch} height={36} width={36} alt="Tool Pouch" className="inline" />
+  ),
+
+  [RendererType.MemoryLocket]: () => (
+    <img src={MemoryLocket} height={48} width={48} alt="Memory Locket" className="inline" />
   ),
 };
 

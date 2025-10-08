@@ -1,8 +1,9 @@
 import { getPercentageSection, type PercentageSectionCtx } from '@/ui/tabs/percentage/sections';
 import { getPercentageFromEntry } from '@/parser/percentage';
+import { MemoryLockets } from '@/info/lockets';
+import { Renderer, RendererType } from '@/ui/components/renderers';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 import type { SaveData } from '@/parser/types';
-import { Renderer, RendererType } from '../../components/renderers';
 
 export type TrueCompletionSectionCtx = {
   maxCount: number | 'auto';
@@ -95,7 +96,23 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
           {
             title: 'Memory Lockets',
             subtext: 'There are 20 Memory Lockets available.',
-            children: [],
+            children: MemoryLockets.map(locket => ({
+              has: locket.has,
+              title: locket.desc,
+              subtext: null,
+              render: ({ saveData, entry }) => (
+                <Renderer
+                  id={locket.id}
+                  check={entry.has}
+                  hint={locket.desc}
+                  data={saveData}
+                  markers={
+                    typeof locket.markers === 'function' ? locket.markers(saveData) : locket.markers
+                  }
+                  type={RendererType.MemoryLocket}
+                />
+              ),
+            })),
             ctx: { maxCount: 20, getCount: 'auto' },
           },
         ],
