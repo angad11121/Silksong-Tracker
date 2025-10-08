@@ -1,5 +1,7 @@
 import { useCallback, useRef, useState, type KeyboardEventHandler, type ReactElement } from 'react';
+import { DevDisplay } from '@/ui/tabs/help/dev';
 import { Code } from '@/ui/components/Code';
+import { DEV_MODE_KEY } from '@/ui/components/map/constants';
 
 import ShowMapImage from '@/assets/demo/show_map.png';
 import VisibleMapImage from '@/assets/demo/visible_map.png';
@@ -132,39 +134,42 @@ function SaveLocation(): ReactElement {
 
 export function HelpDisplay(): ReactElement {
   return (
-    <div className="p-4">
-      <p>This is a tool to help you track your progress in Hollow Knight: Silksong.</p>
-      <p>To use the tool, simply upload your save file.</p>
-      <SaveLocation />
-      <p>Once you've uploaded your save file, you can start tracking your progress.</p>
-      <hr />
-      <br />
-      <h3>Maps</h3>
-      <br />
-      <p>
-        All collectibles have an accompanying map that shows you where and how to acquire them!
-        Click the map icon to show/hide the map.
-      </p>
-      <div className="flex flex-col items-center gap-8">
-        <img
-          src={ShowMapImage}
-          alt="Show Map"
-          width={600}
-          className="border-4 border-white rounded-lg"
-        />
-        <img
-          src={VisibleMapImage}
-          alt="Visible Map"
-          width={600}
-          className="border-4 border-white rounded-lg"
-        />
+    <>
+      {localStorage.getItem(DEV_MODE_KEY) === 'true' ? <DevDisplay /> : null}
+      <div className="p-4">
+        <p>This is a tool to help you track your progress in Hollow Knight: Silksong.</p>
+        <p>To use the tool, simply upload your save file.</p>
+        <SaveLocation />
+        <p>Once you've uploaded your save file, you can start tracking your progress.</p>
+        <hr />
+        <br />
+        <h3>Maps</h3>
+        <br />
+        <p>
+          All collectibles have an accompanying map that shows you where and how to acquire them!
+          Click the map icon to show/hide the map.
+        </p>
+        <div className="flex flex-col items-center gap-8">
+          <img
+            src={ShowMapImage}
+            alt="Show Map"
+            width={600}
+            className="border-4 border-white rounded-lg"
+          />
+          <img
+            src={VisibleMapImage}
+            alt="Visible Map"
+            width={600}
+            className="border-4 border-white rounded-lg"
+          />
+        </div>
+        <br />
+        <small>
+          Please notify us on{' '}
+          <a href="https://github.com/angad11121/Silksong-Tracker/issues">GitHub</a> if you find
+          something that's missing or incorrect. We'll be glad to fix it!
+        </small>
       </div>
-      <br />
-      <small>
-        Please notify us on{' '}
-        <a href="https://github.com/angad11121/Silksong-Tracker/issues">GitHub</a> if you find
-        something that's missing or incorrect. We'll be glad to fix it!
-      </small>
-    </div>
+    </>
   );
 }

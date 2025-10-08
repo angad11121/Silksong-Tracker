@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, type ReactElement } from 'react';
+import { useState, useEffect, useRef, useCallback, type ReactElement, useMemo } from 'react';
 import { useOnce } from '@/ui/hooks/useOnce';
 
 import MapImage from '@/assets/map/map.jpg';
@@ -61,7 +61,11 @@ const DEFAULT_CONTAINER_HEIGHT = Math.round(
 
 export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactElement {
   // Group markers by location to combine overlapping ones
-  const combinedMarkers = groupMarkersByLocation(markers);
+  const [dynamicMarker, setDynamicMarker] = useState<MapLocation | null>(null);
+  const combinedMarkers = useMemo(
+    () => groupMarkersByLocation(dynamicMarker && !markers.length ? [dynamicMarker] : markers),
+    [markers, dynamicMarker],
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
   const outerContainerRef = useRef<HTMLDivElement>(null);
@@ -201,6 +205,30 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
       }
     };
   }, [handleWheel]);
+
+  const handleRightClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const mapX = Math.round((mouseX - position.x) / zoom);
+      const mapY = Math.round((mouseY - position.y) / zoom);
+
+      const copyText = `location: { x: ${mapX}, y: ${mapY} }`;
+
+      console.log(`Copied to clipboard: ${copyText}`);
+      navigator.clipboard.writeText(copyText);
+      setDynamicMarker({ label: copyText, location: { x: mapX, y: mapY } });
+    },
+    [position, zoom],
+  );
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -361,6 +389,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
       <div
         ref={containerRef}
         className="relative overflow-hidden bg-[#010101] cursor-grab active:cursor-grabbing h-full w-full touch-none"
+        onContextMenu={handleRightClick}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

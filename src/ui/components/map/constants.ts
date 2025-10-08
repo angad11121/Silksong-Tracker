@@ -7,6 +7,8 @@ import BronzeMarker from '@/assets/map/markers/bronze.png';
 
 import type { MapMarker } from '@/ui/components/map/types';
 
+export const DEV_MODE_KEY = 'dev';
+
 // Coordinates are specified on markers assuming these dimensions.
 export const MAP_DIMENSIONS = { x: 5000, y: 3643 };
 
