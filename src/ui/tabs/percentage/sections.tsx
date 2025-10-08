@@ -11,7 +11,7 @@ import {
 import { hasTool, getScene, type MetadataKey, getQuest } from '@/parser/metadata';
 import { Locations } from '@/info/locations';
 import { getPercentageFromEntry } from '@/parser/percentage';
-import { Renderer, RendererType } from '@/ui/components/renderers';
+import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
 
 import RedTool from '@/assets/tools/red_tool.png';
 import BlueTool from '@/assets/tools/blue_tool.png';
@@ -49,7 +49,7 @@ function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
       (tool.upgradesTo && hasTool(tool.upgradesTo!, saveData) ? CustomHas.ToolUpgrade : false) ||
       (tool.isUpgrade && hasTool(tool.isUpgrade!, saveData) ? CustomHas.MissingUpgrade : false),
     render: ({ saveData, entry }) => (
-      <Renderer
+      <LeafRenderer
         id={tool.upgradesTo || tool.isUpgrade ? tool.displayName : null}
         data={saveData}
         type={tool.img ?? ToolImgs[tool.type]!}
@@ -122,7 +122,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           subtext: fragment.hint,
           has: fragment.check,
           render: ({ saveData }) => (
-            <Renderer {...fragment} data={saveData} type={RendererType.Mask} />
+            <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Mask} />
           ),
         })),
         ctx: {
@@ -139,7 +139,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           subtext: fragment.hint,
           has: fragment.check,
           render: ({ saveData }) => (
-            <Renderer {...fragment} data={saveData} type={RendererType.Spool} />
+            <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Spool} />
           ),
         })),
         ctx: {
@@ -157,7 +157,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             has: saveData =>
               getScene('Memory_Silk_Heart_BellBeast', 'glow_rim_Remasker', saveData)?.Value,
             render: ({ saveData, entry }) => (
-              <Renderer
+              <LeafRenderer
                 id={1}
                 check={entry.has}
                 hint={entry.subtext}
@@ -168,7 +168,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     location: { x: 1363, y: 2441 },
                   },
                 ]}
-                type={RendererType.SilkHeart}
+                type={LeafRendererType.SilkHeart}
               />
             ),
           },
@@ -178,7 +178,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             has: saveData =>
               getScene('Memory_Silk_Heart_LaceTower', 'glow_rim_Remasker', saveData)?.Value,
             render: ({ saveData, entry }) => (
-              <Renderer
+              <LeafRenderer
                 id={2}
                 check={entry.has}
                 hint={entry.subtext}
@@ -189,7 +189,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     location: { x: 2526, y: 328 },
                   },
                 ]}
-                type={RendererType.SilkHeart}
+                type={LeafRendererType.SilkHeart}
               />
             ),
           },
@@ -200,7 +200,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             has: saveData =>
               getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value,
             render: ({ saveData, entry }) => (
-              <Renderer
+              <LeafRenderer
                 id={3}
                 check={entry.has}
                 hint={entry.subtext}
@@ -215,7 +215,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     location: { x: 2156, y: 1355 },
                   },
                 ]}
-                type={RendererType.SilkHeart}
+                type={LeafRendererType.SilkHeart}
               />
             ),
           },
@@ -247,7 +247,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
               subtext: level.desc,
               has: () => upgrade.done,
               render: ({ saveData }) => (
-                <Renderer
+                <LeafRenderer
                   id={level.name}
                   check={upgrade.check}
                   hint={upgrade.desc}
@@ -257,7 +257,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                       : upgrade.markers
                   }
                   data={saveData}
-                  type={level.type as string as RendererType}
+                  type={level.type as string as LeafRendererType}
                 />
               ),
             };
@@ -272,12 +272,12 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         title: 'Ancestral Arts',
         subtext: 'All Ancestral Arts are required for 100% completion.',
         children: [
-          RendererType.SwiftStep,
-          RendererType.ClingGrip,
-          RendererType.Needolin,
-          RendererType.Clawline,
-          RendererType.SilkSoar,
-          RendererType.Sylphsong,
+          LeafRendererType.SwiftStep,
+          LeafRendererType.ClingGrip,
+          LeafRendererType.Needolin,
+          LeafRendererType.Clawline,
+          LeafRendererType.SilkSoar,
+          LeafRendererType.Sylphsong,
         ].map(art => {
           const data = AncestralArts[art]!;
           return {
@@ -292,7 +292,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     ? data.has(saveData) === data.percentage
                     : !!saveData.playerData[data.has],
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={null}
                     check={entry.has}
                     hint={data.desc}
@@ -334,12 +334,12 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         subtext:
           'All Crests are required for 100% completion. Hunter Crest upgrades are not required, but are acquired during Sylphsong regardless.',
         children: [
-          RendererType.Crest_Reaper,
-          RendererType.Crest_Wanderer,
-          RendererType.Crest_Beast,
-          RendererType.Crest_Witch,
-          RendererType.Crest_Architect,
-          RendererType.Crest_Shaman,
+          LeafRendererType.Crest_Reaper,
+          LeafRendererType.Crest_Wanderer,
+          LeafRendererType.Crest_Beast,
+          LeafRendererType.Crest_Witch,
+          LeafRendererType.Crest_Architect,
+          LeafRendererType.Crest_Shaman,
         ].map(type => {
           const crest = Crests.find(crest => crest.id === type)!;
 
@@ -355,7 +355,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     gameCrest => gameCrest.Name === crest.gameId,
                   ),
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={null}
                     check={entry.has}
                     hint={crest.hint}
@@ -403,7 +403,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             subtext:
               'The Needle Strike is acquired by talking to the Pinstress in the Blasted Steps. The Great Conchflies must be fought to access her.',
             render: ({ saveData, entry }) => (
-              <Renderer
+              <LeafRenderer
                 id={null}
                 check={saveData => saveData.playerData.hasChargeSlash}
                 hint={entry.subtext}
@@ -414,7 +414,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     location: Locations.Pinstress,
                   },
                 ]}
-                type={RendererType.NeedleStrike}
+                type={LeafRendererType.NeedleStrike}
               />
             ),
           },
@@ -433,7 +433,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             title: 'Everbloom',
             subtext: 'Complete the quest in the Ruined Chapel.',
             render: ({ saveData, entry }) => (
-              <Renderer
+              <LeafRenderer
                 id={null}
                 check={getPercentageFromEntry('Collectables', saveData) === 1}
                 hint={entry.subtext}
@@ -444,7 +444,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     location: Locations.RuinedChapel,
                   },
                 ]}
-                type={RendererType.Everbloom}
+                type={LeafRendererType.Everbloom}
               />
             ),
           },
@@ -518,7 +518,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 title: 'Crafting Kit #1',
                 subtext: 'A Crafting Kit can be purchased from Forge Daughter for 180 rosaries.',
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={1}
                     check={saveData => saveData.playerData.PurchasedForgeToolKit}
                     hint={entry.subtext}
@@ -529,7 +529,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                         location: Locations.ForgeDaughter,
                       },
                     ]}
-                    type={RendererType.CraftingKit}
+                    type={LeafRendererType.CraftingKit}
                   />
                 ),
               },
@@ -538,7 +538,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 subtext:
                   "A Crafting Kit is rewarded by Creige in Greymoor's Halfway Home for completing the Crawbug Clearing quest.",
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={2}
                     check={saveData =>
                       getQuest('Crow Feathers', saveData)?.Data.IsCompleted ||
@@ -552,7 +552,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                         location: Locations.HalfwayHome,
                       },
                     ]}
-                    type={RendererType.CraftingKit}
+                    type={LeafRendererType.CraftingKit}
                   />
                 ),
               },
@@ -561,7 +561,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 subtext:
                   'A Crafting Kit can be purchased from the Twelfth Architect in the Underworks for 450 rosaries.',
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={3}
                     check={saveData => saveData.playerData.PurchasedArchitectToolKit}
                     hint={entry.subtext}
@@ -572,7 +572,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                         location: Locations.TwelfthArchitect,
                       },
                     ]}
-                    type={RendererType.CraftingKit}
+                    type={LeafRendererType.CraftingKit}
                   />
                 ),
               },
@@ -581,7 +581,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 subtext:
                   'A Crafting Kit can be purchased from Grindle in the Blasted Steps for 700 rosaries.',
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={4}
                     check={saveData => saveData.playerData.purchasedGrindleToolKit}
                     hint={entry.subtext}
@@ -592,7 +592,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                         location: Locations.Grindle,
                       },
                     ]}
-                    type={RendererType.CraftingKit}
+                    type={LeafRendererType.CraftingKit}
                   />
                 ),
               },
@@ -612,7 +612,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 subtext:
                   'A Tool Pouch can be won from Loddie in the Marrow by hitting 15 targets in a row. It can be picked up from a table in the same room in Act III.',
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={1}
                     check={
                       saveData =>
@@ -629,7 +629,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                         location: { x: 2106, y: 2539 },
                       },
                     ]}
-                    type={RendererType.ToolPouch}
+                    type={LeafRendererType.ToolPouch}
                   />
                 ),
               },
@@ -638,7 +638,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 subtext:
                   "A Tool Pouch can be purchased from Mort in the Pilgrim's Rest in Far Fields for 220 rosaries.",
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={2}
                     check={saveData => saveData.playerData.PurchasedPilgrimsRestToolPouch}
                     hint={entry.subtext}
@@ -649,7 +649,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                         location: Locations.Mort,
                       },
                     ]}
-                    type={RendererType.ToolPouch}
+                    type={LeafRendererType.ToolPouch}
                   />
                 ),
               },
@@ -657,7 +657,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 title: 'Tool Pouch Upgrade #3',
                 subtext: 'Mooshka gives you a Tool Pouch upgrade after moving to Fleatopia.',
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={3}
                     check={saveData =>
                       getScene('Aqueduct_05', 'Caravan Troupe Leader Fleatopia NPC', saveData)
@@ -671,7 +671,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                         location: Locations.Mooshka.Fleatopia,
                       },
                     ]}
-                    type={RendererType.ToolPouch}
+                    type={LeafRendererType.ToolPouch}
                   />
                 ),
               },
@@ -680,7 +680,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 subtext:
                   'Given by Nuu in Halfway Home in Greymoor after completing the Bugs of Pharloom quest.',
                 render: ({ saveData, entry }) => (
-                  <Renderer
+                  <LeafRenderer
                     id={4}
                     check={saveData => getQuest('Journal', saveData)?.Data.IsCompleted}
                     hint={entry.subtext}
@@ -691,7 +691,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                         location: Locations.HalfwayHome,
                       },
                     ]}
-                    type={RendererType.ToolPouch}
+                    type={LeafRendererType.ToolPouch}
                   />
                 ),
               },

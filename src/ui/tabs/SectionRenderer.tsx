@@ -1,18 +1,22 @@
 import type { ReactElement } from 'react';
 import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
+import { SpoilerRenderer } from './SpoilerRenderer';
 
 export function SectionRenderer<ExtraCtx = null>({
   depth = 0,
   data,
   sections,
   parent,
-  hasSiblings,
   SectionTitleRenderer = ({ section, children }) => (
     <details open className="p-4 bg-[#0006] rounded-xl">
       <summary>
-        <h3 className="inline mx-2 pt-2">{section.title}</h3>
-        <h4>{section.subtext}</h4>
+        <h3 className="inline mx-2 pt-2">
+          <SpoilerRenderer content={section.title} />
+        </h3>
+        <h4>
+          <SpoilerRenderer content={section.subtext} />
+        </h4>
       </summary>
       {children}
     </details>
@@ -22,7 +26,6 @@ export function SectionRenderer<ExtraCtx = null>({
   data: SaveData;
   sections: (Section<ExtraCtx> | LeafSection)[];
   parent?: Section<ExtraCtx> | null;
-  hasSiblings?: boolean;
   SectionTitleRenderer?: (props: {
     section: Section<ExtraCtx>;
     children: ReactElement;
@@ -35,7 +38,7 @@ export function SectionRenderer<ExtraCtx = null>({
       {sections.map(section => (
         <>
           {(!('render' in section) || sections.length > 1) && parent ? <br /> : null}
-          <div key={section.title} style={{ paddingLeft: depth * 4 }}>
+          <div key={section.title} className={`pl-1`}>
             {'render' in section ? (
               <>{section.render({ saveData: data, depth, entry: section })}</>
             ) : (
