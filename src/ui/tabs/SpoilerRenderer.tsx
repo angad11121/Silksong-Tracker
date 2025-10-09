@@ -1,6 +1,8 @@
 import { useState, type ReactElement } from 'react';
 import { Tooltip } from '@/ui/components/Tooltip';
-const currentSpoilerLevel = 1;
+
+const currentSpoilerLevel = 2;
+
 export function SpoilerRenderer({ content }: { content: string | null }): ReactElement {
   return (
     <>
@@ -20,16 +22,14 @@ export function SpoilerRenderer({ content }: { content: string | null }): ReactE
 function SpoilerSpan({ text, spoilerLevel }: { text: string; spoilerLevel: number }): ReactElement {
   const [clicked, setClicked] = useState(false);
   const onKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
-    console.log(e.key);
     if (e.key === 'Enter' || e.key === ' ') {
       setClicked(true);
-      console.log('clicked');
       e.preventDefault();
       e.stopPropagation();
     }
   };
   return (
-    <Tooltip content={`Spoilers for Act ${spoilerLevel}`}>
+    <Tooltip content={`Spoilers for Act ${'I'.repeat(spoilerLevel)}`}>
       {clicked ? (
         <span tabIndex={0} onKeyDown={onKeyDown}>
           {text}
