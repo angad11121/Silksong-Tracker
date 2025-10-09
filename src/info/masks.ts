@@ -5,27 +5,30 @@ import type { MapLocation } from '@/ui/components/map/types';
 
 export const MaskFragments: {
   id: number;
+  act: 1 | 2 | 3;
   check: (saveData: SaveData) => boolean | undefined;
   hint: string;
   markers: MapLocation[];
 }[] = [
   {
     id: 1,
+    act: 1,
     check: save => save.playerData.PurchasedBonebottomHeartPiece,
-    hint: 'Purchased from Pebb in Bone Bottom. Can be purchased from Grindle in Act III.',
+    hint: 'Purchased from Pebb in Bone Bottom. ||<3>Can be purchased from Grindle in Act III||.',
     markers: [
       {
         label: 'Purchased from Pebb in Bone Bottom.',
         location: Locations.BoneBottom,
       },
       {
-        label: 'Purchased from Grindle in Act III.',
+        label: '||<3>Purchased from Grindle in Act III||.',
         location: Locations.Grindle,
       },
     ],
   },
   {
     id: 2,
+    act: 1,
     check: save => getScene('Crawl_02', 'Heart Piece', save)?.Value,
     hint: "Found in the Wormways. There's a breakable wall at the bottom of the room to the left of the Craggler room.",
     markers: [
@@ -37,6 +40,7 @@ export const MaskFragments: {
   },
   {
     id: 3,
+    act: 1,
     check: save => getScene('Bone_East_20', 'Heart Piece', save)?.Value,
     hint: 'Found in Far Fields, from the top left exit of the Seamstress room.',
     markers: [
@@ -48,6 +52,7 @@ export const MaskFragments: {
   },
   {
     id: 4,
+    act: 1,
     check: save => getScene('Shellwood_14', 'Heart Piece', save)?.Value,
     hint: 'Found in Shellwood. Take the middle right exit in the room to the right of the Bellway.',
     markers: [
@@ -60,6 +65,7 @@ export const MaskFragments: {
   },
   {
     id: 5,
+    act: 1,
     check: save => getScene('Dock_08', 'Heart Piece', save)?.Value,
     hint: 'Found in the Deep Docks, accessed through The Marrow. Use Cling Grip to go above the usual entrance.',
     markers: [
@@ -75,6 +81,7 @@ export const MaskFragments: {
   },
   {
     id: 6,
+    act: 1,
     check: save => getScene('Weave_05b', 'Heart Piece', save)?.Value,
     hint: 'Found in Weavenest Atla. Take the teleporter down, then climb the wall on the right to get to the elevator shaft, then climb further.',
     markers: [
@@ -90,8 +97,9 @@ export const MaskFragments: {
   },
   {
     id: 7,
+    act: 2,
     check: save => getScene('Song_09', 'Heart Piece', save)?.Value,
-    hint: 'Found in Cogwork Core. Head to the left and complete a small gauntlet.',
+    hint: 'Found in ||<2>Cogwork Core. Head to the left and complete a small gauntlet||.',
     markers: [
       {
         label: 'Defeat a short gauntlet.',
@@ -105,8 +113,9 @@ export const MaskFragments: {
   },
   {
     id: 8,
+    act: 2,
     check: save => save.playerData.MerchantEnclaveShellFragment,
-    hint: 'Purchased from Jubilana in Songclave for 750 rosaries.',
+    hint: 'Purchased from ||<2>Jubilana in Songclave for 750 rosaries||.',
     markers: [
       {
         label: 'Purchased from Jubilana for 750 rosaries.',
@@ -116,8 +125,9 @@ export const MaskFragments: {
   },
   {
     id: 9,
+    act: 2,
     check: save => getQuest('Beastfly Hunt', save)?.Data.IsCompleted,
-    hint: 'Promise the Grand Hunt wish in Bellhart and fight the Savage Beastfly in Far Fields.',
+    hint: 'Promise the Grand Hunt wish in Bellhart and fight the ||<2>Savage Beastfly in Far Fields||.',
     markers: [
       {
         label: 'Promise the Grand Hunt wish.',
@@ -135,8 +145,9 @@ export const MaskFragments: {
   },
   {
     id: 10,
+    act: 2,
     check: save => getScene('Library_05', 'Heart Piece', save)?.Value,
-    hint: 'Found in the Whispering Vaults. Hit a hidden lever in the ceiling in a room near the bottom right.',
+    hint: 'Found in the ||<2>Whispering Vaults. Hit a hidden lever in the ceiling in a room near the bottom right||.',
     markers: [
       {
         label: 'Hit a hidden lever in the ceiling and climb up from it.',
@@ -150,6 +161,7 @@ export const MaskFragments: {
   },
   {
     id: 11,
+    act: 2,
     check: save => getScene('Bone_East_LavaChallenge', 'Heart Piece (1)', save)?.Value,
     hint: 'Found in a deep lava gauntlet in a room in Far Fields.',
     markers: [
@@ -161,8 +173,9 @@ export const MaskFragments: {
   },
   {
     id: 12,
+    act: 2,
     check: save => getScene('Peak_04c', 'Heart Piece', save)?.Value,
-    hint: 'Found in a column in the far left of Mount Fay.',
+    hint: 'Found in a column in the far left of ||<2>Mount Fay||.',
     markers: [
       {
         label: 'Climb up the inside of a hanging column here.',
@@ -172,11 +185,12 @@ export const MaskFragments: {
   },
   {
     id: 13,
+    act: 2,
     check: save => getScene('Coral_19b', 'Heart Piece', save)?.Value,
-    hint: 'Found in the Blasted Steps. Head to the far left (near the way to leave Pharloom), take a running start, and harpoon -> double jump -> dash onto a platform. Or use Silk Soar.',
+    hint: 'Found in the Blasted Steps. Head to the far left (near the way to leave Pharloom), take a running start, and ||<2>harpoon -> double jump -> dash onto a platform||. Or use ||<3>Silk Soar||.',
     markers: [
       {
-        label: 'Harpoon -> double jump -> dash onto the platform here. Or use Silk Soar.',
+        label: 'Harpoon -> double jump -> dash onto the platform here. Or use ||<3>Silk Soar||.',
         location: { x: 541, y: 1980 },
       },
       {
@@ -187,8 +201,9 @@ export const MaskFragments: {
   },
   {
     id: 14,
+    act: 2,
     check: save => getScene('Wisp_07', 'Heart Piece', save)?.Value,
-    hint: 'Found in the right end of the Wisp Thicket.',
+    hint: 'Found in the right end of the ||<2>Wisp Thicket||.',
     markers: [
       {
         label: 'The Mask Fragment is above the muckwater.',
@@ -198,8 +213,9 @@ export const MaskFragments: {
   },
   {
     id: 15,
+    act: 2,
     check: save => getScene('Shadow_13', 'Heart Piece', save)?.Value,
-    hint: 'Found in Bilewater, in a room infested with Slubberlugs.',
+    hint: 'Found in ||<2>Bilewater, in a room infested with Slubberlugs||.',
     markers: [
       {
         label: 'The Mask Fragment is past all the Slubberlugs.',
@@ -209,8 +225,9 @@ export const MaskFragments: {
   },
   {
     id: 16,
+    act: 2,
     check: save => getScene('Slab_17', 'Heart Piece', save)?.Value,
-    hint: "Found in a platforming room locked behind the Apostate's Key in the top right portion of the Slab. The Apostate's Key can be acquired in the left side of the Putrified Ducts.",
+    hint: "Found in a platforming room locked behind the ||<2>Apostate's Key in the top right portion of the Slab||. The ||<2>Apostate's Key can be acquired in the left side of the Putrified Ducts||.",
     markers: [
       {
         label: "The Apostate's Key can be found here.",
@@ -224,8 +241,9 @@ export const MaskFragments: {
   },
   {
     id: 17,
+    act: 3,
     check: save => getQuest('Sprintmaster Race', save)?.Data.IsCompleted,
-    hint: 'Defeat Sprintmaster Swift in three races.',
+    hint: 'Defeat ||<3>Sprintmaster Swift in three races||.',
     markers: [
       {
         label: 'Defeat Sprintmaster Swift in three races.',
@@ -235,8 +253,9 @@ export const MaskFragments: {
   },
   {
     id: 18,
+    act: 3,
     check: save => getQuest('Destroy Thread Cores', save)?.Data.IsCompleted,
-    hint: 'Complete the Dark Hearts quest in Bellhart.',
+    hint: 'Complete the ||<3>Dark Hearts quest in Bellhart||.',
     markers: [
       {
         label:
@@ -247,8 +266,9 @@ export const MaskFragments: {
   },
   {
     id: 19,
+    act: 3,
     check: save => getScene('Peak_06', 'Heart Piece', save)?.Value,
-    hint: 'Found at the top of the Brightvein in Mount Fay.',
+    hint: 'Found at the top of the ||<3>Brightvein in Mount Fay||.',
     markers: [
       {
         label: 'Platform to the top of the Brightvein.',
@@ -258,8 +278,9 @@ export const MaskFragments: {
   },
   {
     id: 20,
+    act: 3,
     check: save => getQuest('Ant Trapper', save)?.Data.IsCompleted,
-    hint: 'Defeat Gurr the Outcast after claiming the quest in Bellhart after unlocking the Frontier.',
+    hint: 'Defeat ||<3>Gurr the Outcast after claiming the quest in Bellhart after unlocking the Frontier||.',
     markers: [
       {
         label: 'Claim the Hidden Hunter quest.',

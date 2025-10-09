@@ -42,7 +42,7 @@ const Mossberries: MapLocation[] = [
     location: { x: 1025, y: 2866 },
   },
   {
-    label: 'Collect the Mossberry here.',
+    label: '||<2>Collect the Mossberry here||.',
     location: { x: 2891, y: 728 },
   },
 ];
@@ -58,6 +58,7 @@ export const Tools: Record<
     id: string;
     img?: () => ReactElement;
     displayName: string;
+    act: 1 | 2 | 3;
     type: ToolType;
     isCounted: boolean;
     isUpgrade?: string;
@@ -69,6 +70,7 @@ export const Tools: Record<
   'Barbed Wire': {
     id: 'Barbed Wire',
     displayName: 'Barbed Bracelet',
+    act: 1,
     type: 2,
     isCounted: true,
     desc: "Collected in Sinner's Road.",
@@ -82,6 +84,7 @@ export const Tools: Record<
   'Bell Bind': {
     id: 'Bell Bind',
     displayName: 'Warding Bell',
+    act: 1,
     type: 1,
     isCounted: true,
     desc: 'Picked up from a corpse in the Far Fields.',
@@ -95,6 +98,7 @@ export const Tools: Record<
   'Bone Necklace': {
     id: 'Bone Necklace',
     displayName: 'Shard Pendant',
+    act: 1,
     type: 2,
     isCounted: true,
     desc: 'Collected in the Marrow.',
@@ -107,23 +111,25 @@ export const Tools: Record<
   },
   'Brolly Spike': {
     id: 'Brolly Spike',
-    displayName: 'Sawtooth Circlet',
+    displayName: '||<2>Sawtooth Circlet||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Bought from the Twelfth Architect in the Underworks for 230 rosaries and a Crafting Kit.',
+    desc: 'Bought from the ||<2>Twelfth Architect in the Underworks for 230 rosaries and a Craftmetal||.',
     markers: [
       {
-        label: 'Bought from the Twelfth Architect for 230 rosaries and a Crafting Kit.',
+        label: 'Bought from the Twelfth Architect for 230 rosaries and a Craftmetal.',
         location: Locations.TwelfthArchitect,
       },
     ],
   },
   'Cogwork Flier': {
     id: 'Cogwork Flier',
-    displayName: 'Cogfly',
+    displayName: '||<2>Cogfly||',
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: 'Constructed at a crafting bench in the High Halls. Requires one Craftmetal.',
+    desc: 'Constructed at a crafting bench in the ||<2>High Halls||. Requires one Craftmetal.',
     markers: [
       {
         label: 'Constructed for one Craftmetal.',
@@ -133,10 +139,11 @@ export const Tools: Record<
   },
   'Cogwork Saw': {
     id: 'Cogwork Saw',
-    displayName: 'Cogwork Wheel',
+    displayName: '||<2>Cogwork Wheel||',
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: 'Purchased from the Twelfth Architect in the Underworks for 360 rosaries and a Craftmetal.',
+    desc: 'Purchased from the ||<2>Twelfth Architect in the Underworks for 360 rosaries and a Craftmetal||.',
     markers: [
       {
         label: 'Purchased from the Twelfth Architect for 360 rosaries and a Craftmetal.',
@@ -147,6 +154,7 @@ export const Tools: Record<
   Compass: {
     id: 'Compass',
     displayName: 'Compass',
+    act: 1,
     type: 2,
     isCounted: true,
     desc: 'Purchased from Shakra for 70 rosaries.',
@@ -154,10 +162,11 @@ export const Tools: Record<
   },
   'Conch Drill': {
     id: 'Conch Drill',
-    displayName: 'Conchcutter',
+    displayName: '||<2>Conchcutter||',
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: 'Collected in the Coral Tower in the Sands of Karak.',
+    desc: 'Collected in the ||<2>Coral Tower in the Sands of Karak||.',
     markers: [
       {
         label: 'Collected in the Coral Tower.',
@@ -168,10 +177,11 @@ export const Tools: Record<
   'Curve Claws Upgraded': {
     id: 'Curve Claws Upgraded',
     displayName: 'Curvesickle',
+    act: 3,
     type: 0,
     isCounted: true,
     isUpgrade: 'Curve Claws',
-    desc: 'Upgraded by a Mottled Ant in the Far Fields after finishing a target shot.',
+    desc: 'Upgraded by a ||<3>Mottled Ant in the Far Fields after finishing a target shot||.',
     markers: [
       {
         label:
@@ -183,17 +193,18 @@ export const Tools: Record<
   'Curve Claws': {
     id: 'Curve Claws',
     displayName: 'Curveclaw',
+    act: 1,
     type: 0,
     isCounted: true,
     upgradesTo: 'Curve Claws Upgraded',
-    desc: 'Purchase the Curveclaw from the Mottled Hunter in the Far Fields for 140 rosaries. In Act II, this can be acquired from the room above.',
+    desc: 'Purchase the Curveclaw from the Mottled Hunter in the Far Fields for 140 rosaries. ||<2>In Act II, this can be acquired from the room above||.',
     markers: [
       {
         label: 'Purchase the Curveclaw from the Mottled Hunter in the Far Fields for 140 rosaries.',
         location: { x: 2788, y: 2316 },
       },
       {
-        label: 'In Act II, this can be acquired from the gauntlet room.',
+        label: '||<2>In Act II, this can be acquired from the gauntlet room||.',
         location: { x: 2898, y: 2282 },
       },
     ],
@@ -201,11 +212,16 @@ export const Tools: Record<
   'Dazzle Bind Upgraded': {
     id: 'Dazzle Bind Upgraded',
     displayName: 'Claw Mirrors',
+    act: 3,
     type: 1,
     isCounted: true,
     isUpgrade: 'Dazzle Bind',
-    desc: 'Received after defeating Tormented Trobbio in the Whispering Vaults.',
+    desc: 'Received after defeating ||<3>Tormented Trobbio in the Whispering Vaults||.',
     markers: [
+      {
+        label: 'Claim the Pain, Anguish, and Misery wish in Songclave.',
+        location: Locations.Songclave,
+      },
       {
         label: 'Received after defeating Tormented Trobbio.',
         location: { x: 2912, y: 1111 },
@@ -215,10 +231,11 @@ export const Tools: Record<
   'Dazzle Bind': {
     id: 'Dazzle Bind',
     displayName: 'Claw Mirror',
+    act: 2,
     type: 1,
     isCounted: true,
     upgradesTo: 'Dazzle Bind Upgraded',
-    desc: 'Received after defeating Trobbio in the Whispering Vaults.',
+    desc: 'Received after defeating ||<2>Trobbio in the Whispering Vaults||.',
     markers: [
       {
         label: 'Received after defeating Trobbio.',
@@ -229,6 +246,7 @@ export const Tools: Record<
   'Dead Mans Purse': {
     id: 'Dead Mans Purse',
     displayName: "Dead Bug's Purse",
+    act: 1,
     type: 2,
     isCounted: true,
     desc: 'Found on a corpse in the Wormways near Shellwood.',
@@ -242,6 +260,7 @@ export const Tools: Record<
   Extractor: {
     id: 'Extractor',
     displayName: 'Extractor',
+    act: 1,
     type: 0,
     isCounted: false,
     desc: 'Acquired from Alchemist Zylotol in the Wormways temporarily during quests.',
@@ -255,6 +274,7 @@ export const Tools: Record<
   'Flea Brew': {
     id: 'Flea Brew',
     displayName: 'Flea Brew',
+    act: 1,
     type: 0,
     isCounted: true,
     desc: 'Acquired from Grishkin at the Flea Caravan after moving to Greymoor.',
@@ -262,7 +282,8 @@ export const Tools: Record<
   },
   'Flea Charm': {
     id: 'Flea Charm',
-    displayName: 'Egg of Flealia',
+    displayName: '||<2>Egg of Flealia||',
+    act: 2,
     type: 1,
     isCounted: true,
     desc: 'Acquired from Fleamaster Mooshka after rescuing all fleas in Pharloom. See the Fleas section in True Completion for more details.',
@@ -271,6 +292,7 @@ export const Tools: Record<
   Flintstone: {
     id: 'Flintstone',
     displayName: 'Flintslate',
+    act: 1,
     type: 0,
     isCounted: true,
     desc: 'Found after the Simple Key door in Deep Docks. Can also be accessed via the secret entrance in the Far Fields.',
@@ -284,6 +306,7 @@ export const Tools: Record<
   'Fractured Mask': {
     id: 'Fractured Mask',
     displayName: 'Fractured Mask',
+    act: 1,
     type: 1,
     isCounted: true,
     desc: 'Bought from the Mottled Hunter in the Far Fields for 260 rosaries.',
@@ -297,6 +320,7 @@ export const Tools: Record<
   Harpoon: {
     id: 'Harpoon',
     displayName: 'Longpin',
+    act: 1,
     type: 0,
     isCounted: true,
     desc: 'Found in a hidden room in the northeast corner of Shellwood.',
@@ -310,6 +334,7 @@ export const Tools: Record<
   'Lava Charm': {
     id: 'Lava Charm',
     displayName: 'Magma Bell',
+    act: 2,
     type: 1,
     isCounted: true,
     desc: 'Purchased from the Forge Daughter in the Deep Docks for 110 rosaries and a Craftmetal.',
@@ -323,6 +348,7 @@ export const Tools: Record<
   'Lifeblood Syringe': {
     id: 'Lifeblood Syringe',
     displayName: 'Plasmium Phial',
+    act: 1,
     type: 0,
     isCounted: true,
     desc: "Received from Alchemist Zylotol in the Wormways after completing the Alchemist's Assistant quest.",
@@ -335,10 +361,11 @@ export const Tools: Record<
   },
   'Lightning Rod': {
     id: 'Lightning Rod',
-    displayName: 'Voltvessels',
+    displayName: '||<2>Voltvessels||',
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: 'Fight two Memoria in a mini-gauntlet in the Memorium to obtain the Voltvessels.',
+    desc: 'Fight ||<2>two Memoria in a mini-gauntlet in the Memorium to obtain the Voltvessels||.',
     markers: [
       {
         label: 'Fight the two Memoria in the room to obtain the Voltvessels.',
@@ -348,23 +375,25 @@ export const Tools: Record<
   },
   Longneedle: {
     id: 'Longneedle',
-    displayName: 'Longclaw',
+    displayName: '||<2>Longclaw||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Reward for completing the Broodfeast Wish for the Huntress in the Putrified Ducts.',
+    desc: 'Reward for completing the ||<2>Broodfeast wish for the Huntress in the Putrified Ducts||.',
     markers: [
       {
-        label: 'Reward for completing the Broodfeast Wish for the Huntress.',
+        label: 'Reward for completing the Broodfeast wish for the Huntress.',
         location: { x: 3618, y: 869 },
       },
     ],
   },
   'Maggot Charm': {
     id: 'Maggot Charm',
-    displayName: 'Wreath of Purity',
+    displayName: '||<2>Wreath of Purity||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Found on a platform in the Putrified Ducts.',
+    desc: 'Found on a platform in the ||<2>Putrified Ducts||.',
     markers: [
       {
         label: 'Pick up the Wreath of Purity here.',
@@ -375,12 +404,14 @@ export const Tools: Record<
   'Magnetite Dice': {
     id: 'Magnetite Dice',
     displayName: 'Magnetite Dice',
+    act: 1,
     type: 2,
     isCounted: true,
-    desc: 'Gamble against Lumble the Lucky in the Blasted Steps to win the Magnetite Dice. Can be picked up from his corpse in Act II.',
+    desc: 'Gamble against Lumble the Lucky in the Blasted Steps to win the Magnetite Dice. ||<2>Can be picked up from his corpse in Act II||.',
     markers: [
       {
-        label: 'Gamble against Lumble the Lucky to win the Magnetite Dice. Or wait for Act II.',
+        label:
+          'Gamble against Lumble the Lucky to win the Magnetite Dice. ||<2>Or wait for Act II||.',
         location: { x: 531, y: 1641 },
       },
     ],
@@ -388,6 +419,7 @@ export const Tools: Record<
   'Mosscreep Tool 1': {
     id: 'Mosscreep Tool 1',
     displayName: "Druid's Eye",
+    act: 1,
     type: 1,
     isCounted: true,
     upgradesTo: 'Mosscreep Tool 2',
@@ -403,6 +435,7 @@ export const Tools: Record<
   'Mosscreep Tool 2': {
     id: 'Mosscreep Tool 2',
     displayName: "Druid's Eyes",
+    act: 2,
     type: 1,
     isCounted: true,
     isUpgrade: 'Mosscreep Tool 1',
@@ -418,6 +451,7 @@ export const Tools: Record<
   Multibind: {
     id: 'Multibind',
     displayName: 'Multibinder',
+    act: 1,
     type: 1,
     isCounted: true,
     desc: 'Purchased from Frey in Bellhart for 880 rosaries.',
@@ -431,9 +465,10 @@ export const Tools: Record<
   'Musician Charm': {
     id: 'Musician Charm',
     displayName: 'Spider Strings',
+    act: 2,
     type: 2,
     isCounted: true,
-    desc: 'Purchased from Jubilana in Songclave for 320 rosaries.',
+    desc: 'Purchased from ||<2>Jubilana in Songclave for 320 rosaries||.',
     markers: [
       {
         label: 'Purchased from Jubilana for 320 rosaries.',
@@ -444,6 +479,7 @@ export const Tools: Record<
   Parry: {
     id: 'Parry',
     displayName: 'Cross Stitch',
+    act: 1,
     img: () => <img src={Parry} height={48} width={48} alt="Cross Stitch" className="inline" />,
     type: 3,
     isCounted: true,
@@ -458,6 +494,7 @@ export const Tools: Record<
   Pimpilo: {
     id: 'Pimpilo',
     displayName: 'Pimpillo',
+    act: 1,
     type: 0,
     isCounted: true,
     desc: "Can be crafted at a crafting bench in Greymoor, above Yarnaby's bellhome, with one Craftmetal.",
@@ -470,10 +507,11 @@ export const Tools: Record<
   },
   'Pinstress Tool': {
     id: 'Pinstress Tool',
-    displayName: 'Pin Badge',
+    displayName: '||<3>Pin Badge||',
+    act: 3,
     type: 1,
     isCounted: true,
-    desc: 'Received after defeating the Pinstress on Mount Fay in Act III.',
+    desc: 'Received after defeating the ||<3>Pinstress on Mount Fay in Act III||.',
     markers: [
       {
         label: "Find Pinstress's note in the Blasted Steps.",
@@ -488,6 +526,7 @@ export const Tools: Record<
   'Poison Pouch': {
     id: 'Poison Pouch',
     displayName: 'Pollip Pouch',
+    act: 1,
     type: 1,
     isCounted: true,
     desc: 'Received from Greyroot for the Rite of the Pollip quest.',
@@ -506,10 +545,11 @@ export const Tools: Record<
   },
   'Quick Sling': {
     id: 'Quick Sling',
-    displayName: 'Quick Sling',
+    displayName: '||<2>Quick Sling||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Picked up in Bilewater, below a mass of spike balls.',
+    desc: 'Picked up in ||<2>Bilewater, below a mass of spike balls||.',
     markers: [
       {
         label: 'Pick up the Quick Sling here.',
@@ -519,10 +559,11 @@ export const Tools: Record<
   },
   Quickbind: {
     id: 'Quickbind',
-    displayName: 'Injector Band',
+    displayName: '||<2>Injector Band||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Picked up in the Whiteward.',
+    desc: 'Picked up in the ||<2>Whiteward||.',
     markers: [
       {
         label: 'Pick up the Injector Band here.',
@@ -532,10 +573,11 @@ export const Tools: Record<
   },
   'Reserve Bind': {
     id: 'Reserve Bind',
-    displayName: 'Reserve Bind',
+    displayName: '||<2>Reserve Bind||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Reward for defeating the Second Sentinel in the High Halls.',
+    desc: 'Reward for defeating the ||<2>Second Sentinel in the High Halls||.',
     markers: [
       {
         label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
@@ -573,10 +615,11 @@ export const Tools: Record<
   },
   'Revenge Crystal': {
     id: 'Revenge Crystal',
-    displayName: 'Memory Crystal',
+    displayName: '||<2>Memory Crystal||',
     type: 1,
+    act: 2,
     isCounted: true,
-    desc: 'Found in Mount Fay, below the bench on the left.',
+    desc: 'Found in ||<2>Mount Fay, below the bench on the left||.',
     markers: [
       {
         label: 'Break the wall next to the bench.',
@@ -586,10 +629,11 @@ export const Tools: Record<
   },
   'Rosary Cannon': {
     id: 'Rosary Cannon',
-    displayName: 'Rosary Cannon',
+    displayName: '||<2>Rosary Cannon||',
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: 'Requires a Simple Key for a locked room before the Forum in the High Halls. Use a secret entrance in the ceiling and break a wall to the left of the steam chamber, then break the rosary string machine.',
+    desc: 'Requires a Simple Key for a locked room before the ||<2>Forum in the High Halls. Use a secret entrance in the ceiling and break a wall to the left of the steam chamber, then break the rosary string machine||.',
     markers: [
       {
         label:
@@ -601,6 +645,7 @@ export const Tools: Record<
   'Rosary Magnet': {
     id: 'Rosary Magnet',
     displayName: 'Magnetite Brooch',
+    act: 1,
     type: 2,
     isCounted: true,
     desc: 'Purchased from Pebb in Bone Bottom for 60 rosaries.',
@@ -613,10 +658,11 @@ export const Tools: Record<
   },
   'Screw Attack': {
     id: 'Screw Attack',
-    displayName: "Delver's Drill",
+    displayName: "||<2>Delver's Drill||",
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: "The Delver's Drill is found on a table in the bottom part of the Underworks.",
+    desc: "The ||<2>Delver's Drill is found on a table in the bottom part of the Underworks||.",
     markers: [
       {
         label: "Pick up the Delver's Drill here.",
@@ -626,10 +672,11 @@ export const Tools: Record<
   },
   Scuttlebrace: {
     id: 'Scuttlebrace',
-    displayName: 'Scuttlebrace',
+    displayName: '||<2>Scuttlebrace||',
+    act: 2,
     type: 2,
     isCounted: true,
-    desc: 'Purchased from the Twelfth Architect in the Underworks for 140 rosaries and a Craftmetal.',
+    desc: 'Purchased from the ||<2>Twelfth Architect in the Underworks for 140 rosaries and a Craftmetal||.',
     markers: [
       {
         label: 'Purchased from the Twelfth Architect for 140 rosaries and a Craftmetal.',
@@ -639,14 +686,15 @@ export const Tools: Record<
   },
   'Shakra Ring': {
     id: 'Shakra Ring',
-    displayName: 'Throwing Ring',
+    displayName: '||<2>Throwing Ring||',
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: "Received from Shakra after completing the Trail's End Wish in Bilewater.",
+    desc: "Received from ||<2>Shakra after completing the Trail's End wish in Bilewater||.",
     markers: [
       {
         label:
-          "Meet Shakra in Bilewater after claiming the Trail's End Wish after collecting all maps.",
+          "Meet Shakra in Bilewater after claiming the Trail's End wish after collecting all maps.",
         location: { x: 4652, y: 949 },
       },
     ],
@@ -654,6 +702,7 @@ export const Tools: Record<
   'Shell Satchel': {
     id: 'Shell Satchel',
     displayName: 'Shell Satchel',
+    act: 1,
     type: 2,
     isCounted: true,
     desc: "Steel-Soul exclusive. Found in the same location in the Wormways as the Dead Bug's Purse.",
@@ -666,11 +715,12 @@ export const Tools: Record<
   },
   'Silk Bomb': {
     id: 'Silk Bomb',
-    displayName: 'Rune Rage',
+    displayName: '||<2>Rune Rage||',
+    act: 2,
     img: () => <img src={SilkBomb} height={48} width={48} alt="Rune Rage" className="inline" />,
     type: 3,
     isCounted: true,
-    desc: 'Defeat the First Sinner in a secret room in the Slab to unlock Rune Rage.',
+    desc: 'Defeat the ||<2>First Sinner in a secret room in the Slab to unlock Rune Rage||.',
     markers: [
       {
         label: "Pick up the Apostate's Key in the Putrified Ducts.",
@@ -688,13 +738,14 @@ export const Tools: Record<
   },
   'Silk Boss Needle': {
     id: 'Silk Boss Needle',
-    displayName: 'Pale Nails',
+    displayName: '||<3>Pale Nails||',
+    act: 3,
     img: () => (
       <img src={SilkBossNeedle} height={48} width={48} alt="Pale Nails" className="inline" />
     ),
     type: 3,
     isCounted: true,
-    desc: 'Return to the Cradle in Act III to pick up the Pale Nails.',
+    desc: 'Return to the ||<3>Cradle in Act III to pick up the Pale Nails||.',
     markers: [
       {
         label: 'Bind the Pale Nails here.',
@@ -704,11 +755,12 @@ export const Tools: Record<
   },
   'Silk Charge': {
     id: 'Silk Charge',
-    displayName: 'Sharpdart',
+    displayName: '||<2>Sharpdart||',
+    act: 2,
     img: () => <img src={SilkCharge} height={48} width={48} alt="Sharpdart" className="inline" />,
     type: 3,
     isCounted: true,
-    desc: 'Bind the Sharpdart in Weavenest Karn.',
+    desc: 'Bind the ||<2>Sharpdart in Weavenest Karn||.',
     markers: [
       {
         label: 'Bound in Weavenest Karn.',
@@ -718,7 +770,8 @@ export const Tools: Record<
   },
   'Silk Snare': {
     id: 'Silk Snare',
-    displayName: 'Silk Snare',
+    displayName: '||<2>Silk Snare||',
+    act: 2,
     type: 0,
     isCounted: false,
     desc: 'Found in a secret room in Weavenest Atla.',
@@ -733,6 +786,7 @@ export const Tools: Record<
     id: 'Silk Spear',
     displayName: 'Silkspear',
     img: () => <img src={SilkSpear} height={48} width={48} alt="Silkspear" className="inline" />,
+    act: 1,
     type: 3,
     isCounted: true,
     desc: 'Bound in Mosshome.',
@@ -745,10 +799,11 @@ export const Tools: Record<
   },
   'Spool Extender': {
     id: 'Spool Extender',
-    displayName: 'Spool Extender',
+    displayName: '||<2>Spool Extender||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Bought from Jubilana in Songclave for 720 rosaries.',
+    desc: 'Bought from ||<2>Jubilana in Songclave for 720 rosaries||.',
     markers: [
       {
         label: 'Bought from Jubilana for 720 rosaries.',
@@ -759,6 +814,7 @@ export const Tools: Record<
   Sprintmaster: {
     id: 'Sprintmaster',
     displayName: 'Silkspeed Anklets',
+    act: 1,
     type: 2,
     isCounted: true,
     desc: 'Sprint across Weavenest Cindril to receive the Silkspeed Anklets.',
@@ -772,6 +828,7 @@ export const Tools: Record<
   'Sting Shard': {
     id: 'Sting Shard',
     displayName: 'Sting Shard',
+    act: 1,
     type: 0,
     isCounted: true,
     desc: 'Purchased from the Forge Daughter in the Deep Docks for 140 rosaries and 1 Craftmetal.',
@@ -785,6 +842,7 @@ export const Tools: Record<
   'Straight Pin': {
     id: 'Straight Pin',
     displayName: 'Straight Pin',
+    act: 1,
     type: 0,
     isCounted: true,
     desc: "Found above Grindle's cell in the Marrow after he is freed.",
@@ -798,6 +856,7 @@ export const Tools: Record<
   Tack: {
     id: 'Tack',
     displayName: 'Tacks',
+    act: 1,
     type: 0,
     isCounted: true,
     desc: "Complete the Muckroach Guts wish for Crull and Benjie in Sinner's Road.",
@@ -810,10 +869,11 @@ export const Tools: Record<
   },
   'Thief Charm': {
     id: 'Thief Charm',
-    displayName: "Thief's Mark",
+    displayName: "||<2>Thief's Mark||",
+    act: 2,
     type: 2,
     isCounted: true,
-    desc: 'Bought from Grindle in the Blasted Steps for 350 rosaries.',
+    desc: 'Bought from ||<2>Grindle in the Blasted Steps for 350 rosaries||.',
     markers: [
       {
         label: 'Bought from Grindle for 350 rosaries.',
@@ -823,10 +883,11 @@ export const Tools: Record<
   },
   'Thief Claw': {
     id: 'Thief Claw',
-    displayName: 'Snitch Pick',
+    displayName: '||<2>Snitch Pick||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Bought from Grindle in the Blasted Steps for 740 rosaries.',
+    desc: 'Bought from ||<2>Grindle in the Blasted Steps for 740 rosaries||.',
     markers: [
       {
         label: 'Bought from Grindle for 740 rosaries.',
@@ -837,6 +898,7 @@ export const Tools: Record<
   'Thread Sphere': {
     id: 'Thread Sphere',
     displayName: 'Thread Storm',
+    act: 1,
     img: () => (
       <img src={ThreadSphere} height={48} width={48} alt="Thread Storm" className="inline" />
     ),
@@ -857,6 +919,7 @@ export const Tools: Record<
   'Tri Pin': {
     id: 'Tri Pin',
     displayName: 'Threefold Pin',
+    act: 1,
     type: 0,
     isCounted: true,
     desc: 'Complete the Craw gauntlet in Greymoor to unlock balloons that can be pogoed to reach the top.',
@@ -873,10 +936,11 @@ export const Tools: Record<
   },
   Wallcling: {
     id: 'Wallcling',
-    displayName: "Ascendant's Grip",
+    displayName: "||<2>Ascendant's Grip||",
+    act: 2,
     type: 2,
     isCounted: true,
-    desc: 'Purchased from Jubilana in Songclave for 350 rosaries.',
+    desc: 'Purchased from ||<2>Jubilana in Songclave for 350 rosaries||.',
     markers: [
       {
         label: 'Purchased from Jubilana for 350 rosaries.',
@@ -886,10 +950,11 @@ export const Tools: Record<
   },
   'WebShot Architect': {
     id: 'WebShot Architect',
-    displayName: 'Silkshot',
+    displayName: '||<2>Silkshot||',
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: 'This can be acquired by having the Twelfth Architect in the Underworks repair the Ruined Tool from Weavenest Murglin in Bilewater.',
+    desc: 'This can be acquired by having the ||<2>Twelfth Architect in the Underworks repair the Ruined Tool from Weavenest Murglin in Bilewater||.',
     markers: [
       RuinedTool,
       {
@@ -900,10 +965,11 @@ export const Tools: Record<
   },
   'WebShot Forge': {
     id: 'WebShot Forge',
-    displayName: 'Silkshot',
+    displayName: '||<2>Silkshot||',
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: 'This can be acquired by having the Forge Daughter in the Deep Docks repair the Ruined Tool from Weavenest Murglin in Bilewater.',
+    desc: 'This can be acquired by having the ||<2>Forge Daughter in the Deep Docks repair the Ruined Tool from Weavenest Murglin in Bilewater||.',
     markers: [
       RuinedTool,
       {
@@ -914,10 +980,11 @@ export const Tools: Record<
   },
   'WebShot Weaver': {
     id: 'WebShot Weaver',
-    displayName: 'Silkshot',
+    displayName: '||<2>Silkshot||',
+    act: 2,
     type: 0,
     isCounted: true,
-    desc: 'This can be acquired by going to Mount Fay to repair the Ruined Tool from Weavenest Murglin in Bilewater.',
+    desc: 'This can be acquired by going to ||<2>Mount Fay to repair the Ruined Tool from Weavenest Murglin in Bilewater||.',
     markers: [
       RuinedTool,
       {
@@ -929,6 +996,7 @@ export const Tools: Record<
   'Weighted Anklet': {
     id: 'Weighted Anklet',
     displayName: 'Weighted Belt',
+    act: 1,
     type: 2,
     isCounted: true,
     desc: "Buy from Mort in the Pilgrim's Rest in Far Fields for 160 Rosaries.",
@@ -942,6 +1010,7 @@ export const Tools: Record<
   'White Ring': {
     id: 'White Ring',
     displayName: 'Weavelight',
+    act: 1,
     type: 1,
     isCounted: true,
     desc: 'Rewarded for defeating the double Moss Mother fight in Weavenest Atla.',
@@ -954,10 +1023,11 @@ export const Tools: Record<
   },
   'Wisp Lantern': {
     id: 'Wisp Lantern',
-    displayName: 'Wispfire Lantern',
+    displayName: '||<2>Wispfire Lantern||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Rewarded for defeating the Father of the Flame in the Wisp Thicket.',
+    desc: 'Rewarded for defeating the ||<2>Father of the Flame in the Wisp Thicket||.',
     markers: [
       {
         label: 'Rewarded for defeating the Father of the Flame.',
@@ -967,10 +1037,11 @@ export const Tools: Record<
   },
   'Zap Imbuement': {
     id: 'Zap Imbuement',
-    displayName: 'Volt Filament',
+    displayName: '||<2>Volt Filament||',
+    act: 2,
     type: 1,
     isCounted: true,
-    desc: 'Rewarded for defeating the Voltvyrm in the Voltnest in the Sands of Karak.',
+    desc: 'Rewarded for defeating the ||<2>Voltvyrm in the Voltnest in the Sands of Karak||.',
     markers: [
       {
         label: 'Rewarded for defeating the Voltvyrm.',

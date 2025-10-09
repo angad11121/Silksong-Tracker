@@ -5,12 +5,14 @@ import type { MapLocation } from '@/ui/components/map/types';
 
 export const SpoolFragments: {
   id: number;
+  act: 1 | 2 | 3;
   check: (saveData: SaveData) => boolean | undefined;
   hint: string;
   markers: MapLocation[];
 }[] = [
   {
     id: 1,
+    act: 1,
     check: save => getScene('Bone_11b', 'Silk Spool', save)?.Value,
     hint: 'Found in Mosshome, after a breakable wall in a room directly above Bone Bottom.',
     markers: [
@@ -26,6 +28,7 @@ export const SpoolFragments: {
   },
   {
     id: 2,
+    act: 1,
     check: save => getScene('Bone_East_13', 'Silk Spool', save)?.Value,
     hint: 'Found in Deep Docks, left -> down -> right from Forge Daughter.',
     markers: [
@@ -37,8 +40,9 @@ export const SpoolFragments: {
   },
   {
     id: 3,
+    act: 2,
     check: save => getScene('Dock_03c', 'Silk Spool', save)?.Value,
-    hint: 'Found in the inner parts of Deep Docks. Requires Harpoon to unlock an area, then a platforming section to the right when you get near the lava.',
+    hint: 'Found in the inner parts of Deep Docks. Requires ||<2>Clawline to unlock an area, then a platforming section to the right when you get near the lava||.',
     markers: [
       {
         label: 'Start the platforming section here.',
@@ -52,6 +56,7 @@ export const SpoolFragments: {
   },
   {
     id: 4,
+    act: 1,
     check: save => getScene('Greymoor_02', 'Silk Spool', save)?.Value,
     hint: 'Found in Greymoor, above the place where Shakra can give you the map. Unlocked by heading right from above Halfway Home.',
     markers: [
@@ -67,6 +72,7 @@ export const SpoolFragments: {
   },
   {
     id: 5,
+    act: 1,
     check: save => save.playerData.PurchasedBelltownSpoolSegment,
     hint: 'Complete the My Missing Courier quest in Bellhart in order to buy it from Frey. Tipp can be found in the drop left of Shellwood.',
     markers: [
@@ -82,6 +88,7 @@ export const SpoolFragments: {
   },
   {
     id: 6,
+    act: 1,
     check: save => getScene('Weave_11', 'Silk Spool', save)?.Value,
     hint: 'Found in Weavenest Atla. Climb up the room from the right wall of the lower end of the teleporter, then head left.',
     markers: [
@@ -97,28 +104,7 @@ export const SpoolFragments: {
   },
   {
     id: 7,
-    check: save => getScene('Peak_01', 'Silk Spool', save)?.Value,
-    hint: 'Found in Mount Fay, technically, but only accessible from the Slab. Head up from the large room where you normally head down to get to the Bellway from the Citadel passage.',
-    markers: [
-      {
-        label: 'Spool Fragment',
-        location: { x: 1152, y: 916 },
-      },
-    ],
-  },
-  {
-    id: 8,
-    check: save => save.playerData.purchasedGrindleSpoolPiece,
-    hint: 'Purchased from Grindle in the Blasted Steps for 680 rosaries.',
-    markers: [
-      {
-        label: 'Purchased from Grindle for 680 rosaries.',
-        location: Locations.Grindle,
-      },
-    ],
-  },
-  {
-    id: 9,
+    act: 1,
     check: save =>
       getQuest('Save the Fleas', save)?.Data.IsCompleted ||
       getQuest('Save the Fleas Pre', save)?.Data.IsCompleted,
@@ -131,9 +117,34 @@ export const SpoolFragments: {
     ],
   },
   {
+    id: 8,
+    act: 2,
+    check: save => getScene('Peak_01', 'Silk Spool', save)?.Value,
+    hint: 'Found in ||<2>Mount Fay, technically, but only accessible from the Slab. Head up from the large room where you normally head down to get to the Bellway from the Citadel passage||.',
+    markers: [
+      {
+        label: 'Spool Fragment',
+        location: { x: 1152, y: 916 },
+      },
+    ],
+  },
+  {
+    id: 9,
+    act: 2,
+    check: save => save.playerData.purchasedGrindleSpoolPiece,
+    hint: 'Purchased from ||<2>Grindle in the Blasted Steps for 680 rosaries||.',
+    markers: [
+      {
+        label: 'Purchased from Grindle for 680 rosaries.',
+        location: Locations.Grindle,
+      },
+    ],
+  },
+  {
     id: 10,
+    act: 2,
     check: save => getScene('Song_19_entrance', 'Silk Spool', save)?.Value,
-    hint: 'Found at the Grand Gate. Climb up the balances to the very top.',
+    hint: 'Found at the ||<2>Grand Gate. Climb up the balances to the very top||.',
     markers: [
       {
         label: 'Climb up the balances to the very top.',
@@ -143,8 +154,9 @@ export const SpoolFragments: {
   },
   {
     id: 11,
+    act: 2,
     check: save => getScene('Hang_03_top', 'Silk Spool', save)?.Value,
-    hint: 'Found at the top of a room in the High Halls.',
+    hint: 'Found at the top of a room in the ||<2>High Halls||.',
     markers: [
       {
         label: 'Spool Fragment',
@@ -154,8 +166,9 @@ export const SpoolFragments: {
   },
   {
     id: 12,
+    act: 2,
     check: save => save.playerData.MerchantEnclaveSpoolPiece,
-    hint: 'Purchased from Jubilana in Songclave for 500 rosaries after completing The Lost Merchant.',
+    hint: 'Purchased from ||<2>Jubilana in Songclave for 500 rosaries after completing The Lost Merchant||.',
     markers: [
       {
         label: 'Purchased from Jubilana for 500 rosaries.',
@@ -165,8 +178,9 @@ export const SpoolFragments: {
   },
   {
     id: 13,
+    act: 2,
     check: save => getScene('Cog_07', 'Silk Spool', save)?.Value,
-    hint: 'Found in Cogwork Core, after the room in the lower right with the Cogwork Clapper.',
+    hint: 'Found in ||<2>Cogwork Core, after the room in the lower right with the Cogwork Clapper||.',
     markers: [
       {
         label: 'Open the door in the room with the Cogwork Clapper.',
@@ -176,8 +190,9 @@ export const SpoolFragments: {
   },
   {
     id: 14,
+    act: 2,
     check: save => getScene('Ward_01', 'Silk Spool', save)?.Value,
-    hint: 'Found in Whiteward, below the elevator. Take the lift down, go through Whiteward until you find the shaft, then head up, summon the lift, and drop down the shaft into the side channel as it passes you.',
+    hint: 'Found in ||<2>Whiteward, below the elevator. Take the lift down, go through Whiteward until you find the shaft, then head up, summon the lift, and drop down the shaft into the side channel as it passes you||.',
     markers: [
       {
         label: 'Below the elevator.',
@@ -187,8 +202,9 @@ export const SpoolFragments: {
   },
   {
     id: 15,
+    act: 2,
     check: save => getQuest('Save Sherma', save)?.Data.IsCompleted,
-    hint: 'Complete the Balm for the Wounded quest in Songclave.',
+    hint: 'Complete the ||<2>Balm for the Wounded quest in Songclave||.',
     markers: [
       {
         label: 'Promise the Balm for the Wounded wish.',
@@ -202,8 +218,9 @@ export const SpoolFragments: {
   },
   {
     id: 16,
+    act: 2,
     check: save => getScene('Under_10', 'Silk Spool', save)?.Value,
-    hint: 'Found in the Underworks, after a mini-gauntlet down and left from the Underworks Ventrica.',
+    hint: 'Found in the ||<2>Underworks, after a mini-gauntlet down and left from the Underworks Ventrica||.',
     markers: [
       {
         label: 'Enter the gauntlet from the right.',
@@ -213,8 +230,9 @@ export const SpoolFragments: {
   },
   {
     id: 17,
+    act: 2,
     check: save => getScene('Library_11b', 'Silk Spool', save)?.Value,
-    hint: 'Found in the Underworks, at the very bottom of the room to the right of the Twelfth Architect.',
+    hint: 'Found in the ||<2>Underworks, at the very bottom of the room to the right of the Twelfth Architect||.',
     markers: [
       {
         label: 'Spool Fragment',
@@ -224,8 +242,9 @@ export const SpoolFragments: {
   },
   {
     id: 18,
+    act: 2,
     check: save => getScene('Arborium_09', 'Silk Spool', save)?.Value,
-    hint: "Found in the Memorium, in a platforming segment on the left side that's entered from below the Memorium Ventrica.",
+    hint: "Found in the ||<2>Memorium, in a platforming segment on the left side that's entered from below the Memorium Ventrica||.",
     markers: [
       {
         label: 'Enter from the upper entry.',

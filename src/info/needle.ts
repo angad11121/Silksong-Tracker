@@ -14,6 +14,7 @@ export const NeedleUpgrades: {
   levels: { id: number; name: string; desc: string; type: NeedleLevel }[];
   options: {
     desc: string;
+    act: 1 | 2 | 3;
     check: (saveData: SaveData) => boolean | undefined;
     markers: ((saveData: SaveData) => MapLocation[]) | MapLocation[];
   }[];
@@ -46,6 +47,7 @@ export const NeedleUpgrades: {
   ],
   options: [
     {
+      act: 1,
       desc: 'The Needle can be sharpened once for free by talking to Pinmaster Plinney.',
       check: saveData => saveData.playerData.nailUpgrades >= 1,
       markers: [
@@ -56,7 +58,8 @@ export const NeedleUpgrades: {
       ],
     },
     {
-      desc: 'A Pale Oil can be found after solving a block puzzle in the Whispering Vaults.',
+      act: 2,
+      desc: 'A Pale Oil can be found after solving a block puzzle in the ||<2>Whispering Vaults||.',
       check: saveData => getScene('Library_03', 'Collectable Item Pickup', saveData)?.Value,
       markers: [
         {
@@ -74,7 +77,8 @@ export const NeedleUpgrades: {
       ],
     },
     {
-      desc: 'A Pale Oil can be received from Loyal Megwin in the Choral Chambers after completing the Great Taste of Pharloom quest.',
+      act: 2,
+      desc: 'A Pale Oil can be received from ||<2>Loyal Megwin in the Choral Chambers after completing the Great Taste of Pharloom quest||.',
       check: saveData => saveData.playerData.GotGourmandReward,
       markers: saveData =>
         [
@@ -119,7 +123,8 @@ export const NeedleUpgrades: {
         }),
     },
     {
-      desc: 'A Pale Oil can be received from Fleamaster Mooshka in Fleatopia after beating all three high scores in the Flea Games.',
+      act: 3,
+      desc: 'A Pale Oil can be received from ||<3>Fleamaster Mooshka in Fleatopia after beating all three high scores in the Flea Games||.',
       check: saveData => saveData.playerData.FleaGamesPinataHit,
       markers: [
         {

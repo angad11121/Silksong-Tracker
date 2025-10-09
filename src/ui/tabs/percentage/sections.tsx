@@ -87,9 +87,9 @@ function renderToolChildren(type: ToolType): Section<PercentageSectionCtx>[] {
     ...(type === ToolType.Red
       ? [
           {
-            title: 'Silkshot',
+            title: '||<2>Silkshot||',
             subtext:
-              'The Ruined Tool can be upgraded by three different characters, each of whom produces a slightly different Silkshot.',
+              'The ||<2>Ruined Tool can be upgraded by three different characters, each of whom produces a slightly different Silkshot||.',
             children: saveData => {
               const hasSilkshot = SilkshotVariants.find(variant => hasTool(variant, saveData));
               return hasSilkshot
@@ -172,9 +172,10 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
               />
             ),
           },
+          // Act II
           {
             title: 'Silk Heart #2',
-            subtext: 'A Silk Heart is awarded for defeating Lace in the Cradle.',
+            subtext: 'A Silk Heart is awarded for ||<2>defeating Lace in the Cradle||.',
             has: saveData =>
               getScene('Memory_Silk_Heart_LaceTower', 'glow_rim_Remasker', saveData)?.Value,
             render: ({ saveData, entry }) => (
@@ -193,10 +194,11 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
               />
             ),
           },
+          // Act II
           {
             title: 'Silk Heart #3',
             subtext:
-              'A Silk Heart is awarded for defeating the Unravelled in a secret area in Whiteward.',
+              'A Silk Heart is awarded for ||<2>defeating the Unravelled in a secret area in Whiteward||.',
             has: saveData =>
               getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value,
             render: ({ saveData, entry }) => (
@@ -425,13 +427,13 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         },
       },
       {
-        title: 'Everbloom',
+        title: '||<3>Everbloom||',
         subtext:
-          'The Everbloom is acquired by talking to the Snail Shamans after acquiring three Hearts in Act III.',
+          'The ||<3>Everbloom|| is acquired by ||<3>talking to the Snail Shamans after acquiring three Hearts in Act III||.',
         children: [
           {
-            title: 'Everbloom',
-            subtext: 'Complete the quest in the Ruined Chapel.',
+            title: '||<3>Everbloom||',
+            subtext: 'Complete the quest in the ||<3>Ruined Chapel||.',
             render: ({ saveData, entry }) => (
               <LeafRenderer
                 id={null}
@@ -457,7 +459,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
       {
         title: 'Tools',
         subtext:
-          'All Tools, except the Extractor and the Silk Snare, are required for 100% completion.',
+          'All Tools, except the Extractor and the ||<2>Silk Snare||, are required for 100% completion.',
         children: [
           {
             title: 'Red Tools',
@@ -556,10 +558,11 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                   />
                 ),
               },
+              // Act II
               {
                 title: 'Crafting Kit #3',
                 subtext:
-                  'A Crafting Kit can be purchased from the Twelfth Architect in the Underworks for 450 rosaries.',
+                  'A Crafting Kit can be purchased from the ||<2>Twelfth Architect in the Underworks for 450 rosaries||.',
                 render: ({ saveData, entry }) => (
                   <LeafRenderer
                     id={3}
@@ -576,10 +579,11 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                   />
                 ),
               },
+              // Act II
               {
                 title: 'Crafting Kit #4',
                 subtext:
-                  'A Crafting Kit can be purchased from Grindle in the Blasted Steps for 700 rosaries.',
+                  'A Crafting Kit can be purchased from ||<2>Grindle in the Blasted Steps for 700 rosaries||.',
                 render: ({ saveData, entry }) => (
                   <LeafRenderer
                     id={4}
@@ -610,7 +614,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
               {
                 title: 'Tool Pouch Upgrade #1',
                 subtext:
-                  'A Tool Pouch can be won from Loddie in the Marrow by hitting 15 targets in a row. It can be picked up from a table in the same room in Act III.',
+                  'A Tool Pouch can be won from Loddie in the Marrow by hitting 15 targets in a row. ||<3>It can be picked up from a table in the same room in Act III||.',
                 render: ({ saveData, entry }) => (
                   <LeafRenderer
                     id={1}
@@ -625,7 +629,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     markers={[
                       {
                         label:
-                          'Won from Loddie by hitting 15 targets in a row. It can be picked up from a table in the same room in Act III.',
+                          'Won from Loddie by hitting 15 targets in a row. ||<3>It can be picked up from a table in the same room in Act III||.',
                         location: { x: 2106, y: 2539 },
                       },
                     ]}
@@ -655,7 +659,28 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
               },
               {
                 title: 'Tool Pouch Upgrade #3',
-                subtext: 'Mooshka gives you a Tool Pouch upgrade after moving to Fleatopia.',
+                subtext:
+                  'Given by Nuu in Halfway Home in Greymoor after completing the Bugs of Pharloom quest.',
+                render: ({ saveData, entry }) => (
+                  <LeafRenderer
+                    id={4}
+                    check={saveData => getQuest('Journal', saveData)?.Data.IsCompleted}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Given by Nuu after completing the Bugs of Pharloom quest.',
+                        location: Locations.HalfwayHome,
+                      },
+                    ]}
+                    type={LeafRendererType.ToolPouch}
+                  />
+                ),
+              },
+              // Act II
+              {
+                title: 'Tool Pouch Upgrade #4',
+                subtext: 'Mooshka gives you a Tool Pouch upgrade after moving to ||<2>Fleatopia||.',
                 render: ({ saveData, entry }) => (
                   <LeafRenderer
                     id={3}
@@ -669,26 +694,6 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                       {
                         label: 'Move the Flea Caravan to Fleatopia.',
                         location: Locations.Mooshka.Fleatopia,
-                      },
-                    ]}
-                    type={LeafRendererType.ToolPouch}
-                  />
-                ),
-              },
-              {
-                title: 'Tool Pouch Upgrade #4',
-                subtext:
-                  'Given by Nuu in Halfway Home in Greymoor after completing the Bugs of Pharloom quest.',
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={4}
-                    check={saveData => getQuest('Journal', saveData)?.Data.IsCompleted}
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={[
-                      {
-                        label: 'Given by Nuu after completing the Bugs of Pharloom quest.',
-                        location: Locations.HalfwayHome,
                       },
                     ]}
                     type={LeafRendererType.ToolPouch}

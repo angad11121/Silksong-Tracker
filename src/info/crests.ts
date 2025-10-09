@@ -5,6 +5,7 @@ export const Crests: {
   id: string;
   gameId: string;
   name: string;
+  act: 1 | 2 | 3;
   desc: string;
   hint: string;
   markers: MapLocation[];
@@ -13,6 +14,7 @@ export const Crests: {
     id: 'crest_reaper',
     gameId: 'Reaper',
     name: 'Reaper',
+    act: 1,
     desc: 'Attack with heavy, arcing slashes and reap additional Silk from enemies.',
     hint: 'Bound in the Chapel of the Reaper in Greymoor.',
     markers: [
@@ -26,6 +28,7 @@ export const Crests: {
     id: 'crest_wanderer',
     gameId: 'Wanderer',
     name: 'Wanderer',
+    act: 1,
     desc: 'Cut swiftly and nimbly with short, precise strikes.',
     hint: 'Bound in the Chapel of the Wanderer in Bonegrave, in Moss Grotto.',
     markers: [
@@ -39,6 +42,7 @@ export const Crests: {
     id: 'crest_beast',
     gameId: 'Warrior',
     name: 'Beast',
+    act: 1,
     desc: 'Tear foes with savage slashes. Bind to enter a wild fury and steal life from prey.',
     hint: "Bound in the Chapel of the Beast in Hunter's March.",
     markers: [
@@ -51,9 +55,10 @@ export const Crests: {
   {
     id: 'crest_witch',
     gameId: 'Witch',
-    name: 'Witch',
+    name: '||<2>Witch||',
+    act: 2,
     desc: 'Whip the needle in sweeping swings. Leech the life of foes through twisted roots.',
-    hint: "Obtained after completing the Infestation Operation quest. First, acquire the Twisted Bud by dropping into Bilewater in the Whispering Vaults. Next, talk with Greyroot in Shellwood and grant the Right of Rebirth wish. Then go speak to Yarnaby in upper Greymoor. She will direct you to Crull and Benjie in Sinner's Road. Finally, return to Yarnaby.",
+    hint: "Obtained after ||<2>completing the Infestation Operation quest. First, acquire the Twisted Bud by dropping into Bilewater in the Whispering Vaults. Next, talk with Greyroot in Shellwood and grant the Right of Rebirth wish. Then go speak to Yarnaby in upper Greymoor. She will direct you to Crull and Benjie in Sinner's Road. Finally, return to Yarnaby||.",
     markers: [
       {
         label:
@@ -79,9 +84,10 @@ export const Crests: {
   {
     id: 'crest_architect',
     gameId: 'Toolmaster',
-    name: 'Architect',
+    name: '||<2>Architect||',
+    act: 2,
     desc: 'Spin the needle as a screw, shredding foes. Spend Silk to rapnamely craft new tools.',
-    hint: 'Bound in the Chapel of the Architect in the Underworks; can be purchased from the Twelfth Architect for 110 rosaries after acquiring 25 tools.',
+    hint: 'Bound in the ||<2>Chapel of the Architect in the Underworks; the key can be purchased from the Twelfth Architect for 110 rosaries after acquiring 25 tools||.',
     markers: [
       {
         label:
@@ -97,9 +103,10 @@ export const Crests: {
   {
     id: 'crest_shaman',
     gameId: 'Spell',
-    name: 'Shaman',
+    name: '||<3>Shaman||',
+    act: 3,
     desc: 'Cast the blade forward and empower Silk Skills with powerful runes.',
-    hint: 'Bound in the Ruined Chapel in the Moss Grotto. Requires Silk Soar to access.',
+    hint: 'Bound in the ||<3>Ruined Chapel in the Moss Grotto||.',
     markers: [
       {
         label:
