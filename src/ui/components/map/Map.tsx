@@ -1,4 +1,12 @@
-import { useState, useEffect, useRef, useCallback, type ReactElement, useMemo } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type ReactElement,
+  useMemo,
+  type ReactNode,
+} from 'react';
 import { useOnce } from '@/ui/hooks/useOnce';
 
 import MapImage from '@/assets/map/map.jpg';
@@ -7,6 +15,7 @@ import LiteMapImage from '@/assets/map/map_lite.jpg';
 import { Tooltip } from '@/ui/components/Tooltip';
 import { MAP_DIMENSIONS, MAP_MARKERS } from '@/ui/components/map/constants';
 import { MAP_CONTROLS_STYLES } from '@/ui/components/map/styles';
+import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
 import type { MapLocation, MapMarker } from '@/ui/components/map/types';
 
 function Delim(): ReactElement {
@@ -14,7 +23,7 @@ function Delim(): ReactElement {
 }
 
 type CombinedMarker = {
-  labels: string[];
+  labels: ReactNode[];
   marker: MapMarker;
   location: { x: number; y: number };
   outOfBounds?: boolean;
@@ -29,15 +38,16 @@ function groupMarkersByLocation(markers: MapLocation[]): CombinedMarker[] {
   for (const marker of markers) {
     const locationKey = `${marker.location.x},${marker.location.y}`;
     const existing = locationMap.get(locationKey);
+    const labelElement = <SpoilerRenderer content={marker.label} />;
 
     if (existing) {
-      existing.labels.push(marker.label);
+      existing.labels.push(<Delim />, labelElement);
       if (!existing.marker && marker.marker) {
         existing.marker = marker.marker;
       }
     } else {
       locationMap.set(locationKey, {
-        labels: [marker.label],
+        labels: [labelElement],
         marker: marker.marker,
         location: marker.location,
       });
@@ -433,20 +443,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
           return (
             <div key={`${marker.labels.join('-')}-${index}`} className="absolute">
               <Tooltip
-                content={
-                  marker.labels.length > 1
-                    ? marker.labels.reduce((acc, label, idx) => {
-                        if (idx === 0) return label;
-                        return (
-                          <>
-                            {acc}
-                            <Delim />
-                            {label}
-                          </>
-                        );
-                      }, '' as any)
-                    : marker.labels[0]
-                }
+                content={marker.labels.length > 1 ? marker.labels : marker.labels[0]}
                 placement="top"
                 delay={200}
               >
