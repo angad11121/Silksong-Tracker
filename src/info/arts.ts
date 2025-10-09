@@ -94,7 +94,7 @@ export const AncestralArts: Record<
   },
   silk_soar: {
     name: '||<3>Silk Soar||',
-    desc: 'The Silk Soar is acquired in ||<3>Weavenest Absolom in the Abyss||.',
+    desc: 'The ||<3>Silk Soar|| is acquired in ||<3>Weavenest Absolom in the Abyss||.',
     act: 3,
     has: 'HasSeenSuperJump',
     percentage: 1,
