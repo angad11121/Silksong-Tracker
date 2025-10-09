@@ -11,7 +11,7 @@ export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
       sections={SectionGenerator}
       depth={0}
       data={data}
-      SectionTitleRenderer={({ section, children, depth, parent }) => {
+      getSectionDisplayProps={section => {
         const getPercentage = section.ctx.getPercentage;
         const currentPercentage =
           typeof getPercentage === 'function'
@@ -19,36 +19,23 @@ export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
             : getPercentageFromEntry(getPercentage, data);
         const maxPercentage = section.ctx.maxPercentage;
 
-        return (
-          <details
-            open={currentPercentage < maxPercentage || !parent}
-            className={
-              parent
-                ? depth >= 2
-                  ? 'p-2 bg-[#0006] rounded-xl'
-                  : 'p-4 bg-[#0006] rounded-xl'
-                : 'p-4'
-            }
-          >
-            <summary>
-              <h3 className="inline mx-2 pt-2">
-                <SpoilerRenderer content={section.title} /> (
-                {currentPercentage === maxPercentage ? (
-                  <span className="text-green-500">{maxPercentage}%</span>
-                ) : (
-                  <>
-                    <span className="text-red-500">{currentPercentage}%</span>/{maxPercentage}%
-                  </>
-                )}
-                )
-              </h3>
-              <h4>
-                <SpoilerRenderer content={section.subtext} />
-              </h4>
-            </summary>
-            {children}
-          </details>
-        );
+        return {
+          open: currentPercentage < maxPercentage,
+          After: () => (
+            <>
+              {' '}
+              (
+              {currentPercentage === maxPercentage ? (
+                <span className="text-green-500">{maxPercentage}%</span>
+              ) : (
+                <>
+                  <span className="text-red-500">{currentPercentage}%</span>/{maxPercentage}%
+                </>
+              )}
+              )
+            </>
+          ),
+        };
       }}
     />
   );

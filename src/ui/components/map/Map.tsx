@@ -539,7 +539,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
           </button>
         </div>
 
-        <div className="absolute bottom-4 right-4 px-3 py-1 bg-[#0008] text-white text-sm rounded">
+        <div className="absolute bottom-4 right-4 px-3 py-1 bg-[#0006] text-white text-sm rounded">
           {Math.round((zoom / MIN_ZOOM) * 100)}%
         </div>
       </div>

@@ -125,7 +125,7 @@ function SaveLocation(): ReactElement {
         tabs={Object.values(saveLocationTabs)}
         onSelect={tab => setTab(tab as keyof typeof saveLocationTabs)}
       />
-      <div className="bg-[#0008] rounded-md border-white border-1 p-4">
+      <div className="bg-[#0006] rounded-md border-white border-1 p-4">
         {saveLocationTabs[tab].children()}
       </div>
     </div>

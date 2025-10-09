@@ -22,7 +22,7 @@ export function TabRenderer({ data }: { data: SaveData | null }): ReactElement {
   return (
     <div>
       <TabComponent tabs={tabs} selectedTab={tab} onSelect={setTab} />
-      <div className="border-1 border-white rounded-xl p-4 bg-[#0008]">
+      <div className="border-1 border-white rounded-xl p-4 bg-[#0006]">
         <Renderer data={data!} />
       </div>
     </div>

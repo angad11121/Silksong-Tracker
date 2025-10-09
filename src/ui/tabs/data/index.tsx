@@ -6,7 +6,7 @@ export function RawDataDisplay({ data }: { data: SaveData }): ReactElement | nul
   if (!data) return null;
 
   return (
-    <div className="p-4 bg-[#0008] rounded-xl relative">
+    <div className="p-4 bg-[#0006] rounded-xl relative">
       <button
         className="absolute top-2 right-0"
         onClick={() => navigator.clipboard.writeText(JSON.stringify(data))}
