@@ -55,7 +55,7 @@ function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
         type={tool.img ?? ToolImgs[tool.type]!}
         check={entry.has}
         hint={tool.desc}
-        markers={tool.markers}
+        markers={typeof tool.markers === 'function' ? tool.markers(saveData) : tool.markers}
       />
     ),
   };

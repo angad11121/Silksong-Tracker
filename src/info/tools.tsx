@@ -1,6 +1,8 @@
-import type { MapLocation } from '@/ui/components/map';
-import { Locations } from '@/info/locations';
 import type { ReactElement } from 'react';
+import { Locations } from '@/info/locations';
+import { Items } from './items';
+import type { MapLocation } from '@/ui/components/map';
+import type { SaveData } from '@/parser/types';
 
 import Parry from '@/assets/tools/parry.png';
 import SilkBomb from '@/assets/tools/silk_bomb.png';
@@ -64,7 +66,7 @@ export const Tools: Record<
     isUpgrade?: string;
     upgradesTo?: string;
     desc: string;
-    markers: MapLocation[];
+    markers: MapLocation[] | ((data: SaveData) => MapLocation[]);
   }
 > = {
   'Barbed Wire': {
@@ -116,11 +118,12 @@ export const Tools: Record<
     type: 1,
     isCounted: true,
     desc: 'Bought from the ||<2>Twelfth Architect in the Underworks for 230 rosaries and a Craftmetal||.',
-    markers: [
+    markers: data => [
       {
         label: 'Bought from the Twelfth Architect for 230 rosaries and a Craftmetal.',
         location: Locations.TwelfthArchitect,
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'Cogwork Flier': {
@@ -130,11 +133,12 @@ export const Tools: Record<
     type: 0,
     isCounted: true,
     desc: 'Constructed at a crafting bench in the ||<2>High Halls||. Requires one Craftmetal.',
-    markers: [
+    markers: data => [
       {
         label: 'Constructed for one Craftmetal.',
         location: { x: 2249, y: 571 },
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'Cogwork Saw': {
@@ -144,11 +148,12 @@ export const Tools: Record<
     type: 0,
     isCounted: true,
     desc: 'Purchased from the ||<2>Twelfth Architect in the Underworks for 360 rosaries and a Craftmetal||.',
-    markers: [
+    markers: data => [
       {
         label: 'Purchased from the Twelfth Architect for 360 rosaries and a Craftmetal.',
         location: Locations.TwelfthArchitect,
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   Compass: {
@@ -338,11 +343,12 @@ export const Tools: Record<
     type: 1,
     isCounted: true,
     desc: 'Purchased from the Forge Daughter in the Deep Docks for 110 rosaries and a Craftmetal.',
-    markers: [
+    markers: data => [
       {
         label: 'Purchased from the Forge Daughter for 110 rosaries and a Craftmetal.',
         location: Locations.ForgeDaughter,
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'Lifeblood Syringe': {
@@ -498,11 +504,12 @@ export const Tools: Record<
     type: 0,
     isCounted: true,
     desc: "Can be crafted at a crafting bench in Greymoor, above Yarnaby's bellhome, with one Craftmetal.",
-    markers: [
+    markers: data => [
       {
         label: 'Can be crafted for one Craftmetal.',
         location: { x: 2368, y: 1898 },
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'Pinstress Tool': {
@@ -634,12 +641,13 @@ export const Tools: Record<
     type: 0,
     isCounted: true,
     desc: 'Requires a Simple Key for a locked room before the ||<2>Forum in the High Halls. Use a secret entrance in the ceiling and break a wall to the left of the steam chamber, then break the rosary string machine||.',
-    markers: [
+    markers: data => [
       {
         label:
           'Requires a Simple Key. Use a secret entrance in the ceiling and break a wall to the left of the steam chamber, then break the rosary string machine.',
         location: { x: 2257, y: 733 },
       },
+      ...Items.SimpleKey.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'Rosary Magnet': {
@@ -677,11 +685,12 @@ export const Tools: Record<
     type: 2,
     isCounted: true,
     desc: 'Purchased from the ||<2>Twelfth Architect in the Underworks for 140 rosaries and a Craftmetal||.',
-    markers: [
+    markers: data => [
       {
         label: 'Purchased from the Twelfth Architect for 140 rosaries and a Craftmetal.',
         location: Locations.TwelfthArchitect,
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'Shakra Ring': {
@@ -832,11 +841,12 @@ export const Tools: Record<
     type: 0,
     isCounted: true,
     desc: 'Purchased from the Forge Daughter in the Deep Docks for 140 rosaries and 1 Craftmetal.',
-    markers: [
+    markers: data => [
       {
         label: 'Purchased from the Forge Daughter for 140 rosaries and 1 Craftmetal.',
         location: Locations.ForgeDaughter,
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'Straight Pin': {
@@ -955,12 +965,13 @@ export const Tools: Record<
     type: 0,
     isCounted: true,
     desc: 'This can be acquired by having the ||<2>Twelfth Architect in the Underworks repair the Ruined Tool from Weavenest Murglin in Bilewater||.',
-    markers: [
+    markers: data => [
       RuinedTool,
       {
         label: 'Repaired by the Twelfth Architect for 130 rosaries and a Craftmetal.',
         location: Locations.TwelfthArchitect,
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'WebShot Forge': {
@@ -970,12 +981,13 @@ export const Tools: Record<
     type: 0,
     isCounted: true,
     desc: 'This can be acquired by having the ||<2>Forge Daughter in the Deep Docks repair the Ruined Tool from Weavenest Murglin in Bilewater||.',
-    markers: [
+    markers: data => [
       RuinedTool,
       {
         label: 'Repaired by the Forge Daughter for 240 rosaries and a Craftmetal.',
         location: Locations.ForgeDaughter,
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'WebShot Weaver': {
@@ -985,12 +997,13 @@ export const Tools: Record<
     type: 0,
     isCounted: true,
     desc: 'This can be acquired by going to ||<2>Mount Fay to repair the Ruined Tool from Weavenest Murglin in Bilewater||.',
-    markers: [
+    markers: data => [
       RuinedTool,
       {
         label: 'Repaired using a Craftmetal.',
         location: { x: 1068, y: 372 },
       },
+      ...Items.Craftmetal.filter(item => !item.has(data)).flatMap(item => item.markers),
     ],
   },
   'Weighted Anklet': {
