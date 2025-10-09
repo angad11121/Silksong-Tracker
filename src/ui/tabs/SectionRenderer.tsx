@@ -63,8 +63,7 @@ export function SectionRenderer<ExtraCtx = null>({
     <div>
       {sections.map(section => (
         <>
-          {(!('render' in section) || sections.length > 1) && parent ? <br /> : null}
-          <div key={section.title} className="pl-1">
+          <div key={section.title} className="pl-1 my-4">
             {'render' in section ? (
               <>{section.render({ saveData: data, depth, entry: section })}</>
             ) : (
