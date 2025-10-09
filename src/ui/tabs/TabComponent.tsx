@@ -1,5 +1,12 @@
 import { TabRendererMetadata, TabType } from '@/ui/tabs/constants';
-import { useCallback, useRef, useState, type KeyboardEventHandler, type ReactElement } from 'react';
+import {
+  Fragment,
+  useCallback,
+  useRef,
+  useState,
+  type KeyboardEventHandler,
+  type ReactElement,
+} from 'react';
 
 export function TabComponent({
   selectedTab,
@@ -35,10 +42,9 @@ export function TabComponent({
   return (
     <nav onKeyDown={handleKeyDown} className="flex gap-1 mx-6 px-2">
       {tabs.map((tab, index) => (
-        <>
+        <Fragment key={tab}>
           {index > 0 && index === tabs.length - 1 ? <span className="grow" /> : null}
           <button
-            key={tab}
             tabIndex={tab === tabs[focusedIndex] ? 0 : -1}
             onClick={() => onSelect(tab)}
             ref={el => {
@@ -52,7 +58,7 @@ export function TabComponent({
               <div className="absolute left-0 w-full bg-black" style={{ height: 1, bottom: -1 }} />
             ) : null}
           </button>
-        </>
+        </Fragment>
       ))}
     </nav>
   );
