@@ -11,8 +11,10 @@ const LOCAL_STORAGE_KEY = 'save';
 export default function App(): ReactElement {
   const [file, setFile] = useState<File | null>(null);
   const [decoded, setDecoded] = useState<SaveData | null>(() => {
-    const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (savedData) return JSON.parse(savedData);
+    if (typeof window !== 'undefined') {
+      const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (savedData) return JSON.parse(savedData);
+    }
     return null;
   });
 
@@ -38,8 +40,10 @@ export default function App(): ReactElement {
   };
 
   useEffect(() => {
-    if (decoded) localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(decoded));
-    else localStorage.removeItem(LOCAL_STORAGE_KEY);
+    if (typeof window !== 'undefined') {
+      if (decoded) localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(decoded));
+      else localStorage.removeItem(LOCAL_STORAGE_KEY);
+    }
   }, [decoded]);
 
   return (

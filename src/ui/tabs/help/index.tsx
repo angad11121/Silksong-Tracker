@@ -135,7 +135,7 @@ function SaveLocation(): ReactElement {
 export function HelpDisplay(): ReactElement {
   return (
     <>
-      {localStorage.getItem(DEV_MODE_KEY) === 'true' ? <DevDisplay /> : null}
+      {typeof window !== 'undefined' && localStorage.getItem(DEV_MODE_KEY) === 'true' ? <DevDisplay /> : null}
       <div className="p-4">
         <p>This is a tool to help you track your progress in Hollow Knight: Silksong.</p>
         <p>To use the tool, simply upload your save file.</p>

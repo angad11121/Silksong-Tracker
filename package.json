@@ -2,9 +2,9 @@
   "name": "silksong-tracker",
   "private": true,
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "vike dev",
+    "build": "vike build",
+    "preview": "vike preview"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -27,6 +27,7 @@
     "group-sub": "^1.0.0",
     "prettier": "^3.6.2",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "vike": "^0.4.242"
   }
 }
