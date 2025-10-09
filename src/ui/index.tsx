@@ -4,12 +4,24 @@ import { decodeFile } from '@/parser/decoder/decoder';
 import { TabRenderer } from '@/ui/tabs';
 import { Footer } from '@/ui/components/Footer';
 import { Preload } from '@/ui/preload';
+
+import BlankSaveData from '@/info/blankSave';
 import type { SaveData } from '@/parser/types';
 
 const LOCAL_STORAGE_KEY = 'save';
 
+function BlankSave({ onChange }: { onChange: (value: SaveData) => void }): ReactElement {
+  return (
+    <button
+      className="text-md text-stone-400 bg-[#0006] px-4 py-2 rounded-md"
+      onClick={() => onChange(BlankSaveData)}
+    >
+      Use Demo Profile
+    </button>
+  );
+}
+
 export default function App(): ReactElement {
-  const [file, setFile] = useState<File | null>(null);
   const [decoded, setDecoded] = useState<SaveData | null>(() => {
     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (savedData) return JSON.parse(savedData);
@@ -18,7 +30,6 @@ export default function App(): ReactElement {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target!.files?.[0];
-    setFile(selectedFile ?? null);
 
     if (selectedFile) {
       const reader = new FileReader();
@@ -59,12 +70,20 @@ export default function App(): ReactElement {
           {decoded ? (
             <>
               <span className="text-md text-stone-400 bg-[#0006] px-4 py-2 rounded-md">
-                Profile {decoded.playerData.profileID} (
-                {Math.floor(decoded.playerData.completionPercentage)}%)
+                {decoded.playerData.profileID === 0 ? (
+                  <>Using Demo Profile</>
+                ) : (
+                  <>
+                    Profile {decoded.playerData.profileID} (
+                    {Math.floor(decoded.playerData.completionPercentage)}%)
+                  </>
+                )}
               </span>
               <button onClick={() => setDecoded(null)}>Clear</button>
             </>
-          ) : null}
+          ) : (
+            <BlankSave onChange={value => setDecoded(value)} />
+          )}
         </div>
         <TabRenderer data={decoded} />
         <Footer />
