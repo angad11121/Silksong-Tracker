@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 import { SectionRenderer } from '@/ui/tabs/SectionRenderer';
 import { SectionGenerator, type TrueCompletionSectionCtx } from '@/ui/tabs/trueCompletion/sections';
+import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
 import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 
@@ -38,7 +39,7 @@ export function TrueCompletionDisplay({ data }: { data: SaveData }): ReactElemen
           <details open={currentCount < maxCount || !parent} className="p-4 bg-[#0006] rounded-xl">
             <summary>
               <h3 className="inline mx-2 pt-2">
-                {section.title} (
+                <SpoilerRenderer content={section.title} /> (
                 {!parent ? (
                   <strong>{Math.floor((currentCount / maxCount) * 100)}%</strong>
                 ) : currentCount === maxCount ? (
@@ -50,7 +51,9 @@ export function TrueCompletionDisplay({ data }: { data: SaveData }): ReactElemen
                 )}
                 )
               </h3>
-              <h4>{section.subtext}</h4>
+              <h4>
+                <SpoilerRenderer content={section.subtext} />
+              </h4>
             </summary>
             {children}
           </details>
