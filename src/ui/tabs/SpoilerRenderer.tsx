@@ -42,7 +42,7 @@ function SpoilerSpan({ text, spoilerLevel }: { text: string; spoilerLevel: numbe
             <span
               tabIndex={0}
               onKeyDown={onKeyDown}
-              className="text-stone-700 group-hover:text-inherit transition-colors duration-300 cursor-pointer select-none relative"
+              className="text-transparent group-hover:text-inherit transition-colors duration-300 cursor-pointer select-none relative"
               onClick={() => setClicked(true)}
             >
               {text}
