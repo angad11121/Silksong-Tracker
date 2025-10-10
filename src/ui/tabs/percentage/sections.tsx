@@ -117,6 +117,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         title: 'Masks',
         subtext:
           'There are 20 Mask Fragments available. All of them are required for 100% completion.',
+        layout: 'grid',
         children: MaskFragments.map(fragment => ({
           title: fragment.hint,
           subtext: fragment.hint,
@@ -134,6 +135,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         title: 'Silk Spools',
         subtext:
           'There are 18 spool fragments available, for a total of 9 extra spool extensions. All of them are required for 100% completion.',
+        layout: 'grid',
         children: SpoolFragments.map(fragment => ({
           title: fragment.hint,
           subtext: fragment.hint,
@@ -150,6 +152,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
       {
         title: 'Silk Hearts',
         subtext: 'There are 3 Silk Hearts available. All of them are required for 100% completion.',
+        layout: 'grid',
         children: [
           {
             title: 'Silk Heart #1',
@@ -231,6 +234,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         title: 'Needle Upgrades',
         subtext:
           'All four Needle Upgrades are required for 100% completion. The Needle can only be upgraded by visiting Pinmaster Plinney in Bellhart.',
+        layout: 'grid',
         children: saveData => {
           const doneUpgrades = NeedleUpgrades.options.filter(upgrade => upgrade.check(saveData));
           const leftUpgrades = NeedleUpgrades.options.filter(
@@ -273,6 +277,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
       {
         title: 'Ancestral Arts',
         subtext: 'All Ancestral Arts are required for 100% completion.',
+        layout: 'grid',
         children: [
           LeafRendererType.SwiftStep,
           LeafRendererType.ClingGrip,
@@ -335,6 +340,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         title: 'Crests',
         subtext:
           'All Crests are required for 100% completion. Hunter Crest upgrades are not required, but are acquired during Sylphsong regardless.',
+        layout: 'grid',
         children: [
           LeafRendererType.Crest_Reaper,
           LeafRendererType.Crest_Wanderer,
@@ -387,6 +393,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
       {
         title: 'Silk Skills',
         subtext: 'All Silk Skills are required for 100% completion.',
+        layout: 'grid',
         children: renderToolChildren(ToolType.SilkSkill),
         ctx: {
           maxPercentage: 6,
@@ -464,6 +471,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           {
             title: 'Red Tools',
             subtext: 'Red tools are mainly used actively for combat.',
+            layout: 'grid',
             children: renderToolChildren(ToolType.Red),
             ctx: {
               getPercentage: saveData =>
@@ -476,6 +484,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           {
             title: 'Blue Tools',
             subtext: 'Blue tools are mainly used passively for combat utility.',
+            layout: 'grid',
             children: renderToolChildren(ToolType.Blue),
             ctx: {
               getPercentage: saveData =>
@@ -488,6 +497,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
           {
             title: 'Yellow Tools',
             subtext: 'Yellow tools are mainly used as passive movement and utility tools.',
+            layout: 'grid',
             children: renderToolChildren(ToolType.Yellow),
             ctx: {
               getPercentage: saveData =>
@@ -515,6 +525,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             title: 'Crafting Kits',
             subtext:
               'There are four Crafting Kits available. All of them are required for 100% completion.',
+            layout: 'grid',
             children: [
               {
                 title: 'Crafting Kit #1',
@@ -610,6 +621,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             title: 'Tool Pouch Upgrades',
             subtext:
               'There are four Tool Pouch upgrades available. All of them are required for 100% completion.',
+            layout: 'grid',
             children: [
               {
                 title: 'Tool Pouch Upgrade #1',

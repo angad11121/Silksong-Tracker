@@ -24,6 +24,7 @@ export type LeafSection = {
 export type Section<ExtraData = null> = {
   title: string;
   subtext: string | null;
+  layout?: 'grid' | 'list';
   children:
     | (Section<ExtraData> | LeafSection)[]
     | ((saveData: SaveData) => (Section<ExtraData> | LeafSection)[]);

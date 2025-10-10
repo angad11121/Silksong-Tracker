@@ -1,10 +1,12 @@
-import type { ReactElement, ReactNode } from 'react';
+import { createContext, Fragment, useContext, type ReactElement, type ReactNode } from 'react';
 import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
 import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 
+const SectionLayoutContext = createContext<'grid' | 'list' | null>(null);
+export const useSectionLayout = () => useContext(SectionLayoutContext);
+
 export type SectionDisplayProps<ExtraCtx = null> = {
-  data: SaveData;
   section: Section<ExtraCtx>;
   children: ReactNode;
   depth: number;
@@ -14,7 +16,6 @@ export type SectionDisplayProps<ExtraCtx = null> = {
 };
 
 function SectionDisplay<ExtraCtx = null>({
-  data,
   section,
   children,
   depth,
@@ -23,23 +24,31 @@ function SectionDisplay<ExtraCtx = null>({
   After = () => null,
 }: SectionDisplayProps<ExtraCtx>): ReactElement {
   return (
-    <details
-      open={open || !parent}
-      className={
-        parent ? (depth >= 2 ? 'p-2 bg-[#0006] rounded-xl' : 'p-4 bg-[#0006] rounded-xl') : 'p-4'
-      }
-    >
-      <summary>
-        <h3 className="inline mx-2 pt-2">
-          <SpoilerRenderer content={section.title} />
-          <After />
-        </h3>
-        <h4>
-          <SpoilerRenderer content={section.subtext} />
-        </h4>
-      </summary>
-      {children}
-    </details>
+    <SectionLayoutContext.Provider value={section.layout ?? null}>
+      <div className="pl-1 my-4">
+        <details
+          open={open || !parent}
+          className={
+            parent
+              ? depth >= 2
+                ? 'p-2 bg-[#0006] rounded-xl'
+                : 'p-4 bg-[#0006] rounded-xl'
+              : 'p-4'
+          }
+        >
+          <summary>
+            <h3 className="inline mx-2 pt-2">
+              <SpoilerRenderer content={section.title} />
+              <After />
+            </h3>
+            <h4>
+              <SpoilerRenderer content={section.subtext} />
+            </h4>
+          </summary>
+          {children}
+        </details>
+      </div>
+    </SectionLayoutContext.Provider>
   );
 }
 
@@ -60,35 +69,30 @@ export function SectionRenderer<ExtraCtx = null>({
   ) => Partial<SectionDisplayProps<ExtraCtx>>;
 }): ReactElement {
   return (
-    <div>
+    <div className={parent?.layout === 'grid' ? 'grid grid-cols-2 gap-4' : ''}>
       {sections.map(section => (
-        <>
-          <div key={section.title} className="pl-1 my-4">
-            {'render' in section ? (
-              <>{section.render({ saveData: data, depth, entry: section })}</>
-            ) : (
-              <SectionDisplay
+        <Fragment key={section.title}>
+          {'render' in section ? (
+            <>{section.render({ saveData: data, depth, entry: section })}</>
+          ) : (
+            <SectionDisplay
+              section={section}
+              depth={depth}
+              parent={parent}
+              {...getSectionDisplayProps(section, parent)}
+            >
+              <SectionRenderer
                 data={data}
-                section={section}
-                depth={depth}
-                parent={parent}
-                {...getSectionDisplayProps(section, parent)}
-              >
-                <SectionRenderer
-                  depth={depth + 1}
-                  data={data}
-                  parent={section}
-                  sections={
-                    typeof section.children === 'function'
-                      ? section.children(data)
-                      : section.children
-                  }
-                  getSectionDisplayProps={getSectionDisplayProps}
-                />
-              </SectionDisplay>
-            )}
-          </div>
-        </>
+                depth={depth + 1}
+                parent={section}
+                sections={
+                  typeof section.children === 'function' ? section.children(data) : section.children
+                }
+                getSectionDisplayProps={getSectionDisplayProps}
+              />
+            </SectionDisplay>
+          )}
+        </Fragment>
       ))}
     </div>
   );

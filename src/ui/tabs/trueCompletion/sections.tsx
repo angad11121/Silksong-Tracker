@@ -96,6 +96,7 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
           {
             title: 'Memory Lockets',
             subtext: 'There are 20 Memory Lockets available.',
+            layout: 'grid',
             children: MemoryLockets.map(locket => ({
               has: locket.has,
               title: 'Memory Locket',

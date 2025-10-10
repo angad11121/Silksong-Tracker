@@ -34,7 +34,8 @@ import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
 import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
 import { Tooltip } from '@/ui/components/Tooltip';
 import type { SaveData } from '@/parser/types';
-import type { CustomHas } from '@/ui/tabs/types';
+import type { CustomHas, Section } from '@/ui/tabs/types';
+import { useSectionLayout } from '@/ui/tabs/SectionRenderer';
 
 export enum LeafRendererType {
   Mask = 'mask',
@@ -177,8 +178,10 @@ export function LeafRenderer({
   hint,
   data,
   markers,
+  parent,
 }: {
   id: number | string | null;
+  parent?: Section | null;
   check: ((data: SaveData) => boolean | CustomHas | undefined) | boolean | CustomHas | undefined;
   hint: string;
   data: SaveData;
@@ -189,8 +192,10 @@ export function LeafRenderer({
   const [showMap, setShowMap] = useState(false);
   const Image = typeof type === 'function' ? type : Images[type];
 
+  const layout = useSectionLayout();
+
   return (
-    <div>
+    <div className={`pl-1 my-4 ${layout === 'grid' && showMap ? 'col-span-2' : ''}`}>
       <div>
         <Image />
         {typeof id === 'number' || typeof id === 'string' ? (
