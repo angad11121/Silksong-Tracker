@@ -19,6 +19,7 @@ export function SpoilerRenderer({ content }: { content: string | null }): ReactE
   );
 }
 
+const SPOILER_WIDTH = 20;
 function SpoilerSpan({ text, spoilerLevel }: { text: string; spoilerLevel: number }): ReactElement {
   const [clicked, setClicked] = useState(false);
 
@@ -30,12 +31,15 @@ function SpoilerSpan({ text, spoilerLevel }: { text: string; spoilerLevel: numbe
     }
   };
 
+  const textEl =
+    text + (SPOILER_WIDTH > text.length ? '\u00A0'.repeat(SPOILER_WIDTH - text.length) : null);
+
   return (
     <Tooltip content={`Spoilers for Act ${'I'.repeat(spoilerLevel)}`}>
-      <span className="relative min-w-30 inline-block group bg-stone-700 hover:bg-[#aaa6]">
+      <span className="relative group bg-stone-700 hover:bg-[#aaa6]">
         {clicked ? (
           <span tabIndex={0} onKeyDown={onKeyDown}>
-            {text}
+            {textEl}
           </span>
         ) : (
           <>
@@ -43,9 +47,13 @@ function SpoilerSpan({ text, spoilerLevel }: { text: string; spoilerLevel: numbe
               tabIndex={0}
               onKeyDown={onKeyDown}
               className="text-transparent group-hover:text-inherit transition-colors duration-300 cursor-pointer select-none relative"
-              onClick={() => setClicked(true)}
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                setClicked(true);
+              }}
             >
-              {text}
+              {textEl}
             </span>
             <span className="absolute w-full h-full top-0 left-0 flex items-center justify-center text-xs group-hover:invisible duration-0 text-stone-400">
               (spoilers for Act {'I'.repeat(spoilerLevel)})
