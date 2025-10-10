@@ -7,41 +7,14 @@ Silksong Tracker is a web-based tool designed to help players track their progre
 - **Progress Tracking:** Track collectibles such as mask shards, spool fragments, and mementos.
 - **Sectioned UI:** Organized tabs and sections for different collectible types and game areas.
 - **Percentage Calculation:** Visualize completion rates for each category and overall progress.
-- **Data Filtering:** Filter and sort game data for easier navigation.
+- **Inbuilt Mapping:** Each item has an attached interactive map that has markers for all relevant places.
 - **Metadata Display:** View detailed information about items and collectibles.
 - **Modern UI:** Responsive design with custom components for a smooth user experience.
-
-## Project Structure
-
-```
-Silksong-Tracker/
-├── src/
-│   ├── constants.ts           # Global constants
-│   ├── filterData.ts         # Data filtering logic
-│   ├── index.css             # Main stylesheet
-│   ├── index.tsx             # App entry point
-│   ├── metadata.ts           # Metadata definitions
-│   ├── percentage.ts         # Completion percentage logic
-│   ├── types.ts              # TypeScript types
-│   ├── typings.d.ts          # TypeScript type declarations
-│   ├── utils.ts              # Utility functions
-│   ├── decoder/              # Data decoding logic
-│   └── ui/                   # UI components and tabs
-│       ├── components/       # Shared UI components
-│       └── tabs/             # Tabbed sections for collectibles
-├── data/                     # Game data and tools
-├── static/                   # Static assets (images, icons)
-├── tests/                    # Unit tests
-├── index.html                # HTML entry point
-├── package.json              # Project dependencies and scripts
-├── tsconfig.json             # TypeScript configuration
-├── vite.config.mts           # Vite configuration
-└── README.md                 # Project documentation
-```
 
 ## Getting Started
 
 ### Prerequisites
+
 - bun
 
 ### Installation
@@ -76,4 +49,4 @@ MIT License
 
 ---
 
-*This project is not affiliated with Team Cherry or Hollow Knight: Silksong. All assets and references are for fan use only.*
+_This project is not affiliated with Team Cherry or Hollow Knight: Silksong. All assets and references are for fan use only._
