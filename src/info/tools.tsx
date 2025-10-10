@@ -11,6 +11,66 @@ import SilkCharge from '@/assets/tools/silk_charge.png';
 import SilkSpear from '@/assets/tools/silk_spear.png';
 import ThreadSphere from '@/assets/tools/thread_sphere.png';
 
+import Barbed_Wire from '@/assets/tools/barbed_wire.png';
+import CurveClaws from '@/assets/tools/curve_claws.png';
+import Longneedle from '@/assets/tools/longneedle.png';
+import BellBind from '@/assets/tools/bell_bind.png';
+import BoneNecklace from '@/assets/tools/bone_necklace.png';
+import BrollySpike from '@/assets/tools/brolly_spike.png';
+import CogworkFlier from '@/assets/tools/cogwork_flier.png';
+import CogworkSaw from '@/assets/tools/cogwork_saw.png';
+import Compass from '@/assets/tools/compass.png';
+import ConchDrill from '@/assets/tools/conch_drill.png';
+import CurveClawsUpgraded from '@/assets/tools/curve_claws_upgraded.png';
+import DazzleBind from '@/assets/tools/dazzle_bind.png';
+import DazzleBindUpgraded from '@/assets/tools/dazzle_bind_upgraded.png';
+import DeadMansPurse from '@/assets/tools/dead_mans_purse.png';
+import Extractor from '@/assets/tools/extractor.png';
+import FleaBrew from '@/assets/tools/flea_brew.png';
+import FleaCharm from '@/assets/tools/flea_charm.png';
+import FracturedMask from '@/assets/tools/fractured_mask.png';
+import ShakraRing from '@/assets/tools/shakra_ring.png';
+import Pimpilo from '@/assets/tools/pimpilo.png';
+import ScrewAttack from '@/assets/tools/screw_attack.png';
+import SilkSnare from '@/assets/tools/silk_snare.png';
+import Flintstone from '@/assets/tools/flintstone.png';
+import ShellSatchel from '@/assets/tools/shell_satchel.png';
+import MagnetiteDice from '@/assets/tools/magnetite_dice.png';
+import Scuttlebrace from '@/assets/tools/scuttlebrace.png';
+import Wallcling from '@/assets/tools/wallcling.png';
+import ThiefCharm from '@/assets/tools/thief_charm.png';
+import ThiefClaw from '@/assets/tools/thief_claw.png';
+import Harpoon from '@/assets/tools/harpoon.png';
+import LavaCharm from '@/assets/tools/lava_charm.png';
+import LifebloodSyringe from '@/assets/tools/lifeblood_syringe.png';
+import LightningRod from '@/assets/tools/lightning_rod.png';
+import MaggotCharm from '@/assets/tools/maggot_charm.png';
+import MosscreepTool1 from '@/assets/tools/mosscreep_tool_1.png';
+import MosscreepTool2 from '@/assets/tools/mosscreep_tool_2.png';
+import Multibind from '@/assets/tools/multibind.png';
+import MusicianCharm from '@/assets/tools/musician_charm.png';
+import PinstressTool from '@/assets/tools/pinstress_tool.png';
+import PoisonPouch from '@/assets/tools/poison_pouch.png';
+import QuickSling from '@/assets/tools/quick_sling.png';
+import Quickbind from '@/assets/tools/quickbind.png';
+import ReserveBind from '@/assets/tools/reserve_bind.png';
+import RevengeCrystal from '@/assets/tools/revenge_crystal.png';
+import RosaryCannon from '@/assets/tools/rosary_cannon.png';
+import RosaryMagnet from '@/assets/tools/rosary_magnet.png';
+import WeightedAnklet from '@/assets/tools/weighted_anklet.png';
+import WispLantern from '@/assets/tools/wisp_lantern.png';
+import ZapImbuement from '@/assets/tools/zap_imbuement.png';
+import WhiteRing from '@/assets/tools/white_ring.png';
+import SpoolExtender from '@/assets/tools/spool_extender.png';
+import Sprintmaster from '@/assets/tools/sprintmaster.png';
+import StingShard from '@/assets/tools/sting_shard.png';
+import StraightPin from '@/assets/tools/straight_pin.png';
+import Tack from '@/assets/tools/tack.png';
+import TriPin from '@/assets/tools/tri_pin.png';
+import WebShotArchitect from '@/assets/tools/webshot_architect.png';
+import WebShotForge from '@/assets/tools/webshot_forge.png';
+import WebShotWeaver from '@/assets/tools/webshot_weaver.png';
+
 export enum ToolType {
   Red = 0,
   Blue = 1,
@@ -58,7 +118,7 @@ export const Tools: Record<
   string,
   {
     id: string;
-    img?: () => ReactElement;
+    img: () => ReactElement;
     displayName: string;
     act: 1 | 2 | 3;
     type: ToolType;
@@ -71,6 +131,9 @@ export const Tools: Record<
 > = {
   'Barbed Wire': {
     id: 'Barbed Wire',
+    img: () => (
+      <img src={Barbed_Wire} height={48} width={48} alt="Barbed Bracelet" className="inline" />
+    ),
     displayName: 'Barbed Bracelet',
     act: 1,
     type: 2,
@@ -85,6 +148,7 @@ export const Tools: Record<
   },
   'Bell Bind': {
     id: 'Bell Bind',
+    img: () => <img src={BellBind} height={48} width={48} alt="Warding Bell" className="inline" />,
     displayName: 'Warding Bell',
     act: 1,
     type: 1,
@@ -99,6 +163,9 @@ export const Tools: Record<
   },
   'Bone Necklace': {
     id: 'Bone Necklace',
+    img: () => (
+      <img src={BoneNecklace} height={48} width={48} alt="Shard Pendant" className="inline" />
+    ),
     displayName: 'Shard Pendant',
     act: 1,
     type: 2,
@@ -113,6 +180,9 @@ export const Tools: Record<
   },
   'Brolly Spike': {
     id: 'Brolly Spike',
+    img: () => (
+      <img src={BrollySpike} height={48} width={48} alt="Sawtooth Circlet" className="inline" />
+    ),
     displayName: '||<2>Sawtooth Circlet||',
     act: 2,
     type: 1,
@@ -128,6 +198,7 @@ export const Tools: Record<
   },
   'Cogwork Flier': {
     id: 'Cogwork Flier',
+    img: () => <img src={CogworkFlier} height={48} width={48} alt="Cogfly" className="inline" />,
     displayName: '||<2>Cogfly||',
     act: 2,
     type: 0,
@@ -143,6 +214,9 @@ export const Tools: Record<
   },
   'Cogwork Saw': {
     id: 'Cogwork Saw',
+    img: () => (
+      <img src={CogworkSaw} height={48} width={48} alt="Cogwork Wheel" className="inline" />
+    ),
     displayName: '||<2>Cogwork Wheel||',
     act: 2,
     type: 0,
@@ -158,6 +232,7 @@ export const Tools: Record<
   },
   Compass: {
     id: 'Compass',
+    img: () => <img src={Compass} height={48} width={48} alt="Compass" className="inline" />,
     displayName: 'Compass',
     act: 1,
     type: 2,
@@ -167,6 +242,7 @@ export const Tools: Record<
   },
   'Conch Drill': {
     id: 'Conch Drill',
+    img: () => <img src={ConchDrill} height={48} width={48} alt="Conchcutter" className="inline" />,
     displayName: '||<2>Conchcutter||',
     act: 2,
     type: 0,
@@ -181,6 +257,9 @@ export const Tools: Record<
   },
   'Curve Claws Upgraded': {
     id: 'Curve Claws Upgraded',
+    img: () => (
+      <img src={CurveClawsUpgraded} height={48} width={48} alt="Curvesickle" className="inline" />
+    ),
     displayName: 'Curvesickle',
     act: 3,
     type: 0,
@@ -197,6 +276,7 @@ export const Tools: Record<
   },
   'Curve Claws': {
     id: 'Curve Claws',
+    img: () => <img src={CurveClaws} height={48} width={48} alt="Curveclaw" className="inline" />,
     displayName: 'Curveclaw',
     act: 1,
     type: 0,
@@ -216,6 +296,9 @@ export const Tools: Record<
   },
   'Dazzle Bind Upgraded': {
     id: 'Dazzle Bind Upgraded',
+    img: () => (
+      <img src={DazzleBindUpgraded} height={48} width={48} alt="Claw Mirrors" className="inline" />
+    ),
     displayName: 'Claw Mirrors',
     act: 3,
     type: 1,
@@ -235,6 +318,7 @@ export const Tools: Record<
   },
   'Dazzle Bind': {
     id: 'Dazzle Bind',
+    img: () => <img src={DazzleBind} height={48} width={48} alt="Claw Mirror" className="inline" />,
     displayName: 'Claw Mirror',
     act: 2,
     type: 1,
@@ -250,6 +334,9 @@ export const Tools: Record<
   },
   'Dead Mans Purse': {
     id: 'Dead Mans Purse',
+    img: () => (
+      <img src={DeadMansPurse} height={48} width={48} alt="Dead Bug's Purse" className="inline" />
+    ),
     displayName: "Dead Bug's Purse",
     act: 1,
     type: 2,
@@ -264,6 +351,7 @@ export const Tools: Record<
   },
   Extractor: {
     id: 'Extractor',
+    img: () => <img src={Extractor} height={48} width={48} alt="Extractor" className="inline" />,
     displayName: 'Extractor',
     act: 1,
     type: 0,
@@ -278,6 +366,7 @@ export const Tools: Record<
   },
   'Flea Brew': {
     id: 'Flea Brew',
+    img: () => <img src={FleaBrew} height={48} width={48} alt="Flea Brew" className="inline" />,
     displayName: 'Flea Brew',
     act: 1,
     type: 0,
@@ -287,6 +376,9 @@ export const Tools: Record<
   },
   'Flea Charm': {
     id: 'Flea Charm',
+    img: () => (
+      <img src={FleaCharm} height={48} width={48} alt="Egg of Flealia" className="inline" />
+    ),
     displayName: '||<2>Egg of Flealia||',
     act: 2,
     type: 1,
@@ -296,6 +388,7 @@ export const Tools: Record<
   },
   Flintstone: {
     id: 'Flintstone',
+    img: () => <img src={Flintstone} height={48} width={48} alt="Flintslate" className="inline" />,
     displayName: 'Flintslate',
     act: 1,
     type: 0,
@@ -310,6 +403,9 @@ export const Tools: Record<
   },
   'Fractured Mask': {
     id: 'Fractured Mask',
+    img: () => (
+      <img src={FracturedMask} height={48} width={48} alt="Fractured Mask" className="inline" />
+    ),
     displayName: 'Fractured Mask',
     act: 1,
     type: 1,
@@ -324,6 +420,7 @@ export const Tools: Record<
   },
   Harpoon: {
     id: 'Harpoon',
+    img: () => <img src={Harpoon} height={48} width={48} alt="Longpin" className="inline" />,
     displayName: 'Longpin',
     act: 1,
     type: 0,
@@ -338,6 +435,7 @@ export const Tools: Record<
   },
   'Lava Charm': {
     id: 'Lava Charm',
+    img: () => <img src={LavaCharm} height={48} width={48} alt="Magma Bell" className="inline" />,
     displayName: 'Magma Bell',
     act: 2,
     type: 1,
@@ -353,6 +451,9 @@ export const Tools: Record<
   },
   'Lifeblood Syringe': {
     id: 'Lifeblood Syringe',
+    img: () => (
+      <img src={LifebloodSyringe} height={48} width={48} alt="Plasmium Phial" className="inline" />
+    ),
     displayName: 'Plasmium Phial',
     act: 1,
     type: 0,
@@ -367,6 +468,9 @@ export const Tools: Record<
   },
   'Lightning Rod': {
     id: 'Lightning Rod',
+    img: () => (
+      <img src={LightningRod} height={48} width={48} alt="Voltvessels" className="inline" />
+    ),
     displayName: '||<2>Voltvessels||',
     act: 2,
     type: 0,
@@ -381,6 +485,7 @@ export const Tools: Record<
   },
   Longneedle: {
     id: 'Longneedle',
+    img: () => <img src={Longneedle} height={48} width={48} alt="Longclaw" className="inline" />,
     displayName: '||<2>Longclaw||',
     act: 2,
     type: 1,
@@ -395,6 +500,9 @@ export const Tools: Record<
   },
   'Maggot Charm': {
     id: 'Maggot Charm',
+    img: () => (
+      <img src={MaggotCharm} height={48} width={48} alt="Wreath of Purity" className="inline" />
+    ),
     displayName: '||<2>Wreath of Purity||',
     act: 2,
     type: 1,
@@ -409,6 +517,9 @@ export const Tools: Record<
   },
   'Magnetite Dice': {
     id: 'Magnetite Dice',
+    img: () => (
+      <img src={MagnetiteDice} height={48} width={48} alt="Magnetite Dice" className="inline" />
+    ),
     displayName: 'Magnetite Dice',
     act: 1,
     type: 2,
@@ -424,6 +535,9 @@ export const Tools: Record<
   },
   'Mosscreep Tool 1': {
     id: 'Mosscreep Tool 1',
+    img: () => (
+      <img src={MosscreepTool1} height={48} width={48} alt="Druid's Eye" className="inline" />
+    ),
     displayName: "Druid's Eye",
     act: 1,
     type: 1,
@@ -440,6 +554,9 @@ export const Tools: Record<
   },
   'Mosscreep Tool 2': {
     id: 'Mosscreep Tool 2',
+    img: () => (
+      <img src={MosscreepTool2} height={48} width={48} alt="Druid's Eyes" className="inline" />
+    ),
     displayName: "Druid's Eyes",
     act: 2,
     type: 1,
@@ -456,6 +573,7 @@ export const Tools: Record<
   },
   Multibind: {
     id: 'Multibind',
+    img: () => <img src={Multibind} height={48} width={48} alt="Multibinder" className="inline" />,
     displayName: 'Multibinder',
     act: 1,
     type: 1,
@@ -470,6 +588,9 @@ export const Tools: Record<
   },
   'Musician Charm': {
     id: 'Musician Charm',
+    img: () => (
+      <img src={MusicianCharm} height={48} width={48} alt="Spider Strings" className="inline" />
+    ),
     displayName: 'Spider Strings',
     act: 2,
     type: 2,
@@ -484,9 +605,9 @@ export const Tools: Record<
   },
   Parry: {
     id: 'Parry',
+    img: () => <img src={Parry} height={48} width={48} alt="Cross Stitch" className="inline" />,
     displayName: 'Cross Stitch',
     act: 1,
-    img: () => <img src={Parry} height={48} width={48} alt="Cross Stitch" className="inline" />,
     type: 3,
     isCounted: true,
     desc: 'Received after defeating Phantom in the Exhaust Organ.',
@@ -499,6 +620,7 @@ export const Tools: Record<
   },
   Pimpilo: {
     id: 'Pimpilo',
+    img: () => <img src={Pimpilo} height={48} width={48} alt="Pimpillo" className="inline" />,
     displayName: 'Pimpillo',
     act: 1,
     type: 0,
@@ -514,6 +636,9 @@ export const Tools: Record<
   },
   'Pinstress Tool': {
     id: 'Pinstress Tool',
+    img: () => (
+      <img src={PinstressTool} height={48} width={48} alt="Pin Badge" className="inline" />
+    ),
     displayName: '||<3>Pin Badge||',
     act: 3,
     type: 1,
@@ -532,6 +657,9 @@ export const Tools: Record<
   },
   'Poison Pouch': {
     id: 'Poison Pouch',
+    img: () => (
+      <img src={PoisonPouch} height={48} width={48} alt="Pollip Pouch" className="inline" />
+    ),
     displayName: 'Pollip Pouch',
     act: 1,
     type: 1,
@@ -552,6 +680,7 @@ export const Tools: Record<
   },
   'Quick Sling': {
     id: 'Quick Sling',
+    img: () => <img src={QuickSling} height={48} width={48} alt="Quick Sling" className="inline" />,
     displayName: '||<2>Quick Sling||',
     act: 2,
     type: 1,
@@ -566,6 +695,9 @@ export const Tools: Record<
   },
   Quickbind: {
     id: 'Quickbind',
+    img: () => (
+      <img src={Quickbind} height={48} width={48} alt="Injector Band" className="inline" />
+    ),
     displayName: '||<2>Injector Band||',
     act: 2,
     type: 1,
@@ -580,6 +712,9 @@ export const Tools: Record<
   },
   'Reserve Bind': {
     id: 'Reserve Bind',
+    img: () => (
+      <img src={ReserveBind} height={48} width={48} alt="Reserve Bind" className="inline" />
+    ),
     displayName: '||<2>Reserve Bind||',
     act: 2,
     type: 1,
@@ -622,6 +757,9 @@ export const Tools: Record<
   },
   'Revenge Crystal': {
     id: 'Revenge Crystal',
+    img: () => (
+      <img src={RevengeCrystal} height={48} width={48} alt="Memory Crystal" className="inline" />
+    ),
     displayName: '||<2>Memory Crystal||',
     type: 1,
     act: 2,
@@ -636,6 +774,9 @@ export const Tools: Record<
   },
   'Rosary Cannon': {
     id: 'Rosary Cannon',
+    img: () => (
+      <img src={RosaryCannon} height={48} width={48} alt="Rosary Cannon" className="inline" />
+    ),
     displayName: '||<2>Rosary Cannon||',
     act: 2,
     type: 0,
@@ -652,6 +793,9 @@ export const Tools: Record<
   },
   'Rosary Magnet': {
     id: 'Rosary Magnet',
+    img: () => (
+      <img src={RosaryMagnet} height={48} width={48} alt="Magnetite Brooch" className="inline" />
+    ),
     displayName: 'Magnetite Brooch',
     act: 1,
     type: 2,
@@ -666,6 +810,9 @@ export const Tools: Record<
   },
   'Screw Attack': {
     id: 'Screw Attack',
+    img: () => (
+      <img src={ScrewAttack} height={48} width={48} alt="Delver's Drill" className="inline" />
+    ),
     displayName: "||<2>Delver's Drill||",
     act: 2,
     type: 0,
@@ -680,6 +827,9 @@ export const Tools: Record<
   },
   Scuttlebrace: {
     id: 'Scuttlebrace',
+    img: () => (
+      <img src={Scuttlebrace} height={48} width={48} alt="Scuttlebrace" className="inline" />
+    ),
     displayName: '||<2>Scuttlebrace||',
     act: 2,
     type: 2,
@@ -695,6 +845,9 @@ export const Tools: Record<
   },
   'Shakra Ring': {
     id: 'Shakra Ring',
+    img: () => (
+      <img src={ShakraRing} height={48} width={48} alt="Throwing Ring" className="inline" />
+    ),
     displayName: '||<2>Throwing Ring||',
     act: 2,
     type: 0,
@@ -710,6 +863,9 @@ export const Tools: Record<
   },
   'Shell Satchel': {
     id: 'Shell Satchel',
+    img: () => (
+      <img src={ShellSatchel} height={48} width={48} alt="Shell Satchel" className="inline" />
+    ),
     displayName: 'Shell Satchel',
     act: 1,
     type: 2,
@@ -724,9 +880,9 @@ export const Tools: Record<
   },
   'Silk Bomb': {
     id: 'Silk Bomb',
+    img: () => <img src={SilkBomb} height={48} width={48} alt="Rune Rage" className="inline" />,
     displayName: '||<2>Rune Rage||',
     act: 2,
-    img: () => <img src={SilkBomb} height={48} width={48} alt="Rune Rage" className="inline" />,
     type: 3,
     isCounted: true,
     desc: 'Defeat the ||<2>First Sinner in a secret room in the Slab to unlock Rune Rage||.',
@@ -747,11 +903,11 @@ export const Tools: Record<
   },
   'Silk Boss Needle': {
     id: 'Silk Boss Needle',
-    displayName: '||<3>Pale Nails||',
-    act: 3,
     img: () => (
       <img src={SilkBossNeedle} height={48} width={48} alt="Pale Nails" className="inline" />
     ),
+    displayName: '||<3>Pale Nails||',
+    act: 3,
     type: 3,
     isCounted: true,
     desc: 'Return to the ||<3>Cradle in Act III to pick up the Pale Nails||.',
@@ -764,9 +920,9 @@ export const Tools: Record<
   },
   'Silk Charge': {
     id: 'Silk Charge',
+    img: () => <img src={SilkCharge} height={48} width={48} alt="Sharpdart" className="inline" />,
     displayName: '||<2>Sharpdart||',
     act: 2,
-    img: () => <img src={SilkCharge} height={48} width={48} alt="Sharpdart" className="inline" />,
     type: 3,
     isCounted: true,
     desc: 'Bind the ||<2>Sharpdart in Weavenest Karn||.',
@@ -779,6 +935,7 @@ export const Tools: Record<
   },
   'Silk Snare': {
     id: 'Silk Snare',
+    img: () => <img src={SilkSnare} height={48} width={48} alt="Silk Snare" className="inline" />,
     displayName: '||<2>Silk Snare||',
     act: 2,
     type: 0,
@@ -793,8 +950,8 @@ export const Tools: Record<
   },
   'Silk Spear': {
     id: 'Silk Spear',
-    displayName: 'Silkspear',
     img: () => <img src={SilkSpear} height={48} width={48} alt="Silkspear" className="inline" />,
+    displayName: 'Silkspear',
     act: 1,
     type: 3,
     isCounted: true,
@@ -808,6 +965,9 @@ export const Tools: Record<
   },
   'Spool Extender': {
     id: 'Spool Extender',
+    img: () => (
+      <img src={SpoolExtender} height={48} width={48} alt="Spool Extender" className="inline" />
+    ),
     displayName: '||<2>Spool Extender||',
     act: 2,
     type: 1,
@@ -824,6 +984,9 @@ export const Tools: Record<
     id: 'Sprintmaster',
     displayName: 'Silkspeed Anklets',
     act: 1,
+    img: () => (
+      <img src={Sprintmaster} height={48} width={48} alt="Silkspeed Anklets" className="inline" />
+    ),
     type: 2,
     isCounted: true,
     desc: 'Sprint across Weavenest Cindril to receive the Silkspeed Anklets.',
@@ -836,6 +999,7 @@ export const Tools: Record<
   },
   'Sting Shard': {
     id: 'Sting Shard',
+    img: () => <img src={StingShard} height={48} width={48} alt="Sting Shard" className="inline" />,
     displayName: 'Sting Shard',
     act: 1,
     type: 0,
@@ -851,6 +1015,9 @@ export const Tools: Record<
   },
   'Straight Pin': {
     id: 'Straight Pin',
+    img: () => (
+      <img src={StraightPin} height={48} width={48} alt="Straight Pin" className="inline" />
+    ),
     displayName: 'Straight Pin',
     act: 1,
     type: 0,
@@ -865,6 +1032,7 @@ export const Tools: Record<
   },
   Tack: {
     id: 'Tack',
+    img: () => <img src={Tack} height={48} width={48} alt="Tacks" className="inline" />,
     displayName: 'Tacks',
     act: 1,
     type: 0,
@@ -879,6 +1047,9 @@ export const Tools: Record<
   },
   'Thief Charm': {
     id: 'Thief Charm',
+    img: () => (
+      <img src={ThiefCharm} height={48} width={48} alt="Thief's Mark" className="inline" />
+    ),
     displayName: "||<2>Thief's Mark||",
     act: 2,
     type: 2,
@@ -893,6 +1064,7 @@ export const Tools: Record<
   },
   'Thief Claw': {
     id: 'Thief Claw',
+    img: () => <img src={ThiefClaw} height={48} width={48} alt="Snitch Pick" className="inline" />,
     displayName: '||<2>Snitch Pick||',
     act: 2,
     type: 1,
@@ -928,6 +1100,7 @@ export const Tools: Record<
   },
   'Tri Pin': {
     id: 'Tri Pin',
+    img: () => <img src={TriPin} height={48} width={48} alt="Threefold Pin" className="inline" />,
     displayName: 'Threefold Pin',
     act: 1,
     type: 0,
@@ -946,6 +1119,9 @@ export const Tools: Record<
   },
   Wallcling: {
     id: 'Wallcling',
+    img: () => (
+      <img src={Wallcling} height={48} width={48} alt="Ascendant's Grip" className="inline" />
+    ),
     displayName: "||<2>Ascendant's Grip||",
     act: 2,
     type: 2,
@@ -960,6 +1136,9 @@ export const Tools: Record<
   },
   'WebShot Architect': {
     id: 'WebShot Architect',
+    img: () => (
+      <img src={WebShotArchitect} height={48} width={48} alt="Silkshot" className="inline" />
+    ),
     displayName: '||<2>Silkshot||',
     act: 2,
     type: 0,
@@ -976,6 +1155,7 @@ export const Tools: Record<
   },
   'WebShot Forge': {
     id: 'WebShot Forge',
+    img: () => <img src={WebShotForge} height={48} width={48} alt="Silkshot" className="inline" />,
     displayName: '||<2>Silkshot||',
     act: 2,
     type: 0,
@@ -992,6 +1172,7 @@ export const Tools: Record<
   },
   'WebShot Weaver': {
     id: 'WebShot Weaver',
+    img: () => <img src={WebShotWeaver} height={48} width={48} alt="Silkshot" className="inline" />,
     displayName: '||<2>Silkshot||',
     act: 2,
     type: 0,
@@ -1008,6 +1189,9 @@ export const Tools: Record<
   },
   'Weighted Anklet': {
     id: 'Weighted Anklet',
+    img: () => (
+      <img src={WeightedAnklet} height={48} width={48} alt="Weighted Belt" className="inline" />
+    ),
     displayName: 'Weighted Belt',
     act: 1,
     type: 2,
@@ -1022,6 +1206,7 @@ export const Tools: Record<
   },
   'White Ring': {
     id: 'White Ring',
+    img: () => <img src={WhiteRing} height={48} width={48} alt="Weavelight" className="inline" />,
     displayName: 'Weavelight',
     act: 1,
     type: 1,
@@ -1036,6 +1221,9 @@ export const Tools: Record<
   },
   'Wisp Lantern': {
     id: 'Wisp Lantern',
+    img: () => (
+      <img src={WispLantern} height={48} width={48} alt="Wispfire Lantern" className="inline" />
+    ),
     displayName: '||<2>Wispfire Lantern||',
     act: 2,
     type: 1,
@@ -1050,6 +1238,9 @@ export const Tools: Record<
   },
   'Zap Imbuement': {
     id: 'Zap Imbuement',
+    img: () => (
+      <img src={ZapImbuement} height={48} width={48} alt="Volt Filament" className="inline" />
+    ),
     displayName: '||<2>Volt Filament||',
     act: 2,
     type: 1,

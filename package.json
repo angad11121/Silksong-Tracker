@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "bunx http-server dist -p 5173"
   },
   "devDependencies": {
     "@types/bun": "latest",
