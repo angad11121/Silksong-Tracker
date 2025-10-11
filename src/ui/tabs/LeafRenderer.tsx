@@ -13,14 +13,6 @@ import SilkSoar from '@/assets/arts/silk_soar.png';
 import Sylphsong from '@/assets/arts/sylphsong.png';
 import NeedleStrike from '@/assets/arts/needle_strike.png';
 
-import CrestHunter from '@/assets/crests/hunter.png';
-import CrestReaper from '@/assets/crests/reaper.png';
-import CrestWanderer from '@/assets/crests/architect.png';
-import CrestBeast from '@/assets/crests/beast.png';
-import CrestWitch from '@/assets/crests/witch.png';
-import CrestArchitect from '@/assets/crests/architect.png';
-import CrestShaman from '@/assets/crests/shaman.png';
-
 import Needle_1 from '@/assets/needle/1.png';
 import Needle_2 from '@/assets/needle/2.png';
 import Needle_3 from '@/assets/needle/3.png';
@@ -52,14 +44,6 @@ export enum LeafRendererType {
   SilkSoar = 'silk_soar',
   Sylphsong = 'sylphsong',
   NeedleStrike = 'needle_strike',
-
-  Crest_Hunter = 'crest_hunter',
-  Crest_Reaper = 'crest_reaper',
-  Crest_Wanderer = 'crest_wanderer',
-  Crest_Beast = 'crest_beast',
-  Crest_Witch = 'crest_witch',
-  Crest_Architect = 'crest_architect',
-  Crest_Shaman = 'crest_shaman',
 
   Needle_1 = NeedleLevel.Sharpened,
   Needle_2 = NeedleLevel.Shining,
@@ -103,27 +87,6 @@ const Images: Record<LeafRendererType, () => ReactElement> = {
   ),
   [LeafRendererType.Everbloom]: () => (
     <img src={Everbloom} height={30} width={30} alt="Everbloom" className="inline" />
-  ),
-  [LeafRendererType.Crest_Hunter]: () => (
-    <img src={CrestHunter} height={72} width={72} alt="Hunter Crest" className="inline" />
-  ),
-  [LeafRendererType.Crest_Reaper]: () => (
-    <img src={CrestReaper} height={72} width={72} alt="Reaper Crest" className="inline" />
-  ),
-  [LeafRendererType.Crest_Wanderer]: () => (
-    <img src={CrestWanderer} height={72} width={72} alt="Wanderer Crest" className="inline" />
-  ),
-  [LeafRendererType.Crest_Beast]: () => (
-    <img src={CrestBeast} height={72} width={72} alt="Beast Crest" className="inline" />
-  ),
-  [LeafRendererType.Crest_Witch]: () => (
-    <img src={CrestWitch} height={72} width={72} alt="Witch Crest" className="inline" />
-  ),
-  [LeafRendererType.Crest_Architect]: () => (
-    <img src={CrestArchitect} height={72} width={72} alt="Architect Crest" className="inline" />
-  ),
-  [LeafRendererType.Crest_Shaman]: () => (
-    <img src={CrestShaman} height={72} width={72} alt="Shaman Crest" className="inline" />
   ),
 
   [LeafRendererType.Needle_1]: () => (

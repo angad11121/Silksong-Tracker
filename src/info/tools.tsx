@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { Locations } from '@/info/locations';
-import { Items } from './items';
+import { Items } from '@/info/items';
 import type { MapLocation } from '@/ui/components/map';
 import type { SaveData } from '@/parser/types';
 

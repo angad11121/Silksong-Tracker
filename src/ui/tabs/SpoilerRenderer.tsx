@@ -32,7 +32,7 @@ function SpoilerSpan({ text, spoilerLevel }: { text: string; spoilerLevel: numbe
   };
 
   const textEl =
-    text + (SPOILER_WIDTH > text.length ? '\u00A0'.repeat(SPOILER_WIDTH - text.length) : null);
+    text + (SPOILER_WIDTH > text.length ? '\u00A0'.repeat(SPOILER_WIDTH - text.length) : '');
 
   return (
     <Tooltip content={`Spoilers for Act ${'I'.repeat(spoilerLevel)}`}>
@@ -55,7 +55,7 @@ function SpoilerSpan({ text, spoilerLevel }: { text: string; spoilerLevel: numbe
             >
               {textEl}
             </span>
-            <span className="absolute w-full h-full top-0 left-0 flex items-center justify-center text-xs group-hover:invisible duration-0 text-stone-400">
+            <span className="absolute w-full h-full top-0 left-0 flex items-center justify-center text-xs group-hover:invisible duration-0 text-stone-400 overflow-hidden">
               (spoilers for Act {'I'.repeat(spoilerLevel)})
             </span>
           </>

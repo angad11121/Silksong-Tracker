@@ -1,3 +1,4 @@
+import { Crests } from '@/info';
 import { getPercentageSection, type PercentageSectionCtx } from '@/ui/tabs/percentage/sections';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { MemoryLockets } from '@/info/lockets';
@@ -71,16 +72,19 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
                       title: 'Crest of the Hunter',
                       subtext: 'The Crest of the Hunter is acquired at the start of the game.',
                       has: () => true,
-                      render: ({ saveData, entry }) => (
-                        <LeafRenderer
-                          id={null}
-                          check={entry.has}
-                          hint="The Crest of the Hunter is acquired at the start of the game."
-                          data={saveData}
-                          markers={[]}
-                          type={LeafRendererType.Crest_Hunter}
-                        />
-                      ),
+                      render: ({ saveData, entry }) => {
+                        const crest = Crests.find(entry => entry.gameId === 'Hunter')!;
+                        return (
+                          <LeafRenderer
+                            id={null}
+                            check={entry.has}
+                            hint={crest.hint}
+                            data={saveData}
+                            markers={crest.markers}
+                            type={crest.img!}
+                          />
+                        );
+                      },
                     },
                   ],
                   ctx: { maxCount: 1, getCount: 'auto' },

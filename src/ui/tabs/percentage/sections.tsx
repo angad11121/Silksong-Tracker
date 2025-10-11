@@ -339,18 +339,9 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
       {
         title: 'Crests',
         subtext:
-          'All Crests are required for 100% completion. Hunter Crest upgrades are not required, but are acquired during Sylphsong regardless.',
+          'All Crests are required for 100% completion. Hunter Crest upgrades are not required, but are acquired during ||<3>Sylphsong|| regardless.',
         layout: 'grid',
-        children: [
-          LeafRendererType.Crest_Reaper,
-          LeafRendererType.Crest_Wanderer,
-          LeafRendererType.Crest_Beast,
-          LeafRendererType.Crest_Witch,
-          LeafRendererType.Crest_Architect,
-          LeafRendererType.Crest_Shaman,
-        ].map(type => {
-          const crest = Crests.find(crest => crest.id === type)!;
-
+        children: Crests.filter(crest => crest.hasPercent).map(crest => {
           return {
             title: `Crest of the ${crest.name}`,
             subtext: null,
@@ -369,7 +360,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     hint={crest.hint}
                     data={saveData}
                     markers={crest.markers}
-                    type={type}
+                    type={crest.img!}
                   />
                 ),
               },
