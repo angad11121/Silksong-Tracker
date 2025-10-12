@@ -615,7 +615,7 @@ export const getSections = (
                         markers={[
                           {
                             label: 'Move the Flea Caravan to Fleatopia.',
-                            location: Locations.Mooshka.Fleatopia,
+                            location: Locations.Fleatopia,
                           },
                         ]}
                         type={LeafRendererType.ToolPouch}

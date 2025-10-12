@@ -129,7 +129,7 @@ export const NeedleUpgrades: {
       markers: [
         {
           label: 'Beat all three high scores in the Flea Games to receive a Pale Oil.',
-          location: Locations.Mooshka.Fleatopia,
+          location: Locations.Fleatopia,
         },
         {
           label: 'Talk to Pinmaster Plinney.',
