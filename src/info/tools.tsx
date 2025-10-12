@@ -260,7 +260,7 @@ export const Tools: Record<
     img: () => (
       <img src={CurveClawsUpgraded} height={48} width={48} alt="Curvesickle" className="inline" />
     ),
-    displayName: 'Curvesickle',
+    displayName: '||<3>Curvesickle||',
     act: 3,
     type: 0,
     isCounted: true,
@@ -299,7 +299,7 @@ export const Tools: Record<
     img: () => (
       <img src={DazzleBindUpgraded} height={48} width={48} alt="Claw Mirrors" className="inline" />
     ),
-    displayName: 'Claw Mirrors',
+    displayName: '||<3>Claw Mirrors||',
     act: 3,
     type: 1,
     isCounted: true,
@@ -319,7 +319,7 @@ export const Tools: Record<
   'Dazzle Bind': {
     id: 'Dazzle Bind',
     img: () => <img src={DazzleBind} height={48} width={48} alt="Claw Mirror" className="inline" />,
-    displayName: 'Claw Mirror',
+    displayName: '||<2>Claw Mirror||',
     act: 2,
     type: 1,
     isCounted: true,
@@ -437,7 +437,7 @@ export const Tools: Record<
     id: 'Lava Charm',
     img: () => <img src={LavaCharm} height={48} width={48} alt="Magma Bell" className="inline" />,
     displayName: 'Magma Bell',
-    act: 2,
+    act: 1,
     type: 1,
     isCounted: true,
     desc: 'Purchased from the Forge Daughter in the Deep Docks for 110 rosaries and a Craftmetal.',
@@ -557,12 +557,12 @@ export const Tools: Record<
     img: () => (
       <img src={MosscreepTool2} height={48} width={48} alt="Druid's Eyes" className="inline" />
     ),
-    displayName: "Druid's Eyes",
+    displayName: "||<2>Druid's Eyes||",
     act: 2,
     type: 1,
     isCounted: true,
     isUpgrade: 'Mosscreep Tool 1',
-    desc: 'Received as the reward from the Moss Druid in Mosshome for collecting all seven Mossberries across Pharloom.',
+    desc: 'Received as the reward from ||<2>the Moss Druid in Mosshome for collecting all seven Mossberries across Pharloom||.',
     markers: [
       ...Mossberries,
       {
@@ -591,7 +591,7 @@ export const Tools: Record<
     img: () => (
       <img src={MusicianCharm} height={48} width={48} alt="Spider Strings" className="inline" />
     ),
-    displayName: 'Spider Strings',
+    displayName: '||<2>Spider Strings||',
     act: 2,
     type: 2,
     isCounted: true,

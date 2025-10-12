@@ -4,11 +4,16 @@ import { getSections } from '@/ui/tabs/percentage/sections';
 import { computePercentage } from '@/ui/tabs/utils';
 import { useSettings } from '@/ui/components/Settings';
 import { useSaveData } from '@/ui/hooks/useSaveData';
+import { useSpoilerLevel } from '@/ui/tabs/SpoilerRenderer';
 
 export function PercentageDisplay(): ReactElement {
   const data = useSaveData()!;
   const showMissingFirst = useSettings('showMissingFirst');
-  const sections = useMemo(() => getSections(showMissingFirst), [showMissingFirst]);
+  const spoilerLevel = useSpoilerLevel();
+  const sections = useMemo(
+    () => getSections(showMissingFirst, spoilerLevel),
+    [showMissingFirst, spoilerLevel],
+  );
 
   return (
     <SectionRenderer

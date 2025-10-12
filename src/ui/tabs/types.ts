@@ -9,6 +9,7 @@ export enum CustomHas {
 export type LeafSection = {
   title: string;
   subtext: string;
+  act?: 1 | 2 | 3;
   has?: (saveData: SaveData) => boolean | CustomHas | undefined;
   render: ({
     saveData,
@@ -24,6 +25,7 @@ export type LeafSection = {
 export type Section<ExtraData = null> = {
   title: string;
   subtext: string | null;
+  act?: 1 | 2 | 3;
   layout?: 'grid' | 'list';
   children:
     | (Section<ExtraData> | LeafSection)[]

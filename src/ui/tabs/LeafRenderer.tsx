@@ -163,7 +163,10 @@ export function LeafRenderer({
         <Image />
         {typeof id === 'number' || typeof id === 'string' ? (
           <>
-            <small className="text-gray-300">{typeof id === 'number' ? `#${id}` : id}:</small>&nbsp;
+            <small className="text-gray-300">
+              <SpoilerRenderer content={typeof id === 'number' ? `#${id}` : id} />:
+            </small>
+            &nbsp;
           </>
         ) : (
           ' '

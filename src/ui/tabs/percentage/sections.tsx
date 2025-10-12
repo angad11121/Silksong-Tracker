@@ -18,11 +18,13 @@ import {
   getToolPercentage,
 } from '@/ui/tabs/utils';
 
-import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 import type { PercentageSectionCtx } from '@/ui/tabs/percentage/types';
 
-export const getSections = (showMissingFirst: boolean): Section<PercentageSectionCtx>[] => [
+export const getSections = (
+  showMissingFirst: boolean,
+  spoilerLevel: number,
+): Section<PercentageSectionCtx>[] => [
   {
     title: '100% Completion',
     subtext:
@@ -41,7 +43,7 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
             render: () => (
               <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Mask} />
             ),
-          })).sort(missingFirstSortComparator(saveData, showMissingFirst)),
+          })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
           maxPercentage: 5,
           getPercentage: 'maxHealthBase',
@@ -60,7 +62,7 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
             render: () => (
               <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Spool} />
             ),
-          })).sort(missingFirstSortComparator(saveData, showMissingFirst)),
+          })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
           maxPercentage: 9,
           getPercentage: 'silkMax',
@@ -94,10 +96,10 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                   />
                 ),
               },
-              // Act II
               {
                 title: 'Silk Heart #2',
                 subtext: 'A Silk Heart is awarded for ||<2>defeating Lace in the Cradle||.',
+                act: 2,
                 has: () =>
                   getScene('Memory_Silk_Heart_LaceTower', 'glow_rim_Remasker', saveData)?.Value,
                 render: ({ entry }) => (
@@ -116,11 +118,11 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                   />
                 ),
               },
-              // Act II
               {
                 title: 'Silk Heart #3',
                 subtext:
                   'A Silk Heart is awarded for ||<2>defeating the Unravelled in a secret area in Whiteward||.',
+                act: 2,
                 has: () =>
                   getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value,
                 render: ({ entry }) => (
@@ -144,7 +146,7 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                 ),
               },
             ] satisfies LeafSection[]
-          ).sort(missingFirstSortComparator(saveData, showMissingFirst)),
+          ).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
           maxPercentage: 3,
           getPercentage: 'silkRegenMax',
@@ -171,10 +173,13 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
             return {
               title: level.name,
               subtext: level.desc,
+              act: upgrade.act,
               has: () => upgrade.done,
               render: ({ saveData }) => (
                 <LeafRenderer
-                  id={level.name}
+                  id={
+                    spoilerLevel >= upgrade.act ? level.name : `||<${upgrade.act}>${level.name}||`
+                  }
                   check={upgrade.check}
                   hint={upgrade.desc}
                   markers={
@@ -212,6 +217,7 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
               return {
                 title: data.name,
                 subtext: null,
+                act: data.act,
                 children: [
                   {
                     title: data.name,
@@ -235,7 +241,7 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                 },
               };
             })
-            .sort(missingFirstSortComparator(saveData, showMissingFirst)),
+            .sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
           maxPercentage: 6,
           getPercentage: saveData =>
@@ -256,6 +262,7 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
               return {
                 title: `Crest of the ${crest.name}`,
                 subtext: null,
+                act: crest.act,
                 children: saveData => [
                   {
                     title: crest.name,
@@ -287,7 +294,7 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                 },
               };
             })
-            .sort(missingFirstSortComparator(saveData, showMissingFirst)),
+            .sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
           maxPercentage: 6,
           getPercentage: 'ToolEquips',
@@ -297,7 +304,8 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
         title: 'Silk Skills',
         subtext: 'All Silk Skills are required for 100% completion.',
         layout: 'grid',
-        children: saveData => renderToolChildren(ToolType.SilkSkill, saveData, showMissingFirst),
+        children: saveData =>
+          renderToolChildren(ToolType.SilkSkill, saveData, showMissingFirst, spoilerLevel),
         ctx: {
           maxPercentage: 6,
           getPercentage: getToolPercentage(ToolType.SilkSkill),
@@ -335,12 +343,13 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
       },
       {
         title: '||<3>Everbloom||',
-        subtext:
-          'The ||<3>Everbloom|| is acquired by ||<3>talking to the Snail Shamans after acquiring three Hearts in Act III||.',
+        subtext: null,
+        act: 3,
         children: [
           {
-            title: '||<3>Everbloom||',
-            subtext: 'Complete the quest in the ||<3>Ruined Chapel||.',
+            title: 'Everbloom',
+            subtext:
+              'The Everbloom is acquired by talking to the Snail Shamans in the Ruined Chapel after acquiring three Hearts in Act III.',
             render: ({ saveData, entry }) => (
               <LeafRenderer
                 id={null}
@@ -372,7 +381,8 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
             title: 'Red Tools',
             subtext: 'Red tools are mainly used actively for combat.',
             layout: 'grid',
-            children: saveData => renderToolChildren(ToolType.Red, saveData, showMissingFirst),
+            children: saveData =>
+              renderToolChildren(ToolType.Red, saveData, showMissingFirst, spoilerLevel),
             ctx: {
               getPercentage: getToolPercentage(ToolType.Red),
               maxPercentage: 18,
@@ -382,7 +392,8 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
             title: 'Blue Tools',
             subtext: 'Blue tools are mainly used passively for combat utility.',
             layout: 'grid',
-            children: saveData => renderToolChildren(ToolType.Blue, saveData, showMissingFirst),
+            children: saveData =>
+              renderToolChildren(ToolType.Blue, saveData, showMissingFirst, spoilerLevel),
             ctx: {
               getPercentage: getToolPercentage(ToolType.Blue),
               maxPercentage: 21,
@@ -392,7 +403,8 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
             title: 'Yellow Tools',
             subtext: 'Yellow tools are mainly used as passive movement and utility tools.',
             layout: 'grid',
-            children: saveData => renderToolChildren(ToolType.Yellow, saveData, showMissingFirst),
+            children: saveData =>
+              renderToolChildren(ToolType.Yellow, saveData, showMissingFirst, spoilerLevel),
             ctx: {
               getPercentage: getToolPercentage(ToolType.Yellow),
               maxPercentage: 12,
@@ -463,11 +475,11 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                       />
                     ),
                   },
-                  // Act II
                   {
                     title: 'Crafting Kit #3',
                     subtext:
                       'A Crafting Kit can be purchased from the ||<2>Twelfth Architect in the Underworks for 450 rosaries||.',
+                    act: 2,
                     render: ({ entry }) => (
                       <LeafRenderer
                         id={3}
@@ -484,11 +496,11 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                       />
                     ),
                   },
-                  // Act II
                   {
                     title: 'Crafting Kit #4',
                     subtext:
                       'A Crafting Kit can be purchased from ||<2>Grindle in the Blasted Steps for 700 rosaries||.',
+                    act: 2,
                     render: ({ entry }) => (
                       <LeafRenderer
                         id={4}
@@ -506,7 +518,7 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                     ),
                   },
                 ] satisfies LeafSection[]
-              ).sort(missingFirstSortComparator(saveData, showMissingFirst)),
+              ).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
             ctx: {
               getPercentage: 'ToolKitUpgrades',
               maxPercentage: 4,
@@ -586,11 +598,11 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                       />
                     ),
                   },
-                  // Act II
                   {
                     title: 'Tool Pouch Upgrade #4',
                     subtext:
-                      'Mooshka gives you a Tool Pouch upgrade after moving to ||<2>Fleatopia||.',
+                      '||<2>Mooshka gives you a Tool Pouch upgrade after moving to Fleatopia||.',
+                    act: 2,
                     render: ({ entry }) => (
                       <LeafRenderer
                         id={3}
@@ -611,7 +623,7 @@ export const getSections = (showMissingFirst: boolean): Section<PercentageSectio
                     ),
                   },
                 ] satisfies LeafSection[]
-              ).sort(missingFirstSortComparator(saveData, showMissingFirst)),
+              ).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
             ctx: {
               getPercentage: 'ToolPouchUpgrades',
               maxPercentage: 4,

@@ -1,5 +1,5 @@
 import { createContext, Fragment, useContext, type ReactElement, type ReactNode } from 'react';
-import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
+import { SpoilerRenderer, useSpoilerLevel } from '@/ui/tabs/SpoilerRenderer';
 import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 
@@ -23,11 +23,15 @@ function SectionDisplay<ExtraCtx = null>({
   open,
   After = () => null,
 }: SectionDisplayProps<ExtraCtx>): ReactElement {
+  const spoilerLevel = useSpoilerLevel();
+
   return (
     <SectionLayoutContext.Provider value={section.layout ?? null}>
       <div className="pl-1 my-4">
         <details
-          open={open || !parent}
+          open={
+            typeof section.act === 'number' && section.act > spoilerLevel ? false : open || !parent
+          }
           className={
             parent
               ? depth >= 2

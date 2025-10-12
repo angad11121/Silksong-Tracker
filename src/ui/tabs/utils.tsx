@@ -2,7 +2,7 @@ import { SilkshotVariants, ToolType, Tools } from '@/info/index';
 import { hasTool } from '@/parser/metadata';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { CustomHas, type LeafSection, type Section } from '@/ui/tabs/types';
-import { stripSpoilers } from '@/ui/tabs/SpoilerRenderer';
+import { stripSpoilers, useSpoilerLevel } from '@/ui/tabs/SpoilerRenderer';
 import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 
 import type { SaveData } from '@/parser/types';
@@ -40,7 +40,11 @@ export function computePercentage(
   return ret ? 1 : 0;
 }
 
-export function missingFirstSortComparator(saveData: SaveData, enabled: boolean = true) {
+export function missingFirstSortComparator(
+  saveData: SaveData,
+  enabled: boolean,
+  spoilerLevel: number,
+) {
   return <
     T extends Section<PercentageSectionCtx> | Section<TrueCompletionSectionCtx> | LeafSection,
   >(
@@ -50,13 +54,15 @@ export function missingFirstSortComparator(saveData: SaveData, enabled: boolean 
     if (!enabled) return 0;
 
     const getPercentage = (term: T): number =>
-      'render' in term
-        ? term.has?.(saveData)
-          ? 1
-          : 0
-        : 'getPercentage' in term.ctx
-          ? computePercentage(term.ctx.getPercentage, saveData)
-          : calculateCurrentCount(term as Section<TrueCompletionSectionCtx>, saveData, 'current');
+      'act' in term && typeof term.act === 'number' && term.act > spoilerLevel
+        ? 2
+        : 'render' in term
+          ? term.has?.(saveData)
+            ? 1
+            : 0
+          : 'getPercentage' in term.ctx
+            ? computePercentage(term.ctx.getPercentage, saveData)
+            : calculateCurrentCount(term as Section<TrueCompletionSectionCtx>, saveData, 'current');
 
     return getPercentage(a) - getPercentage(b);
   };
@@ -115,7 +121,8 @@ function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
 export function renderToolChildren(
   type: ToolType,
   saveData: SaveData,
-  showMissingFirst: boolean = true,
+  showMissingFirst: boolean,
+  spoilerLevel: number,
 ): Section<PercentageSectionCtx>[] {
   return [
     ...Object.values(Tools)
@@ -124,8 +131,12 @@ export function renderToolChildren(
       .filter(tool => !tool.isUpgrade)
       .filter(tool => !tool.displayName.includes('Silkshot'))
       .map<Section<PercentageSectionCtx>>(tool => ({
-        title: tool.upgradesTo ? Tools[tool.upgradesTo]!.displayName : tool.displayName,
+        title:
+          tool.upgradesTo && hasTool(tool.upgradesTo!, saveData)
+            ? Tools[tool.upgradesTo]!.displayName
+            : tool.displayName,
         subtext: null,
+        act: tool.act,
         children: [
           getToolChild(tool),
           ...(tool.upgradesTo ? [getToolChild(Tools[tool.upgradesTo]!)] : []),
@@ -145,6 +156,7 @@ export function renderToolChildren(
             title: '||<2>Silkshot||',
             subtext:
               'The ||<2>Ruined Tool can be upgraded by three different characters, each of whom produces a slightly different Silkshot||.',
+            act: 2,
             children: saveData => {
               const hasSilkshot = SilkshotVariants.find(variant => hasTool(variant, saveData));
               return hasSilkshot
@@ -161,7 +173,8 @@ export function renderToolChildren(
       : []),
   ]
     .sort((a, b) => stripSpoilers(a.title).localeCompare(stripSpoilers(b.title)))
-    .sort(missingFirstSortComparator(saveData, showMissingFirst));
+    .sort((a, b) => (a.act ?? 1) - (b.act ?? 1))
+    .sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel));
 }
 
 const PercentTools = Object.values(Tools).filter(tool => tool.isCounted);

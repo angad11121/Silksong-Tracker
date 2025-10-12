@@ -10,7 +10,12 @@ export function stripSpoilers(content: string): string {
   return content.replace(SPOILER_REGEX, '$3');
 }
 
-function calculateSpoilerLevel(spoilers: 'auto' | 'none' | 'all', saveData: SaveData): number {
+export function useSpoilerLevel(): number {
+  const spoilers = useSettings('spoilers');
+  const saveData = useSaveData();
+
+  if (!saveData) return 0;
+
   if (spoilers === 'all') return 3;
   if (spoilers === 'none') return 0;
 
@@ -20,9 +25,7 @@ function calculateSpoilerLevel(spoilers: 'auto' | 'none' | 'all', saveData: Save
 }
 
 export function SpoilerRenderer({ content }: { content: string | null }): ReactElement {
-  const spoilers = useSettings('spoilers');
-  const saveData = useSaveData()!;
-  const currentSpoilerLevel = calculateSpoilerLevel(spoilers, saveData);
+  const currentSpoilerLevel = useSpoilerLevel();
 
   return (
     <>

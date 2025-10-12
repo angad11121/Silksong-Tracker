@@ -4,11 +4,16 @@ import { SectionRenderer } from '@/ui/tabs/SectionRenderer';
 import { getSections } from '@/ui/tabs/trueCompletion/sections';
 import { calculateCurrentCount } from '@/ui/tabs/utils';
 import { useSettings } from '@/ui/components/Settings';
+import { useSpoilerLevel } from '@/ui/tabs/SpoilerRenderer';
 
 export function TrueCompletionDisplay(): ReactElement {
   const data = useSaveData()!;
   const showMissingFirst = useSettings('showMissingFirst');
-  const sections = useMemo(() => getSections(showMissingFirst), [showMissingFirst]);
+  const spoilerLevel = useSpoilerLevel();
+  const sections = useMemo(
+    () => getSections(showMissingFirst, spoilerLevel),
+    [showMissingFirst, spoilerLevel],
+  );
 
   return (
     <SectionRenderer
