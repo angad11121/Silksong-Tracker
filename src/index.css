@@ -6,7 +6,6 @@ html,
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
 }
 
 body {
@@ -21,7 +20,7 @@ body {
 }
 
 input[type='file'] {
-  @apply w-32 ;
+  @apply w-32;
   &::file-selector-button {
     @apply mr-5 py-2 px-4 border-1 rounded-md text-sm font-medium bg-rose-600 text-white border-rose-800;
   }

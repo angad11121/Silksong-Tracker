@@ -9,6 +9,15 @@ import type { SaveData } from '@/parser/types';
 import type { PercentageSectionCtx } from '@/ui/tabs/percentage/types';
 import type { TrueCompletionSectionCtx } from '@/ui/tabs/trueCompletion/types';
 
+export function generateSectionId(title: string): string {
+  return stripSpoilers(title)
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
 export function calculateCurrentCount(
   section: Section<TrueCompletionSectionCtx> | LeafSection,
   data: SaveData,

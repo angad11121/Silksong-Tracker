@@ -135,15 +135,16 @@ function SaveLocation(): ReactElement {
 export function HelpDisplay(): ReactElement {
   return (
     <>
-      {localStorage.getItem(DEV_MODE_KEY) === 'true' ? <DevDisplay /> : null}
       <div className="p-4">
+        <h3 id="help-intro">Introduction</h3>
+        <br />
         <p>This is a tool to help you track your progress in Hollow Knight: Silksong.</p>
         <p>To use the tool, simply upload your save file.</p>
         <SaveLocation />
         <p>Once you've uploaded your save file, you can start tracking your progress.</p>
         <hr />
         <br />
-        <h3>Maps</h3>
+        <h3 id="help-maps">Maps</h3>
         <br />
         <p>
           All collectibles have an accompanying map that shows you where and how to acquire them!
@@ -169,6 +170,7 @@ export function HelpDisplay(): ReactElement {
           <a href="https://github.com/angad11121/Silksong-Tracker/issues">GitHub</a> if you find
           something that's missing or incorrect. We'll be glad to fix it!
         </small>
+        {localStorage.getItem(DEV_MODE_KEY) === 'true' ? <DevDisplay /> : null}
       </div>
     </>
   );

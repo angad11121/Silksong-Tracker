@@ -34,10 +34,13 @@ export const getSections = (
     subtext:
       "True completion is a representation of how much of the game's content has been completed. This tab is a work in progress!",
     children: saveData => [
-      mapPercentageSectionToTrueCompletion(getPercentageSection(['Masks'], saveData, showMissingFirst, spoilerLevel)!, () => ({
-        subtext: 'There are 20 Mask Fragments available.',
-        ctx: { maxCount: 20, getCount: 'auto' },
-      })),
+      mapPercentageSectionToTrueCompletion(
+        getPercentageSection(['Masks'], saveData, showMissingFirst, spoilerLevel)!,
+        () => ({
+          subtext: 'There are 20 Mask Fragments available.',
+          ctx: { maxCount: 20, getCount: 'auto' },
+        }),
+      ),
       mapPercentageSectionToTrueCompletion(
         getPercentageSection(['Silk Spools'], saveData, showMissingFirst, spoilerLevel)!,
         () => ({
@@ -62,7 +65,12 @@ export const getSections = (
         subtext: 'There are 7 Crests and 20 Memory Lockets available.',
         children: [
           mapPercentageSectionToTrueCompletion(
-            getPercentageSection(['Crests'], saveData, showMissingFirst, spoilerLevel)! as Section<PercentageSectionCtx>,
+            getPercentageSection(
+              ['Crests'],
+              saveData,
+              showMissingFirst,
+              spoilerLevel,
+            )! as Section<PercentageSectionCtx>,
             ({ children }) => ({
               children: (
                 [

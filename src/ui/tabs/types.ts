@@ -32,3 +32,9 @@ export type Section<ExtraData = null> = {
     | ((saveData: SaveData) => (Section<ExtraData> | LeafSection)[]);
   ctx: ExtraData;
 };
+
+export type SidebarItem = {
+  name: string;
+  id: string;
+  children?: SidebarItem[];
+};

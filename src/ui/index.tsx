@@ -11,6 +11,8 @@ import {
 } from '@/ui/components/Settings';
 import { SaveUpload, SAVE_DATA_KEY } from '@/ui/components/SaveUpload';
 import { SaveDataProvider } from './hooks/useSaveData';
+import { TabStateProvider } from '@/ui/tabs/TabStateProvider';
+import { TabSidebar } from '@/ui/tabs/TabSidebar';
 
 import type { SaveData } from '@/parser/types';
 
@@ -26,23 +28,29 @@ export default function App(): ReactElement {
   });
 
   return (
-    <>
-      <Preload />
-      <div className="flex flex-col gap-10 p-6 max-w-screen-lg mx-auto min-h-screen">
-        <div className="flex justify-between items-center">
-          <h1 className="">Silksong Progress Tracker</h1>
-          <Settings settings={settings} onSettingsChange={settings => setSettings(settings)} />
+    <SaveDataProvider saveData={decoded}>
+      <TabStateProvider>
+        <div className="flex flex-col p-6 min-h-screen">
+          <Preload />
+          <div className="flex justify-between p-6 items-center shrink sticky top-0 bg-black z-1">
+            <h1>Silksong Progress Tracker</h1>
+            <div className="grow" />
+            <Settings settings={settings} onSettingsChange={settings => setSettings(settings)} />
+          </div>
+          <div className="flex gap-6 mx-auto px-6 relative">
+            <div className="flex flex-col gap-8 py-6 flex-1 min-w-0 max-w-screen-lg">
+              <div className="flex gap-4 items-center">
+                <SaveUpload decoded={decoded} onUpload={setDecoded} />
+              </div>
+              <SettingsProvider settings={settings}>
+                <TabRenderer />
+              </SettingsProvider>
+            </div>
+            <TabSidebar />
+          </div>
+          <Footer />
         </div>
-        <div className="flex gap-4 items-center">
-          <SaveUpload decoded={decoded} onUpload={setDecoded} />
-        </div>
-        <SettingsProvider settings={settings}>
-          <SaveDataProvider saveData={decoded}>
-            <TabRenderer />
-          </SaveDataProvider>
-        </SettingsProvider>
-        <Footer />
-      </div>
-    </>
+      </TabStateProvider>
+    </SaveDataProvider>
   );
 }

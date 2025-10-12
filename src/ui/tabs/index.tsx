@@ -1,23 +1,11 @@
-import { useState, type ReactElement, useMemo } from 'react';
-import { TabType } from '@/ui/tabs/constants';
+import { type ReactElement } from 'react';
 import { TabHeader } from '@/ui/tabs/TabHeader';
 import { TabRendererMetadata } from '@/ui/tabs/constants';
-import { useSaveData } from '@/ui/hooks/useSaveData';
+import { useTabState } from '@/ui/tabs/TabStateProvider';
 
 export function TabRenderer(): ReactElement {
-  const data = useSaveData();
-  const [_tab, setTab] = useState<TabType>(TabType.PercentageData);
-  const tab = data ? _tab : TabType.Help;
+  const { tab, tabs, setTab } = useTabState();
   const { Renderer } = TabRendererMetadata[tab];
-
-  const tabs = useMemo(() => {
-    if (!data) return [TabType.Help];
-    return [
-      ...Object.values(TabRendererMetadata)
-        .filter(value => !value.hideTab)
-        .map(value => value.id),
-    ];
-  }, [!data]);
 
   return (
     <div>

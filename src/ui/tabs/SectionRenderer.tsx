@@ -2,6 +2,7 @@ import { createContext, Fragment, useContext, type ReactElement, type ReactNode 
 import { SpoilerRenderer, useSpoilerLevel } from '@/ui/tabs/SpoilerRenderer';
 import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
+import { generateSectionId } from '@/ui/tabs/utils';
 
 const SectionLayoutContext = createContext<'grid' | 'list' | null>(null);
 export const useSectionLayout = () => useContext(SectionLayoutContext);
@@ -41,7 +42,7 @@ function SectionDisplay<ExtraCtx = null>({
           }
         >
           <summary>
-            <h3 className="inline mx-2 pt-2">
+            <h3 className="inline mx-2 pt-2 scroll-m-30" id={generateSectionId(section.title)}>
               <SpoilerRenderer content={section.title} />
               <After />
             </h3>
