@@ -107,7 +107,7 @@ export const AncestralArts: Record<
   },
   sylphsong: {
     name: '||<3>Sylphsong||',
-    desc: 'The ||<3>Sylphsong|| is acquired by ||<3>binding Eva in Weavenest Atla|| after acquiring all crests and having 32 unlocked non-Hunter Crest slots.',
+    desc: 'The ||<3>Sylphsong|| is acquired by ||<3>binding Eva in Weavenest Atla after acquiring all crests and having 32 unlocked non-Hunter Crest slots||.',
     act: 3,
     has: 'HasSeenEvaHeal',
     percentage: 1,

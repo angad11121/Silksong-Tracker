@@ -1,7 +1,12 @@
 import { useState, type ReactElement } from 'react';
 import { Tooltip } from '@/ui/components/Tooltip';
 
+const SPOILER_REGEX = /(\|\|)<(\d+)>(.*?)\|\|/g;
 const currentSpoilerLevel = 2;
+
+export function stripSpoilers(content: string): string {
+  return content.replace(SPOILER_REGEX, '$3');
+}
 
 export function SpoilerRenderer({ content }: { content: string | null }): ReactElement {
   return (
@@ -73,7 +78,7 @@ function* TextParser(content: string): Generator<{ text: string; spoilerLevel: n
 }
 
 function* TextParserGenerator(content: string): Generator<string> {
-  for (const part of content.split(/(\|\|)<(\d+)>(.*?)\|\|/g)) {
+  for (const part of content.split(SPOILER_REGEX)) {
     yield part;
   }
 }
