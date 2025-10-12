@@ -21,9 +21,19 @@ body {
 }
 
 input[type='file'] {
-  @apply invisible file:visible w-30;
-  @apply file:mr-5 file:py-2 file:px-4 file:border-1 file:rounded-md file:text-sm file:font-medium file:bg-stone-50 file:text-stone-700;
-  @apply hover:file:cursor-pointer hover:file:bg-rose-50 hover:file:text-rose-700;
+  @apply w-32;
+  &::file-selector-button {
+    @apply mr-5 py-2 px-4 border-1 rounded-md text-sm font-medium bg-rose-600 text-white border-rose-800;
+  }
+  &:hover {
+    @apply cursor-pointer bg-rose-700 border-rose-900;
+  }
+  &:active {
+    @apply bg-rose-800 border-rose-900;
+  }
+  &:focus {
+    @apply border-white;
+  }
 }
 
 h1 {
@@ -47,18 +57,34 @@ p {
 }
 
 button:not([data-unstyled]) {
-  @apply bg-rose-600 text-white px-4 py-2 rounded-md mx-4 my-2 cursor-pointer;
+  @apply bg-rose-600 border-rose-800 border-1 text-white text-sm px-4 py-2 rounded-md mx-4 my-2 cursor-pointer;
   &:hover {
-    @apply bg-rose-700;
+    @apply bg-rose-700 border-rose-900;
   }
   &:active {
-    @apply bg-rose-800;
+    @apply bg-rose-800 border-rose-900;
   }
   &:focus {
     @apply border-white;
   }
   &[disabled] {
     @apply bg-rose-400 text-white cursor-not-allowed;
+  }
+
+  &[data-secondary] {
+    @apply bg-stone-200 border-stone-400 text-stone-700;
+    &:hover {
+      @apply bg-stone-300 text-stone-800;
+    }
+    &:active {
+      @apply bg-stone-400 text-stone-800;
+    }
+    &:focus {
+      @apply border-stone-800 text-stone-800;
+    }
+    &[disabled] {
+      @apply bg-stone-400 text-stone-700;
+    }
   }
 }
 

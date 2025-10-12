@@ -6,10 +6,7 @@ import type { SaveData } from '@/parser/types';
 
 function BlankSave({ onChange }: { onChange: (value: SaveData) => void }): ReactElement {
   return (
-    <button
-      className="text-md text-stone-400 bg-[#0006] px-4 py-2 rounded-md"
-      onClick={() => onChange(BlankSaveData)}
-    >
+    <button data-secondary onClick={() => onChange(BlankSaveData)}>
       Use Demo Profile
     </button>
   );
@@ -70,7 +67,9 @@ export function SaveUpload({
               </>
             )}
           </span>
-          <button onClick={() => onUpload(null)}>Clear</button>
+          <button data-secondary onClick={() => onUpload(null)}>
+            Clear
+          </button>
         </>
       ) : (
         <BlankSave onChange={value => onUpload(value)} />
