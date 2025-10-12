@@ -20,7 +20,7 @@ export enum TabType {
 export const TabRendererMetadata: Record<
   TabType,
   {
-    Renderer: ({ data }: { data: SaveData }) => ReactNode;
+    Renderer: () => ReactNode;
     hideTab?: boolean;
     title: string;
     id: TabType;

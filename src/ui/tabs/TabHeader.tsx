@@ -1,4 +1,3 @@
-import { TabRendererMetadata, TabType } from '@/ui/tabs/constants';
 import {
   Fragment,
   useCallback,
@@ -7,8 +6,9 @@ import {
   type KeyboardEventHandler,
   type ReactElement,
 } from 'react';
+import { TabRendererMetadata, TabType } from '@/ui/tabs/constants';
 
-export function TabComponent({
+export function TabHeader({
   selectedTab,
   tabs,
   onSelect,

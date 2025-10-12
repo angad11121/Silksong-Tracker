@@ -1,13 +1,18 @@
-import type { ReactElement } from 'react';
-import type { SaveData } from '@/parser/types';
+import { useMemo, type ReactElement } from 'react';
+import { useSaveData } from '@/ui/hooks/useSaveData';
 import { SectionRenderer } from '@/ui/tabs/SectionRenderer';
-import { SectionGenerator } from '@/ui/tabs/trueCompletion/sections';
+import { getSections } from '@/ui/tabs/trueCompletion/sections';
 import { calculateCurrentCount } from '@/ui/tabs/utils';
+import { useSettings } from '@/ui/components/Settings';
 
-export function TrueCompletionDisplay({ data }: { data: SaveData }): ReactElement {
+export function TrueCompletionDisplay(): ReactElement {
+  const data = useSaveData()!;
+  const showMissingFirst = useSettings('showMissingFirst');
+  const sections = useMemo(() => getSections(showMissingFirst), [showMissingFirst]);
+
   return (
     <SectionRenderer
-      sections={SectionGenerator}
+      sections={sections}
       data={data}
       getSectionDisplayProps={(section, parent) => {
         const currentCount = calculateCurrentCount(section, data, 'current');

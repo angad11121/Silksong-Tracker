@@ -47,14 +47,7 @@ export function SaveUpload({
 
   return (
     <>
-      <input
-        id="upload"
-        type="file"
-        accept=".dat,.dat.bak"
-        value=""
-        onChange={handleFileChange}
-        className="rounded-xl p-2"
-      />
+      <input id="upload" type="file" accept=".dat,.dat.bak" value="" onChange={handleFileChange} />
       {decoded ? (
         <>
           <span className="text-md text-stone-400 bg-[#0006] px-4 py-2 rounded-md">

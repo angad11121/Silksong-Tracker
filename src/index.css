@@ -21,19 +21,23 @@ body {
 }
 
 input[type='file'] {
-  @apply w-32;
+  @apply w-32 ;
   &::file-selector-button {
     @apply mr-5 py-2 px-4 border-1 rounded-md text-sm font-medium bg-rose-600 text-white border-rose-800;
   }
   &:hover {
-    @apply cursor-pointer bg-rose-700 border-rose-900;
+    @apply cursor-pointer file:bg-rose-700 file:border-rose-900;
   }
   &:active {
-    @apply bg-rose-800 border-rose-900;
+    @apply file:bg-rose-800 file:border-rose-900;
   }
   &:focus {
     @apply border-white;
   }
+}
+
+input[type='checkbox'] {
+  @apply w-4 h-4 cursor-pointer accent-rose-600;
 }
 
 h1 {
@@ -96,4 +100,8 @@ a {
   &:focus {
     @apply text-rose-500;
   }
+}
+
+select {
+  @apply bg-[#0006] border border-stone-600 rounded-md;
 }

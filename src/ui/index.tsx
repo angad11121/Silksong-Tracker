@@ -9,8 +9,9 @@ import {
   SETTINGS_KEY,
   SettingsProvider,
 } from '@/ui/components/Settings';
-
 import { SaveUpload, SAVE_DATA_KEY } from '@/ui/components/SaveUpload';
+import { SaveDataProvider } from './hooks/useSaveData';
+
 import type { SaveData } from '@/parser/types';
 
 export default function App(): ReactElement {
@@ -30,13 +31,15 @@ export default function App(): ReactElement {
       <div className="flex flex-col gap-10 p-6 max-w-screen-lg mx-auto min-h-screen">
         <div className="flex justify-between items-center">
           <h1 className="">Silksong Progress Tracker</h1>
-          {/* <Settings settings={settings} onSettingsChange={settings => setSettings(settings)} /> */}
+          <Settings settings={settings} onSettingsChange={settings => setSettings(settings)} />
         </div>
         <div className="flex gap-4 items-center">
           <SaveUpload decoded={decoded} onUpload={setDecoded} />
         </div>
         <SettingsProvider settings={settings}>
-          <TabRenderer data={decoded} />
+          <SaveDataProvider saveData={decoded}>
+            <TabRenderer />
+          </SaveDataProvider>
         </SettingsProvider>
         <Footer />
       </div>

@@ -22,7 +22,7 @@ import type { SaveData } from '@/parser/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 import type { PercentageSectionCtx } from '@/ui/tabs/percentage/types';
 
-export const SectionGenerator: Section<PercentageSectionCtx>[] = [
+export const getSections = (showMissingFirst: boolean): Section<PercentageSectionCtx>[] => [
   {
     title: '100% Completion',
     subtext:
@@ -41,7 +41,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             render: () => (
               <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Mask} />
             ),
-          })).sort(missingFirstSortComparator(saveData)),
+          })).sort(missingFirstSortComparator(saveData, showMissingFirst)),
         ctx: {
           maxPercentage: 5,
           getPercentage: 'maxHealthBase',
@@ -60,7 +60,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             render: () => (
               <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Spool} />
             ),
-          })).sort(missingFirstSortComparator(saveData)),
+          })).sort(missingFirstSortComparator(saveData, showMissingFirst)),
         ctx: {
           maxPercentage: 9,
           getPercentage: 'silkMax',
@@ -144,7 +144,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 ),
               },
             ] satisfies LeafSection[]
-          ).sort(missingFirstSortComparator(saveData)),
+          ).sort(missingFirstSortComparator(saveData, showMissingFirst)),
         ctx: {
           maxPercentage: 3,
           getPercentage: 'silkRegenMax',
@@ -235,7 +235,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 },
               };
             })
-            .sort(missingFirstSortComparator(saveData)),
+            .sort(missingFirstSortComparator(saveData, showMissingFirst)),
         ctx: {
           maxPercentage: 6,
           getPercentage: saveData =>
@@ -287,7 +287,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                 },
               };
             })
-            .sort(missingFirstSortComparator(saveData)),
+            .sort(missingFirstSortComparator(saveData, showMissingFirst)),
         ctx: {
           maxPercentage: 6,
           getPercentage: 'ToolEquips',
@@ -297,7 +297,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         title: 'Silk Skills',
         subtext: 'All Silk Skills are required for 100% completion.',
         layout: 'grid',
-        children: saveData => renderToolChildren(ToolType.SilkSkill, saveData),
+        children: saveData => renderToolChildren(ToolType.SilkSkill, saveData, showMissingFirst),
         ctx: {
           maxPercentage: 6,
           getPercentage: getToolPercentage(ToolType.SilkSkill),
@@ -372,7 +372,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             title: 'Red Tools',
             subtext: 'Red tools are mainly used actively for combat.',
             layout: 'grid',
-            children: saveData => renderToolChildren(ToolType.Red, saveData),
+            children: saveData => renderToolChildren(ToolType.Red, saveData, showMissingFirst),
             ctx: {
               getPercentage: getToolPercentage(ToolType.Red),
               maxPercentage: 18,
@@ -382,7 +382,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             title: 'Blue Tools',
             subtext: 'Blue tools are mainly used passively for combat utility.',
             layout: 'grid',
-            children: saveData => renderToolChildren(ToolType.Blue, saveData),
+            children: saveData => renderToolChildren(ToolType.Blue, saveData, showMissingFirst),
             ctx: {
               getPercentage: getToolPercentage(ToolType.Blue),
               maxPercentage: 21,
@@ -392,7 +392,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             title: 'Yellow Tools',
             subtext: 'Yellow tools are mainly used as passive movement and utility tools.',
             layout: 'grid',
-            children: saveData => renderToolChildren(ToolType.Yellow, saveData),
+            children: saveData => renderToolChildren(ToolType.Yellow, saveData, showMissingFirst),
             ctx: {
               getPercentage: getToolPercentage(ToolType.Yellow),
               maxPercentage: 12,
@@ -506,7 +506,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     ),
                   },
                 ] satisfies LeafSection[]
-              ).sort(missingFirstSortComparator(saveData)),
+              ).sort(missingFirstSortComparator(saveData, showMissingFirst)),
             ctx: {
               getPercentage: 'ToolKitUpgrades',
               maxPercentage: 4,
@@ -611,7 +611,7 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
                     ),
                   },
                 ] satisfies LeafSection[]
-              ).sort(missingFirstSortComparator(saveData)),
+              ).sort(missingFirstSortComparator(saveData, showMissingFirst)),
             ctx: {
               getPercentage: 'ToolPouchUpgrades',
               maxPercentage: 4,

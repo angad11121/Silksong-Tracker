@@ -2,7 +2,7 @@ import { Crests } from '@/info';
 import { MemoryLockets } from '@/info/lockets';
 import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
 import { mapPercentageSectionToTrueCompletion, missingFirstSortComparator } from '@/ui/tabs/utils';
-import { SectionGenerator as PercentageSectionGenerator } from '@/ui/tabs/percentage/sections';
+import { getSections as getPercentageSectionGenerator } from '@/ui/tabs/percentage/sections';
 
 import type { PercentageSectionCtx } from '@/ui/tabs/percentage/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
@@ -12,6 +12,7 @@ import type { SaveData } from '@/parser/types';
 function getPercentageSection(
   keys: string[],
   saveData: SaveData,
+  showMissingFirst: boolean,
 ): Section<PercentageSectionCtx> | LeafSection | null {
   return keys.reduce<Section<PercentageSectionCtx> | LeafSection | null>((acc, key) => {
     if (!acc) return null;
@@ -20,34 +21,36 @@ function getPercentageSection(
       return children.find(child => child.title === key) ?? null;
     }
     return null;
-  }, PercentageSectionGenerator[0]!);
+  }, getPercentageSectionGenerator(showMissingFirst)[0]!);
 }
 
-export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
+export const getSections = (
+  showMissingFirst: boolean,
+): Section<TrueCompletionSectionCtx>[] => [
   {
     title: 'True Completion',
     subtext:
       "True completion is a representation of how much of the game's content has been completed. This tab is a work in progress!",
     children: saveData => [
-      mapPercentageSectionToTrueCompletion(getPercentageSection(['Masks'], saveData)!, () => ({
+      mapPercentageSectionToTrueCompletion(getPercentageSection(['Masks'], saveData, showMissingFirst)!, () => ({
         subtext: 'There are 20 Mask Fragments available.',
         ctx: { maxCount: 20, getCount: 'auto' },
       })),
       mapPercentageSectionToTrueCompletion(
-        getPercentageSection(['Silk Spools'], saveData)!,
+        getPercentageSection(['Silk Spools'], saveData, showMissingFirst)!,
         () => ({
           subtext: 'There are 18 Silk Spool Fragments available.',
           ctx: { maxCount: 18, getCount: 'auto' },
         }),
       ),
       mapPercentageSectionToTrueCompletion(
-        getPercentageSection(['Silk Hearts'], saveData)!,
+        getPercentageSection(['Silk Hearts'], saveData, showMissingFirst)!,
         () => ({
           subtext: 'There are 3 Silk Hearts available.',
         }),
       ),
       mapPercentageSectionToTrueCompletion(
-        getPercentageSection(['Ancestral Arts'], saveData)!,
+        getPercentageSection(['Ancestral Arts'], saveData, showMissingFirst)!,
         () => ({
           subtext: 'There are 6 Ancestral Arts available.',
         }),
@@ -57,7 +60,7 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
         subtext: 'There are 7 Crests and 20 Memory Lockets available.',
         children: [
           mapPercentageSectionToTrueCompletion(
-            getPercentageSection(['Crests'], saveData)! as Section<PercentageSectionCtx>,
+            getPercentageSection(['Crests'], saveData, showMissingFirst)! as Section<PercentageSectionCtx>,
             ({ children }) => ({
               children: (
                 [
@@ -91,7 +94,7 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
                     | LeafSection
                   )[]),
                 ] satisfies (Section<TrueCompletionSectionCtx> | LeafSection)[]
-              ).sort(missingFirstSortComparator(saveData)),
+              ).sort(missingFirstSortComparator(saveData, showMissingFirst)),
               ctx: { maxCount: 7, getCount: 'auto' },
             }),
           ),
@@ -118,14 +121,14 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
                     type={LeafRendererType.MemoryLocket}
                   />
                 ),
-              })).sort(missingFirstSortComparator(saveData)),
+              })).sort(missingFirstSortComparator(saveData, showMissingFirst)),
             ctx: { maxCount: 20, getCount: 'auto' },
           },
         ],
         ctx: { maxCount: 27, getCount: 'auto' },
       },
       mapPercentageSectionToTrueCompletion(
-        getPercentageSection(['Needle Upgrades'], saveData)!,
+        getPercentageSection(['Needle Upgrades'], saveData, showMissingFirst)!,
         () => ({
           subtext: '4 Needle upgrades can be found throughout the game.',
         }),

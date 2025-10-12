@@ -1,9 +1,9 @@
 import { type ReactElement } from 'react';
-import type { SaveData } from '@/parser/types';
+import { useSaveData } from '@/ui/hooks/useSaveData';
 import { escapeHTML } from '@/utils';
 
-export function RawDataDisplay({ data }: { data: SaveData }): ReactElement | null {
-  if (!data) return null;
+export function RawDataDisplay(): ReactElement | null {
+  const data = useSaveData()!;
 
   return (
     <div className="p-4 bg-[#0006] rounded-xl relative">

@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
-import type { SaveData } from '@/parser/types';
+import { useSaveData } from '@/ui/hooks/useSaveData';
 
-export function HuntersJournalDisplay({ data }: { data: SaveData }): ReactElement {
+export function HuntersJournalDisplay(): ReactElement {
+  const data = useSaveData()!;
   return <div>Hunter's Journal. Work in progress!</div>;
 }

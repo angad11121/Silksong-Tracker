@@ -40,18 +40,15 @@ export function computePercentage(
   return ret ? 1 : 0;
 }
 
-export function missingFirstSortComparator(
-  saveData: SaveData,
-): <T extends Section<PercentageSectionCtx> | Section<TrueCompletionSectionCtx> | LeafSection>(
-  a: T,
-  b: T,
-) => number {
+export function missingFirstSortComparator(saveData: SaveData, enabled: boolean = true) {
   return <
     T extends Section<PercentageSectionCtx> | Section<TrueCompletionSectionCtx> | LeafSection,
   >(
     a: T,
     b: T,
-  ) => {
+  ): number => {
+    if (!enabled) return 0;
+
     const getPercentage = (term: T): number =>
       'render' in term
         ? term.has?.(saveData)
@@ -118,6 +115,7 @@ function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
 export function renderToolChildren(
   type: ToolType,
   saveData: SaveData,
+  showMissingFirst: boolean = true,
 ): Section<PercentageSectionCtx>[] {
   return [
     ...Object.values(Tools)
@@ -163,7 +161,7 @@ export function renderToolChildren(
       : []),
   ]
     .sort((a, b) => stripSpoilers(a.title).localeCompare(stripSpoilers(b.title)))
-    .sort(missingFirstSortComparator(saveData));
+    .sort(missingFirstSortComparator(saveData, showMissingFirst));
 }
 
 const PercentTools = Object.values(Tools).filter(tool => tool.isCounted);
