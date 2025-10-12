@@ -3,109 +3,24 @@ import {
   Crests,
   MaskFragments,
   NeedleUpgrades,
-  SilkshotVariants,
   SpoolFragments,
   ToolType,
   Tools,
 } from '@/info/index';
-import { hasTool, getScene, type MetadataKey, getQuest } from '@/parser/metadata';
+import { hasTool, getScene, getQuest } from '@/parser/metadata';
 import { Locations } from '@/info/locations';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
-
-import RedTool from '@/assets/tools/red_tool.png';
-import BlueTool from '@/assets/tools/blue_tool.png';
-import YellowTool from '@/assets/tools/yellow_tool.png';
+import {
+  missingFirstSortComparator,
+  renderToolChildren,
+  computePercentage,
+  getToolPercentage,
+} from '@/ui/tabs/utils';
 
 import type { SaveData } from '@/parser/types';
-import { CustomHas, type LeafSection, type Section } from '@/ui/tabs/types';
-import type { ReactElement } from 'react';
-
-const PercentTools = Object.values(Tools).filter(tool => tool.isCounted);
-
-export type PercentageSectionCtx = {
-  maxPercentage: number;
-  getPercentage: MetadataKey | ((saveData: SaveData) => number);
-};
-
-const ToolImgs: Partial<Record<ToolType, () => ReactElement>> = {
-  [ToolType.Red]: () => (
-    <img src={RedTool} height={36} width={36} alt="Red Tool" className="inline" />
-  ),
-  [ToolType.Blue]: () => (
-    <img src={BlueTool} height={36} width={36} alt="Blue Tool" className="inline" />
-  ),
-  [ToolType.Yellow]: () => (
-    <img src={YellowTool} height={36} width={36} alt="Yellow Tool" className="inline" />
-  ),
-};
-
-function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
-  return {
-    title: tool.displayName,
-    subtext: tool.desc,
-    has: saveData =>
-      hasTool(tool.id, saveData) ||
-      (tool.upgradesTo && hasTool(tool.upgradesTo!, saveData) ? CustomHas.ToolUpgrade : false) ||
-      (tool.isUpgrade && hasTool(tool.isUpgrade!, saveData) ? CustomHas.MissingUpgrade : false),
-    render: ({ saveData, entry }) => (
-      <LeafRenderer
-        id={tool.upgradesTo || tool.isUpgrade ? tool.displayName : null}
-        data={saveData}
-        type={tool.img ?? ToolImgs[tool.type]!}
-        check={entry.has}
-        hint={tool.desc}
-        markers={typeof tool.markers === 'function' ? tool.markers(saveData) : tool.markers}
-      />
-    ),
-  };
-}
-
-function renderToolChildren(type: ToolType): Section<PercentageSectionCtx>[] {
-  return [
-    ...Object.values(Tools)
-      .filter(tool => tool.type === type)
-      .filter(tool => tool.isCounted)
-      .filter(tool => !tool.isUpgrade)
-      .filter(tool => !tool.displayName.includes('Silkshot'))
-      .map<Section<PercentageSectionCtx>>(tool => ({
-        title: tool.upgradesTo ? Tools[tool.upgradesTo]!.displayName : tool.displayName,
-        subtext: null,
-        children: [
-          getToolChild(tool),
-          ...(tool.upgradesTo ? [getToolChild(Tools[tool.upgradesTo]!)] : []),
-        ],
-        ctx: {
-          maxPercentage: 1,
-          getPercentage: saveData =>
-            hasTool(tool.id, saveData) ||
-            (tool.upgradesTo ? hasTool(tool.upgradesTo!, saveData) : false)
-              ? 1
-              : 0,
-        },
-      })),
-    ...(type === ToolType.Red
-      ? [
-          {
-            title: '||<2>Silkshot||',
-            subtext:
-              'The ||<2>Ruined Tool can be upgraded by three different characters, each of whom produces a slightly different Silkshot||.',
-            children: saveData => {
-              const hasSilkshot = SilkshotVariants.find(variant => hasTool(variant, saveData));
-              return hasSilkshot
-                ? [getToolChild(Tools[hasSilkshot]!)]
-                : SilkshotVariants.map(variant => getToolChild(Tools[variant]!));
-            },
-            ctx: {
-              maxPercentage: 1,
-              getPercentage: saveData =>
-                SilkshotVariants.some(variant => hasTool(variant, saveData)) ? 1 : 0,
-            },
-          } satisfies Section<PercentageSectionCtx>,
-        ]
-      : []),
-  ].sort((a, b) => a.title.localeCompare(b.title));
-}
+import type { LeafSection, Section } from '@/ui/tabs/types';
+import type { PercentageSectionCtx } from '@/ui/tabs/percentage/types';
 
 export const SectionGenerator: Section<PercentageSectionCtx>[] = [
   {
@@ -118,14 +33,15 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         subtext:
           'There are 20 Mask Fragments available. All of them are required for 100% completion.',
         layout: 'grid',
-        children: MaskFragments.map(fragment => ({
-          title: fragment.hint,
-          subtext: fragment.hint,
-          has: fragment.check,
-          render: ({ saveData }) => (
-            <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Mask} />
-          ),
-        })),
+        children: saveData =>
+          MaskFragments.map(fragment => ({
+            title: fragment.hint,
+            subtext: fragment.hint,
+            has: fragment.check,
+            render: () => (
+              <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Mask} />
+            ),
+          })).sort(missingFirstSortComparator(saveData)),
         ctx: {
           maxPercentage: 5,
           getPercentage: 'maxHealthBase',
@@ -136,14 +52,15 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         subtext:
           'There are 18 spool fragments available, for a total of 9 extra spool extensions. All of them are required for 100% completion.',
         layout: 'grid',
-        children: SpoolFragments.map(fragment => ({
-          title: fragment.hint,
-          subtext: fragment.hint,
-          has: fragment.check,
-          render: ({ saveData }) => (
-            <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Spool} />
-          ),
-        })),
+        children: saveData =>
+          SpoolFragments.map(fragment => ({
+            title: fragment.hint,
+            subtext: fragment.hint,
+            has: fragment.check,
+            render: () => (
+              <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Spool} />
+            ),
+          })).sort(missingFirstSortComparator(saveData)),
         ctx: {
           maxPercentage: 9,
           getPercentage: 'silkMax',
@@ -153,78 +70,81 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         title: 'Silk Hearts',
         subtext: 'There are 3 Silk Hearts available. All of them are required for 100% completion.',
         layout: 'grid',
-        children: [
-          {
-            title: 'Silk Heart #1',
-            subtext: 'A Silk Heart is awarded for defeating the Bell Beast.',
-            has: saveData =>
-              getScene('Memory_Silk_Heart_BellBeast', 'glow_rim_Remasker', saveData)?.Value,
-            render: ({ saveData, entry }) => (
-              <LeafRenderer
-                id={1}
-                check={entry.has}
-                hint={entry.subtext}
-                data={saveData}
-                markers={[
-                  {
-                    label: 'Defeat the Bell Beast.',
-                    location: { x: 1363, y: 2441 },
-                  },
-                ]}
-                type={LeafRendererType.SilkHeart}
-              />
-            ),
-          },
-          // Act II
-          {
-            title: 'Silk Heart #2',
-            subtext: 'A Silk Heart is awarded for ||<2>defeating Lace in the Cradle||.',
-            has: saveData =>
-              getScene('Memory_Silk_Heart_LaceTower', 'glow_rim_Remasker', saveData)?.Value,
-            render: ({ saveData, entry }) => (
-              <LeafRenderer
-                id={2}
-                check={entry.has}
-                hint={entry.subtext}
-                data={saveData}
-                markers={[
-                  {
-                    label: 'Defeat Lace.',
-                    location: { x: 2526, y: 328 },
-                  },
-                ]}
-                type={LeafRendererType.SilkHeart}
-              />
-            ),
-          },
-          // Act II
-          {
-            title: 'Silk Heart #3',
-            subtext:
-              'A Silk Heart is awarded for ||<2>defeating the Unravelled in a secret area in Whiteward||.',
-            has: saveData =>
-              getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value,
-            render: ({ saveData, entry }) => (
-              <LeafRenderer
-                id={3}
-                check={entry.has}
-                hint={entry.subtext}
-                data={saveData}
-                markers={[
-                  {
-                    label: "Acquire the Surgeon's Key.",
-                    location: { x: 2624, y: 1214 },
-                  },
-                  {
-                    label: 'Defeat the Unravelled.',
-                    location: { x: 2156, y: 1355 },
-                  },
-                ]}
-                type={LeafRendererType.SilkHeart}
-              />
-            ),
-          },
-        ],
+        children: saveData =>
+          (
+            [
+              {
+                title: 'Silk Heart #1',
+                subtext: 'A Silk Heart is awarded for defeating the Bell Beast.',
+                has: () =>
+                  getScene('Memory_Silk_Heart_BellBeast', 'glow_rim_Remasker', saveData)?.Value,
+                render: ({ entry }) => (
+                  <LeafRenderer
+                    id={1}
+                    check={entry.has}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Defeat the Bell Beast.',
+                        location: { x: 1363, y: 2441 },
+                      },
+                    ]}
+                    type={LeafRendererType.SilkHeart}
+                  />
+                ),
+              },
+              // Act II
+              {
+                title: 'Silk Heart #2',
+                subtext: 'A Silk Heart is awarded for ||<2>defeating Lace in the Cradle||.',
+                has: () =>
+                  getScene('Memory_Silk_Heart_LaceTower', 'glow_rim_Remasker', saveData)?.Value,
+                render: ({ entry }) => (
+                  <LeafRenderer
+                    id={2}
+                    check={entry.has}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: 'Defeat Lace.',
+                        location: { x: 2526, y: 328 },
+                      },
+                    ]}
+                    type={LeafRendererType.SilkHeart}
+                  />
+                ),
+              },
+              // Act II
+              {
+                title: 'Silk Heart #3',
+                subtext:
+                  'A Silk Heart is awarded for ||<2>defeating the Unravelled in a secret area in Whiteward||.',
+                has: () =>
+                  getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value,
+                render: ({ entry }) => (
+                  <LeafRenderer
+                    id={3}
+                    check={entry.has}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={[
+                      {
+                        label: "Acquire the Surgeon's Key.",
+                        location: { x: 2624, y: 1214 },
+                      },
+                      {
+                        label: 'Defeat the Unravelled.',
+                        location: { x: 2156, y: 1355 },
+                      },
+                    ]}
+                    type={LeafRendererType.SilkHeart}
+                  />
+                ),
+              },
+            ] satisfies LeafSection[]
+          ).sort(missingFirstSortComparator(saveData)),
         ctx: {
           maxPercentage: 3,
           getPercentage: 'silkRegenMax',
@@ -278,61 +198,50 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         title: 'Ancestral Arts',
         subtext: 'All Ancestral Arts are required for 100% completion.',
         layout: 'grid',
-        children: [
-          LeafRendererType.SwiftStep,
-          LeafRendererType.ClingGrip,
-          LeafRendererType.Needolin,
-          LeafRendererType.Clawline,
-          LeafRendererType.SilkSoar,
-          LeafRendererType.Sylphsong,
-        ].map(art => {
-          const data = AncestralArts[art]!;
-          return {
-            title: data.name,
-            subtext: null,
-            children: [
-              {
+        children: saveData =>
+          [
+            LeafRendererType.SwiftStep,
+            LeafRendererType.ClingGrip,
+            LeafRendererType.Needolin,
+            LeafRendererType.Clawline,
+            LeafRendererType.SilkSoar,
+            LeafRendererType.Sylphsong,
+          ]
+            .map<Section<PercentageSectionCtx>>(art => {
+              const data = AncestralArts[art]!;
+              return {
                 title: data.name,
-                subtext: data.desc,
-                has: saveData =>
-                  typeof data.has === 'function'
-                    ? data.has(saveData) === data.percentage
-                    : !!saveData.playerData[data.has],
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={null}
-                    check={entry.has}
-                    hint={data.desc}
-                    data={saveData}
-                    markers={data.markers}
-                    type={art}
-                  />
-                ),
-              },
-            ],
-            ctx: {
-              maxPercentage: data.percentage,
-              getPercentage: saveData =>
-                typeof data.has === 'function'
-                  ? data.has(saveData)
-                  : !!saveData.playerData[data.has]
-                    ? 1
-                    : 0,
-            },
-          };
-        }),
+                subtext: null,
+                children: [
+                  {
+                    title: data.name,
+                    subtext: data.desc,
+                    has: () => computePercentage(data.has, saveData) === data.percentage,
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={null}
+                        check={entry.has}
+                        hint={data.desc}
+                        data={saveData}
+                        markers={data.markers}
+                        type={art}
+                      />
+                    ),
+                  },
+                ],
+                ctx: {
+                  maxPercentage: data.percentage,
+                  getPercentage: saveData => computePercentage(data.has, saveData),
+                },
+              };
+            })
+            .sort(missingFirstSortComparator(saveData)),
         ctx: {
           maxPercentage: 6,
           getPercentage: saveData =>
             Object.values(AncestralArts)
               .filter(value => value.percentage > 0)
-              .map(value =>
-                typeof value.has === 'function'
-                  ? value.has(saveData)
-                  : saveData.playerData[value.has]
-                    ? 1
-                    : 0,
-              )
+              .map(value => computePercentage(value.has, saveData))
               .reduce((a, b) => a + b, 0),
         },
       },
@@ -341,41 +250,44 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         subtext:
           'All Crests are required for 100% completion. Hunter Crest upgrades are not required, but are acquired during ||<3>Sylphsong|| regardless.',
         layout: 'grid',
-        children: Crests.filter(crest => crest.hasPercent).map(crest => {
-          return {
-            title: `Crest of the ${crest.name}`,
-            subtext: null,
-            children: [
-              {
-                title: crest.name,
-                subtext: crest.hint,
-                has: saveData =>
-                  saveData.playerData.ToolEquips.savedData.some(
-                    gameCrest => gameCrest.Name === crest.gameId,
-                  ),
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={null}
-                    check={entry.has}
-                    hint={crest.hint}
-                    data={saveData}
-                    markers={crest.markers}
-                    type={crest.img!}
-                  />
-                ),
-              },
-            ],
-            ctx: {
-              maxPercentage: 1,
-              getPercentage: saveData =>
-                saveData.playerData.ToolEquips.savedData.some(
-                  gameCrest => gameCrest.Name === crest.gameId,
-                )
-                  ? 1
-                  : 0,
-            },
-          };
-        }),
+        children: saveData =>
+          Crests.filter(crest => crest.hasPercent)
+            .map<Section<PercentageSectionCtx>>(crest => {
+              return {
+                title: `Crest of the ${crest.name}`,
+                subtext: null,
+                children: saveData => [
+                  {
+                    title: crest.name,
+                    subtext: crest.hint,
+                    has: () =>
+                      saveData.playerData.ToolEquips.savedData.some(
+                        gameCrest => gameCrest.Name === crest.gameId,
+                      ),
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={null}
+                        check={entry.has}
+                        hint={crest.hint}
+                        data={saveData}
+                        markers={crest.markers}
+                        type={crest.img!}
+                      />
+                    ),
+                  },
+                ],
+                ctx: {
+                  maxPercentage: 1,
+                  getPercentage: saveData =>
+                    saveData.playerData.ToolEquips.savedData.some(
+                      gameCrest => gameCrest.Name === crest.gameId,
+                    )
+                      ? 1
+                      : 0,
+                },
+              };
+            })
+            .sort(missingFirstSortComparator(saveData)),
         ctx: {
           maxPercentage: 6,
           getPercentage: 'ToolEquips',
@@ -385,13 +297,10 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
         title: 'Silk Skills',
         subtext: 'All Silk Skills are required for 100% completion.',
         layout: 'grid',
-        children: renderToolChildren(ToolType.SilkSkill),
+        children: saveData => renderToolChildren(ToolType.SilkSkill, saveData),
         ctx: {
           maxPercentage: 6,
-          getPercentage: saveData =>
-            PercentTools.filter(tool => tool.type === ToolType.SilkSkill).filter(tool =>
-              hasTool(tool.id, saveData),
-            ).length,
+          getPercentage: getToolPercentage(ToolType.SilkSkill),
         },
       },
       {
@@ -463,12 +372,9 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             title: 'Red Tools',
             subtext: 'Red tools are mainly used actively for combat.',
             layout: 'grid',
-            children: renderToolChildren(ToolType.Red),
+            children: saveData => renderToolChildren(ToolType.Red, saveData),
             ctx: {
-              getPercentage: saveData =>
-                PercentTools.filter(tool => tool.type === ToolType.Red).filter(tool =>
-                  hasTool(tool.id, saveData),
-                ).length,
+              getPercentage: getToolPercentage(ToolType.Red),
               maxPercentage: 18,
             },
           },
@@ -476,12 +382,9 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             title: 'Blue Tools',
             subtext: 'Blue tools are mainly used passively for combat utility.',
             layout: 'grid',
-            children: renderToolChildren(ToolType.Blue),
+            children: saveData => renderToolChildren(ToolType.Blue, saveData),
             ctx: {
-              getPercentage: saveData =>
-                PercentTools.filter(tool => tool.type === ToolType.Blue).filter(tool =>
-                  hasTool(tool.id, saveData),
-                ).length,
+              getPercentage: getToolPercentage(ToolType.Blue),
               maxPercentage: 21,
             },
           },
@@ -489,21 +392,18 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             title: 'Yellow Tools',
             subtext: 'Yellow tools are mainly used as passive movement and utility tools.',
             layout: 'grid',
-            children: renderToolChildren(ToolType.Yellow),
+            children: saveData => renderToolChildren(ToolType.Yellow, saveData),
             ctx: {
-              getPercentage: saveData =>
-                PercentTools.filter(tool => tool.type === ToolType.Yellow).filter(tool =>
-                  hasTool(tool.id, saveData),
-                ).length,
+              getPercentage: getToolPercentage(ToolType.Yellow),
               maxPercentage: 12,
             },
           },
         ],
         ctx: {
           getPercentage: saveData =>
-            PercentTools.filter(tool =>
-              [ToolType.Red, ToolType.Blue, ToolType.Yellow].includes(tool.type),
-            ).filter(tool => hasTool(tool.id, saveData)).length,
+            [ToolType.Red, ToolType.Blue, ToolType.Yellow]
+              .map(type => getToolPercentage(type)(saveData))
+              .reduce((a, b) => a + b, 0),
           maxPercentage: 51,
         },
       },
@@ -517,92 +417,96 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             subtext:
               'There are four Crafting Kits available. All of them are required for 100% completion.',
             layout: 'grid',
-            children: [
-              {
-                title: 'Crafting Kit #1',
-                subtext: 'A Crafting Kit can be purchased from Forge Daughter for 180 rosaries.',
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={1}
-                    check={saveData => saveData.playerData.PurchasedForgeToolKit}
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={[
-                      {
-                        label: 'Purchased from Forge Daughter for 180 rosaries.',
-                        location: Locations.ForgeDaughter,
-                      },
-                    ]}
-                    type={LeafRendererType.CraftingKit}
-                  />
-                ),
-              },
-              {
-                title: 'Crafting Kit #2',
-                subtext:
-                  "A Crafting Kit is rewarded by Creige in Greymoor's Halfway Home for completing the Crawbug Clearing quest.",
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={2}
-                    check={saveData =>
-                      getQuest('Crow Feathers', saveData)?.Data.IsCompleted ||
-                      getQuest('Crow Feathers Pre', saveData)?.Data.IsCompleted
-                    }
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={[
-                      {
-                        label: 'Hand over 25 Ragpelts to Creig after accepting the quest.',
-                        location: Locations.HalfwayHome,
-                      },
-                    ]}
-                    type={LeafRendererType.CraftingKit}
-                  />
-                ),
-              },
-              // Act II
-              {
-                title: 'Crafting Kit #3',
-                subtext:
-                  'A Crafting Kit can be purchased from the ||<2>Twelfth Architect in the Underworks for 450 rosaries||.',
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={3}
-                    check={saveData => saveData.playerData.PurchasedArchitectToolKit}
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={[
-                      {
-                        label: 'Purchased from the Twelfth Architect for 450 rosaries.',
-                        location: Locations.TwelfthArchitect,
-                      },
-                    ]}
-                    type={LeafRendererType.CraftingKit}
-                  />
-                ),
-              },
-              // Act II
-              {
-                title: 'Crafting Kit #4',
-                subtext:
-                  'A Crafting Kit can be purchased from ||<2>Grindle in the Blasted Steps for 700 rosaries||.',
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={4}
-                    check={saveData => saveData.playerData.purchasedGrindleToolKit}
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={[
-                      {
-                        label: 'Purchased from Grindle for 700 rosaries.',
-                        location: Locations.Grindle,
-                      },
-                    ]}
-                    type={LeafRendererType.CraftingKit}
-                  />
-                ),
-              },
-            ],
+            children: saveData =>
+              (
+                [
+                  {
+                    title: 'Crafting Kit #1',
+                    subtext:
+                      'A Crafting Kit can be purchased from Forge Daughter for 180 rosaries.',
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={1}
+                        check={() => saveData.playerData.PurchasedForgeToolKit}
+                        hint={entry.subtext}
+                        data={saveData}
+                        markers={[
+                          {
+                            label: 'Purchased from Forge Daughter for 180 rosaries.',
+                            location: Locations.ForgeDaughter,
+                          },
+                        ]}
+                        type={LeafRendererType.CraftingKit}
+                      />
+                    ),
+                  },
+                  {
+                    title: 'Crafting Kit #2',
+                    subtext:
+                      "A Crafting Kit is rewarded by Creige in Greymoor's Halfway Home for completing the Crawbug Clearing quest.",
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={2}
+                        check={() =>
+                          getQuest('Crow Feathers', saveData)?.Data.IsCompleted ||
+                          getQuest('Crow Feathers Pre', saveData)?.Data.IsCompleted
+                        }
+                        hint={entry.subtext}
+                        data={saveData}
+                        markers={[
+                          {
+                            label: 'Hand over 25 Ragpelts to Creig after accepting the quest.',
+                            location: Locations.HalfwayHome,
+                          },
+                        ]}
+                        type={LeafRendererType.CraftingKit}
+                      />
+                    ),
+                  },
+                  // Act II
+                  {
+                    title: 'Crafting Kit #3',
+                    subtext:
+                      'A Crafting Kit can be purchased from the ||<2>Twelfth Architect in the Underworks for 450 rosaries||.',
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={3}
+                        check={() => saveData.playerData.PurchasedArchitectToolKit}
+                        hint={entry.subtext}
+                        data={saveData}
+                        markers={[
+                          {
+                            label: 'Purchased from the Twelfth Architect for 450 rosaries.',
+                            location: Locations.TwelfthArchitect,
+                          },
+                        ]}
+                        type={LeafRendererType.CraftingKit}
+                      />
+                    ),
+                  },
+                  // Act II
+                  {
+                    title: 'Crafting Kit #4',
+                    subtext:
+                      'A Crafting Kit can be purchased from ||<2>Grindle in the Blasted Steps for 700 rosaries||.',
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={4}
+                        check={() => saveData.playerData.purchasedGrindleToolKit}
+                        hint={entry.subtext}
+                        data={saveData}
+                        markers={[
+                          {
+                            label: 'Purchased from Grindle for 700 rosaries.',
+                            location: Locations.Grindle,
+                          },
+                        ]}
+                        type={LeafRendererType.CraftingKit}
+                      />
+                    ),
+                  },
+                ] satisfies LeafSection[]
+              ).sort(missingFirstSortComparator(saveData)),
             ctx: {
               getPercentage: 'ToolKitUpgrades',
               maxPercentage: 4,
@@ -613,97 +517,101 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
             subtext:
               'There are four Tool Pouch upgrades available. All of them are required for 100% completion.',
             layout: 'grid',
-            children: [
-              {
-                title: 'Tool Pouch Upgrade #1',
-                subtext:
-                  'A Tool Pouch can be won from Loddie in the Marrow by hitting 15 targets in a row. ||<3>It can be picked up from a table in the same room in Act III||.',
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={1}
-                    check={
-                      saveData =>
-                        !!getScene<number>('Bone_12', 'Pin Challenge', saveData) ||
-                        getScene('Bone_12', 'Ladybug Craft Pickup', saveData)?.Value
-                      // saveData.playerData.pinGalleriesCompleted >= 1, maybe?
-                    }
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={[
-                      {
-                        label:
-                          'Won from Loddie by hitting 15 targets in a row. ||<3>It can be picked up from a table in the same room in Act III||.',
-                        location: { x: 2106, y: 2539 },
-                      },
-                    ]}
-                    type={LeafRendererType.ToolPouch}
-                  />
-                ),
-              },
-              {
-                title: 'Tool Pouch Upgrade #2',
-                subtext:
-                  "A Tool Pouch can be purchased from Mort in the Pilgrim's Rest in Far Fields for 220 rosaries.",
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={2}
-                    check={saveData => saveData.playerData.PurchasedPilgrimsRestToolPouch}
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={[
-                      {
-                        label: 'Purchased from Mort for 220 rosaries.',
-                        location: Locations.Mort,
-                      },
-                    ]}
-                    type={LeafRendererType.ToolPouch}
-                  />
-                ),
-              },
-              {
-                title: 'Tool Pouch Upgrade #3',
-                subtext:
-                  'Given by Nuu in Halfway Home in Greymoor after completing the Bugs of Pharloom quest.',
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={4}
-                    check={saveData => getQuest('Journal', saveData)?.Data.IsCompleted}
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={[
-                      {
-                        label: 'Given by Nuu after completing the Bugs of Pharloom quest.',
-                        location: Locations.HalfwayHome,
-                      },
-                    ]}
-                    type={LeafRendererType.ToolPouch}
-                  />
-                ),
-              },
-              // Act II
-              {
-                title: 'Tool Pouch Upgrade #4',
-                subtext: 'Mooshka gives you a Tool Pouch upgrade after moving to ||<2>Fleatopia||.',
-                render: ({ saveData, entry }) => (
-                  <LeafRenderer
-                    id={3}
-                    check={saveData =>
-                      getScene('Aqueduct_05', 'Caravan Troupe Leader Fleatopia NPC', saveData)
-                        ?.Value
-                    }
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={[
-                      {
-                        label: 'Move the Flea Caravan to Fleatopia.',
-                        location: Locations.Mooshka.Fleatopia,
-                      },
-                    ]}
-                    type={LeafRendererType.ToolPouch}
-                  />
-                ),
-              },
-            ],
+            children: saveData =>
+              (
+                [
+                  {
+                    title: 'Tool Pouch Upgrade #1',
+                    subtext:
+                      'A Tool Pouch can be won from Loddie in the Marrow by hitting 15 targets in a row. ||<3>It can be picked up from a table in the same room in Act III||.',
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={1}
+                        check={
+                          () =>
+                            !!getScene<number>('Bone_12', 'Pin Challenge', saveData) ||
+                            getScene('Bone_12', 'Ladybug Craft Pickup', saveData)?.Value
+                          // saveData.playerData.pinGalleriesCompleted >= 1, maybe?
+                        }
+                        hint={entry.subtext}
+                        data={saveData}
+                        markers={[
+                          {
+                            label:
+                              'Won from Loddie by hitting 15 targets in a row. ||<3>It can be picked up from a table in the same room in Act III||.',
+                            location: { x: 2106, y: 2539 },
+                          },
+                        ]}
+                        type={LeafRendererType.ToolPouch}
+                      />
+                    ),
+                  },
+                  {
+                    title: 'Tool Pouch Upgrade #2',
+                    subtext:
+                      "A Tool Pouch can be purchased from Mort in the Pilgrim's Rest in Far Fields for 220 rosaries.",
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={2}
+                        check={() => saveData.playerData.PurchasedPilgrimsRestToolPouch}
+                        hint={entry.subtext}
+                        data={saveData}
+                        markers={[
+                          {
+                            label: 'Purchased from Mort for 220 rosaries.',
+                            location: Locations.Mort,
+                          },
+                        ]}
+                        type={LeafRendererType.ToolPouch}
+                      />
+                    ),
+                  },
+                  {
+                    title: 'Tool Pouch Upgrade #3',
+                    subtext:
+                      'Given by Nuu in Halfway Home in Greymoor after completing the Bugs of Pharloom quest.',
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={4}
+                        check={() => getQuest('Journal', saveData)?.Data.IsCompleted}
+                        hint={entry.subtext}
+                        data={saveData}
+                        markers={[
+                          {
+                            label: 'Given by Nuu after completing the Bugs of Pharloom quest.',
+                            location: Locations.HalfwayHome,
+                          },
+                        ]}
+                        type={LeafRendererType.ToolPouch}
+                      />
+                    ),
+                  },
+                  // Act II
+                  {
+                    title: 'Tool Pouch Upgrade #4',
+                    subtext:
+                      'Mooshka gives you a Tool Pouch upgrade after moving to ||<2>Fleatopia||.',
+                    render: ({ entry }) => (
+                      <LeafRenderer
+                        id={3}
+                        check={() =>
+                          getScene('Aqueduct_05', 'Caravan Troupe Leader Fleatopia NPC', saveData)
+                            ?.Value
+                        }
+                        hint={entry.subtext}
+                        data={saveData}
+                        markers={[
+                          {
+                            label: 'Move the Flea Caravan to Fleatopia.',
+                            location: Locations.Mooshka.Fleatopia,
+                          },
+                        ]}
+                        type={LeafRendererType.ToolPouch}
+                      />
+                    ),
+                  },
+                ] satisfies LeafSection[]
+              ).sort(missingFirstSortComparator(saveData)),
             ctx: {
               getPercentage: 'ToolPouchUpgrades',
               maxPercentage: 4,
@@ -723,17 +631,3 @@ export const SectionGenerator: Section<PercentageSectionCtx>[] = [
     },
   },
 ];
-
-export function getPercentageSection(
-  keys: string[],
-  saveData: SaveData,
-): Section<PercentageSectionCtx> | LeafSection | null {
-  return keys.reduce<Section<PercentageSectionCtx> | LeafSection | null>((acc, key) => {
-    if (!acc) return null;
-    if ('children' in acc) {
-      const children = typeof acc.children === 'function' ? acc.children(saveData) : acc.children;
-      return children.find(child => child.title === key) ?? null;
-    }
-    return null;
-  }, SectionGenerator[0]!);
-}

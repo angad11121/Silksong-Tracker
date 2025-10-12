@@ -1,39 +1,26 @@
 import { Crests } from '@/info';
-import { getPercentageSection, type PercentageSectionCtx } from '@/ui/tabs/percentage/sections';
-import { getPercentageFromEntry } from '@/parser/percentage';
 import { MemoryLockets } from '@/info/lockets';
 import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
+import { mapPercentageSectionToTrueCompletion, missingFirstSortComparator } from '@/ui/tabs/utils';
+import { SectionGenerator as PercentageSectionGenerator } from '@/ui/tabs/percentage/sections';
+
+import type { PercentageSectionCtx } from '@/ui/tabs/percentage/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
+import type { TrueCompletionSectionCtx } from '@/ui/tabs/trueCompletion/types';
 import type { SaveData } from '@/parser/types';
 
-export type TrueCompletionSectionCtx = {
-  maxCount: number | 'auto';
-  getCount: number | ((saveData: SaveData) => number) | 'auto';
-};
-
-function mapPercentageSection<T extends Section<PercentageSectionCtx> | LeafSection>(
-  section: T,
-  override?: (section: T) => Partial<T | Section<TrueCompletionSectionCtx>>,
-): Section<TrueCompletionSectionCtx> | LeafSection {
-  if ('ctx' in section) {
-    return {
-      ...section,
-      children: data =>
-        (typeof section.children === 'function' ? section.children(data) : section.children).map(
-          child => mapPercentageSection(child),
-        ),
-      ctx: {
-        maxCount: section.ctx.maxPercentage,
-        getCount: saveData =>
-          typeof section.ctx.getPercentage === 'function'
-            ? section.ctx.getPercentage(saveData)
-            : getPercentageFromEntry(section.ctx.getPercentage, saveData),
-      },
-      ...override?.(section),
-    } as Section<TrueCompletionSectionCtx>;
-  } else {
-    return { ...section, ...override?.(section) } as LeafSection;
-  }
+function getPercentageSection(
+  keys: string[],
+  saveData: SaveData,
+): Section<PercentageSectionCtx> | LeafSection | null {
+  return keys.reduce<Section<PercentageSectionCtx> | LeafSection | null>((acc, key) => {
+    if (!acc) return null;
+    if ('children' in acc) {
+      const children = typeof acc.children === 'function' ? acc.children(saveData) : acc.children;
+      return children.find(child => child.title === key) ?? null;
+    }
+    return null;
+  }, PercentageSectionGenerator[0]!);
 }
 
 export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
@@ -42,58 +29,69 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
     subtext:
       "True completion is a representation of how much of the game's content has been completed. This tab is a work in progress!",
     children: saveData => [
-      mapPercentageSection(getPercentageSection(['Masks'], saveData)!, () => ({
+      mapPercentageSectionToTrueCompletion(getPercentageSection(['Masks'], saveData)!, () => ({
         subtext: 'There are 20 Mask Fragments available.',
         ctx: { maxCount: 20, getCount: 'auto' },
       })),
-      mapPercentageSection(getPercentageSection(['Silk Spools'], saveData)!, () => ({
-        subtext: 'There are 18 Silk Spool Fragments available.',
-        ctx: { maxCount: 18, getCount: 'auto' },
-      })),
-      mapPercentageSection(getPercentageSection(['Silk Hearts'], saveData)!, () => ({
-        subtext: 'There are 3 Silk Hearts available.',
-      })),
-      mapPercentageSection(getPercentageSection(['Ancestral Arts'], saveData)!, () => ({
-        subtext: 'There are 6 Ancestral Arts available.',
-      })),
+      mapPercentageSectionToTrueCompletion(
+        getPercentageSection(['Silk Spools'], saveData)!,
+        () => ({
+          subtext: 'There are 18 Silk Spool Fragments available.',
+          ctx: { maxCount: 18, getCount: 'auto' },
+        }),
+      ),
+      mapPercentageSectionToTrueCompletion(
+        getPercentageSection(['Silk Hearts'], saveData)!,
+        () => ({
+          subtext: 'There are 3 Silk Hearts available.',
+        }),
+      ),
+      mapPercentageSectionToTrueCompletion(
+        getPercentageSection(['Ancestral Arts'], saveData)!,
+        () => ({
+          subtext: 'There are 6 Ancestral Arts available.',
+        }),
+      ),
       {
         title: 'Crests and Memory Lockets',
         subtext: 'There are 7 Crests and 20 Memory Lockets available.',
         children: [
-          mapPercentageSection(
+          mapPercentageSectionToTrueCompletion(
             getPercentageSection(['Crests'], saveData)! as Section<PercentageSectionCtx>,
             ({ children }) => ({
-              children: [
-                {
-                  title: 'Crest of the Hunter',
-                  subtext: null,
-                  children: [
-                    {
-                      title: 'Crest of the Hunter',
-                      subtext: 'The Crest of the Hunter is acquired at the start of the game.',
-                      has: () => true,
-                      render: ({ saveData, entry }) => {
-                        const crest = Crests.find(entry => entry.gameId === 'Hunter')!;
-                        return (
-                          <LeafRenderer
-                            id={null}
-                            check={entry.has}
-                            hint={crest.hint}
-                            data={saveData}
-                            markers={crest.markers}
-                            type={crest.img!}
-                          />
-                        );
+              children: (
+                [
+                  {
+                    title: 'Crest of the Hunter',
+                    subtext: null,
+                    children: [
+                      {
+                        title: 'Crest of the Hunter',
+                        subtext: 'The Crest of the Hunter is acquired at the start of the game.',
+                        has: () => true,
+                        render: ({ saveData, entry }) => {
+                          const crest = Crests.find(entry => entry.gameId === 'Hunter')!;
+                          return (
+                            <LeafRenderer
+                              id={null}
+                              check={entry.has}
+                              hint={crest.hint}
+                              data={saveData}
+                              markers={crest.markers}
+                              type={crest.img!}
+                            />
+                          );
+                        },
                       },
-                    },
-                  ],
-                  ctx: { maxCount: 1, getCount: 'auto' },
-                },
-                ...((typeof children === 'function' ? children(saveData) : children) as (
-                  | Section<TrueCompletionSectionCtx>
-                  | LeafSection
-                )[]),
-              ],
+                    ],
+                    ctx: { maxCount: 1, getCount: 'auto' },
+                  },
+                  ...((typeof children === 'function' ? children(saveData) : children) as (
+                    | Section<TrueCompletionSectionCtx>
+                    | LeafSection
+                  )[]),
+                ] satisfies (Section<TrueCompletionSectionCtx> | LeafSection)[]
+              ).sort(missingFirstSortComparator(saveData)),
               ctx: { maxCount: 7, getCount: 'auto' },
             }),
           ),
@@ -101,31 +99,37 @@ export const SectionGenerator: Section<TrueCompletionSectionCtx>[] = [
             title: 'Memory Lockets',
             subtext: 'There are 20 Memory Lockets available.',
             layout: 'grid',
-            children: MemoryLockets.map(locket => ({
-              has: locket.has,
-              title: 'Memory Locket',
-              subtext: locket.desc,
-              render: ({ saveData, entry }) => (
-                <LeafRenderer
-                  id={locket.id}
-                  check={entry.has}
-                  hint={locket.desc}
-                  data={saveData}
-                  markers={
-                    typeof locket.markers === 'function' ? locket.markers(saveData) : locket.markers
-                  }
-                  type={LeafRendererType.MemoryLocket}
-                />
-              ),
-            })),
+            children: saveData =>
+              MemoryLockets.map<LeafSection>(locket => ({
+                has: locket.has,
+                title: 'Memory Locket',
+                subtext: locket.desc,
+                render: ({ entry }) => (
+                  <LeafRenderer
+                    id={locket.id}
+                    check={entry.has}
+                    hint={locket.desc}
+                    data={saveData}
+                    markers={
+                      typeof locket.markers === 'function'
+                        ? locket.markers(saveData)
+                        : locket.markers
+                    }
+                    type={LeafRendererType.MemoryLocket}
+                  />
+                ),
+              })).sort(missingFirstSortComparator(saveData)),
             ctx: { maxCount: 20, getCount: 'auto' },
           },
         ],
         ctx: { maxCount: 27, getCount: 'auto' },
       },
-      mapPercentageSection(getPercentageSection(['Needle Upgrades'], saveData)!, () => ({
-        subtext: '4 Needle upgrades can be found throughout the game.',
-      })),
+      mapPercentageSectionToTrueCompletion(
+        getPercentageSection(['Needle Upgrades'], saveData)!,
+        () => ({
+          subtext: '4 Needle upgrades can be found throughout the game.',
+        }),
+      ),
     ],
     ctx: {
       maxCount: 'auto',

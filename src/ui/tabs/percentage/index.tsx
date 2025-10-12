@@ -1,8 +1,7 @@
 import type { ReactElement } from 'react';
 import { SectionRenderer } from '@/ui/tabs/SectionRenderer';
 import { SectionGenerator } from '@/ui/tabs/percentage/sections';
-import { getPercentageFromEntry } from '@/parser/percentage';
-import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
+import { computePercentage } from '@/ui/tabs/utils';
 import type { SaveData } from '@/parser/types';
 
 export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
@@ -12,11 +11,7 @@ export function PercentageDisplay({ data }: { data: SaveData }): ReactElement {
       depth={0}
       data={data}
       getSectionDisplayProps={section => {
-        const getPercentage = section.ctx.getPercentage;
-        const currentPercentage =
-          typeof getPercentage === 'function'
-            ? getPercentage(data)
-            : getPercentageFromEntry(getPercentage, data);
+        const currentPercentage = computePercentage(section.ctx.getPercentage, data);
         const maxPercentage = section.ctx.maxPercentage;
 
         return {
