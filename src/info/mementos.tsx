@@ -80,18 +80,9 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
           hint={entry.subtext}
           data={saveData}
           markers={[
-            // TODO
             {
-              label: 'Encounter Garmond and Zaza.',
-              location: { x: 0, y: 0 },
-            },
-            // TODO
-            {
-              label: 'Encounter Garmond and Zaza.',
-              location: { x: 0, y: 0 },
-            },
-            {
-              label: "Claim the Hero's Call wish.",
+              label:
+                "Claim the Hero's Call wish. The wish is available after acquiring the Everbloom, or encountering Garmond and Zaza thrice across Pharloom.",
               location: Locations.Bellhart,
             },
             {
