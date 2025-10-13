@@ -8,6 +8,7 @@ import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 import type { SaveData } from '@/parser/types';
 import type { PercentageSectionCtx } from '@/ui/tabs/percentage/types';
 import type { TrueCompletionSectionCtx } from '@/ui/tabs/trueCompletion/types';
+import type { HuntersJournalSectionCtx } from './huntersJournal/types';
 
 export function generateSectionId(title: string): string {
   return stripSpoilers(title)
@@ -19,7 +20,7 @@ export function generateSectionId(title: string): string {
 }
 
 export function calculateCurrentCount(
-  section: Section<TrueCompletionSectionCtx> | LeafSection,
+  section: Section<TrueCompletionSectionCtx> | Section<HuntersJournalSectionCtx> | LeafSection,
   data: SaveData,
   mode: 'current' | 'max' = 'current',
 ): number {
@@ -71,7 +72,11 @@ export function missingFirstSortComparator(
             : 0
           : 'getPercentage' in term.ctx
             ? computePercentage(term.ctx.getPercentage, saveData)
-            : calculateCurrentCount(term as Section<TrueCompletionSectionCtx>, saveData, 'current');
+            : calculateCurrentCount(
+                term as Section<TrueCompletionSectionCtx>,
+                saveData,
+                'current',
+              ) / calculateCurrentCount(term as Section<TrueCompletionSectionCtx>, saveData, 'max');
 
     return getPercentage(a) - getPercentage(b);
   };

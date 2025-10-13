@@ -6,6 +6,10 @@ import { useSaveData } from '@/ui/hooks/useSaveData';
 
 const SPOILER_REGEX = /(\|\|)<(\d+)>(.*?)\|\|/g;
 
+export function markSpoilers(content: string, act: 1 | 2 | 3): string {
+  return `||<${act}>${content}||`;
+}
+
 export function stripSpoilers(content: string): string {
   return content.replace(SPOILER_REGEX, '$3');
 }

@@ -27,6 +27,7 @@ export type Section<ExtraData = null> = {
   subtext: string | null;
   act?: 1 | 2 | 3;
   layout?: 'grid' | 'list';
+  gridCols?: number;
   children:
     | (Section<ExtraData> | LeafSection)[]
     | ((saveData: SaveData) => (Section<ExtraData> | LeafSection)[]);

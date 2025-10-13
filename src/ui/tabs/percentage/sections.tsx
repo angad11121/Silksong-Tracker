@@ -5,10 +5,9 @@ import {
   NeedleUpgrades,
   SpoolFragments,
   ToolType,
-  Tools,
-} from '@/info/index';
-import { hasTool, getScene, getQuest } from '@/parser/metadata';
-import { Locations } from '@/info/locations';
+} from '@/info';
+import { getScene, getQuest } from '@/parser/metadata';
+import { Locations } from '@/info';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
 import {
@@ -188,7 +187,7 @@ export const getSections = (
                       : upgrade.markers
                   }
                   data={saveData}
-                  type={level.type as string as LeafRendererType}
+                  type={level.img}
                 />
               ),
             };
@@ -204,40 +203,33 @@ export const getSections = (
         subtext: 'All Ancestral Arts are required for 100% completion.',
         layout: 'grid',
         children: saveData =>
-          [
-            LeafRendererType.SwiftStep,
-            LeafRendererType.ClingGrip,
-            LeafRendererType.Needolin,
-            LeafRendererType.Clawline,
-            LeafRendererType.SilkSoar,
-            LeafRendererType.Sylphsong,
-          ]
+          Object.values(AncestralArts)
+            .filter(art => art.percentage > 0)
             .map<Section<PercentageSectionCtx>>(art => {
-              const data = AncestralArts[art]!;
               return {
-                title: data.name,
+                title: art.name,
                 subtext: null,
-                act: data.act,
+                act: art.act,
                 children: [
                   {
-                    title: data.name,
-                    subtext: data.desc,
-                    has: () => computePercentage(data.has, saveData) === data.percentage,
+                    title: art.name,
+                    subtext: art.desc,
+                    has: () => computePercentage(art.has, saveData) === art.percentage,
                     render: ({ entry }) => (
                       <LeafRenderer
                         id={null}
                         check={entry.has}
-                        hint={data.desc}
+                        hint={art.desc}
                         data={saveData}
-                        markers={data.markers}
-                        type={art}
+                        markers={art.markers}
+                        type={art.img}
                       />
                     ),
                   },
                 ],
                 ctx: {
-                  maxPercentage: data.percentage,
-                  getPercentage: saveData => computePercentage(data.has, saveData),
+                  maxPercentage: art.percentage,
+                  getPercentage: saveData => computePercentage(art.has, saveData),
                 },
               };
             })

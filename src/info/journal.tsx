@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import type { MapLocation } from '@/ui/components/map/types';
+import type { SaveData } from '@/parser/types';
 
 export const Journal: {
   name: string;
@@ -8,7 +9,7 @@ export const Journal: {
   img: () => ReactElement;
   markers: MapLocation[];
   isCounted: boolean | 'steel';
-  missable?: boolean;
+  missable?: (saveData: SaveData) => boolean;
   required: number;
   act: 1 | 2 | 3;
 }[] = [
@@ -2109,7 +2110,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: false,
-    missable: true,
+    missable: () => true,
     required: 1,
     act: 3,
   },
@@ -2289,8 +2290,8 @@ export const Journal: {
     gameId: 'Shakra',
     img: () => <>TODO</>,
     markers: [],
-    isCounted: true,
-    missable: true,
+    isCounted: false,
+    missable: () => true,
     required: 1,
     act: 2,
   },
@@ -2300,8 +2301,8 @@ export const Journal: {
     gameId: 'Garmond_Zaza',
     img: () => <>TODO</>,
     markers: [],
-    isCounted: true,
-    missable: true,
+    isCounted: false,
+    missable: () => true,
     required: 1,
     act: 2,
   },
