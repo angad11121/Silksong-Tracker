@@ -172,8 +172,7 @@ export const MemoryLockets: {
     id: 11,
     desc: 'Found in a breakable cocoon in ||<2>Bilewater||.',
     act: 2,
-    has: saveData =>
-      getScene('Shadow_27', 'Breakable Hang Sack Memory Locket', saveData)?.Value === false,
+    has: saveData => getScene('Shadow_27', 'Sack Corpse Pickup', saveData)?.Value,
     markers: [
       {
         label: 'Break the cocoon and collect the Memory Locket.',
