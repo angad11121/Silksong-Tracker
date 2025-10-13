@@ -1526,7 +1526,7 @@ export const Journal: {
   {
     name: 'Envoy',
     desc: 'TODO',
-    gameId: 'Song Pilgrim 11',
+    gameId: 'Song Pilgrim 01',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
@@ -1586,7 +1586,7 @@ export const Journal: {
   {
     name: 'Choristor',
     desc: 'TODO',
-    gameId: 'Song Pilgrim 13',
+    gameId: 'Song Pilgrim 03',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
@@ -1696,7 +1696,7 @@ export const Journal: {
   {
     name: 'Surgeon',
     desc: 'TODO',
-    gameId: 'Song Pilgrim 12',
+    gameId: 'Song Pilgrim 02',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,

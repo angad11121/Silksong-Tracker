@@ -25,7 +25,7 @@ export function HuntersJournalDisplay(): ReactElement {
       <SectionRenderer
         data={data}
         sections={getSections(showMissingFirst, spoilerLevel)}
-        getSectionDisplayProps={getSectionDisplayProps}
+        getSectionDisplayProps={(...props) => getSectionDisplayProps(...props, true)}
       />
     </div>
   );

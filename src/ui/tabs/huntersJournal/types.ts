@@ -1,1 +1,5 @@
-export type HuntersJournalSectionCtx = { getCount: number | 'auto'; maxCount: number | 'auto' };
+export type HuntersJournalSectionCtx = {
+  getCount: number | 'auto';
+  maxCount: number | 'auto';
+  optional?: boolean;
+};

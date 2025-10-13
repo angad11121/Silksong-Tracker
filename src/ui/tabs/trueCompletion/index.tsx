@@ -13,31 +13,46 @@ export function getSectionDisplayProps(
   section: Section<TrueCompletionSectionCtx>,
   parent: Section<TrueCompletionSectionCtx> | null,
   data: SaveData,
+  journalMode: boolean = false,
 ) {
-  const currentCount = calculateCurrentCount(section, data, 'current');
-  const maxCount = calculateCurrentCount(section, data, 'max');
+  const currentCount = calculateCurrentCount(section, data, {
+    mode: 'current',
+    cumulative: !journalMode,
+  });
+  const maxCount = calculateCurrentCount(section, data, {
+    mode: 'max',
+    cumulative: !journalMode,
+  });
 
   return {
     open: currentCount < maxCount,
-    After: () => (
-      <>
-        {' '}
-        (
-        {!parent ? (
-          <>
-            <strong>{Math.floor((currentCount / maxCount) * 100)}%</strong> - {currentCount} of{' '}
-            {maxCount} entries
-          </>
-        ) : currentCount >= maxCount ? (
-          <span className="text-green-500">{maxCount}</span>
-        ) : (
-          <>
-            <span className="text-red-500">{currentCount}</span> / {maxCount}
-          </>
-        )}
-        )
-      </>
-    ),
+    After: () =>
+      journalMode && section.title === 'Missable Entries' ? null : (
+        <>
+          {' '}
+          (
+          {!parent ? (
+            <>
+              <strong>{Math.floor((currentCount / maxCount) * 100)}%</strong> - {currentCount} of{' '}
+              {maxCount} {journalMode ? 'required ' : ''}entries
+              {journalMode
+                ? `, ${calculateCurrentCount(section, data, {
+                    mode: 'current',
+                    cumulative: false,
+                    skipOptional: false,
+                  })} of ${calculateCurrentCount(section, data, { mode: 'max', cumulative: false, skipOptional: false })} total`
+                : ''}
+            </>
+          ) : currentCount >= maxCount ? (
+            <span className="text-green-500">{maxCount}</span>
+          ) : (
+            <>
+              <span className="text-red-500">{currentCount}</span> / {maxCount}
+            </>
+          )}
+          )
+        </>
+      ),
   };
 }
 

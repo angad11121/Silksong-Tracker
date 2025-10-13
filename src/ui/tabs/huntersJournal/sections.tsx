@@ -66,7 +66,11 @@ export const getSections = (
               ),
             },
           ],
-          ctx: { getCount: dataEntry?.Record.Kills ?? 0, maxCount: journalEntry.required },
+          ctx: {
+            getCount: dataEntry?.Record.Kills ?? 0,
+            maxCount: journalEntry.required,
+            optional: !journalEntry.isCounted,
+          },
         };
       }).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
     ctx: { getCount: 'auto', maxCount: 'auto' },

@@ -22,21 +22,32 @@ export function generateSectionId(title: string): string {
 export function calculateCurrentCount(
   section: Section<TrueCompletionSectionCtx> | Section<HuntersJournalSectionCtx> | LeafSection,
   data: SaveData,
-  mode: 'current' | 'max' = 'current',
+  options: { mode?: 'current' | 'max'; cumulative?: boolean; skipOptional?: boolean } = {},
 ): number {
+  const { mode = 'current', cumulative = true, skipOptional = true } = options;
+
   if (mode === 'current' && 'has' in section)
-    return section.has?.(data) ? calculateCurrentCount(section, data, 'max') : 0;
+    return section.has?.(data)
+      ? calculateCurrentCount(section, data, { ...options, mode: 'max' })
+      : 0;
   if (!('children' in section)) return 1;
 
   const calculateCount = mode === 'current' ? section.ctx?.getCount : section.ctx?.maxCount;
 
-  if (typeof calculateCount === 'number') return calculateCount;
-  if (typeof calculateCount === 'function') return calculateCount(data);
+  if (typeof calculateCount === 'number')
+    return cumulative ? calculateCount : Math.sign(calculateCount);
+  if (typeof calculateCount === 'function')
+    return cumulative ? calculateCount(data) : Math.sign(calculateCount(data));
 
   return (typeof section.children === 'function' ? section.children(data) : section.children)
-    .map((child: Section<TrueCompletionSectionCtx> | LeafSection) =>
-      calculateCurrentCount(child, data, mode),
-    )
+    .map((child: Section<TrueCompletionSectionCtx> | LeafSection) => {
+      if (skipOptional && 'ctx' in child && 'optional' in child.ctx && child.ctx.optional) return 0;
+      const res = Math.min(
+        calculateCurrentCount(child, data, options),
+        calculateCurrentCount(child, data, { ...options, mode: 'max' }),
+      );
+      return cumulative ? res : Math.sign(res);
+    })
     .reduce((a: number, b: number) => a + b, 0);
 }
 
@@ -72,11 +83,14 @@ export function missingFirstSortComparator(
             : 0
           : 'getPercentage' in term.ctx
             ? computePercentage(term.ctx.getPercentage, saveData)
-            : calculateCurrentCount(
-                term as Section<TrueCompletionSectionCtx>,
-                saveData,
-                'current',
-              ) / calculateCurrentCount(term as Section<TrueCompletionSectionCtx>, saveData, 'max');
+            : calculateCurrentCount(term as Section<TrueCompletionSectionCtx>, saveData, {
+                mode: 'current',
+                cumulative: true,
+              }) /
+              calculateCurrentCount(term as Section<TrueCompletionSectionCtx>, saveData, {
+                mode: 'max',
+                cumulative: true,
+              });
 
     return getPercentage(a) - getPercentage(b);
   };
