@@ -1,4 +1,4 @@
-import type { SaveData } from '../parser/types';
+import type { SaveData } from '@/parser/types';
 
 export default {
   playerData: {

@@ -1,5 +1,6 @@
 import { Crests } from '@/info';
 import { MemoryLockets } from '@/info/lockets';
+import { Mementos } from '@/info/mementos';
 import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
 import { mapPercentageSectionToTrueCompletion, missingFirstSortComparator } from '@/ui/tabs/utils';
 import { getSections as getPercentageSectionGenerator } from '@/ui/tabs/percentage/sections';
@@ -143,6 +144,7 @@ export const getSections = (
           subtext: '4 Needle upgrades can be found throughout the game.',
         }),
       ),
+      Mementos,
     ],
     ctx: {
       maxCount: 'auto',

@@ -32,7 +32,7 @@ export const Crests: {
     hint: 'Unlocked by default. Can be upgraded ||<3>by Eva in Weavenest Atla||.',
     markers: [
       {
-        label: 'Talk to ||<3>Eva after unlocking enough crest sslots||.',
+        label: 'Talk to ||<3>Eva after unlocking enough crest slots||.',
         location: { x: 1450, y: 2889 },
       },
     ],

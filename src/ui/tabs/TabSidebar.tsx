@@ -4,7 +4,7 @@ import { useSaveData } from '@/ui/hooks/useSaveData';
 import { TabType } from '@/ui/tabs/constants';
 import type { SaveData } from '@/parser/types';
 import type { SidebarItem, Section, LeafSection } from '@/ui/tabs/types';
-import { DEV_MODE_KEY } from '../components/map/constants';
+import { DEV_MODE_KEY } from '@/ui/components/map/constants';
 import { generateSectionId } from '@/ui/tabs/utils';
 import { getSections as getPercentageSections } from '@/ui/tabs/percentage/sections';
 import { getSections as getTrueCompletionSections } from '@/ui/tabs/trueCompletion/sections';
@@ -106,7 +106,7 @@ function SidebarItemComponent({
     <div className={depth > 0 ? 'ml-4' : ''}>
       <a
         onClick={() => scrollToElement(item.id)}
-        className="text-left w-full py-1 px-2 rounded transition-colors text-sm cursor-pointer"
+        className="text-left w-full py-1 px-2 rounded transition-colors text-sm cursor-pointer max-w-full truncate"
         data-unstyled
       >
         <SpoilerRenderer content={item.name} />
@@ -136,9 +136,9 @@ export function TabSidebar(): ReactElement {
   if (headers.length === 0) return <></>;
 
   return (
-    <div>
+    <div className="xl:block hidden shrink">
       <div className="h-36" />
-      <div className="sticky top-32 h-fit max-h-[calc(100vh-3rem)] w-64 lg:block hidden overflow-y-auto">
+      <div className="sticky top-32 h-fit max-h-[calc(100vh-3rem)] w-60 overflow-y-auto">
         <nav className="p-4 bg-[#0006] rounded-xl border-1 border-white">
           <h3 className="text-lg font-bold mb-4">Contents</h3>
           <div className="flex flex-col gap-1">
