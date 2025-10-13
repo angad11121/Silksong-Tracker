@@ -122,7 +122,7 @@ export const Tools: Record<
     displayName: string;
     act: 1 | 2 | 3;
     type: ToolType;
-    isCounted: boolean;
+    isCounted: boolean | 'steel' | 'not-steel';
     isUpgrade?: string;
     upgradesTo?: string;
     desc: string;
@@ -340,7 +340,7 @@ export const Tools: Record<
     displayName: "Dead Bug's Purse",
     act: 1,
     type: 2,
-    isCounted: true,
+    isCounted: 'not-steel',
     desc: 'Found on a corpse in the Wormways near Shellwood.',
     markers: [
       {
@@ -869,7 +869,7 @@ export const Tools: Record<
     displayName: 'Shell Satchel',
     act: 1,
     type: 2,
-    isCounted: true,
+    isCounted: 'steel',
     desc: "Steel-Soul exclusive. Found in the same location in the Wormways as the Dead Bug's Purse.",
     markers: [
       {

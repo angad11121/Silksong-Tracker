@@ -305,7 +305,13 @@ export const getSections = (
         subtext: 'All Silk Skills are required for 100% completion.',
         layout: 'grid',
         children: saveData =>
-          renderToolChildren(ToolType.SilkSkill, saveData, showMissingFirst, spoilerLevel),
+          renderToolChildren<Section<PercentageSectionCtx>>(
+            ToolType.SilkSkill,
+            saveData,
+            showMissingFirst,
+            spoilerLevel,
+            true,
+          ),
         ctx: {
           maxPercentage: 6,
           getPercentage: getToolPercentage(ToolType.SilkSkill),
@@ -382,7 +388,13 @@ export const getSections = (
             subtext: 'Red tools are mainly used actively for combat.',
             layout: 'grid',
             children: saveData =>
-              renderToolChildren(ToolType.Red, saveData, showMissingFirst, spoilerLevel),
+              renderToolChildren<Section<PercentageSectionCtx>>(
+                ToolType.Red,
+                saveData,
+                showMissingFirst,
+                spoilerLevel,
+                true,
+              ),
             ctx: {
               getPercentage: getToolPercentage(ToolType.Red),
               maxPercentage: 18,
@@ -393,7 +405,13 @@ export const getSections = (
             subtext: 'Blue tools are mainly used passively for combat utility.',
             layout: 'grid',
             children: saveData =>
-              renderToolChildren(ToolType.Blue, saveData, showMissingFirst, spoilerLevel),
+              renderToolChildren<Section<PercentageSectionCtx>>(
+                ToolType.Blue,
+                saveData,
+                showMissingFirst,
+                spoilerLevel,
+                true,
+              ),
             ctx: {
               getPercentage: getToolPercentage(ToolType.Blue),
               maxPercentage: 21,
@@ -404,7 +422,13 @@ export const getSections = (
             subtext: 'Yellow tools are mainly used as passive movement and utility tools.',
             layout: 'grid',
             children: saveData =>
-              renderToolChildren(ToolType.Yellow, saveData, showMissingFirst, spoilerLevel),
+              renderToolChildren<Section<PercentageSectionCtx>>(
+                ToolType.Yellow,
+                saveData,
+                showMissingFirst,
+                spoilerLevel,
+                true,
+              ),
             ctx: {
               getPercentage: getToolPercentage(ToolType.Yellow),
               maxPercentage: 12,

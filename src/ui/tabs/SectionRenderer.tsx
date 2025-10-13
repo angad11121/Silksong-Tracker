@@ -28,7 +28,7 @@ function SectionDisplay<ExtraCtx = null>({
 
   return (
     <SectionLayoutContext.Provider value={section.layout ?? null}>
-      <div className="pl-1 my-4">
+      <div className={`pl-1 ${parent?.layout !== 'grid' ? 'my-4' : ''}`}>
         <details
           open={
             typeof section.act === 'number' && section.act > spoilerLevel ? false : open || !parent
@@ -74,7 +74,7 @@ export function SectionRenderer<ExtraCtx = null>({
   ) => Partial<SectionDisplayProps<ExtraCtx>>;
 }): ReactElement {
   return (
-    <div className={parent?.layout === 'grid' ? 'grid grid-cols-2 gap-4' : ''}>
+    <div className={parent?.layout === 'grid' ? 'grid grid-cols-2 gap-4 mt-4' : ''}>
       {sections.map(section => (
         <Fragment key={section.title}>
           {'render' in section ? (

@@ -2,7 +2,7 @@ import { SilkshotVariants, ToolType, Tools } from '@/info/index';
 import { hasTool } from '@/parser/metadata';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { CustomHas, type LeafSection, type Section } from '@/ui/tabs/types';
-import { stripSpoilers, useSpoilerLevel } from '@/ui/tabs/SpoilerRenderer';
+import { stripSpoilers } from '@/ui/tabs/SpoilerRenderer';
 import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 
 import type { SaveData } from '@/parser/types';
@@ -127,38 +127,58 @@ function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
   };
 }
 
-export function renderToolChildren(
+export function renderToolChildren<
+  S extends
+    | Section<PercentageSectionCtx>
+    | Section<TrueCompletionSectionCtx> = Section<PercentageSectionCtx>,
+>(
   type: ToolType,
   saveData: SaveData,
   showMissingFirst: boolean,
   spoilerLevel: number,
-): Section<PercentageSectionCtx>[] {
+  percentageMode: S extends Section<PercentageSectionCtx> ? true : false,
+): S[] {
   return [
     ...Object.values(Tools)
       .filter(tool => tool.type === type)
-      .filter(tool => tool.isCounted)
+      .filter(tool => {
+        if (typeof tool.isCounted === 'boolean') return tool.isCounted;
+        if (tool.isCounted === 'steel') return saveData.playerData.permadeathMode > 0;
+        if (tool.isCounted === 'not-steel') return saveData.playerData.permadeathMode === 0;
+        return false;
+      })
       .filter(tool => !tool.isUpgrade)
       .filter(tool => !tool.displayName.includes('Silkshot'))
-      .map<Section<PercentageSectionCtx>>(tool => ({
-        title:
-          tool.upgradesTo && hasTool(tool.upgradesTo!, saveData)
-            ? Tools[tool.upgradesTo]!.displayName
-            : tool.displayName,
-        subtext: null,
-        act: tool.act,
-        children: [
-          getToolChild(tool),
-          ...(tool.upgradesTo ? [getToolChild(Tools[tool.upgradesTo]!)] : []),
-        ],
-        ctx: {
-          maxPercentage: 1,
-          getPercentage: saveData =>
-            hasTool(tool.id, saveData) ||
-            (tool.upgradesTo ? hasTool(tool.upgradesTo!, saveData) : false)
-              ? 1
-              : 0,
-        },
-      })),
+      .map(
+        tool =>
+          ({
+            title:
+              tool.upgradesTo && hasTool(tool.upgradesTo!, saveData)
+                ? Tools[tool.upgradesTo]!.displayName
+                : tool.displayName,
+            subtext: null,
+            act: tool.act,
+            children: [
+              getToolChild(tool),
+              ...(tool.upgradesTo ? [getToolChild(Tools[tool.upgradesTo]!)] : []),
+            ],
+            ctx: percentageMode
+              ? {
+                  maxPercentage: 1,
+                  getPercentage: saveData =>
+                    hasTool(tool.id, saveData) ||
+                    (tool.upgradesTo ? hasTool(tool.upgradesTo!, saveData) : false)
+                      ? 1
+                      : 0,
+                }
+              : {
+                  maxCount: tool.upgradesTo ? 2 : 1,
+                  getCount: saveData =>
+                    (hasTool(tool.id, saveData) ? 1 : 0) +
+                    (tool.upgradesTo && hasTool(tool.upgradesTo!, saveData) ? 1 : 0),
+                },
+          }) as S,
+      ),
     ...(type === ToolType.Red
       ? [
           {
@@ -172,12 +192,18 @@ export function renderToolChildren(
                 ? [getToolChild(Tools[hasSilkshot]!)]
                 : SilkshotVariants.map(variant => getToolChild(Tools[variant]!));
             },
-            ctx: {
-              maxPercentage: 1,
-              getPercentage: saveData =>
-                SilkshotVariants.some(variant => hasTool(variant, saveData)) ? 1 : 0,
-            },
-          } satisfies Section<PercentageSectionCtx>,
+            ctx: percentageMode
+              ? {
+                  maxPercentage: 1,
+                  getPercentage: saveData =>
+                    SilkshotVariants.some(variant => hasTool(variant, saveData)) ? 1 : 0,
+                }
+              : {
+                  maxCount: 1,
+                  getCount: saveData =>
+                    SilkshotVariants.some(variant => hasTool(variant, saveData)) ? 1 : 0,
+                },
+          } as S,
         ]
       : []),
   ]

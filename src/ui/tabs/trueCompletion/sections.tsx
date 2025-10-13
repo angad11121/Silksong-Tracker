@@ -144,6 +144,34 @@ export const getSections = (
           subtext: '4 Needle upgrades can be found throughout the game.',
         }),
       ),
+      mapPercentageSectionToTrueCompletion(
+        getPercentageSection(['Silk Skills'], saveData, showMissingFirst, spoilerLevel)!,
+        () => ({
+          subtext: 'There are 6 Silk Skills available.',
+        }),
+      ),
+      mapPercentageSectionToTrueCompletion(
+        getPercentageSection(['Tools'], saveData, showMissingFirst, spoilerLevel)!,
+        _section => {
+          const section = _section as Section<PercentageSectionCtx>;
+          const children =
+            typeof section.children === 'function' ? section.children(saveData) : section.children;
+          return {
+            subtext: 'There are 51 Tools permanently available, with three that can be upgraded.',
+            children: children.map(child => ({
+              ...child,
+              ctx: {
+                maxCount: 'auto',
+                getCount: 'auto',
+              },
+            })),
+            ctx: {
+              maxCount: 'auto',
+              getCount: 'auto',
+            },
+          };
+        },
+      ),
       Mementos,
     ],
     ctx: {
