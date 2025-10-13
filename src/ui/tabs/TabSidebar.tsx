@@ -79,7 +79,11 @@ function getHeaders(
   }
 
   if (tab === TabType.HuntersJournalData) {
-    const sections = getHuntersJournalSections(showMissingFirst, spoilerLevel);
+    const sections = getHuntersJournalSections(
+      showMissingFirst,
+      spoilerLevel,
+      saveData.playerData.permadeathMode > 0,
+    );
     return extractSidebarItems(sections, saveData, 0, 1);
   }
 

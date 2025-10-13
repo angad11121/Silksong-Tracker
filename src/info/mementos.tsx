@@ -22,11 +22,6 @@ function hasMemento(mementoName: string, saveData: SaveData): boolean {
       ?.Data?.IsDeposited ?? false
   );
 }
-/*
-Coral Heart', Data: { Amount: 0, IsSeenMask: 0, AmountWhileHidden: 0 } },
-        { Name: 'Clover Heart', Data: { Amount: 0, IsSeenMask: 0, AmountWhileHidden: 0 } },
-        { Name: 'White Flower
-         */
 
 export const Mementos: Section<TrueCompletionSectionCtx> = {
   title: '||<3>Mementos||',

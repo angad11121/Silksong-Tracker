@@ -8,6 +8,7 @@ import type { HuntersJournalSectionCtx } from '@/ui/tabs/huntersJournal/types';
 export const getSections = (
   showMissingFirst: boolean,
   spoilerLevel: number,
+  isSteelSoul: boolean,
 ): Section<HuntersJournalSectionCtx>[] => [
   {
     title: 'Missable Entries',
@@ -44,39 +45,44 @@ export const getSections = (
     layout: 'grid',
     gridCols: 3,
     children: saveData =>
-      Journal.map<Section<HuntersJournalSectionCtx>>(journalEntry => {
-        const dataEntry = saveData.playerData.EnemyJournalKillData.list.find(
-          entry => entry.Name === journalEntry.gameId,
-        );
+      Journal.filter(journalEntry => {
+        if (!isSteelSoul && journalEntry.isCounted === 'steel') return false;
+        return true;
+      })
+        .map<Section<HuntersJournalSectionCtx>>(journalEntry => {
+          const dataEntry = saveData.playerData.EnemyJournalKillData.list.find(
+            entry => entry.Name === journalEntry.gameId,
+          );
 
-        return {
-          title: markSpoilers(journalEntry.name, journalEntry.act),
-          subtext: null,
-          children: saveData => [
-            {
-              title: journalEntry.name,
-              subtext: journalEntry.desc + (!journalEntry.isCounted ? ' (Optional)' : ''),
-              markers: journalEntry.markers,
-              has: () => (dataEntry?.Record.Kills ?? 0) >= journalEntry.required,
-              render: ({ entry }) => (
-                <LeafRenderer
-                  id={null}
-                  icon={journalEntry.img}
-                  check={entry.has}
-                  hint={entry.subtext}
-                  data={saveData}
-                  markers={journalEntry.markers}
-                />
-              ),
+          return {
+            title: markSpoilers(journalEntry.name, journalEntry.act),
+            subtext: null,
+            children: saveData => [
+              {
+                title: journalEntry.name,
+                subtext: journalEntry.desc + (!journalEntry.isCounted ? ' (Optional)' : ''),
+                markers: journalEntry.markers,
+                has: () => (dataEntry?.Record.Kills ?? 0) >= journalEntry.required,
+                render: ({ entry }) => (
+                  <LeafRenderer
+                    id={null}
+                    icon={journalEntry.img}
+                    check={entry.has}
+                    hint={entry.subtext}
+                    data={saveData}
+                    markers={journalEntry.markers}
+                  />
+                ),
+              },
+            ],
+            ctx: {
+              getCount: dataEntry?.Record.Kills ?? 0,
+              maxCount: journalEntry.required,
+              optional: !journalEntry.isCounted,
             },
-          ],
-          ctx: {
-            getCount: dataEntry?.Record.Kills ?? 0,
-            maxCount: journalEntry.required,
-            optional: !journalEntry.isCounted,
-          },
-        };
-      }).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
+          };
+        })
+        .sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
     ctx: { getCount: 'auto', maxCount: 'auto' },
   },
 ];

@@ -94,7 +94,7 @@ export function Settings({
           </div>
           <div className="flex flex-col gap-1 mt-3 text-sm text-gray-200">
             <label className={LABEL_CLASSES}>
-              <span>Show spoilers:</span>
+              <span>Conceal spoilers:</span>
               <select
                 value={settings.spoilers}
                 onChange={event =>
