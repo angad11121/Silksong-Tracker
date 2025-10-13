@@ -33,7 +33,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
     {
       title: 'Surface Memento',
       subtext:
-        'This Memento can be acquired from the Surface. Play the Needolin in the Nameless Town to receive it.',
+        'The Surface Memento can be acquired from the Surface. Play the Needolin in the Nameless Town to receive it.',
       act: 3,
       has: saveData => hasMemento('Surface Memento', saveData),
       render: ({ entry }) => (
@@ -67,7 +67,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
     {
       title: "Hero's Memento",
       subtext:
-        "This Memento can be acquired from Garmond in the Blasted Steps after defeating Lost Garmond from the Hero's Call wish.",
+        "The Hero's Memento can be acquired from Garmond in the Blasted Steps after defeating Lost Garmond from the Hero's Call wish.",
       act: 3,
       has: saveData => hasMemento('Garmond Memento', saveData),
       render: ({ entry }) => (
@@ -105,7 +105,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
     {
       title: 'Craw Memento',
       subtext:
-        'This Memento can be acquired after defeating the Crawfather in the Court of Craws in Greymoor.',
+        'The Craw Memento can be acquired after defeating the Crawfather in the Court of Craws in Greymoor.',
       act: 3,
       has: saveData => hasMemento('Crawman Memento', saveData),
       render: ({ entry }) => (
@@ -133,7 +133,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
     {
       title: 'Grey Memento',
       subtext:
-        'This Memento can be acquired after defeating the Watcher at the Edge in the Sands of Karak.',
+        'The Grey Memento can be acquired after defeating the Watcher at the Edge in the Sands of Karak.',
       act: 3,
       has: saveData => hasMemento('Grey Memento', saveData),
       render: ({ entry }) => (
@@ -165,7 +165,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
     {
       title: 'Sprintmaster Memento',
       subtext:
-        'This Memento can be acquired after defeating Sprintmaster Swift in the final race in the Frontier. This may only be done after obtaining the Everbloom.',
+        'The Sprintmaster Memento can be acquired after defeating Sprintmaster Swift in the final race in the Frontier. This may only be done after obtaining the Everbloom.',
       act: 3,
       has: saveData => hasMemento('Sprintmaster Memento', saveData),
       render: ({ entry }) => (
@@ -195,7 +195,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
     {
       title: "Hunter's Memento",
       subtext:
-        "This Memento can be acquired after completing the full Hunter's Journal. See the Hunter's Journal tab for more details.",
+        "The Hunter's Memento can be acquired after completing the full Hunter's Journal. See the Hunter's Journal tab for more details.",
       act: 3,
       has: saveData => hasMemento('Hunter Memento', saveData),
       render: ({ entry }) => (
@@ -226,7 +226,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
     {
       title: "Guardian's Memento",
       subtext:
-        "This Memento can be acquired after defeating all three of Seth's high scores in the Flea Games.",
+        "The Guardian's Memento can be acquired after defeating all three of Seth's high scores in the Flea Games.",
       act: 3,
       has: saveData => hasMemento('Memento Seth', saveData),
       render: ({ entry }) => (
