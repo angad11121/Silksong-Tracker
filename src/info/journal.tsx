@@ -41,7 +41,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -121,7 +121,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 31,
+    required: 30,
     act: 1,
   },
   {
@@ -161,7 +161,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -171,7 +171,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -181,7 +181,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -191,7 +191,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 31,
+    required: 30,
     act: 1,
   },
   {
@@ -251,7 +251,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -267,7 +267,7 @@ export const Journal: {
   {
     name: 'Pilgrim Groveller',
     desc: 'TODO',
-    gameId: 'Pilgrim 13',
+    gameId: 'Pilgrim 03',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
@@ -277,7 +277,7 @@ export const Journal: {
   {
     name: 'Pilgrim Pouncer',
     desc: 'TODO',
-    gameId: 'Pilgrim 11',
+    gameId: 'Pilgrim 01',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
@@ -287,7 +287,7 @@ export const Journal: {
   {
     name: 'Pilgrim Hornfly',
     desc: 'TODO',
-    gameId: 'Pilgrim 14',
+    gameId: 'Pilgrim 04',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
@@ -297,11 +297,11 @@ export const Journal: {
   {
     name: 'Pilgrim Hulk',
     desc: 'TODO',
-    gameId: 'Pilgrim 12',
+    gameId: 'Pilgrim 02',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -311,7 +311,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -327,7 +327,7 @@ export const Journal: {
   {
     name: 'Elder Pilgrim',
     desc: 'TODO',
-    gameId: 'Pilgrim 15',
+    gameId: 'Pilgrim 05',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
@@ -341,7 +341,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -351,7 +351,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -371,7 +371,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -441,7 +441,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -451,7 +451,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -521,7 +521,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -551,7 +551,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 31,
+    required: 30,
     act: 1,
   },
   {
@@ -561,7 +561,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -581,7 +581,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -631,7 +631,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 31,
+    required: 30,
     act: 1,
   },
   {
@@ -651,7 +651,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -661,7 +661,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -741,7 +741,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -771,7 +771,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -801,7 +801,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 81,
+    required: 80,
     act: 1,
   },
   {
@@ -821,7 +821,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -841,7 +841,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -851,7 +851,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -861,7 +861,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -871,7 +871,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 2,
   },
   {
@@ -891,7 +891,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -911,7 +911,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -921,7 +921,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 31,
+    required: 30,
     act: 1,
   },
   {
@@ -931,7 +931,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
@@ -1001,7 +1001,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -1041,7 +1041,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -1051,7 +1051,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -1081,7 +1081,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -1091,7 +1091,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -1141,7 +1141,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 1,
   },
   {
@@ -1151,7 +1151,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -1171,7 +1171,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 41,
+    required: 40,
     act: 1,
   },
   {
@@ -1271,7 +1271,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -1291,7 +1291,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -1301,7 +1301,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -1341,7 +1341,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -1351,7 +1351,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -1431,7 +1431,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 31,
+    required: 30,
     act: 2,
   },
   {
@@ -1451,7 +1451,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
@@ -1477,11 +1477,11 @@ export const Journal: {
   {
     name: 'Underscrub',
     desc: 'TODO',
-    gameId: 'Pilgrim 13 Understore',
+    gameId: 'Pilgrim 03 Understore',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
@@ -1491,7 +1491,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 2,
   },
   {
@@ -1531,23 +1531,23 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
     name: 'Choir Pouncer',
     desc: 'TODO',
-    gameId: 'Pilgrim 11 Song',
+    gameId: 'Pilgrim 01 Song',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 31,
+    required: 30,
     act: 2,
   },
   {
     name: 'Choir Hornhead',
     desc: 'TODO',
-    gameId: 'Pilgrim 12 Song',
+    gameId: 'Pilgrim 02 Song',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
@@ -1557,7 +1557,7 @@ export const Journal: {
   {
     name: 'Choir Bellbearer',
     desc: 'TODO',
-    gameId: 'Pilgrim 13 Song',
+    gameId: 'Pilgrim 03 Song',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
@@ -1567,11 +1567,11 @@ export const Journal: {
   {
     name: 'Choir Flyer',
     desc: 'TODO',
-    gameId: 'Pilgrim 14 Song',
+    gameId: 'Pilgrim 04 Song',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
@@ -1601,7 +1601,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 31,
+    required: 30,
     act: 2,
   },
   {
@@ -1631,7 +1631,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 2,
   },
   {
@@ -1711,7 +1711,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 2,
   },
   {
@@ -1771,23 +1771,23 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 2,
   },
   {
     name: 'Cogwork Choirbug',
     desc: 'TODO',
-    gameId: 'Song Automaton 11',
+    gameId: 'Song Automaton 01',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
     name: 'Cogwork Cleanser',
     desc: 'TODO',
-    gameId: 'Song Automaton 12',
+    gameId: 'Song Automaton 02',
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
@@ -1831,7 +1831,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
@@ -1841,7 +1841,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
@@ -1861,7 +1861,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 2,
   },
   {
@@ -1911,7 +1911,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
@@ -1931,7 +1931,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 1,
   },
   {
@@ -1961,7 +1961,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 21,
+    required: 20,
     act: 2,
   },
   {
@@ -1971,7 +1971,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 2,
   },
   {
@@ -2061,7 +2061,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -2071,7 +2071,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -2081,7 +2081,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -2101,7 +2101,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -2126,7 +2126,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -2136,7 +2136,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -2146,7 +2146,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -2236,7 +2236,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
@@ -2246,7 +2246,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 31,
+    required: 30,
     act: 3,
   },
   {
@@ -2266,7 +2266,7 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: true,
-    required: 11,
+    required: 10,
     act: 3,
   },
   {
