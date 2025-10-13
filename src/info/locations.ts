@@ -11,9 +11,7 @@ export const Locations = {
   Greyroot: { x: 1591, y: 2100 },
   Grindle: { x: 722, y: 1532 },
   HalfwayHome: { x: 2972, y: 2041 },
-  Mooshka: {
-    Fleatopia: { x: 4399, y: 863 },
-  },
+  Fleatopia: { x: 4399, y: 863 },
   Mort: { x: 3610, y: 2480 },
   Mossdruid: { x: 1379, y: 2396 },
   Pinstress: { x: 402, y: 1724 },
