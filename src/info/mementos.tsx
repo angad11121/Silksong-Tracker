@@ -22,6 +22,11 @@ function hasMemento(mementoName: string, saveData: SaveData): boolean {
       ?.Data?.IsDeposited ?? false
   );
 }
+/*
+Coral Heart', Data: { Amount: 0, IsSeenMask: 0, AmountWhileHidden: 0 } },
+        { Name: 'Clover Heart', Data: { Amount: 0, IsSeenMask: 0, AmountWhileHidden: 0 } },
+        { Name: 'White Flower
+         */
 
 export const Mementos: Section<TrueCompletionSectionCtx> = {
   title: '||<3>Mementos||',
@@ -35,7 +40,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       subtext:
         'The Surface Memento can be acquired from the Surface. Play the Needolin in the Nameless Town to receive it.',
       act: 3,
-      has: saveData => hasMemento('Surface Memento', saveData),
+      has: saveData => hasMemento('Memento Surface', saveData),
       render: ({ entry }) => (
         <LeafRenderer
           type={() => (
@@ -69,7 +74,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       subtext:
         "The Hero's Memento can be acquired from Garmond in the Blasted Steps after defeating Lost Garmond from the Hero's Call wish.",
       act: 3,
-      has: saveData => hasMemento('Garmond Memento', saveData),
+      has: saveData => hasMemento('Memento Garmond', saveData),
       render: ({ entry }) => (
         <LeafRenderer
           type={() => (
@@ -98,7 +103,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       subtext:
         'The Craw Memento can be acquired after defeating the Crawfather in the Court of Craws in Greymoor.',
       act: 3,
-      has: saveData => hasMemento('Crawman Memento', saveData),
+      has: saveData => hasMemento('Crowman Memento', saveData),
       render: ({ entry }) => (
         <LeafRenderer
           type={() => (
@@ -264,7 +269,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
           subtext:
             'The Conjoined Heart can be acquired after defeating the Clover Dancers in Lost Verdania. Requires Elegy of the Deep.',
           act: 3,
-          has: saveData => hasMemento('Conjoined Heart', saveData),
+          has: saveData => hasMemento('Clover Heart', saveData),
           render: ({ entry }) => (
             <LeafRenderer
               type={() => (
