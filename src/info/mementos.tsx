@@ -43,7 +43,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       has: saveData => hasMemento('Memento Surface', saveData),
       render: ({ entry }) => (
         <LeafRenderer
-          type={() => (
+          icon={() => (
             <img
               src={SurfaceMemento}
               height={60}
@@ -77,7 +77,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       has: saveData => hasMemento('Memento Garmond', saveData),
       render: ({ entry }) => (
         <LeafRenderer
-          type={() => (
+          icon={() => (
             <img src={HeroMemento} height={60} width={60} alt="Hero's Memento" className="inline" />
           )}
           id={null}
@@ -106,7 +106,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       has: saveData => hasMemento('Crowman Memento', saveData),
       render: ({ entry }) => (
         <LeafRenderer
-          type={() => (
+          icon={() => (
             <img src={CrawMemento} height={60} width={60} alt="Craw Memento" className="inline" />
           )}
           id={null}
@@ -134,7 +134,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       has: saveData => hasMemento('Grey Memento', saveData),
       render: ({ entry }) => (
         <LeafRenderer
-          type={() => (
+          icon={() => (
             <img src={GreyMemento} height={60} width={60} alt="Grey Memento" className="inline" />
           )}
           id={null}
@@ -166,7 +166,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       has: saveData => hasMemento('Sprintmaster Memento', saveData),
       render: ({ entry }) => (
         <LeafRenderer
-          type={() => (
+          icon={() => (
             <img
               src={SprintmasterMemento}
               height={60}
@@ -196,7 +196,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       has: saveData => hasMemento('Hunter Memento', saveData),
       render: ({ entry }) => (
         <LeafRenderer
-          type={() => (
+          icon={() => (
             <img
               src={HunterMemento}
               height={60}
@@ -227,7 +227,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
       has: saveData => hasMemento('Memento Seth', saveData),
       render: ({ entry }) => (
         <LeafRenderer
-          type={() => (
+          icon={() => (
             <img
               src={GuardianMemento}
               height={60}
@@ -272,7 +272,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
           has: saveData => hasMemento('Clover Heart', saveData),
           render: ({ entry }) => (
             <LeafRenderer
-              type={() => (
+              icon={() => (
                 <img
                   src={ConjoinedHeart}
                   height={60}
@@ -312,7 +312,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
           has: saveData => hasMemento('Coral Heart', saveData),
           render: ({ entry }) => (
             <LeafRenderer
-              type={() => (
+              icon={() => (
                 <img
                   src={EncrustedHeart}
                   height={60}
@@ -342,7 +342,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
           has: saveData => hasMemento('Flower Heart', saveData),
           render: ({ entry }) => (
             <LeafRenderer
-              type={() => (
+              icon={() => (
                 <img
                   src={PollenHeart}
                   height={60}
@@ -377,7 +377,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
           has: saveData => hasMemento('Hunter Heart', saveData),
           render: ({ entry }) => (
             <LeafRenderer
-              type={() => (
+              icon={() => (
                 <img
                   src={HuntersHeart}
                   height={60}

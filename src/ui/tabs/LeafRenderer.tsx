@@ -1,3 +1,11 @@
+import { useState, type ReactElement } from 'react';
+import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
+import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
+import { Tooltip } from '@/ui/components/Tooltip';
+import { useSectionLayout } from '@/ui/tabs/SectionRenderer';
+import type { SaveData } from '@/parser/types';
+import type { CustomHas, Section } from '@/ui/tabs/types';
+
 import MaskShard from '@/assets/mask_shard.png';
 import SpoolFragment from '@/assets/spool_fragment.png';
 import SilkHeart from '@/assets/silk_heart.png';
@@ -5,14 +13,6 @@ import CraftingKit from '@/assets/crafting_kit.png';
 import ToolPouch from '@/assets/tool_pouch.png';
 import Everbloom from '@/assets/everbloom.png';
 import NeedleStrike from '@/assets/arts/needle_strike.png';
-
-import { useState, type ReactElement } from 'react';
-import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
-import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
-import { Tooltip } from '@/ui/components/Tooltip';
-import type { SaveData } from '@/parser/types';
-import type { CustomHas, Section } from '@/ui/tabs/types';
-import { useSectionLayout } from '@/ui/tabs/SectionRenderer';
 
 export enum LeafRendererType {
   Mask = 'mask',
@@ -53,7 +53,7 @@ const Images: Record<LeafRendererType, () => ReactElement> = {
 
 export function LeafRenderer({
   id,
-  type,
+  icon: type,
   check,
   hint,
   data,
@@ -66,7 +66,7 @@ export function LeafRenderer({
   hint: string;
   data: SaveData;
   markers: MapLocation[];
-  type: LeafRendererType | (() => ReactElement);
+  icon: LeafRendererType | (() => ReactElement);
 }): ReactElement {
   const hasAcquired = typeof check === 'function' ? check(data) : check;
   const [showMap, setShowMap] = useState(false);

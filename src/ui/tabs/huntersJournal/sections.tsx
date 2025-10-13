@@ -23,7 +23,7 @@ export const getSections = (
           render: ({ entry }) => (
             <LeafRenderer
               id={null}
-              type={journalEntry.img}
+              icon={journalEntry.img}
               check={entry.has}
               hint={entry.subtext}
               data={saveData}
@@ -57,7 +57,7 @@ export const getSections = (
               render: ({ entry }) => (
                 <LeafRenderer
                   id={null}
-                  type={journalEntry.img}
+                  icon={journalEntry.img}
                   check={entry.has}
                   hint={entry.subtext}
                   data={saveData}

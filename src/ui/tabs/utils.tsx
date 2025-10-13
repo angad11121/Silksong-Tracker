@@ -123,7 +123,7 @@ function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
       <LeafRenderer
         id={tool.upgradesTo || tool.isUpgrade ? tool.displayName : null}
         data={saveData}
-        type={tool.img}
+        icon={tool.img}
         check={entry.has}
         hint={tool.desc}
         markers={typeof tool.markers === 'function' ? tool.markers(saveData) : tool.markers}

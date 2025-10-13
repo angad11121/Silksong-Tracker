@@ -40,7 +40,7 @@ export const getSections = (
             subtext: fragment.hint,
             has: fragment.check,
             render: () => (
-              <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Mask} />
+              <LeafRenderer {...fragment} data={saveData} icon={LeafRendererType.Mask} />
             ),
           })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
@@ -59,7 +59,7 @@ export const getSections = (
             subtext: fragment.hint,
             has: fragment.check,
             render: () => (
-              <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Spool} />
+              <LeafRenderer {...fragment} data={saveData} icon={LeafRendererType.Spool} />
             ),
           })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
@@ -91,7 +91,7 @@ export const getSections = (
                         location: { x: 1363, y: 2441 },
                       },
                     ]}
-                    type={LeafRendererType.SilkHeart}
+                    icon={LeafRendererType.SilkHeart}
                   />
                 ),
               },
@@ -113,7 +113,7 @@ export const getSections = (
                         location: { x: 2526, y: 328 },
                       },
                     ]}
-                    type={LeafRendererType.SilkHeart}
+                    icon={LeafRendererType.SilkHeart}
                   />
                 ),
               },
@@ -140,7 +140,7 @@ export const getSections = (
                         location: { x: 2156, y: 1355 },
                       },
                     ]}
-                    type={LeafRendererType.SilkHeart}
+                    icon={LeafRendererType.SilkHeart}
                   />
                 ),
               },
@@ -187,7 +187,7 @@ export const getSections = (
                       : upgrade.markers
                   }
                   data={saveData}
-                  type={level.img}
+                  icon={level.img}
                 />
               ),
             };
@@ -222,7 +222,7 @@ export const getSections = (
                         hint={art.desc}
                         data={saveData}
                         markers={art.markers}
-                        type={art.img}
+                        icon={art.img}
                       />
                     ),
                   },
@@ -270,7 +270,7 @@ export const getSections = (
                         hint={crest.hint}
                         data={saveData}
                         markers={crest.markers}
-                        type={crest.img!}
+                        icon={crest.img!}
                       />
                     ),
                   },
@@ -329,7 +329,7 @@ export const getSections = (
                     location: Locations.Pinstress,
                   },
                 ]}
-                type={LeafRendererType.NeedleStrike}
+                icon={LeafRendererType.NeedleStrike}
               />
             ),
           },
@@ -360,7 +360,7 @@ export const getSections = (
                     location: Locations.RuinedChapel,
                   },
                 ]}
-                type={LeafRendererType.Everbloom}
+                icon={LeafRendererType.Everbloom}
               />
             ),
           },
@@ -464,7 +464,7 @@ export const getSections = (
                             location: Locations.ForgeDaughter,
                           },
                         ]}
-                        type={LeafRendererType.CraftingKit}
+                        icon={LeafRendererType.CraftingKit}
                       />
                     ),
                   },
@@ -487,7 +487,7 @@ export const getSections = (
                             location: Locations.HalfwayHome,
                           },
                         ]}
-                        type={LeafRendererType.CraftingKit}
+                        icon={LeafRendererType.CraftingKit}
                       />
                     ),
                   },
@@ -508,7 +508,7 @@ export const getSections = (
                             location: Locations.TwelfthArchitect,
                           },
                         ]}
-                        type={LeafRendererType.CraftingKit}
+                        icon={LeafRendererType.CraftingKit}
                       />
                     ),
                   },
@@ -529,7 +529,7 @@ export const getSections = (
                             location: Locations.Grindle,
                           },
                         ]}
-                        type={LeafRendererType.CraftingKit}
+                        icon={LeafRendererType.CraftingKit}
                       />
                     ),
                   },
@@ -570,7 +570,7 @@ export const getSections = (
                             location: { x: 2106, y: 2539 },
                           },
                         ]}
-                        type={LeafRendererType.ToolPouch}
+                        icon={LeafRendererType.ToolPouch}
                       />
                     ),
                   },
@@ -590,7 +590,7 @@ export const getSections = (
                             location: Locations.Mort,
                           },
                         ]}
-                        type={LeafRendererType.ToolPouch}
+                        icon={LeafRendererType.ToolPouch}
                       />
                     ),
                   },
@@ -610,7 +610,7 @@ export const getSections = (
                             location: Locations.HalfwayHome,
                           },
                         ]}
-                        type={LeafRendererType.ToolPouch}
+                        icon={LeafRendererType.ToolPouch}
                       />
                     ),
                   },
@@ -634,7 +634,7 @@ export const getSections = (
                             location: Locations.Fleatopia,
                           },
                         ]}
-                        type={LeafRendererType.ToolPouch}
+                        icon={LeafRendererType.ToolPouch}
                       />
                     ),
                   },

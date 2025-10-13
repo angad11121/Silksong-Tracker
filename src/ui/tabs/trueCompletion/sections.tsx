@@ -92,7 +92,7 @@ export const getSections = (
                               hint={crest.hint}
                               data={saveData}
                               markers={crest.markers}
-                              type={crest.img!}
+                              icon={crest.img!}
                             />
                           );
                         },
@@ -129,7 +129,7 @@ export const getSections = (
                         ? locket.markers(saveData)
                         : locket.markers
                     }
-                    type={() => (
+                    icon={() => (
                       <img
                         src={MemoryLocket}
                         height={48}
