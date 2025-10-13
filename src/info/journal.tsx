@@ -2313,7 +2313,7 @@ export const Journal: {
     isCounted: false,
     missable: (saveData, obtained) => {
       if (obtained) return true;
-      // TODO
+      if (saveData.playerData.garmondInEnclave) return CustomHas.Missed;
       return CustomHas.CanMiss;
     },
     required: 1,
