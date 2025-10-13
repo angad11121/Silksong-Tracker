@@ -65,7 +65,7 @@ export function LeafRenderer({
   check: ((data: SaveData) => boolean | CustomHas | undefined) | boolean | CustomHas | undefined;
   hint: string;
   data: SaveData;
-  markers: MapLocation[];
+  markers: MapLocation[] | ((saveData: SaveData) => MapLocation[]);
   icon: LeafRendererType | (() => ReactElement);
 }): ReactElement {
   const hasAcquired = typeof check === 'function' ? check(data) : check;
@@ -122,7 +122,7 @@ export function LeafRenderer({
       </div>
       {showMap ? (
         <div className="flex flex-col items-center">
-          <SilksongMap markers={markers} />
+          <SilksongMap markers={typeof markers === 'function' ? markers(data) : markers} />
           <hr className="text-gray-500 self-stretch" />
         </div>
       ) : null}

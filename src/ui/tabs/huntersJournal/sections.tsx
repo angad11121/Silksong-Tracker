@@ -1,9 +1,31 @@
-import { Journal } from '@/info';
+import { AutoJournal, Journal } from '@/info';
 import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 import { missingFirstSortComparator } from '@/ui/tabs/utils';
 import { markSpoilers } from '@/ui/tabs/SpoilerRenderer';
 import type { LeafSection, Section } from '@/ui/tabs/types';
 import type { HuntersJournalSectionCtx } from '@/ui/tabs/huntersJournal/types';
+import type { SaveData } from '@/parser/types';
+
+function checkAuto(saveData: SaveData, auto: AutoJournal): boolean {
+  switch (auto) {
+    case AutoJournal.Coral:
+      return saveData.playerData.defeatedCoralKing;
+    case AutoJournal.Wisp:
+      return saveData.playerData.defeatedWispPyreEffigy;
+    case AutoJournal.Ant:
+      return saveData.playerData.defeatedAntQueen;
+    case AutoJournal.Clover:
+      return saveData.playerData.defeatedCloverDancers;
+    case AutoJournal.Puppet:
+      return saveData.playerData.marionettesBurned; // TODO: It's not this, fix later I guess
+    case AutoJournal.Mist:
+      return saveData.playerData.defeatedPhantom;
+    case AutoJournal.Thread:
+      return saveData.playerData.wardBossDefeated;
+    default:
+      return false;
+  }
+}
 
 export const getSections = (
   showMissingFirst: boolean,
@@ -32,7 +54,11 @@ export const getSections = (
               check={entry.has}
               hint={entry.subtext}
               data={saveData}
-              markers={journalEntry.markers}
+              markers={
+                typeof journalEntry.markers === 'function'
+                  ? journalEntry.markers(saveData)
+                  : journalEntry.markers
+              }
             />
           ),
         };
@@ -62,7 +88,9 @@ export const getSections = (
                 title: journalEntry.name,
                 subtext: journalEntry.desc + (!journalEntry.isCounted ? ' (Optional)' : ''),
                 markers: journalEntry.markers,
-                has: () => (dataEntry?.Record.Kills ?? 0) >= journalEntry.required,
+                has: () =>
+                  (dataEntry?.Record.Kills ?? 0) >= journalEntry.required ||
+                  (journalEntry.auto && checkAuto(saveData, journalEntry.auto)),
                 render: ({ entry }) => (
                   <LeafRenderer
                     id={null}

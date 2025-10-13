@@ -1,4 +1,6 @@
 import { CustomHas } from '@/ui/tabs/types';
+import { Locations } from '@/info/locations';
+import type { MetadataKey } from '@/parser/metadata';
 import type { ReactElement } from 'react';
 import type { MapLocation } from '@/ui/components/map/types';
 import type { SaveData } from '@/parser/types';
@@ -241,23 +243,131 @@ import Lace from '@/assets/journal/Lace.png';
 import Grand_Mother_Silk from '@/assets/journal/Grand_Mother_Silk.png';
 import Lost_Lace from '@/assets/journal/Lost_Lace.png';
 
+export const Flintbeetles: (saveData: SaveData) => MapLocation[] = saveData => [
+  {
+    label: 'Promise the Volatile Flintbeetles wish.',
+    location: Locations.BoneBottom,
+  },
+  ...(
+    [
+      {
+        key: 'rockRollerDefeated_bone01',
+        getMarker: () => [
+          {
+            label: 'Defeat the Flintbeetle and collect the Flintgem.',
+            location: { x: 1304, y: 2598 },
+          },
+        ],
+      },
+      {
+        key: 'rockRollerDefeated_bone06',
+        getMarker: () => [
+          {
+            label: 'Defeat the Flintbeetle and collect the Flintgem.',
+            location: { x: 1610, y: 2316 },
+          },
+        ],
+      },
+      // TODO: This location is different depending on playerData.bone03_openedTrapdoorForRockRoller
+      {
+        key: 'rockRollerDefeated_bone07',
+        getMarker: () => [
+          {
+            label: 'Defeat the Flintbeetle and collect the Flintgem.',
+            location: { x: 2024, y: 2451 },
+          },
+        ],
+      },
+    ] satisfies { key: MetadataKey; getMarker: (saveData: SaveData) => MapLocation[] }[]
+  )
+    .filter(beetle => !saveData.playerData[beetle.key])
+    .flatMap(beetle => beetle.getMarker()),
+  {
+    label: 'Turn over the Flintgems to receive a Memory Locket.',
+    location: Locations.BoneBottom,
+  },
+];
+
+export const SecondSentinel: MapLocation[] = [
+  {
+    label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
+    location: { x: 1918, y: 898 },
+  },
+  {
+    label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
+    location: { x: 3070, y: 1122 },
+  },
+  {
+    label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
+    location: { x: 3050, y: 690 },
+  },
+  {
+    label: 'Revive the Second Sentinel.',
+    location: { x: 2462, y: 848 },
+  },
+  {
+    label: 'Encounter the Second Sentinel.',
+    location: { x: 2527, y: 1077 },
+  },
+  {
+    label: 'Encounter the Second Sentinel.',
+    location: { x: 2859, y: 789 },
+  },
+  {
+    label: "Accept the Second Sentinel's challenge.",
+    location: Locations.Songclave,
+  },
+  {
+    label: 'Defeat the Second Sentinel.',
+    location: { x: 2421, y: 703 },
+  },
+];
+
+export const Unravelled: MapLocation[] = [
+  {
+    label: "Acquire the Surgeon's Key.",
+    location: { x: 2624, y: 1214 },
+  },
+  {
+    label: 'Defeat the Unravelled.',
+    location: { x: 2156, y: 1355 },
+  },
+];
+
+export enum AutoJournal {
+  Coral = 'coral',
+  Wisp = 'wisp',
+  Puppet = 'puppet',
+  Ant = 'ant',
+  Clover = 'clover',
+  Thread = 'thread',
+  Mist = 'mist',
+}
+
 export const Journal: {
   name: string;
   desc: string;
   gameId: string;
   img: () => ReactElement;
-  markers: MapLocation[];
+  markers: MapLocation[] | ((saveData: SaveData) => MapLocation[]);
   isCounted: boolean | 'steel';
   missable?: (saveData: SaveData, obtained: boolean) => CustomHas | true;
   required: number;
+  /** Entries that are auto-completed under certain situations. */
+  auto?: AutoJournal;
   act: 1 | 2 | 3;
 }[] = [
   {
     name: 'Mossgrub',
-    desc: 'TODO',
+    desc: "If you don't know where to find this, you have issues. It's in Moss Grotto.",
     gameId: 'MossBone Crawler',
     img: () => <img src={Mossgrub} height={48} width={48} className="inline" alt="Mossgrub" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 892, y: 2806 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -275,7 +385,12 @@ export const Journal: {
         alt="Massive Mossgrub"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here, under the platforming segment.',
+        location: { x: 2681, y: 712 },
+      },
+    ],
     isCounted: true,
     required: 3,
     act: 2,
@@ -285,7 +400,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'MossBone Fly',
     img: () => <img src={Mossmir} height={48} width={48} className="inline" alt="Mossmir" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 892, y: 2806 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -297,7 +417,16 @@ export const Journal: {
     img: () => (
       <img src={Moss_Mother} height={48} width={48} className="inline" alt="Moss Mother" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 847, y: 2682 },
+      },
+      {
+        label: 'Two Moss Mothers can be fought simultaneously here.',
+        location: { x: 796, y: 2872 },
+      },
+    ],
     isCounted: true,
     required: 3,
     act: 1,
@@ -307,7 +436,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Aspid Collector',
     img: () => <img src={Aknid} height={48} width={48} className="inline" alt="Aknid" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1067, y: 2479 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -319,7 +453,12 @@ export const Journal: {
     img: () => (
       <img src={Skull_Scuttler} height={48} width={48} className="inline" alt="Skull Scuttler" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1268, y: 2615 },
+      },
+    ],
     isCounted: true,
     required: 35,
     act: 1,
@@ -329,7 +468,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Goomba Bounce Fly',
     img: () => <img src={Skullwing} height={48} width={48} className="inline" alt="Skullwing" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1654, y: 2788 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -341,7 +485,12 @@ export const Journal: {
     img: () => (
       <img src={Skull_Brute} height={48} width={48} className="inline" alt="Skull Brute" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1305, y: 2598 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -353,7 +502,17 @@ export const Journal: {
     img: () => (
       <img src={Skull_Tyrant} height={48} width={48} className="inline" alt="Skull Tyrant" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1980, y: 2536 },
+      },
+      {
+        label:
+          'In Act II, there is a ||<2>33% chance of a Skull Tyrant spawning in Bone Bottom once when sitting on the bench||.',
+        location: Locations.BoneBottom,
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 1,
@@ -363,7 +522,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Crawler',
     img: () => <img src={Kilik} height={48} width={48} className="inline" alt="Kilik" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1966, y: 2599 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -373,7 +537,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Flyer',
     img: () => <img src={Beastfly} height={48} width={48} className="inline" alt="Beastfly" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1384, y: 2624 },
+      },
+    ],
     isCounted: true,
     required: 30,
     act: 1,
@@ -385,7 +554,16 @@ export const Journal: {
     img: () => (
       <img src={Savage_Beastfly} height={48} width={48} className="inline" alt="Savage Beastfly" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Onean be found here.',
+        location: { x: 3313, y: 2410 },
+      },
+      {
+        label: 'Another can be found here after claiming the Grand Hunt in Bellhart.',
+        location: { x: 3635, y: 2757 },
+      },
+    ],
     isCounted: true,
     required: 2,
     act: 1,
@@ -395,7 +573,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Circler',
     img: () => <img src={Caranid} height={48} width={48} className="inline" alt="Caranid" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2194, y: 2632 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -407,7 +590,12 @@ export const Journal: {
     img: () => (
       <img src={Vicious_Caranid} height={48} width={48} className="inline" alt="Vicious Caranid" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3825, y: 2781 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -419,7 +607,12 @@ export const Journal: {
     img: () => (
       <img src={Hardbone_Hopper} height={48} width={48} className="inline" alt="Hardbone Hopper" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2729, y: 2614 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -431,7 +624,12 @@ export const Journal: {
     img: () => (
       <img src={Hardbone_Elder} height={48} width={48} className="inline" alt="Hardbone Elder" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3701, y: 2326 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 3,
@@ -441,7 +639,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Spitter',
     img: () => <img src={Tarmite} height={48} width={48} className="inline" alt="Tarmite" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 4159, y: 2764 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -451,7 +654,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Roller',
     img: () => <img src={Mawling} height={48} width={48} className="inline" alt="Mawling" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1097, y: 2764 },
+      },
+    ],
     isCounted: true,
     required: 30,
     act: 1,
@@ -461,7 +669,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Thumper',
     img: () => <img src={Marrowmaw} height={48} width={48} className="inline" alt="Marrowmaw" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1093, y: 2872 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 1,
@@ -471,7 +684,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Spine Floater',
     img: () => <img src={Hoker} height={48} width={48} className="inline" alt="Hoker" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3994, y: 2769 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -483,7 +701,7 @@ export const Journal: {
     img: () => (
       <img src={Flintbeetle} height={48} width={48} className="inline" alt="Flintbeetle" />
     ),
-    markers: [],
+    markers: Flintbeetles,
     isCounted: false,
     required: 3,
     act: 1,
@@ -493,7 +711,30 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Rhino',
     img: () => <img src={Rhinogrund} height={48} width={48} className="inline" alt="Rhinogrund" />,
-    markers: [],
+    markers: [
+      {
+        label:
+          'Going from the secret entrance below the ledge of the Bellway, you end up in a platforming section.',
+        location: { x: 3627, y: 2650 },
+      },
+      {
+        label: 'At the end of the Far Fields Bellway platforming, you can encounter a Rhinogrund.',
+        location: { x: 3729, y: 2477 },
+      },
+      {
+        label:
+          "Failing to defeat the Far Fields Rhinogrund will make it invade the Pilgrim's Rest.",
+        location: Locations.Mort,
+      },
+      {
+        label: 'One Rhinogrund can be found here.',
+        location: { x: 2851, y: 691 },
+      },
+      {
+        label: '||<3>A voided Rhinogrund will spawn here in Act III.||',
+        location: { x: 3219, y: 2663 },
+      },
+    ],
     isCounted: true,
     required: 2,
     act: 2,
@@ -503,7 +744,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Crypt Worm',
     img: () => <img src={Gromling} height={48} width={48} className="inline" alt="Gromling" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here in any Act.',
+        location: { x: 735, y: 2367 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -513,7 +759,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Worm',
     img: () => <img src={Grom} height={48} width={48} className="inline" alt="Grom" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here in any Act.',
+        location: { x: 735, y: 2367 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -523,7 +774,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Beast',
     img: () => <img src={Bell_Beast} height={48} width={48} className="inline" alt="Bell Beast" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1386, y: 2445 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 1,
@@ -541,7 +797,12 @@ export const Journal: {
         alt="Pilgrim Groveller"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3317, y: 2037 },
+      },
+    ],
     isCounted: true,
     required: 35,
     act: 1,
@@ -553,7 +814,12 @@ export const Journal: {
     img: () => (
       <img src={Pilgrim_Pouncer} height={48} width={48} className="inline" alt="Pilgrim Pouncer" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3123, y: 2042 },
+      },
+    ],
     isCounted: true,
     required: 35,
     act: 1,
@@ -565,7 +831,12 @@ export const Journal: {
     img: () => (
       <img src={Pilgrim_Hornfly} height={48} width={48} className="inline" alt="Pilgrim Hornfly" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 4288, y: 2779 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -577,7 +848,12 @@ export const Journal: {
     img: () => (
       <img src={Pilgrim_Hulk} height={48} width={48} className="inline" alt="Pilgrim Hulk" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 4288, y: 2779 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -595,7 +871,12 @@ export const Journal: {
         alt="Pilgrim Bellbearer"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3123, y: 2042 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -607,7 +888,12 @@ export const Journal: {
     img: () => (
       <img src={Winged_Pilgrim} height={48} width={48} className="inline" alt="Winged Pilgrim" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 489, y: 2660 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -619,7 +905,12 @@ export const Journal: {
     img: () => (
       <img src={Elder_Pilgrim} height={48} width={48} className="inline" alt="Elder Pilgrim" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 489, y: 2660 },
+      },
+    ],
     isCounted: true,
     required: 5,
     act: 1,
@@ -637,7 +928,12 @@ export const Journal: {
         alt="Winged Pilgrim Bellbearer"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1121, y: 2026 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -649,7 +945,12 @@ export const Journal: {
     img: () => (
       <img src={Pilgrim_Hiker} height={48} width={48} className="inline" alt="Pilgrim Hiker" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 973, y: 1712 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -661,7 +962,12 @@ export const Journal: {
     img: () => (
       <img src={Pilgrim_Guide} height={48} width={48} className="inline" alt="Pilgrim Guide" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3123, y: 2042 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -679,7 +985,12 @@ export const Journal: {
         alt="Overgrown Pilgrim"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1112, y: 2438 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -697,7 +1008,20 @@ export const Journal: {
         alt="Covetous Pilgrim"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here once.',
+        location: { x: 1306, y: 2111 },
+      },
+      {
+        label: 'Can be found here once.',
+        location: { x: 489, y: 2660 },
+      },
+      {
+        label: 'Can be found here once.',
+        location: { x: 3837, y: 1410 },
+      },
+    ],
     isCounted: true,
     required: 2,
     act: 1,
@@ -707,7 +1031,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Rosary Thief',
     img: () => <img src={Snitchfly} height={48} width={48} className="inline" alt="Snitchfly" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3973, y: 1555 },
+      },
+    ],
     isCounted: true,
     required: 4,
     act: 1,
@@ -717,7 +1046,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Tar Slug',
     img: () => <img src={Lavalug} height={48} width={48} className="inline" alt="Lavalug" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2585, y: 2805 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 1,
@@ -727,7 +1061,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Tar Slug Huge',
     img: () => <img src={Lavalarga} height={48} width={48} className="inline" alt="Lavalarga" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2743, y: 2978 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 2,
@@ -739,7 +1078,12 @@ export const Journal: {
     img: () => (
       <img src={Smelt_Shoveller} height={48} width={48} className="inline" alt="Smelt Shoveller" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2308, y: 2647 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -757,7 +1101,12 @@ export const Journal: {
         alt="Flintstone Flyer"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2587, y: 2779 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -775,7 +1124,12 @@ export const Journal: {
         alt="Flintflame Flyer"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3340, y: 2757 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -793,7 +1147,12 @@ export const Journal: {
         alt="Smokerock Sifter"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3017, y: 2769 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -803,7 +1162,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Dock Charger',
     img: () => <img src={Deep_Diver} height={48} width={48} className="inline" alt="Deep Diver" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3052, y: 2766 },
+      },
+    ],
     isCounted: true,
     required: 5,
     act: 1,
@@ -821,7 +1185,12 @@ export const Journal: {
         alt="Forebrothers Signis & Gron"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2760, y: 2896 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -831,7 +1200,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Small Crab',
     img: () => <img src={Cragglite} height={48} width={48} className="inline" alt="Cragglite" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here when you return after slaying the Craggler.',
+        location: { x: 805, y: 2456 },
+      },
+    ],
     isCounted: true,
     required: 3,
     act: 1,
@@ -841,7 +1215,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Roof Crab',
     img: () => <img src={Craggler} height={48} width={48} className="inline" alt="Craggler" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 805, y: 2456 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 1,
@@ -851,7 +1230,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Fields Flock Flyers',
     img: () => <img src={Brushflit} height={48} width={48} className="inline" alt="Brushflit" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3924, y: 2765 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -861,7 +1245,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Fields Goomba',
     img: () => <img src={Fertid} height={48} width={48} className="inline" alt="Fertid" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3221, y: 2664 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -873,7 +1262,12 @@ export const Journal: {
     img: () => (
       <img src={Flapping_Fertid} height={48} width={48} className="inline" alt="Flapping Fertid" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3221, y: 2664 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -885,7 +1279,12 @@ export const Journal: {
     img: () => (
       <img src={Fourth_Chorus} height={48} width={48} className="inline" alt="Fourth Chorus" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3636, y: 2757 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 1,
@@ -895,7 +1294,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Hunter Tiny',
     img: () => <img src={Skarrlid} height={48} width={48} className="inline" alt="Skarrlid" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2363, y: 2479 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -905,7 +1309,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Hunter Buzzer',
     img: () => <img src={Skarrwing} height={48} width={48} className="inline" alt="Skarrwing" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2363, y: 2479 },
+      },
+    ],
     isCounted: true,
     required: 30,
     act: 1,
@@ -917,7 +1326,12 @@ export const Journal: {
     img: () => (
       <img src={Skarr_Scout} height={48} width={48} className="inline" alt="Skarr Scout" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2465, y: 2426 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -929,7 +1343,12 @@ export const Journal: {
     img: () => (
       <img src={Skarr_Stalker} height={48} width={48} className="inline" alt="Skarr Stalker" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2465, y: 2426 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -941,7 +1360,16 @@ export const Journal: {
     img: () => (
       <img src={Spear_Skarr} height={48} width={48} className="inline" alt="Spear Skarr" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2704, y: 2420 },
+      },
+      {
+        label: 'Can be found here in Act III.',
+        location: { x: 2088, y: 2501 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -951,7 +1379,20 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Hunter Throw',
     img: () => <img src={Skarrgard} height={48} width={48} className="inline" alt="Skarrgard" />,
-    markers: [],
+    markers: [
+      {
+        label: 'One can be found here.',
+        location: { x: 2217, y: 2495 },
+      },
+      {
+        label: 'One can be found here.',
+        location: { x: 2941, y: 2275 },
+      },
+      {
+        label: 'One can be found when claiming the Vintage Nectar.',
+        location: Locations.HalfwayHome,
+      },
+    ],
     isCounted: true,
     required: 2,
     act: 1,
@@ -969,18 +1410,30 @@ export const Journal: {
         alt="Gurr the Outcast"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here after claiming his quest in Bellhart.',
+        location: { x: 4264, y: 2437 },
+      },
+    ],
     isCounted: true,
     required: 1,
-    act: 2,
+    act: 3,
   },
   {
     name: 'Last Claw',
     desc: 'TODO',
     gameId: 'Bone Hunter Chief',
     img: () => <img src={Last_Claw} height={48} width={48} className="inline" alt="Last Claw" />,
-    markers: [],
+    markers: [
+      {
+        label:
+          'Can be found here before the Karmelita fight. Defeating Karmelita will automatically grant this entry.',
+        location: { x: 4094, y: 2300 },
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Ant,
     required: 6,
     act: 3,
   },
@@ -997,7 +1450,12 @@ export const Journal: {
         alt="Skarrsinger Karmelita"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 4094, y: 2300 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -1007,7 +1465,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Mite',
     img: () => <img src={Mite} height={48} width={48} className="inline" alt="Mite" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2615, y: 2105 },
+      },
+    ],
     isCounted: true,
     required: 30,
     act: 1,
@@ -1019,7 +1482,12 @@ export const Journal: {
     img: () => (
       <img src={Fluttermite} height={48} width={48} className="inline" alt="Fluttermite" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2789, y: 2039 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -1029,7 +1497,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Gnat Giant',
     img: () => <img src={Mitemother} height={48} width={48} className="inline" alt="Mitemother" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2782, y: 2183 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -1041,7 +1514,12 @@ export const Journal: {
     img: () => (
       <img src={Dreg_Catcher} height={48} width={48} className="inline" alt="Dreg Catcher" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2773, y: 2101 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -1053,7 +1531,12 @@ export const Journal: {
     img: () => (
       <img src={Silk_Snipper} height={48} width={48} className="inline" alt="Silk Snipper" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2615, y: 2060 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -1065,7 +1548,12 @@ export const Journal: {
     img: () => (
       <img src={Thread_Raker} height={48} width={48} className="inline" alt="Thread Raker" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2615, y: 2060 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -1075,7 +1563,16 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Vampire Gnat',
     img: () => <img src={Moorwing} height={48} width={48} className="inline" alt="Moorwing" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2415, y: 2179 },
+      },
+      {
+        label: 'If displaced by the Caravan, the Moorwing can be found here instead.',
+        location: { x: 2715, y: 2101 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 1,
@@ -1085,9 +1582,15 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Wisp',
     img: () => <img src={Wisp} height={48} width={48} className="inline" alt="Wisp" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2298, y: 1798 },
+      },
+    ],
     isCounted: true,
     required: 15,
+    auto: AutoJournal.Wisp,
     act: 2,
   },
   {
@@ -1097,7 +1600,13 @@ export const Journal: {
     img: () => (
       <img src={Burning_Bug} height={48} width={48} className="inline" alt="Burning Bug" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2298, y: 1798 },
+      },
+    ],
+    auto: AutoJournal.Wisp,
     isCounted: true,
     required: 8,
     act: 2,
@@ -1115,7 +1624,12 @@ export const Journal: {
         alt="Father of the Flame"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2101, y: 1752 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -1125,7 +1639,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Crow',
     img: () => <img src={Craw} height={48} width={48} className="inline" alt="Craw" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3954, y: 2057 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -1135,7 +1654,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Crowman',
     img: () => <img src={Tallcraw} height={48} width={48} className="inline" alt="Tallcraw" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3954, y: 2057 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -1145,7 +1669,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Crowman Dagger',
     img: () => <img src={Squatcraw} height={48} width={48} className="inline" alt="Squatcraw" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3954, y: 2057 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -1155,7 +1684,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Crowman Juror Tiny',
     img: () => <img src={Craw_Juror} height={48} width={48} className="inline" alt="Craw Juror" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3954, y: 2057 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 3,
@@ -1167,7 +1701,12 @@ export const Journal: {
     img: () => (
       <img src={Tallcraw_Juror} height={48} width={48} className="inline" alt="Tallcraw Juror" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3954, y: 2057 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 3,
@@ -1179,7 +1718,12 @@ export const Journal: {
     img: () => (
       <img src={Squatcraw_Juror} height={48} width={48} className="inline" alt="Squatcraw Juror" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3954, y: 2057 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 3,
@@ -1189,7 +1733,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Crawfather',
     img: () => <img src={Crawfather} height={48} width={48} className="inline" alt="Crawfather" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here after receiving the Craw Summons.',
+        location: { x: 3954, y: 2057 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -1199,7 +1748,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Maggots',
     img: () => <img src={Muckmaggot} height={48} width={48} className="inline" alt="Muckmaggot" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here. Use a Tool like the Voltvessels on the water.',
+        location: { x: 3426, y: 1578 },
+      },
+    ],
     isCounted: true,
     required: 80,
     act: 1,
@@ -1209,7 +1763,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Dustroach Pollywog',
     img: () => <img src={Slubberlug} height={48} width={48} className="inline" alt="Slubberlug" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3986, y: 1284 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 2,
@@ -1219,7 +1778,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Dustroach',
     img: () => <img src={Muckroach} height={48} width={48} className="inline" alt="Muckroach" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3158, y: 1892 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -1229,7 +1793,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bloat Roach',
     img: () => <img src={Bloatroach} height={48} width={48} className="inline" alt="Bloatroach" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3725, y: 1383 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 2,
@@ -1241,7 +1810,12 @@ export const Journal: {
     img: () => (
       <img src={Roachcatcher} height={48} width={48} className="inline" alt="Roachcatcher" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3406, y: 1771 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -1253,7 +1827,12 @@ export const Journal: {
     img: () => (
       <img src={Roachfeeder} height={48} width={48} className="inline" alt="Roachfeeder" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3406, y: 1771 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -1265,7 +1844,12 @@ export const Journal: {
     img: () => (
       <img src={Roachkeeper} height={48} width={48} className="inline" alt="Roachkeeper" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3408, y: 1674 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -1277,7 +1861,12 @@ export const Journal: {
     img: () => (
       <img src={Roachserver} height={48} width={48} className="inline" alt="Roachserver" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3582, y: 1768 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 2,
@@ -1295,7 +1884,12 @@ export const Journal: {
         alt="Disgraced Chef Lugoli"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3582, y: 1768 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -1305,9 +1899,15 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Wraith',
     img: () => <img src={Wraith} height={48} width={48} className="inline" alt="Wraith" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3238, y: 1546 },
+      },
+    ],
     isCounted: true,
     required: 10,
+    auto: AutoJournal.Mist,
     act: 1,
   },
   {
@@ -1317,7 +1917,12 @@ export const Journal: {
     img: () => (
       <img src={Mothleaf_Lagnia} height={48} width={48} className="inline" alt="Mothleaf Lagnia" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3949, y: 1151 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 2,
@@ -1327,7 +1932,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Swamp Goomba',
     img: () => <img src={Miremite} height={48} width={48} className="inline" alt="Miremite" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3436, y: 1532 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -1339,7 +1949,12 @@ export const Journal: {
     img: () => (
       <img src={Swamp_Squit} height={48} width={48} className="inline" alt="Swamp Squit" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3436, y: 1532 },
+      },
+    ],
     isCounted: true,
     required: 30,
     act: 1,
@@ -1349,7 +1964,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Swamp Mosquito Skinny',
     img: () => <img src={Spit_Squit} height={48} width={48} className="inline" alt="Spit Squit" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3796, y: 745 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -1359,7 +1979,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Swamp Muckman',
     img: () => <img src={Stilkin} height={48} width={48} className="inline" alt="Stilkin" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 4202, y: 1060 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -1371,7 +1996,12 @@ export const Journal: {
     img: () => (
       <img src={Stilkin_Trapper} height={48} width={48} className="inline" alt="Stilkin Trapper" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here after defeating Groal the Great.',
+        location: { x: 4202, y: 1060 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 2,
@@ -1383,7 +2013,12 @@ export const Journal: {
     img: () => (
       <img src={Groal_the_Great} height={48} width={48} className="inline" alt="Groal the Great" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3869, y: 959 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -1393,7 +2028,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Swamp Barnacle',
     img: () => <img src={Barnak} height={48} width={48} className="inline" alt="Barnak" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3796, y: 745 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 2,
@@ -1403,7 +2043,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Swamp Ductsucker',
     img: () => <img src={Ductsucker} height={48} width={48} className="inline" alt="Ductsucker" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3970, y: 839 },
+      },
+    ],
     isCounted: true,
     required: 6,
     act: 2,
@@ -1415,7 +2060,12 @@ export const Journal: {
     img: () => (
       <img src={Pond_Skipper} height={48} width={48} className="inline" alt="Pond Skipper" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1855, y: 2186 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -1427,7 +2077,12 @@ export const Journal: {
     img: () => (
       <img src={Pondcatcher} height={48} width={48} className="inline" alt="Pondcatcher" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1855, y: 2186 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -1439,7 +2094,12 @@ export const Journal: {
     img: () => (
       <img src={Shellwood_Gnat} height={48} width={48} className="inline" alt="Shellwood Gnat" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1876, y: 2135 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -1449,7 +2109,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Shellwood Wasp',
     img: () => <img src={Wood_Wasp} height={48} width={48} className="inline" alt="Wood Wasp" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1876, y: 2135 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 1,
@@ -1459,7 +2124,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Stick Insect',
     img: () => <img src={Splinter} height={48} width={48} className="inline" alt="Splinter" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1667, y: 2140 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 1,
@@ -1471,7 +2141,12 @@ export const Journal: {
     img: () => (
       <img src={Splinterhorn} height={48} width={48} className="inline" alt="Splinterhorn" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1667, y: 2140 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -1483,7 +2158,12 @@ export const Journal: {
     img: () => (
       <img src={Splinterbark} height={48} width={48} className="inline" alt="Splinterbark" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1713, y: 1810 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -1495,7 +2175,12 @@ export const Journal: {
     img: () => (
       <img src={Sister_Splinter} height={48} width={48} className="inline" alt="Sister Splinter" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1695, y: 1910 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 1,
@@ -1505,7 +2190,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Flower Drifter',
     img: () => <img src={Phacia} height={48} width={48} className="inline" alt="Phacia" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1477, y: 2014 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -1515,7 +2205,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bloom Shooter',
     img: () => <img src={Pollenica} height={48} width={48} className="inline" alt="Pollenica" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1491, y: 2098 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -1525,7 +2220,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bloom Puncher',
     img: () => <img src={Gahlia} height={48} width={48} className="inline" alt="Gahlia" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1809, y: 1991 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -1543,7 +2243,12 @@ export const Journal: {
         alt="Shrine Guardian Seth"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1383, y: 1695 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -1553,7 +2258,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Flower Queen',
     img: () => <img src={Nyleth} height={48} width={48} className="inline" alt="Nyleth" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1222, y: 1695 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -1563,7 +2273,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bell Goomba',
     img: () => <img src={Furm} height={48} width={48} className="inline" alt="Furm" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2126, y: 1943 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -1575,7 +2290,12 @@ export const Journal: {
     img: () => (
       <img src={Winged_Furm} height={48} width={48} className="inline" alt="Winged Furm" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2126, y: 1943 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 1,
@@ -1585,7 +2305,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Blade Spider',
     img: () => <img src={Pharlid} height={48} width={48} className="inline" alt="Pharlid" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 993, y: 1792 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 1,
@@ -1597,7 +2322,12 @@ export const Journal: {
     img: () => (
       <img src={Pharlid_Diver} height={48} width={48} className="inline" alt="Pharlid Diver" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1588, y: 2816 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -1609,7 +2339,24 @@ export const Journal: {
     img: () => (
       <img src={Shardillard} height={48} width={48} className="inline" alt="Shardillard" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'One Shardillard can be found here, camouflaged as a Shell Fossil.',
+        location: { x: 1511, y: 2345 },
+      },
+      {
+        label: 'One Shardillard can be found here, camouflaged as a Shell Fossil.',
+        location: { x: 3759, y: 1898 },
+      },
+      {
+        label: 'One Shardillard can be found here, camouflaged as a Shell Fossil.',
+        location: { x: 1218, y: 1396 },
+      },
+      {
+        label: 'One Shardillard can be found here, camouflaged as a Shell Fossil.',
+        location: { x: 1851, y: 2436 },
+      },
+    ],
     isCounted: true,
     required: 3,
     act: 1,
@@ -1619,7 +2366,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Sand Centipede',
     img: () => <img src={Sandcarver} height={48} width={48} className="inline" alt="Sandcarver" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Use a Tool like the Pimpillo against the Sandcarvers in the ground.',
+        location: { x: 787, y: 1929 },
+      },
+    ],
     isCounted: true,
     required: 40,
     act: 1,
@@ -1629,7 +2381,13 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Judge Child',
     img: () => <img src={Squirrm} height={48} width={48} className="inline" alt="Squirrm" />,
-    markers: [],
+    markers: [
+      {
+        label:
+          'Can be found here, in the a secret room behind a breakable wall. Use the Needolin to lure them.',
+        location: { x: 878, y: 1566 },
+      },
+    ],
     isCounted: true,
     required: 4,
     act: 1,
@@ -1639,7 +2397,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Judge',
     img: () => <img src={Judge} height={48} width={48} className="inline" alt="Judge" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 741, y: 1904 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -1649,7 +2412,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Last Judge',
     img: () => <img src={Last_Judge} height={48} width={48} className="inline" alt="Last Judge" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1337, y: 1495 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 1,
@@ -1659,7 +2427,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Spike Goomba',
     img: () => <img src={Coral_Furm} height={48} width={48} className="inline" alt="Coral Furm" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 724, y: 1466 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 2,
@@ -1669,7 +2442,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Conch Shooter',
     img: () => <img src={Driznit} height={48} width={48} className="inline" alt="Driznit" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 981, y: 1779 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 1,
@@ -1679,7 +2457,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Conch Shooter Heavy',
     img: () => <img src={Driznarga} height={48} width={48} className="inline" alt="Driznarga" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2828, y: 595 },
+      },
+    ],
     isCounted: true,
     required: 14,
     act: 2,
@@ -1689,7 +2472,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Conch Stabber',
     img: () => <img src={Pokenabbin} height={48} width={48} className="inline" alt="Pokenabbin" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 803, y: 1401 },
+      },
+    ],
     isCounted: true,
     required: 16,
     act: 2,
@@ -1699,7 +2487,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Conch Driller',
     img: () => <img src={Conchfly} height={48} width={48} className="inline" alt="Conchfly" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1300, y: 1338 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 2,
@@ -1711,7 +2504,16 @@ export const Journal: {
     img: () => (
       <img src={Great_Conchfly} height={48} width={48} className="inline" alt="Great Conchfly" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Two can be fought here, but one will flee.',
+        location: { x: 743, y: 1751 },
+      },
+      {
+        label: 'The other will flee to here.',
+        location: { x: 501, y: 1200 },
+      },
+    ],
     isCounted: true,
     required: 2,
     act: 2,
@@ -1723,7 +2525,12 @@ export const Journal: {
     img: () => (
       <img src={Crustcrawler} height={48} width={48} className="inline" alt="Crustcrawler" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 3,
@@ -1733,7 +2540,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Goomba Large',
     img: () => <img src={Crustcrag} height={48} width={48} className="inline" alt="Crustcrag" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2828, y: 595 },
+      },
+    ],
     isCounted: true,
     required: 6,
     act: 2,
@@ -1743,8 +2555,14 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Swimmer Fat',
     img: () => <img src={Kai} height={48} width={48} className="inline" alt="Kai" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 10,
     act: 3,
   },
@@ -1755,8 +2573,14 @@ export const Journal: {
     img: () => (
       <img src={Spinebeak_Kai} height={48} width={48} className="inline" alt="Spinebeak Kai" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 10,
     act: 3,
   },
@@ -1767,8 +2591,14 @@ export const Journal: {
     img: () => (
       <img src={Steelspine_Kai} height={48} width={48} className="inline" alt="Steelspine Kai" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 15,
     act: 3,
   },
@@ -1777,8 +2607,14 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Swimmer Small',
     img: () => <img src={Yuma} height={48} width={48} className="inline" alt="Yuma" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 16,
     act: 3,
   },
@@ -1787,8 +2623,14 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Big Jellyfish',
     img: () => <img src={Yumama} height={48} width={48} className="inline" alt="Yumama" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 3,
     act: 3,
   },
@@ -1797,8 +2639,14 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Warrior',
     img: () => <img src={Karaka} height={48} width={48} className="inline" alt="Karaka" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 10,
     act: 3,
   },
@@ -1807,8 +2655,14 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Flyer',
     img: () => <img src={Kakri} height={48} width={48} className="inline" alt="Kakri" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 10,
     act: 3,
   },
@@ -1817,8 +2671,14 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Flyer Throw',
     img: () => <img src={Yago} height={48} width={48} className="inline" alt="Yago" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 12,
     act: 3,
   },
@@ -1827,8 +2687,14 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Brawler',
     img: () => <img src={Karak_Gor} height={48} width={48} className="inline" alt="Karak Gor" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 8,
     act: 3,
   },
@@ -1837,8 +2703,14 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Coral Hunter',
     img: () => <img src={Alita} height={48} width={48} className="inline" alt="Alita" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 6,
     act: 3,
   },
@@ -1855,8 +2727,14 @@ export const Journal: {
         alt="Corrcrust Karaka"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 6,
     act: 3,
   },
@@ -1873,8 +2751,14 @@ export const Journal: {
         alt="Crust King Khann"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: Locations.CoralTower,
+      },
+    ],
     isCounted: true,
+    auto: AutoJournal.Coral,
     required: 1,
     act: 3,
   },
@@ -1891,7 +2775,20 @@ export const Journal: {
         alt="Watcher at the Edge"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Trigger the coral platforms from this point.',
+        location: { x: 543, y: 1447 },
+      },
+      {
+        label: 'Silk Soar up from here.',
+        location: { x: 436, y: 1470 },
+      },
+      {
+        label: 'Defeat the Watcher at the Edge in the Sands of Karak.',
+        location: { x: 336, y: 1418 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -1901,7 +2798,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Zap Core Enemy',
     img: () => <img src={Voltvyrm} height={48} width={48} className="inline" alt="Voltvyrm" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 804, y: 1155 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -1911,7 +2813,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Citadel Bat',
     img: () => <img src={Drapefly} height={48} width={48} className="inline" alt="Drapefly" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3219, y: 730 },
+      },
+    ],
     isCounted: true,
     required: 30,
     act: 2,
@@ -1921,7 +2828,13 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Citadel Bat Large',
     img: () => <img src={Drapelord} height={48} width={48} className="inline" alt="Drapelord" />,
-    markers: [],
+    markers: [
+      {
+        label:
+          'Can be found here rarely. Exiting and re-entering the door outside causes the odds to be rolled again.',
+        location: { x: 3219, y: 730 },
+      },
+    ],
     isCounted: true,
     required: 4,
     act: 2,
@@ -1931,7 +2844,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Mite Heavy',
     img: () => <img src={Drapemite} height={48} width={48} className="inline" alt="Drapemite" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3342, y: 1048 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -1943,7 +2861,12 @@ export const Journal: {
     img: () => (
       <img src={Giant_Drapemite} height={48} width={48} className="inline" alt="Giant Drapemite" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3342, y: 1048 },
+      },
+    ],
     isCounted: true,
     required: 6,
     act: 2,
@@ -1955,7 +2878,12 @@ export const Journal: {
     img: () => (
       <img src={Underworker} height={48} width={48} className="inline" alt="Underworker" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1882, y: 1656 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 2,
@@ -1965,7 +2893,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Pilgrim 03 Understore',
     img: () => <img src={Underscrub} height={48} width={48} className="inline" alt="Underscrub" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2207, y: 1579 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -1975,7 +2908,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Pilgrim Staff Understore',
     img: () => <img src={Undersweep} height={48} width={48} className="inline" alt="Undersweep" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1926, y: 1446 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 2,
@@ -1985,7 +2923,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Understore Poker',
     img: () => <img src={Underpoke} height={48} width={48} className="inline" alt="Underpoke" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1882, y: 1656 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 2,
@@ -1995,7 +2938,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Understore Thrower',
     img: () => <img src={Underloft} height={48} width={48} className="inline" alt="Underloft" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1882, y: 1656 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 2,
@@ -2005,7 +2953,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Understore Heavy',
     img: () => <img src={Undercrank} height={48} width={48} className="inline" alt="Undercrank" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1965, y: 1461 },
+      },
+    ],
     isCounted: true,
     required: 4,
     act: 2,
@@ -2015,7 +2968,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Pilgrim 01',
     img: () => <img src={Envoy} height={48} width={48} className="inline" alt="Envoy" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2274, y: 1147 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -2027,7 +2985,12 @@ export const Journal: {
     img: () => (
       <img src={Choir_Pouncer} height={48} width={48} className="inline" alt="Choir Pouncer" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2776, y: 1075 },
+      },
+    ],
     isCounted: true,
     required: 30,
     act: 2,
@@ -2039,7 +3002,12 @@ export const Journal: {
     img: () => (
       <img src={Choir_Hornhead} height={48} width={48} className="inline" alt="Choir Hornhead" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2200, y: 998 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 2,
@@ -2057,7 +3025,12 @@ export const Journal: {
         alt="Choir Bellbearer"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2596, y: 1078 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 2,
@@ -2069,7 +3042,12 @@ export const Journal: {
     img: () => (
       <img src={Choir_Flyer} height={48} width={48} className="inline" alt="Choir Flyer" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2270, y: 912 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -2081,7 +3059,12 @@ export const Journal: {
     img: () => (
       <img src={Choir_Elder} height={48} width={48} className="inline" alt="Choir Elder" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2758, y: 1065 },
+      },
+    ],
     isCounted: true,
     required: 6,
     act: 2,
@@ -2091,7 +3074,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Pilgrim 03',
     img: () => <img src={Choristor} height={48} width={48} className="inline" alt="Choristor" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2772, y: 1169 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 2,
@@ -2101,7 +3089,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Reed',
     img: () => <img src={Reed} height={48} width={48} className="inline" alt="Reed" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2774, y: 1126 },
+      },
+    ],
     isCounted: true,
     required: 30,
     act: 2,
@@ -2111,7 +3104,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Reed Grand',
     img: () => <img src={Grand_Reed} height={48} width={48} className="inline" alt="Grand Reed" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2824, y: 782 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 2,
@@ -2123,7 +3121,12 @@ export const Journal: {
     img: () => (
       <img src={Choir_Clapper} height={48} width={48} className="inline" alt="Choir Clapper" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2170, y: 740 },
+      },
+    ],
     isCounted: true,
     required: 3,
     act: 2,
@@ -2133,9 +3136,16 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Handmaiden',
     img: () => <img src={Clawmaiden} height={48} width={48} className="inline" alt="Clawmaiden" />,
-    markers: [],
+    markers: [
+      {
+        label:
+          "The Clawmaidens stop spawning everywhere after destroying the main thread, which is located in this room. Hit the cart until it's right below the small trickle of water falling from the ceiling, then double jump up.Inside, repeat the same to reach the main thread.",
+        location: { x: 2287, y: 702 },
+      },
+    ],
     isCounted: true,
     required: 10,
+    auto: AutoJournal.Puppet,
     act: 2,
   },
   {
@@ -2143,7 +3153,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Arborium Keeper',
     img: () => <img src={Memoria} height={48} width={48} className="inline" alt="Memoria" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2998, y: 552 },
+      },
+    ],
     isCounted: true,
     required: 2,
     act: 2,
@@ -2153,7 +3168,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Administrator',
     img: () => <img src={Minister} height={48} width={48} className="inline" alt="Minister" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2150, y: 552 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 2,
@@ -2163,7 +3183,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Pilgrim Maestro',
     img: () => <img src={Maestro} height={48} width={48} className="inline" alt="Maestro" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2026, y: 646 },
+      },
+    ],
     isCounted: true,
     required: 6,
     act: 2,
@@ -2175,29 +3200,41 @@ export const Journal: {
     img: () => (
       <img src={Second_Sentinel} height={48} width={48} className="inline" alt="Second Sentinel" />
     ),
-    markers: [],
+    markers: SecondSentinel,
     isCounted: true,
     required: 1,
     act: 2,
   },
   {
     name: 'Dreg Husk',
-    desc: 'TODO',
+    desc: 'See the Unravelled for more details.',
     gameId: 'Song Threaded Husk',
     img: () => <img src={Dreg_Husk} height={48} width={48} className="inline" alt="Dreg Husk" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2157, y: 1351 },
+      },
+    ],
     isCounted: true,
     required: 8,
+    auto: AutoJournal.Thread,
     act: 2,
   },
   {
     name: 'Dregwheel',
-    desc: 'TODO',
+    desc: 'See the Unravelled for more details.',
     gameId: 'Song Threaded Husk Spin',
     img: () => <img src={Dregwheel} height={48} width={48} className="inline" alt="Dregwheel" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2157, y: 1351 },
+      },
+    ],
     isCounted: true,
     required: 8,
+    auto: AutoJournal.Thread,
     act: 2,
   },
   {
@@ -2205,7 +3242,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Pilgrim 02',
     img: () => <img src={Surgeon} height={48} width={48} className="inline" alt="Surgeon" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here while rescuing Sherma during the Balm of the Wounded.',
+        location: { x: 2668, y: 1213 },
+      },
+    ],
     isCounted: true,
     required: 3,
     act: 2,
@@ -2215,7 +3257,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Creeper',
     img: () => <img src={Mortician} height={48} width={48} className="inline" alt="Mortician" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2645, y: 1275 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 2,
@@ -2227,7 +3274,7 @@ export const Journal: {
     img: () => (
       <img src={The_Unravelled} height={48} width={48} className="inline" alt="The Unravelled" />
     ),
-    markers: [],
+    markers: Unravelled,
     isCounted: true,
     required: 1,
     act: 2,
@@ -2245,7 +3292,12 @@ export const Journal: {
         alt="Cogwork Underfly"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2501, y: 1587 },
+      },
+    ],
     isCounted: true,
     required: 25,
     act: 2,
@@ -2257,7 +3309,12 @@ export const Journal: {
     img: () => (
       <img src={Cogwork_Hauler} height={48} width={48} className="inline" alt="Cogwork Hauler" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2501, y: 1587 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 2,
@@ -2269,7 +3326,12 @@ export const Journal: {
     img: () => (
       <img src={Cogwork_Crawler} height={48} width={48} className="inline" alt="Cogwork Crawler" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2508, y: 864 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 2,
@@ -2279,7 +3341,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Automaton Fly',
     img: () => <img src={Cogworker} height={48} width={48} className="inline" alt="Cogworker" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2647, y: 887 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 2,
@@ -2291,7 +3358,12 @@ export const Journal: {
     img: () => (
       <img src={Cogwork_Spine} height={48} width={48} className="inline" alt="Cogwork Spine" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2455, y: 905 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 2,
@@ -2309,7 +3381,12 @@ export const Journal: {
         alt="Cogwork Choirbug"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2508, y: 864 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -2327,7 +3404,12 @@ export const Journal: {
         alt="Cogwork Cleanser"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2508, y: 984 },
+      },
+    ],
     isCounted: true,
     required: 12,
     act: 2,
@@ -2345,7 +3427,12 @@ export const Journal: {
         alt="Cogwork Defender"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2647, y: 887 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 2,
@@ -2357,7 +3444,16 @@ export const Journal: {
     img: () => (
       <img src={Cogwork_Clapper} height={48} width={48} className="inline" alt="Cogwork Clapper" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2634, y: 1014 },
+      },
+      {
+        label: 'In Act III, they can be found here.',
+        location: { x: 2634, y: 975 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -2369,7 +3465,12 @@ export const Journal: {
     img: () => (
       <img src={Cogwork_Dancers} height={48} width={48} className="inline" alt="Cogwork Dancers" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2535, y: 795 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -2379,7 +3480,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Song Scholar Acolyte',
     img: () => <img src={Vaultborn} height={48} width={48} className="inline" alt="Vaultborn" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here in Act II by awakening the Vaultborn in this room.',
+        location: { x: 2918, y: 1036 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -2389,7 +3495,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Lightbearer',
     img: () => <img src={Lampbearer} height={48} width={48} className="inline" alt="Lampbearer" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3030, y: 998 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -2401,7 +3512,12 @@ export const Journal: {
     img: () => (
       <img src={Scrollreader} height={48} width={48} className="inline" alt="Scrollreader" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3030, y: 998 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 2,
@@ -2413,7 +3529,12 @@ export const Journal: {
     img: () => (
       <img src={Vaultkeeper} height={48} width={48} className="inline" alt="Vaultkeeper" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 3154, y: 973 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 2,
@@ -2423,7 +3544,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Trobbio',
     img: () => <img src={Trobbio} height={48} width={48} className="inline" alt="Trobbio" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2914, y: 1105 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -2441,7 +3567,12 @@ export const Journal: {
         alt="Tormented Trobbio"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2914, y: 1105 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -2451,7 +3582,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Slab Prisoner Leaper New',
     img: () => <img src={Penitent} height={48} width={48} className="inline" alt="Penitent" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1272, y: 1043 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 1,
@@ -2463,7 +3599,12 @@ export const Journal: {
     img: () => (
       <img src={Puny_Penitent} height={48} width={48} className="inline" alt="Puny Penitent" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1192, y: 843 },
+      },
+    ],
     isCounted: true,
     required: 6,
     act: 1,
@@ -2473,7 +3614,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Slab Fly Small Fresh',
     img: () => <img src={Freshfly} height={48} width={48} className="inline" alt="Freshfly" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here during the Broodmother fight.',
+        location: { x: 1223, y: 782 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -2483,7 +3629,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Slab Fly Small',
     img: () => <img src={Scabfly} height={48} width={48} className="inline" alt="Scabfly" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1272, y: 1043 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 1,
@@ -2493,7 +3644,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Slab Fly Mid',
     img: () => <img src={Guardfly} height={48} width={48} className="inline" alt="Guardfly" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1224, y: 989 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 1,
@@ -2503,7 +3659,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Slab Fly Large',
     img: () => <img src={Wardenfly} height={48} width={48} className="inline" alt="Wardenfly" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1350, y: 675 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 1,
@@ -2515,7 +3676,12 @@ export const Journal: {
     img: () => (
       <img src={Broodmother} height={48} width={48} className="inline" alt="Broodmother" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be fought here after claiming the Wailing Mother quest in Songclave.',
+        location: { x: 1223, y: 782 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -2525,7 +3691,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Peaks Drifter',
     img: () => <img src={Driftlin} height={48} width={48} className="inline" alt="Driftlin" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1089, y: 983 },
+      },
+    ],
     isCounted: true,
     required: 20,
     act: 2,
@@ -2535,7 +3706,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Crystal Drifter',
     img: () => <img src={Mnemonid} height={48} width={48} className="inline" alt="Mnemonid" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 894, y: 1050 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 2,
@@ -2545,7 +3721,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Crystal Drifter Giant',
     img: () => <img src={Mnemonord} height={48} width={48} className="inline" alt="Mnemonord" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can only be found in the Brightvein .',
+        location: { x: 887, y: 719 },
+      },
+    ],
     isCounted: true,
     required: 3,
     act: 3,
@@ -2557,7 +3738,12 @@ export const Journal: {
     img: () => (
       <img src={Servitor_Ignim} height={48} width={48} className="inline" alt="Servitor Ignim" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 1326, y: 2838 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 1,
@@ -2569,7 +3755,12 @@ export const Journal: {
     img: () => (
       <img src={Servitor_Boran} height={48} width={48} className="inline" alt="Servitor Boran" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 758, y: 942 },
+      },
+    ],
     isCounted: true,
     required: 5,
     act: 2,
@@ -2581,7 +3772,12 @@ export const Journal: {
     img: () => (
       <img src={Winged_Lifeseed} height={48} width={48} className="inline" alt="Winged Lifeseed" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here after obtaining the Plasmium Phial.',
+        location: { x: 487, y: 2528 },
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 1,
@@ -2591,7 +3787,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Worm BlueBlood',
     img: () => <img src={Plasmid} height={48} width={48} className="inline" alt="Plasmid" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 480, y: 2479 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 3,
@@ -2601,7 +3802,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Bone Worm BlueTurret',
     img: () => <img src={Plasmidas} height={48} width={48} className="inline" alt="Plasmidas" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 480, y: 2479 },
+      },
+    ],
     isCounted: true,
     required: 6,
     act: 3,
@@ -2619,7 +3825,12 @@ export const Journal: {
         alt="Plasmified Zango"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 296, y: 2511 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -2631,9 +3842,15 @@ export const Journal: {
     img: () => (
       <img src={Leaf_Glider} height={48} width={48} className="inline" alt="Leaf Glider" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4408, y: 2037 },
+      },
+    ],
     isCounted: true,
     required: 12,
+    auto: AutoJournal.Clover,
     act: 3,
   },
   {
@@ -2643,9 +3860,15 @@ export const Journal: {
     img: () => (
       <img src={Leaf_Roller} height={48} width={48} className="inline" alt="Leaf Roller" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4703, y: 1963 },
+      },
+    ],
     isCounted: true,
     required: 10,
+    auto: AutoJournal.Clover,
     act: 3,
   },
   {
@@ -2653,9 +3876,15 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Hornet Dragonfly',
     img: () => <img src={Pendra} height={48} width={48} className="inline" alt="Pendra" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4703, y: 1963 },
+      },
+    ],
     isCounted: true,
     required: 10,
+    auto: AutoJournal.Clover,
     act: 3,
   },
   {
@@ -2663,9 +3892,15 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Dragonfly Large',
     img: () => <img src={Pendragor} height={48} width={48} className="inline" alt="Pendragor" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4910, y: 1940 },
+      },
+    ],
     isCounted: true,
     required: 10,
+    auto: AutoJournal.Clover,
     act: 3,
   },
   {
@@ -2673,9 +3908,15 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Lilypad Trap',
     img: () => <img src={Nuphar} height={48} width={48} className="inline" alt="Nuphar" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4502, y: 1906 },
+      },
+    ],
     isCounted: true,
     required: 6,
+    auto: AutoJournal.Clover,
     act: 3,
   },
   {
@@ -2683,9 +3924,15 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Cloverstag',
     img: () => <img src={Cloverstag} height={48} width={48} className="inline" alt="Cloverstag" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4200, y: 1877 },
+      },
+    ],
     isCounted: true,
     required: 10,
+    auto: AutoJournal.Clover,
     act: 3,
   },
   {
@@ -2693,7 +3940,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Cloverstag White',
     img: () => <img src={Palestag} height={48} width={48} className="inline" alt="Palestag" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4421, y: 1814 },
+      },
+    ],
     isCounted: false,
     missable: (saveData, obtained) => {
       if (obtained) return true;
@@ -2708,9 +3960,15 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Grasshopper Child',
     img: () => <img src={Kindanir} height={48} width={48} className="inline" alt="Kindanir" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4477, y: 1869 },
+      },
+    ],
     isCounted: true,
     required: 10,
+    auto: AutoJournal.Clover,
     act: 3,
   },
   {
@@ -2718,9 +3976,15 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Grasshopper Slasher',
     img: () => <img src={Verdanir} height={48} width={48} className="inline" alt="Verdanir" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4118, y: 1951 },
+      },
+    ],
     isCounted: true,
     required: 10,
+    auto: AutoJournal.Clover,
     act: 3,
   },
   {
@@ -2728,9 +3992,15 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Grasshopper Fly',
     img: () => <img src={Escalion} height={48} width={48} className="inline" alt="Escalion" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4118, y: 1951 },
+      },
+    ],
     isCounted: true,
     required: 10,
+    auto: AutoJournal.Clover,
     act: 3,
   },
   {
@@ -2740,7 +4010,12 @@ export const Journal: {
     img: () => (
       <img src={Clover_Dancers} height={48} width={48} className="inline" alt="Clover Dancers" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found only in Lost Verdania.',
+        location: { x: 4548, y: 1814 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -2752,7 +4027,12 @@ export const Journal: {
     img: () => (
       <img src={Shadow_Creeper} height={48} width={48} className="inline" alt="Shadow Creeper" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2914, y: 3292 },
+      },
+    ],
     isCounted: true,
     required: 16,
     act: 3,
@@ -2764,7 +4044,12 @@ export const Journal: {
     img: () => (
       <img src={Shadow_Charger} height={48} width={48} className="inline" alt="Shadow Charger" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2115, y: 3523 },
+      },
+    ],
     isCounted: true,
     required: 6,
     act: 3,
@@ -2774,7 +4059,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Gloomfly',
     img: () => <img src={Gloomsac} height={48} width={48} className="inline" alt="Gloomsac" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2473, y: 3317 },
+      },
+    ],
     isCounted: true,
     required: 15,
     act: 3,
@@ -2786,7 +4076,12 @@ export const Journal: {
     img: () => (
       <img src={Gargant_Gloom} height={48} width={48} className="inline" alt="Gargant Gloom" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2473, y: 3317 },
+      },
+    ],
     isCounted: true,
     required: 4,
     act: 3,
@@ -2798,7 +4093,12 @@ export const Journal: {
     img: () => (
       <img src={Void_Tendrils} height={48} width={48} className="inline" alt="Void Tendrils" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2774, y: 3426 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -2808,7 +4108,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Black Thread Core',
     img: () => <img src={Void_Mass} height={48} width={48} className="inline" alt="Void Mass" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        // TODO
+      },
+    ],
     isCounted: true,
     required: 8,
     act: 3,
@@ -2826,17 +4131,27 @@ export const Journal: {
         alt="Summoned Saviour"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        // TODO
+      },
+    ],
     isCounted: 'steel',
     required: 1,
     act: 3,
   },
   {
     name: 'Wingmould',
-    desc: 'TODO',
+    desc: 'Can only be found in the Red Memory.',
     gameId: 'White Palace Fly',
     img: () => <img src={Wingmould} height={48} width={48} className="inline" alt="Wingmould" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Trigger the Red Memory in the Ruined Chapel.',
+        location: Locations.RuinedChapel,
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 3,
@@ -2846,7 +4161,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Centipede Trap',
     img: () => <img src={Garpid} height={48} width={48} className="inline" alt="Garpid" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found en route to the Surface.',
+        location: { x: 2526, y: 4 },
+      },
+    ],
     isCounted: true,
     required: 30,
     act: 3,
@@ -2856,7 +4176,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Spike Lazy Flyer',
     img: () => <img src={Imoba} height={48} width={48} className="inline" alt="Imoba" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found en route to the Surface.',
+        location: { x: 2526, y: 4 },
+      },
+    ],
     isCounted: true,
     required: 4,
     act: 3,
@@ -2866,14 +4191,19 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Surface Scuttler',
     img: () => <img src={Skrill} height={48} width={48} className="inline" alt="Skrill" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found on the Surface.',
+        location: { x: 2526, y: 4 },
+      },
+    ],
     isCounted: true,
     required: 10,
     act: 3,
   },
   {
     name: 'Bell Eater',
-    desc: 'TODO',
+    desc: 'Can be fought at any Bellway in Act III.',
     gameId: 'Giant Centipede',
     img: () => <img src={Bell_Eater} height={48} width={48} className="inline" alt="Bell Eater" />,
     markers: [],
@@ -2886,7 +4216,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Giant Flea',
     img: () => <img src={Huge_Flea} height={48} width={48} className="inline" alt="Huge Flea" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be freed here.',
+        location: { x: 2822, y: 493 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -2896,7 +4231,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Shakra',
     img: () => <img src={Shakra} height={48} width={48} className="inline" alt="Shakra" />,
-    markers: [],
+    markers: [
+      {
+        label: "Can be fought here after completing the Trail's End wish in Act II.",
+        location: { x: 2404, y: 2181 },
+      },
+    ],
     isCounted: false,
     missable: (saveData, obtained) => {
       if (obtained) return true;
@@ -2913,7 +4253,12 @@ export const Journal: {
     img: () => (
       <img src={Garmond_Zaza} height={48} width={48} className="inline" alt="Garmond & Zaza" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be fought here under specific circumstances.',
+        location: { x: 3352, y: 878 },
+      },
+    ],
     isCounted: false,
     missable: (saveData, obtained) => {
       if (obtained) return true;
@@ -2930,7 +4275,12 @@ export const Journal: {
     img: () => (
       <img src={Lost_Garmond} height={48} width={48} className="inline" alt="Lost Garmond" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 549, y: 1646 },
+      },
+    ],
     isCounted: false,
     required: 1,
     act: 3,
@@ -2940,7 +4290,16 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Pinstress Boss',
     img: () => <img src={Pinstress} height={48} width={48} className="inline" alt="Pinstress" />,
-    markers: [],
+    markers: [
+      {
+        label: "Find Pinstress's note in the Blasted Steps.",
+        location: { x: 403, y: 1727 },
+      },
+      {
+        label: 'Received after defeating the Pinstress.',
+        location: { x: 1048, y: 607 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 3,
@@ -2950,7 +4309,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Spinner Boss',
     img: () => <img src={Widow} height={48} width={48} className="inline" alt="Widow" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2149, y: 2066 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 1,
@@ -2962,7 +4326,20 @@ export const Journal: {
     img: () => (
       <img src={First_Sinner} height={48} width={48} className="inline" alt="First Sinner" />
     ),
-    markers: [],
+    markers: [
+      {
+        label: "Pick up the Apostate's Key in the Putrified Ducts.",
+        location: Locations.ApostateKey,
+      },
+      {
+        label: 'Double jump off the chest to a secret passage in the ceiling.',
+        location: { x: 1398, y: 1097 },
+      },
+      {
+        label: 'Defeat the First Sinner.',
+        location: { x: 1475, y: 1131 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -2972,7 +4349,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Phantom',
     img: () => <img src={Phantom} height={48} width={48} className="inline" alt="Phantom" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be fought here.',
+        location: { x: 3236, y: 1549 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 1,
@@ -2982,7 +4364,16 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Lace',
     img: () => <img src={Lace} height={48} width={48} className="inline" alt="Lace" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be fought here once.',
+        location: { x: 2764, y: 2668 },
+      },
+      {
+        label: 'Can be fought here again.',
+        location: { x: 2530, y: 328 },
+      },
+    ],
     isCounted: true,
     required: 2,
     act: 2,
@@ -3000,7 +4391,12 @@ export const Journal: {
         alt="Grand Mother Silk"
       />
     ),
-    markers: [],
+    markers: [
+      {
+        label: 'Can be found here.',
+        location: { x: 2525, y: 44 },
+      },
+    ],
     isCounted: true,
     required: 1,
     act: 2,
@@ -3010,7 +4406,12 @@ export const Journal: {
     desc: 'TODO',
     gameId: 'Lost Lace',
     img: () => <img src={Lost_Lace} height={48} width={48} className="inline" alt="Lost Lace" />,
-    markers: [],
+    markers: [
+      {
+        label: 'Can be fought here at the end of the game.',
+        location: { x: 2511, y: 3523 },
+      },
+    ],
     isCounted: false,
     required: 1,
     act: 3,

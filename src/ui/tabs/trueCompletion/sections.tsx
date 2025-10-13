@@ -124,11 +124,7 @@ export const getSections = (
                     check={entry.has}
                     hint={locket.desc}
                     data={saveData}
-                    markers={
-                      typeof locket.markers === 'function'
-                        ? locket.markers(saveData)
-                        : locket.markers
-                    }
+                    markers={locket.markers}
                     icon={() => (
                       <img
                         src={MemoryLocket}

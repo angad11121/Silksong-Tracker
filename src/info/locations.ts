@@ -7,6 +7,7 @@ export const Locations = {
   ApostateKey: { x: 3509, y: 837 },
   Bellhart: { x: 2160, y: 2174 },
   BoneBottom: { x: 1134, y: 2646 },
+  CoralTower: { x: 360, y: 1192 },
   ForgeDaughter: { x: 2797, y: 2733 },
   Greyroot: { x: 1591, y: 2100 },
   Grindle: { x: 722, y: 1532 },

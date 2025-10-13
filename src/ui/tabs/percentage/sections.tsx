@@ -5,6 +5,7 @@ import {
   NeedleUpgrades,
   SpoolFragments,
   ToolType,
+  Unravelled,
 } from '@/info';
 import { getScene, getQuest } from '@/parser/metadata';
 import { Locations } from '@/info';
@@ -130,16 +131,7 @@ export const getSections = (
                     check={entry.has}
                     hint={entry.subtext}
                     data={saveData}
-                    markers={[
-                      {
-                        label: "Acquire the Surgeon's Key.",
-                        location: { x: 2624, y: 1214 },
-                      },
-                      {
-                        label: 'Defeat the Unravelled.',
-                        location: { x: 2156, y: 1355 },
-                      },
-                    ]}
+                    markers={Unravelled}
                     icon={LeafRendererType.SilkHeart}
                   />
                 ),
@@ -181,11 +173,7 @@ export const getSections = (
                   }
                   check={upgrade.check}
                   hint={upgrade.desc}
-                  markers={
-                    typeof upgrade.markers === 'function'
-                      ? upgrade.markers(saveData)
-                      : upgrade.markers
-                  }
+                  markers={upgrade.markers}
                   data={saveData}
                   icon={level.img}
                 />

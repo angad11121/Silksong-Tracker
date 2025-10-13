@@ -323,7 +323,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
               markers={[
                 {
                   label: 'Defeat Crust King Khann.',
-                  location: { x: 360, y: 1192 },
+                  location: Locations.CoralTower,
                 },
               ]}
             />

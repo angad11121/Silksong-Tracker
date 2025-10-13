@@ -140,7 +140,7 @@ function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
         icon={tool.img}
         check={entry.has}
         hint={tool.desc}
-        markers={typeof tool.markers === 'function' ? tool.markers(saveData) : tool.markers}
+        markers={tool.markers}
       />
     ),
   };
