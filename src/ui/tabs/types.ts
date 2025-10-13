@@ -4,6 +4,9 @@ import type { SaveData } from '@/parser/types';
 export enum CustomHas {
   ToolUpgrade = 'Upgraded',
   MissingUpgrade = 'Can be upgraded',
+
+  Missed = 'Missed',
+  CanMiss = 'Can Miss',
 }
 
 export type LeafSection = {

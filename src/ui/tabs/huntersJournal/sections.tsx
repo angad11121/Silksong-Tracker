@@ -1,9 +1,9 @@
 import { Journal } from '@/info';
+import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
+import { missingFirstSortComparator } from '@/ui/tabs/utils';
+import { markSpoilers } from '@/ui/tabs/SpoilerRenderer';
 import type { LeafSection, Section } from '@/ui/tabs/types';
-import { LeafRenderer } from '../LeafRenderer';
-import type { HuntersJournalSectionCtx } from './types';
-import { missingFirstSortComparator } from '../utils';
-import { markSpoilers } from '../SpoilerRenderer';
+import type { HuntersJournalSectionCtx } from '@/ui/tabs/huntersJournal/types';
 
 export const getSections = (
   showMissingFirst: boolean,
@@ -16,10 +16,14 @@ export const getSections = (
     gridCols: 3,
     children: saveData =>
       Journal.filter(journalEntry => journalEntry.missable).map<LeafSection>(journalEntry => {
+        const obtained =
+          (saveData.playerData.EnemyJournalKillData.list.find(
+            entry => entry.Name === journalEntry.gameId,
+          )?.Record.Kills ?? 0) >= journalEntry.required;
         return {
           title: markSpoilers(journalEntry.name, journalEntry.act),
           subtext: journalEntry.desc,
-          has: () => journalEntry.missable!(saveData),
+          has: () => journalEntry.missable!(saveData, obtained),
           render: ({ entry }) => (
             <LeafRenderer
               id={null}

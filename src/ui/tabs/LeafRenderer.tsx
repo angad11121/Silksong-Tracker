@@ -4,7 +4,7 @@ import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
 import { Tooltip } from '@/ui/components/Tooltip';
 import { useSectionLayout } from '@/ui/tabs/SectionRenderer';
 import type { SaveData } from '@/parser/types';
-import type { CustomHas, Section } from '@/ui/tabs/types';
+import { CustomHas, type Section } from '@/ui/tabs/types';
 
 import MaskShard from '@/assets/mask_shard.png';
 import SpoolFragment from '@/assets/spool_fragment.png';
@@ -94,7 +94,9 @@ export function LeafRenderer({
               ? hasAcquired
                 ? 'text-green-500'
                 : 'text-red-500'
-              : 'text-yellow-500'
+              : hasAcquired === CustomHas.Missed
+                ? 'text-red-500'
+                : 'text-yellow-500'
           }
         >
           {typeof hasAcquired === 'boolean' || typeof hasAcquired === 'undefined'

@@ -1,3 +1,4 @@
+import { CustomHas } from '@/ui/tabs/types';
 import type { ReactElement } from 'react';
 import type { MapLocation } from '@/ui/components/map/types';
 import type { SaveData } from '@/parser/types';
@@ -9,7 +10,7 @@ export const Journal: {
   img: () => ReactElement;
   markers: MapLocation[];
   isCounted: boolean | 'steel';
-  missable?: (saveData: SaveData) => boolean;
+  missable?: (saveData: SaveData, obtained: boolean) => CustomHas | true;
   required: number;
   act: 1 | 2 | 3;
 }[] = [
@@ -2110,7 +2111,11 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: false,
-    missable: () => true,
+    missable: (saveData, obtained) => {
+      if (obtained) return true;
+      if (saveData.playerData.defeatedCloverDancers) return CustomHas.Missed;
+      return CustomHas.CanMiss;
+    },
     required: 1,
     act: 3,
   },
@@ -2291,7 +2296,11 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: false,
-    missable: () => true,
+    missable: (saveData, obtained) => {
+      if (obtained) return true;
+      if (saveData.playerData.act3_wokeUp) return CustomHas.Missed;
+      return CustomHas.CanMiss;
+    },
     required: 1,
     act: 2,
   },
@@ -2302,7 +2311,11 @@ export const Journal: {
     img: () => <>TODO</>,
     markers: [],
     isCounted: false,
-    missable: () => true,
+    missable: (saveData, obtained) => {
+      if (obtained) return true;
+      // TODO
+      return CustomHas.CanMiss;
+    },
     required: 1,
     act: 2,
   },
