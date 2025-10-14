@@ -1,18 +1,12 @@
+/* Shoutouts to Josh W Comeau for the lovely glass */
+
 header {
-  --thickness: 8px;
+  --thickness: 0px; /* We'll see whether to remove this entirely later */
   position: sticky;
   top: 0;
-  /*
-      Very opaque, for unsupported browsers.
-      Overwritten in the feature queries below.
-    */
   background: hsl(0, 16.9%, 4.2% / 0.95);
 }
 
-/*
-    This code gets applied for folks using
-    browsers that support backdrop-filter.
-  */
 @supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
   header {
     background: hsla(0, 16.9%, 4.2% / 0.5);
@@ -21,12 +15,8 @@ header {
   .backdrop {
     position: absolute;
     inset: 0;
-    /*
-        These prefixed properties are usually
-        added automatically by tooling:
-      */
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     background: linear-gradient(to bottom, hsl(0, 16.9%, 4.2%), transparent 50%);
     pointer-events: none;
   }
