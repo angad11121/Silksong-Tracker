@@ -5,10 +5,10 @@ import {
   NeedleUpgrades,
   SpoolFragments,
   ToolType,
-  Tools,
-} from '@/info/index';
-import { hasTool, getScene, getQuest } from '@/parser/metadata';
-import { Locations } from '@/info/locations';
+  Unravelled,
+} from '@/info';
+import { getScene, getQuest } from '@/parser/metadata';
+import { Locations } from '@/info';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
 import {
@@ -41,7 +41,7 @@ export const getSections = (
             subtext: fragment.hint,
             has: fragment.check,
             render: () => (
-              <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Mask} />
+              <LeafRenderer {...fragment} data={saveData} icon={LeafRendererType.Mask} />
             ),
           })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
@@ -60,7 +60,7 @@ export const getSections = (
             subtext: fragment.hint,
             has: fragment.check,
             render: () => (
-              <LeafRenderer {...fragment} data={saveData} type={LeafRendererType.Spool} />
+              <LeafRenderer {...fragment} data={saveData} icon={LeafRendererType.Spool} />
             ),
           })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
@@ -92,7 +92,7 @@ export const getSections = (
                         location: { x: 1363, y: 2441 },
                       },
                     ]}
-                    type={LeafRendererType.SilkHeart}
+                    icon={LeafRendererType.SilkHeart}
                   />
                 ),
               },
@@ -114,7 +114,7 @@ export const getSections = (
                         location: { x: 2526, y: 328 },
                       },
                     ]}
-                    type={LeafRendererType.SilkHeart}
+                    icon={LeafRendererType.SilkHeart}
                   />
                 ),
               },
@@ -131,17 +131,8 @@ export const getSections = (
                     check={entry.has}
                     hint={entry.subtext}
                     data={saveData}
-                    markers={[
-                      {
-                        label: "Acquire the Surgeon's Key.",
-                        location: { x: 2624, y: 1214 },
-                      },
-                      {
-                        label: 'Defeat the Unravelled.',
-                        location: { x: 2156, y: 1355 },
-                      },
-                    ]}
-                    type={LeafRendererType.SilkHeart}
+                    markers={Unravelled}
+                    icon={LeafRendererType.SilkHeart}
                   />
                 ),
               },
@@ -182,13 +173,9 @@ export const getSections = (
                   }
                   check={upgrade.check}
                   hint={upgrade.desc}
-                  markers={
-                    typeof upgrade.markers === 'function'
-                      ? upgrade.markers(saveData)
-                      : upgrade.markers
-                  }
+                  markers={upgrade.markers}
                   data={saveData}
-                  type={level.type as string as LeafRendererType}
+                  icon={level.img}
                 />
               ),
             };
@@ -204,40 +191,33 @@ export const getSections = (
         subtext: 'All Ancestral Arts are required for 100% completion.',
         layout: 'grid',
         children: saveData =>
-          [
-            LeafRendererType.SwiftStep,
-            LeafRendererType.ClingGrip,
-            LeafRendererType.Needolin,
-            LeafRendererType.Clawline,
-            LeafRendererType.SilkSoar,
-            LeafRendererType.Sylphsong,
-          ]
+          Object.values(AncestralArts)
+            .filter(art => art.percentage > 0)
             .map<Section<PercentageSectionCtx>>(art => {
-              const data = AncestralArts[art]!;
               return {
-                title: data.name,
+                title: art.name,
                 subtext: null,
-                act: data.act,
+                act: art.act,
                 children: [
                   {
-                    title: data.name,
-                    subtext: data.desc,
-                    has: () => computePercentage(data.has, saveData) === data.percentage,
+                    title: art.name,
+                    subtext: art.desc,
+                    has: () => computePercentage(art.has, saveData) === art.percentage,
                     render: ({ entry }) => (
                       <LeafRenderer
                         id={null}
                         check={entry.has}
-                        hint={data.desc}
+                        hint={art.desc}
                         data={saveData}
-                        markers={data.markers}
-                        type={art}
+                        markers={art.markers}
+                        icon={art.img}
                       />
                     ),
                   },
                 ],
                 ctx: {
-                  maxPercentage: data.percentage,
-                  getPercentage: saveData => computePercentage(data.has, saveData),
+                  maxPercentage: art.percentage,
+                  getPercentage: saveData => computePercentage(art.has, saveData),
                 },
               };
             })
@@ -278,7 +258,7 @@ export const getSections = (
                         hint={crest.hint}
                         data={saveData}
                         markers={crest.markers}
-                        type={crest.img!}
+                        icon={crest.img!}
                       />
                     ),
                   },
@@ -337,7 +317,7 @@ export const getSections = (
                     location: Locations.Pinstress,
                   },
                 ]}
-                type={LeafRendererType.NeedleStrike}
+                icon={LeafRendererType.NeedleStrike}
               />
             ),
           },
@@ -368,7 +348,7 @@ export const getSections = (
                     location: Locations.RuinedChapel,
                   },
                 ]}
-                type={LeafRendererType.Everbloom}
+                icon={LeafRendererType.Everbloom}
               />
             ),
           },
@@ -472,7 +452,7 @@ export const getSections = (
                             location: Locations.ForgeDaughter,
                           },
                         ]}
-                        type={LeafRendererType.CraftingKit}
+                        icon={LeafRendererType.CraftingKit}
                       />
                     ),
                   },
@@ -495,7 +475,7 @@ export const getSections = (
                             location: Locations.HalfwayHome,
                           },
                         ]}
-                        type={LeafRendererType.CraftingKit}
+                        icon={LeafRendererType.CraftingKit}
                       />
                     ),
                   },
@@ -516,7 +496,7 @@ export const getSections = (
                             location: Locations.TwelfthArchitect,
                           },
                         ]}
-                        type={LeafRendererType.CraftingKit}
+                        icon={LeafRendererType.CraftingKit}
                       />
                     ),
                   },
@@ -537,7 +517,7 @@ export const getSections = (
                             location: Locations.Grindle,
                           },
                         ]}
-                        type={LeafRendererType.CraftingKit}
+                        icon={LeafRendererType.CraftingKit}
                       />
                     ),
                   },
@@ -578,7 +558,7 @@ export const getSections = (
                             location: { x: 2106, y: 2539 },
                           },
                         ]}
-                        type={LeafRendererType.ToolPouch}
+                        icon={LeafRendererType.ToolPouch}
                       />
                     ),
                   },
@@ -598,7 +578,7 @@ export const getSections = (
                             location: Locations.Mort,
                           },
                         ]}
-                        type={LeafRendererType.ToolPouch}
+                        icon={LeafRendererType.ToolPouch}
                       />
                     ),
                   },
@@ -618,7 +598,7 @@ export const getSections = (
                             location: Locations.HalfwayHome,
                           },
                         ]}
-                        type={LeafRendererType.ToolPouch}
+                        icon={LeafRendererType.ToolPouch}
                       />
                     ),
                   },
@@ -642,7 +622,7 @@ export const getSections = (
                             location: Locations.Fleatopia,
                           },
                         ]}
-                        type={LeafRendererType.ToolPouch}
+                        icon={LeafRendererType.ToolPouch}
                       />
                     ),
                   },

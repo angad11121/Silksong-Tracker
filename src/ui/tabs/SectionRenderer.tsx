@@ -71,10 +71,18 @@ export function SectionRenderer<ExtraCtx = null>({
   getSectionDisplayProps?: (
     section: Section<ExtraCtx>,
     parent: Section<ExtraCtx> | null,
+    data: SaveData,
   ) => Partial<SectionDisplayProps<ExtraCtx>>;
 }): ReactElement {
   return (
-    <div className={parent?.layout === 'grid' ? 'grid grid-cols-2 gap-4 mt-4' : ''}>
+    <div
+      className={parent?.layout === 'grid' ? 'grid gap-4 mt-4' : ''}
+      style={
+        parent?.layout === 'grid'
+          ? { gridTemplateColumns: `repeat(${parent?.gridCols ?? 2}, 1fr)` }
+          : undefined
+      }
+    >
       {sections.map(section => (
         <Fragment key={section.title}>
           {'render' in section ? (
@@ -84,7 +92,7 @@ export function SectionRenderer<ExtraCtx = null>({
               section={section}
               depth={depth}
               parent={parent}
-              {...getSectionDisplayProps(section, parent)}
+              {...getSectionDisplayProps(section, parent, data)}
             >
               <SectionRenderer
                 data={data}

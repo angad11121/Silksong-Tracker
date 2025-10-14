@@ -2,6 +2,12 @@ import { getScene } from '@/parser/metadata';
 import { Locations } from '@/info/locations';
 import type { SaveData } from '@/parser/types';
 import type { MapLocation } from '@/ui/components/map/types';
+import type { ReactElement } from 'react';
+
+import Needle_1 from '@/assets/needle/1.png';
+import Needle_2 from '@/assets/needle/2.png';
+import Needle_3 from '@/assets/needle/3.png';
+import Needle_4 from '@/assets/needle/4.png';
 
 export enum NeedleLevel {
   Sharpened = 'needle_1',
@@ -11,7 +17,7 @@ export enum NeedleLevel {
 }
 
 export const NeedleUpgrades: {
-  levels: { id: number; name: string; desc: string; type: NeedleLevel }[];
+  levels: { id: number; name: string; desc: string; type: NeedleLevel; img: () => ReactElement }[];
   options: {
     desc: string;
     act: 1 | 2 | 3;
@@ -25,24 +31,56 @@ export const NeedleUpgrades: {
       name: 'Sharpened Needle',
       type: NeedleLevel.Sharpened,
       desc: 'The Needle can be sharpened once for free by talking to Pinmaster Plinney in Bellhart.',
+      img: () => (
+        <img
+          src={Needle_1}
+          width={16}
+          alt="Sharpened Needle"
+          className="inline -rotate-90 mx-12.5 -my-12"
+        />
+      ),
     },
     {
       id: 2,
       name: 'Shining Needle',
       type: NeedleLevel.Shining,
       desc: 'The Needle can be sharpened again by Pinmaster Plinney in Bellhart for one Pale Oil.',
+      img: () => (
+        <img
+          src={Needle_2}
+          width={16}
+          alt="Shining Needle"
+          className="inline -rotate-90 mx-12.5 -my-12"
+        />
+      ),
     },
     {
       id: 3,
       name: 'Hivesteel Needle',
       type: NeedleLevel.Hivesteel,
       desc: 'The Needle can be sharpened again by Pinmaster Plinney in Bellhart for one Pale Oil and 450 rosaries.',
+      img: () => (
+        <img
+          src={Needle_3}
+          width={16}
+          alt="Hivesteel Needle"
+          className="inline -rotate-90 mx-12.5 -my-12"
+        />
+      ),
     },
     {
       id: 4,
       name: 'Pale Steel Needle',
       type: NeedleLevel.PaleSteel,
       desc: 'The Needle can be sharpened again by Pinmaster Plinney in Bellhart for one Pale Oil and 680 rosaries.',
+      img: () => (
+        <img
+          src={Needle_4}
+          width={16}
+          alt="Pale Steel Needle"
+          className="inline -rotate-90 mx-12.5 -my-12"
+        />
+      ),
     },
   ],
   options: [

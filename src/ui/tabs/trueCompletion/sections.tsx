@@ -1,9 +1,9 @@
-import { Crests } from '@/info';
-import { MemoryLockets } from '@/info/lockets';
-import { Mementos } from '@/info/mementos';
-import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
+import { Crests, MemoryLockets, Mementos } from '@/info';
+import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 import { mapPercentageSectionToTrueCompletion, missingFirstSortComparator } from '@/ui/tabs/utils';
 import { getSections as getPercentageSectionGenerator } from '@/ui/tabs/percentage/sections';
+
+import MemoryLocket from '@/assets/memory_locket.png';
 
 import type { PercentageSectionCtx } from '@/ui/tabs/percentage/types';
 import type { LeafSection, Section } from '@/ui/tabs/types';
@@ -92,7 +92,7 @@ export const getSections = (
                               hint={crest.hint}
                               data={saveData}
                               markers={crest.markers}
-                              type={crest.img!}
+                              icon={crest.img!}
                             />
                           );
                         },
@@ -124,12 +124,16 @@ export const getSections = (
                     check={entry.has}
                     hint={locket.desc}
                     data={saveData}
-                    markers={
-                      typeof locket.markers === 'function'
-                        ? locket.markers(saveData)
-                        : locket.markers
-                    }
-                    type={LeafRendererType.MemoryLocket}
+                    markers={locket.markers}
+                    icon={() => (
+                      <img
+                        src={MemoryLocket}
+                        height={48}
+                        width={48}
+                        alt="Memory Locket"
+                        className="inline"
+                      />
+                    )}
                   />
                 ),
               })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),

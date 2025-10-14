@@ -1,6 +1,7 @@
-import type { ReactElement } from 'react';
 import { Locations } from '@/info/locations';
 import { Items } from '@/info/items';
+import { SecondSentinel } from '@/info/journal';
+import type { ReactElement } from 'react';
 import type { MapLocation } from '@/ui/components/map';
 import type { SaveData } from '@/parser/types';
 
@@ -251,7 +252,7 @@ export const Tools: Record<
     markers: [
       {
         label: 'Collected in the Coral Tower.',
-        location: { x: 360, y: 1192 },
+        location: Locations.CoralTower,
       },
     ],
   },
@@ -720,40 +721,7 @@ export const Tools: Record<
     type: 1,
     isCounted: true,
     desc: 'Reward for defeating the ||<2>Second Sentinel in the High Halls||.',
-    markers: [
-      {
-        label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
-        location: { x: 1918, y: 898 },
-      },
-      {
-        label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
-        location: { x: 3070, y: 1122 },
-      },
-      {
-        label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
-        location: { x: 3050, y: 690 },
-      },
-      {
-        label: 'Revive the Second Sentinel.',
-        location: { x: 2462, y: 848 },
-      },
-      {
-        label: 'Encounter the Second Sentinel.',
-        location: { x: 2527, y: 1077 },
-      },
-      {
-        label: 'Encounter the Second Sentinel.',
-        location: { x: 2859, y: 789 },
-      },
-      {
-        label: "Accept the Second Sentinel's challenge.",
-        location: Locations.Songclave,
-      },
-      {
-        label: 'Defeat the Second Sentinel.',
-        location: { x: 2421, y: 703 },
-      },
-    ],
+    markers: SecondSentinel,
   },
   'Revenge Crystal': {
     id: 'Revenge Crystal',

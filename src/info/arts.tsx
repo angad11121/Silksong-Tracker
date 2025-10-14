@@ -1,7 +1,14 @@
-import { getQuest, getScene } from '@/parser/metadata';
+import type { ReactElement } from 'react';
 import { Locations } from '@/info/locations';
 import type { PlayerData, SaveData } from '@/parser/types';
 import type { MapLocation } from '@/ui/components/map/types';
+
+import SwiftStep from '@/assets/arts/swift_step.png';
+import ClingGrip from '@/assets/arts/cling_grip.png';
+import Needolin from '@/assets/arts/needolin.png';
+import Clawline from '@/assets/arts/clawline.png';
+import SilkSoar from '@/assets/arts/silk_soar.png';
+import Sylphsong from '@/assets/arts/sylphsong.png';
 
 export const AncestralArts: Record<
   string,
@@ -10,6 +17,7 @@ export const AncestralArts: Record<
     desc: string;
     act: 1 | 2 | 3;
     percentage: number;
+    img: () => ReactElement;
     has: keyof PlayerData | ((saveData: SaveData) => number);
     markers: MapLocation[];
   }
@@ -20,6 +28,7 @@ export const AncestralArts: Record<
     act: 1,
     has: 'HasSeenDash',
     percentage: 1,
+    img: () => <img src={SwiftStep} height={72} width={72} alt="Swift Step" className="inline" />,
     markers: [
       {
         label: 'Bind the Swift Step here.',
@@ -33,6 +42,7 @@ export const AncestralArts: Record<
     act: 1,
     has: () => 0,
     percentage: 0,
+    img: () => <>TODO</>,
     markers: [
       {
         label: 'Complete the Flexile Spines quest given by the Seamstress.',
@@ -46,6 +56,7 @@ export const AncestralArts: Record<
     act: 1,
     has: 'HasSeenWalljump',
     percentage: 1,
+    img: () => <img src={ClingGrip} height={72} width={72} alt="Cling Grip" className="inline" />,
     markers: [
       {
         label: 'Bind the Cling Grip here.',
@@ -59,6 +70,7 @@ export const AncestralArts: Record<
     act: 1,
     has: 'HasSeenNeedolin',
     percentage: 1,
+    img: () => <img src={Needolin} height={72} width={72} alt="Needolin" className="inline" />,
     markers: [
       {
         label: 'Bind the Needolin here after defeating Widow.',
@@ -72,6 +84,7 @@ export const AncestralArts: Record<
     act: 2,
     has: 'HasSeenHarpoon',
     percentage: 1,
+    img: () => <img src={Clawline} height={72} width={72} alt="Clawline" className="inline" />,
     markers: [
       {
         label: 'Bind the Clawline here.',
@@ -85,6 +98,7 @@ export const AncestralArts: Record<
     act: 2,
     has: () => 0,
     percentage: 0,
+    img: () => <>TODO</>,
     markers: [
       {
         label: 'Bind the Faydown Cloak here.',
@@ -98,6 +112,7 @@ export const AncestralArts: Record<
     act: 3,
     has: 'HasSeenSuperJump',
     percentage: 1,
+    img: () => <img src={SilkSoar} height={72} width={72} alt="Silk Soar" className="inline" />,
     markers: [
       {
         label: 'Bind the Silk Soar here.',
@@ -111,6 +126,7 @@ export const AncestralArts: Record<
     act: 3,
     has: 'HasSeenEvaHeal',
     percentage: 1,
+    img: () => <img src={Sylphsong} height={72} width={72} alt="Sylphsong" className="inline" />,
     markers: [
       {
         label: 'Bind Eva here.',
@@ -124,6 +140,7 @@ export const AncestralArts: Record<
     act: 3,
     has: () => 0,
     percentage: 0,
+    img: () => <>TODO</>,
     markers: [],
   },
   elegy_of_the_deep: {
@@ -132,6 +149,7 @@ export const AncestralArts: Record<
     act: 3,
     has: () => 0,
     percentage: 0,
+    img: () => <>TODO</>,
     markers: [
       {
         label: 'Talk to the Snail Shamans after returning from the Abyss.',

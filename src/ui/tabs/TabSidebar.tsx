@@ -2,15 +2,15 @@ import { useMemo, type ReactElement } from 'react';
 import { useTabState } from '@/ui/tabs/TabStateProvider';
 import { useSaveData } from '@/ui/hooks/useSaveData';
 import { TabType } from '@/ui/tabs/constants';
-import type { SaveData } from '@/parser/types';
-import type { SidebarItem, Section, LeafSection } from '@/ui/tabs/types';
 import { DEV_MODE_KEY } from '@/ui/components/map/constants';
 import { generateSectionId } from '@/ui/tabs/utils';
 import { getSections as getPercentageSections } from '@/ui/tabs/percentage/sections';
 import { getSections as getTrueCompletionSections } from '@/ui/tabs/trueCompletion/sections';
+import { getSections as getHuntersJournalSections } from '@/ui/tabs/huntersJournal/sections';
 import { useSettings } from '@/ui/components/Settings';
-import { useSpoilerLevel } from '@/ui/tabs/SpoilerRenderer';
-import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
+import { useSpoilerLevel, SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
+import type { SaveData } from '@/parser/types';
+import type { SidebarItem, Section, LeafSection } from '@/ui/tabs/types';
 
 // Extract sidebar items from section structure
 function extractSidebarItems<T>(
@@ -76,6 +76,15 @@ function getHeaders(
   if (tab === TabType.TrueCompletionData) {
     const sections = getTrueCompletionSections(showMissingFirst, spoilerLevel);
     return extractSidebarItems(sections, saveData, 0, 2);
+  }
+
+  if (tab === TabType.HuntersJournalData) {
+    const sections = getHuntersJournalSections(
+      showMissingFirst,
+      spoilerLevel,
+      saveData.playerData.permadeathMode > 0,
+    );
+    return extractSidebarItems(sections, saveData, 0, 1);
   }
 
   return [];

@@ -6003,7 +6003,7 @@ export const Angad1: AugmentedSaveData = {
     },
   },
 };
-
+  
 export const PartMan1: AugmentedSaveData = {
   name: 'PartMan1',
   playerData: {

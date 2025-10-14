@@ -1,38 +1,8 @@
 import { getQuest, getScene, type MetadataKey } from '@/parser/metadata';
 import { Locations } from '@/info/locations';
+import { Flintbeetles } from '@/info/journal';
 import type { SaveData } from '@/parser/types';
 import type { MapLocation } from '@/ui/components/map';
-
-const Flintbeetles: { key: MetadataKey; getMarker: (saveData: SaveData) => MapLocation[] }[] = [
-  {
-    key: 'rockRollerDefeated_bone01',
-    getMarker: () => [
-      {
-        label: 'Defeat the Flintbeetle and collect the Flintgem.',
-        location: { x: 1304, y: 2598 },
-      },
-    ],
-  },
-  {
-    key: 'rockRollerDefeated_bone06',
-    getMarker: () => [
-      {
-        label: 'Defeat the Flintbeetle and collect the Flintgem.',
-        location: { x: 1610, y: 2316 },
-      },
-    ],
-  },
-  // TODO: This location is different depending on playerData.bone03_openedTrapdoorForRockRoller
-  {
-    key: 'rockRollerDefeated_bone07',
-    getMarker: () => [
-      {
-        label: 'Defeat the Flintbeetle and collect the Flintgem.',
-        location: { x: 2024, y: 2451 },
-      },
-    ],
-  },
-];
 
 export const MemoryLockets: {
   id: number;
@@ -46,19 +16,7 @@ export const MemoryLockets: {
     desc: 'Complete the Volatile Flintbeetles quest in Bone Bottom.',
     act: 1,
     has: saveData => getQuest('Rock Rollers', saveData)?.Data.IsCompleted ?? false,
-    markers: saveData => [
-      {
-        label: 'Promise the Volatile Flintbeetles wish.',
-        location: Locations.BoneBottom,
-      },
-      ...Flintbeetles.filter(beetle => !saveData.playerData[beetle.key]).flatMap(beetle =>
-        beetle.getMarker(saveData),
-      ),
-      {
-        label: 'Turn over the Flintgems to receive a Memory Locket.',
-        location: Locations.BoneBottom,
-      },
-    ],
+    markers: Flintbeetles,
   },
   {
     id: 2,

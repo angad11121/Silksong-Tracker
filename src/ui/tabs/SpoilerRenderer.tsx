@@ -1,10 +1,13 @@
 import { useState, type ReactElement } from 'react';
 import { Tooltip } from '@/ui/components/Tooltip';
 import { useSettings } from '@/ui/components/Settings';
-import type { SaveData } from '@/parser/types';
 import { useSaveData } from '@/ui/hooks/useSaveData';
 
 const SPOILER_REGEX = /(\|\|)<(\d+)>(.*?)\|\|/g;
+
+export function markSpoilers(content: string, act: 1 | 2 | 3): string {
+  return `||<${act}>${content}||`;
+}
 
 export function stripSpoilers(content: string): string {
   return content.replace(SPOILER_REGEX, '$3');
@@ -16,8 +19,8 @@ export function useSpoilerLevel(): number {
 
   if (!saveData) return 0;
 
-  if (spoilers === 'all') return 3;
-  if (spoilers === 'none') return 0;
+  if (spoilers === 'all') return 1;
+  if (spoilers === 'none') return 3;
 
   if (!saveData.playerData.act2Started) return 1;
   if (!saveData.playerData.act3_wokeUp) return 2;
