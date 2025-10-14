@@ -6,7 +6,6 @@ import { DEV_MODE_KEY } from '@/ui/components/map/constants';
 import { generateSectionId } from '@/ui/tabs/utils';
 import { getSections as getPercentageSections } from '@/ui/tabs/percentage/sections';
 import { getSections as getTrueCompletionSections } from '@/ui/tabs/trueCompletion/sections';
-import { getSections as getHuntersJournalSections } from '@/ui/tabs/huntersJournal/sections';
 import { useSettings } from '@/ui/components/Settings';
 import { useSpoilerLevel, SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
 import type { SaveData } from '@/parser/types';
