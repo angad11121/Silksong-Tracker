@@ -24,11 +24,12 @@ export function HuntersJournalDisplay(): ReactElement {
       <p className="text-center">
         <LeafRenderer
           id={null}
+          parents={[]}
           icon={() => (
             <img
               src={HuntersJournal}
-              height={60}
-              width={60}
+              height={108}
+              width={108}
               alt="Hunter's Journal"
               className="inline"
             />

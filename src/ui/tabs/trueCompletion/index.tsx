@@ -11,7 +11,7 @@ import type { TrueCompletionSectionCtx } from '@/ui/tabs/trueCompletion/types';
 
 export function getSectionDisplayProps(
   section: Section<TrueCompletionSectionCtx>,
-  parent: Section<TrueCompletionSectionCtx> | null,
+  parents: Section<TrueCompletionSectionCtx>[],
   data: SaveData,
   journalMode: boolean = false,
 ) {
@@ -31,7 +31,7 @@ export function getSectionDisplayProps(
         <>
           {' '}
           (
-          {!parent ? (
+          {parents.length === 0 ? (
             <>
               <strong>{Math.floor((currentCount / maxCount) * 100)}%</strong> - {currentCount} of{' '}
               {maxCount} {journalMode ? 'required ' : ''}entries
