@@ -359,7 +359,7 @@ export const Journal: {
 }[] = [
   {
     name: 'Mossgrub',
-    desc: "If you don't know where to find this, you have issues. It's in Moss Grotto.",
+    desc: 'A fur-covered crawler with a series of sharp spikes along its back.',
     gameId: 'MossBone Crawler',
     img: () => <img src={Mossgrub} height={48} width={48} className="inline" alt="Mossgrub" />,
     markers: [
@@ -374,7 +374,7 @@ export const Journal: {
   },
   {
     name: 'Massive Mossgrub',
-    desc: 'TODO',
+    desc: "An unnaturally overgrown Mossgrub, bred within the Citadel's Memorium.",
     gameId: 'MossBone Crawler Fat',
     img: () => (
       <img
@@ -397,7 +397,7 @@ export const Journal: {
   },
   {
     name: 'Mossmir',
-    desc: 'TODO',
+    desc: 'A small, fluttering creature capable of defending itself with its small stinger.',
     gameId: 'MossBone Fly',
     img: () => <img src={Mossmir} height={48} width={48} className="inline" alt="Mossmir" />,
     markers: [
@@ -412,7 +412,7 @@ export const Journal: {
   },
   {
     name: 'Moss Mother',
-    desc: 'TODO',
+    desc: 'An adult Mossmir with a fully developed stinger and hardened hide.',
     gameId: 'Mossbone Mother',
     img: () => (
       <img src={Moss_Mother} height={48} width={48} className="inline" alt="Moss Mother" />
@@ -433,7 +433,7 @@ export const Journal: {
   },
   {
     name: 'Aknid',
-    desc: 'TODO',
+    desc: 'A winged insect that feeds upon moss and lichen in the caves above Bone Bottom.',
     gameId: 'Aspid Collector',
     img: () => <img src={Aknid} height={48} width={48} className="inline" alt="Aknid" />,
     markers: [
@@ -448,7 +448,7 @@ export const Journal: {
   },
   {
     name: 'Skull Scuttler',
-    desc: 'TODO',
+    desc: 'A small, soft bug that uses the hard skulls of the Marrow for protection and disguise.',
     gameId: 'Bone Goomba',
     img: () => (
       <img src={Skull_Scuttler} height={48} width={48} className="inline" alt="Skull Scuttler" />
@@ -465,7 +465,7 @@ export const Journal: {
   },
   {
     name: 'Skullwing',
-    desc: 'TODO',
+    desc: "An airborne relative of the grounded Skull Scuttler, found only in the Marrow's deepest, hottest caves.",
     gameId: 'Bone Goomba Bounce Fly',
     img: () => <img src={Skullwing} height={48} width={48} className="inline" alt="Skullwing" />,
     markers: [
@@ -480,7 +480,7 @@ export const Journal: {
   },
   {
     name: 'Skull Brute',
-    desc: 'TODO',
+    desc: 'A soft bug hidden beneath a large, horned skull. It charges at intruders to protect its territory and its smaller companions.',
     gameId: 'Bone Goomba Large',
     img: () => (
       <img src={Skull_Brute} height={48} width={48} className="inline" alt="Skull Brute" />
@@ -497,7 +497,7 @@ export const Journal: {
   },
   {
     name: 'Skull Tyrant',
-    desc: 'TODO',
+    desc: "A rare, enormous Skull Scuttler, and the Marrow's largest predator.",
     gameId: 'Skull King',
     img: () => (
       <img src={Skull_Tyrant} height={48} width={48} className="inline" alt="Skull Tyrant" />
@@ -519,7 +519,7 @@ export const Journal: {
   },
   {
     name: 'Kilik',
-    desc: 'TODO',
+    desc: 'A small, boney bug that favors dark tunnels. It can expand its spiked carapace to ward against attacking predators.',
     gameId: 'Bone Crawler',
     img: () => <img src={Kilik} height={48} width={48} className="inline" alt="Kilik" />,
     markers: [
@@ -534,7 +534,7 @@ export const Journal: {
   },
   {
     name: 'Beastfly',
-    desc: 'TODO',
+    desc: 'An aggressive fly found in the lowlands of Pharloom, known for ramming prey with its hardbone mask.',
     gameId: 'Bone Flyer',
     img: () => <img src={Beastfly} height={48} width={48} className="inline" alt="Beastfly" />,
     markers: [
@@ -549,7 +549,7 @@ export const Journal: {
   },
   {
     name: 'Savage Beastfly',
-    desc: 'TODO',
+    desc: 'An angered, adult Beastfly with a weighty body and a thickened hardshell mask.',
     gameId: 'Bone Flyer Giant',
     img: () => (
       <img src={Savage_Beastfly} height={48} width={48} className="inline" alt="Savage Beastfly" />
@@ -570,7 +570,7 @@ export const Journal: {
   },
   {
     name: 'Caranid',
-    desc: 'TODO',
+    desc: 'Common winged bugs found in the lowlands.',
     gameId: 'Bone Circler',
     img: () => <img src={Caranid} height={48} width={48} className="inline" alt="Caranid" />,
     markers: [
@@ -585,7 +585,7 @@ export const Journal: {
   },
   {
     name: 'Vicious Caranid',
-    desc: 'TODO',
+    desc: 'An aggressive, winged bug native to the lowlands. When angered, it rapidly whips its bladed tail as a weapon.',
     gameId: 'Bone Circler Vicious',
     img: () => (
       <img src={Vicious_Caranid} height={48} width={48} className="inline" alt="Vicious Caranid" />
@@ -602,7 +602,7 @@ export const Journal: {
   },
   {
     name: 'Hardbone Hopper',
-    desc: 'TODO',
+    desc: 'A grazing creature with sharp senses that nimbly retreats from danger.',
     gameId: 'Bone Hopper',
     img: () => (
       <img src={Hardbone_Hopper} height={48} width={48} className="inline" alt="Hardbone Hopper" />
@@ -619,7 +619,7 @@ export const Journal: {
   },
   {
     name: 'Hardbone Elder',
-    desc: 'TODO',
+    desc: 'A tall creature with sharp senses, the Hardbone Elder defends its herd with powerful legs and a sharp-tipped mask.',
     gameId: 'Bone Hopper Giant',
     img: () => (
       <img src={Hardbone_Elder} height={48} width={48} className="inline" alt="Hardbone Elder" />
@@ -636,7 +636,7 @@ export const Journal: {
   },
   {
     name: 'Tarmite',
-    desc: 'TODO',
+    desc: 'A flying bone mite found near magma. It roasts its prey by spitting scorching tar.',
     gameId: 'Bone Spitter',
     img: () => <img src={Tarmite} height={48} width={48} className="inline" alt="Tarmite" />,
     markers: [
@@ -651,7 +651,7 @@ export const Journal: {
   },
   {
     name: 'Mawling',
-    desc: 'TODO',
+    desc: 'A young, boney bug that can curl its body to form a ball. Their rough, ridged shell grips tight to any surface, allowing them to traverse walls and roofs with ease.',
     gameId: 'Bone Roller',
     img: () => <img src={Mawling} height={48} width={48} className="inline" alt="Mawling" />,
     markers: [
@@ -666,7 +666,7 @@ export const Journal: {
   },
   {
     name: 'Marrowmaw',
-    desc: 'TODO',
+    desc: 'A giant roller found in the lowlands. Its ridged hide is capable of crushing smaller creatures beneath its immense bulk.',
     gameId: 'Bone Thumper',
     img: () => <img src={Marrowmaw} height={48} width={48} className="inline" alt="Marrowmaw" />,
     markers: [
@@ -681,7 +681,7 @@ export const Journal: {
   },
   {
     name: 'Hoker',
-    desc: 'TODO',
+    desc: 'Spine-shooting drifter of the lowlands.',
     gameId: 'Spine Floater',
     img: () => <img src={Hoker} height={48} width={48} className="inline" alt="Hoker" />,
     markers: [
@@ -696,7 +696,7 @@ export const Journal: {
   },
   {
     name: 'Flintbeetle',
-    desc: 'TODO',
+    desc: 'A rarely seen beetle that spends most of its life nestled deep in bone and rock. The Flintgems on its shell excrete an explosive powder.',
     gameId: 'Rock Roller',
     img: () => (
       <img src={Flintbeetle} height={48} width={48} className="inline" alt="Flintbeetle" />
@@ -708,7 +708,7 @@ export const Journal: {
   },
   {
     name: 'Rhinogrund',
-    desc: 'TODO',
+    desc: "A long-horned beast native to Pharloom's lowlands. It relies on its formidable horn to impale foes and to wrench the ground beneath it, flinging dangerous debris.",
     gameId: 'Rhino',
     img: () => <img src={Rhinogrund} height={48} width={48} className="inline" alt="Rhinogrund" />,
     markers: [
@@ -741,7 +741,7 @@ export const Journal: {
   },
   {
     name: 'Gromling',
-    desc: 'TODO',
+    desc: 'Young masked worms that delight in ambushing intruders within their tunnels.',
     gameId: 'Crypt Worm',
     img: () => <img src={Gromling} height={48} width={48} className="inline" alt="Gromling" />,
     markers: [
@@ -756,7 +756,7 @@ export const Journal: {
   },
   {
     name: 'Grom',
-    desc: 'TODO',
+    desc: 'A burrowing worm that uses its many blunted teeth to dig through even the hardest bone. They ceaselessly churn through rock and bone without ever seeming to rest.',
     gameId: 'Bone Worm',
     img: () => <img src={Grom} height={48} width={48} className="inline" alt="Grom" />,
     markers: [
@@ -771,7 +771,7 @@ export const Journal: {
   },
   {
     name: 'Bell Beast',
-    desc: 'TODO',
+    desc: 'A huge, hardbone bug that lives within and travels through the veins of old bells across Pharloom.',
     gameId: 'Bone Beast',
     img: () => <img src={Bell_Beast} height={48} width={48} className="inline" alt="Bell Beast" />,
     markers: [
@@ -786,7 +786,7 @@ export const Journal: {
   },
   {
     name: 'Pilgrim Groveller',
-    desc: 'TODO',
+    desc: 'A basic bug of Pharloom, laid low upon the ground.',
     gameId: 'Pilgrim 03',
     img: () => (
       <img
@@ -809,7 +809,7 @@ export const Journal: {
   },
   {
     name: 'Pilgrim Pouncer',
-    desc: 'TODO',
+    desc: 'An agile bug of Pharloom whose higher functions have been lost to the Haunting.',
     gameId: 'Pilgrim 01',
     img: () => (
       <img src={Pilgrim_Pouncer} height={48} width={48} className="inline" alt="Pilgrim Pouncer" />
@@ -826,7 +826,7 @@ export const Journal: {
   },
   {
     name: 'Pilgrim Hornfly',
-    desc: 'TODO',
+    desc: 'A short pilgrim that uses its long horn to launch itself upon threats. In its assault, it becomes its own projectile.',
     gameId: 'Pilgrim 04',
     img: () => (
       <img src={Pilgrim_Hornfly} height={48} width={48} className="inline" alt="Pilgrim Hornfly" />
@@ -843,7 +843,7 @@ export const Journal: {
   },
   {
     name: 'Pilgrim Hulk',
-    desc: 'TODO',
+    desc: 'A sturdy bug lost to the Haunting. It rolls at threats with no care for its own discomfort.',
     gameId: 'Pilgrim 02',
     img: () => (
       <img src={Pilgrim_Hulk} height={48} width={48} className="inline" alt="Pilgrim Hulk" />
@@ -860,7 +860,7 @@ export const Journal: {
   },
   {
     name: 'Pilgrim Bellbearer',
-    desc: 'TODO',
+    desc: 'A common bug wielding a set of old bells. The bug will fling the bells at anyone it deems still free.',
     gameId: 'Pilgrim Bell Thrower',
     img: () => (
       <img
@@ -883,7 +883,7 @@ export const Journal: {
   },
   {
     name: 'Winged Pilgrim',
-    desc: 'TODO',
+    desc: 'A short-horned bug born with underdeveloped wings.',
     gameId: 'Pilgrim Fly',
     img: () => (
       <img src={Winged_Pilgrim} height={48} width={48} className="inline" alt="Winged Pilgrim" />
@@ -900,7 +900,7 @@ export const Journal: {
   },
   {
     name: 'Elder Pilgrim',
-    desc: 'TODO',
+    desc: 'A thick-set bug consumed by haunted thread.',
     gameId: 'Pilgrim 05',
     img: () => (
       <img src={Elder_Pilgrim} height={48} width={48} className="inline" alt="Elder Pilgrim" />
@@ -917,7 +917,7 @@ export const Journal: {
   },
   {
     name: 'Winged Pilgrim Bellbearer',
-    desc: 'TODO',
+    desc: 'A pilgrim endowed with large wings, carrying a brace of iron bells.',
     gameId: 'Pilgrim Bellthrower Fly',
     img: () => (
       <img
@@ -940,7 +940,7 @@ export const Journal: {
   },
   {
     name: 'Pilgrim Hiker',
-    desc: 'TODO',
+    desc: "A hard-shelled bug with a climber's pin. Their pin, once used as aid, has become a weapon, though the bug is unrefined in its use.",
     gameId: 'Pilgrim Hiker',
     img: () => (
       <img src={Pilgrim_Hiker} height={48} width={48} className="inline" alt="Pilgrim Hiker" />
@@ -957,7 +957,7 @@ export const Journal: {
   },
   {
     name: 'Pilgrim Guide',
-    desc: 'TODO',
+    desc: 'Old pilgrim carrying a heavy iron bell staff.',
     gameId: 'Pilgrim StaffWielder',
     img: () => (
       <img src={Pilgrim_Guide} height={48} width={48} className="inline" alt="Pilgrim Guide" />
@@ -974,7 +974,7 @@ export const Journal: {
   },
   {
     name: 'Overgrown Pilgrim',
-    desc: 'TODO',
+    desc: 'An aged pilgrim, overgrown with lichen and moss.',
     gameId: 'Pilgrim Moss Spitter',
     img: () => (
       <img
@@ -997,7 +997,7 @@ export const Journal: {
   },
   {
     name: 'Covetous Pilgrim',
-    desc: 'TODO',
+    desc: 'A strong bug adorned with rosaries. If angered, they will whip their strings in a ceaseless onslaught.',
     gameId: 'Rosary Pilgrim',
     img: () => (
       <img
@@ -1028,7 +1028,7 @@ export const Journal: {
   },
   {
     name: 'Snitchfly',
-    desc: 'TODO',
+    desc: 'Pernicious looter found all over Pharloom.',
     gameId: 'Rosary Thief',
     img: () => <img src={Snitchfly} height={48} width={48} className="inline" alt="Snitchfly" />,
     markers: [
@@ -1043,7 +1043,7 @@ export const Journal: {
   },
   {
     name: 'Lavalug',
-    desc: 'TODO',
+    desc: 'A sticky mollusc that defends itself by spraying burning fluid from growths on its back.',
     gameId: 'Tar Slug',
     img: () => <img src={Lavalug} height={48} width={48} className="inline" alt="Lavalug" />,
     markers: [
@@ -1058,7 +1058,7 @@ export const Journal: {
   },
   {
     name: 'Lavalarga',
-    desc: 'TODO',
+    desc: 'A fully grown mollusc capable of unleashing a gushing torrent of burning fluid from its back.',
     gameId: 'Tar Slug Huge',
     img: () => <img src={Lavalarga} height={48} width={48} className="inline" alt="Lavalarga" />,
     markers: [
@@ -1073,7 +1073,7 @@ export const Journal: {
   },
   {
     name: 'Smelt Shoveller',
-    desc: 'TODO',
+    desc: "A low-level worker lost to Pharloom's haunting.",
     gameId: 'Dock Worker',
     img: () => (
       <img src={Smelt_Shoveller} height={48} width={48} className="inline" alt="Smelt Shoveller" />
@@ -1090,7 +1090,7 @@ export const Journal: {
   },
   {
     name: 'Flintstone Flyer',
-    desc: 'TODO',
+    desc: "An aerial worker lost to Pharloom's Haunting. The Flintstone Flyer bears a pouch full of flintstone, which it will fling at intruders.",
     gameId: 'Dock Flyer',
     img: () => (
       <img
@@ -1113,7 +1113,7 @@ export const Journal: {
   },
   {
     name: 'Flintflame Flyer',
-    desc: 'TODO',
+    desc: 'A brave worker carrying unstable flintflame, they wear a heavy bell to protect against potential ignition.',
     gameId: 'Dock Bomber',
     img: () => (
       <img
@@ -1136,7 +1136,7 @@ export const Journal: {
   },
   {
     name: 'Smokerock Sifter',
-    desc: 'TODO',
+    desc: 'A cymbal-bearing worker of the Deep Docks.',
     gameId: 'Shield Dock Worker',
     img: () => (
       <img
@@ -1159,7 +1159,7 @@ export const Journal: {
   },
   {
     name: 'Deep Diver',
-    desc: 'TODO',
+    desc: 'Bell-clad bug responsible for mining the deeper, treacherous depths below their docks.',
     gameId: 'Dock Charger',
     img: () => <img src={Deep_Diver} height={48} width={48} className="inline" alt="Deep Diver" />,
     markers: [
@@ -1174,7 +1174,7 @@ export const Journal: {
   },
   {
     name: 'Forebrothers Signis & Gron',
-    desc: 'TODO',
+    desc: 'Elder overseers of the Deep Docks, responsible for the oversight and punishment of lesser workers.',
     gameId: 'Dock Guard Thrower',
     img: () => (
       <img
@@ -1197,7 +1197,7 @@ export const Journal: {
   },
   {
     name: 'Cragglite',
-    desc: 'TODO',
+    desc: 'The infant form of the more formidable Craggler.',
     gameId: 'Small Crab',
     img: () => <img src={Cragglite} height={48} width={48} className="inline" alt="Cragglite" />,
     markers: [
@@ -1212,7 +1212,7 @@ export const Journal: {
   },
   {
     name: 'Craggler',
-    desc: 'TODO',
+    desc: 'A thick-plated scuttler that prefers high places. It holds an extensive supply of searing acid in a layered sack within its shell.',
     gameId: 'Roof Crab',
     img: () => <img src={Craggler} height={48} width={48} className="inline" alt="Craggler" />,
     markers: [
@@ -1227,7 +1227,7 @@ export const Journal: {
   },
   {
     name: 'Brushflit',
-    desc: 'TODO',
+    desc: 'Tiny, timid creatures that huddle in flocks and flee at the first hint of danger. They call out to warn their fellows at the smallest sense of threat.',
     gameId: 'Fields Flock Flyers',
     img: () => <img src={Brushflit} height={48} width={48} className="inline" alt="Brushflit" />,
     markers: [
@@ -1242,7 +1242,7 @@ export const Journal: {
   },
   {
     name: 'Fertid',
-    desc: 'TODO',
+    desc: 'A skittish scrambler found in the Far Fields. Its antennae resemble stalks of grass, aiding in its camouflage.',
     gameId: 'Fields Goomba',
     img: () => <img src={Fertid} height={48} width={48} className="inline" alt="Fertid" />,
     markers: [
@@ -1257,7 +1257,7 @@ export const Journal: {
   },
   {
     name: 'Flapping Fertid',
-    desc: 'TODO',
+    desc: 'A docile bug whose wings mimic the grasses of the Far Fields. When roosting, it would look convincingly plant like, but in flight, its bulbous body quickly ruins the ruse.',
     gameId: 'Fields Flyer',
     img: () => (
       <img src={Flapping_Fertid} height={48} width={48} className="inline" alt="Flapping Fertid" />
@@ -1274,7 +1274,7 @@ export const Journal: {
   },
   {
     name: 'Fourth Chorus',
-    desc: 'TODO',
+    desc: 'Towering iron automaton, driven by rotor and cog.',
     gameId: 'Song Golem',
     img: () => (
       <img src={Fourth_Chorus} height={48} width={48} className="inline" alt="Fourth Chorus" />
@@ -1291,7 +1291,7 @@ export const Journal: {
   },
   {
     name: 'Skarrlid',
-    desc: 'TODO',
+    desc: 'Small burrowing ants that serve the larger Skarr.',
     gameId: 'Bone Hunter Tiny',
     img: () => <img src={Skarrlid} height={48} width={48} className="inline" alt="Skarrlid" />,
     markers: [
@@ -1306,7 +1306,7 @@ export const Journal: {
   },
   {
     name: 'Skarrwing',
-    desc: 'TODO',
+    desc: 'A darting predator that clings fast to roofs and outcrops, often summoned to aid its larger companions.',
     gameId: 'Bone Hunter Buzzer',
     img: () => <img src={Skarrwing} height={48} width={48} className="inline" alt="Skarrwing" />,
     markers: [
@@ -1321,7 +1321,7 @@ export const Journal: {
   },
   {
     name: 'Skarr Scout',
-    desc: 'TODO',
+    desc: 'Young ant hunters wielding sickles carved from teeth.',
     gameId: 'Bone Hunter Child',
     img: () => (
       <img src={Skarr_Scout} height={48} width={48} className="inline" alt="Skarr Scout" />
@@ -1338,7 +1338,7 @@ export const Journal: {
   },
   {
     name: 'Skarr Stalker',
-    desc: 'TODO',
+    desc: "Skarr Stalkers can be found in the tunnels of Hunter's March.",
     gameId: 'Bone Hunter',
     img: () => (
       <img src={Skarr_Stalker} height={48} width={48} className="inline" alt="Skarr Stalker" />
@@ -1355,7 +1355,7 @@ export const Journal: {
   },
   {
     name: 'Spear Skarr',
-    desc: 'TODO',
+    desc: 'A winged ant hunter that strikes from the air with its bone lance.',
     gameId: 'Bone Hunter Fly',
     img: () => (
       <img src={Spear_Skarr} height={48} width={48} className="inline" alt="Spear Skarr" />
@@ -1376,7 +1376,7 @@ export const Journal: {
   },
   {
     name: 'Skarrgard',
-    desc: 'TODO',
+    desc: 'Huge ant hunter tasked to protect the stores and passages of its tribe.',
     gameId: 'Bone Hunter Throw',
     img: () => <img src={Skarrgard} height={48} width={48} className="inline" alt="Skarrgard" />,
     markers: [
@@ -1399,7 +1399,7 @@ export const Journal: {
   },
   {
     name: 'Gurr the Outcast',
-    desc: 'TODO',
+    desc: 'Huge, yet stealthy Skarr. An expert trapper and master of the undergrowth.',
     gameId: 'Bone Hunter Trapper',
     img: () => (
       <img
@@ -1422,7 +1422,7 @@ export const Journal: {
   },
   {
     name: 'Last Claw',
-    desc: 'TODO',
+    desc: 'An elite former hunter serving as the final line of defense before their mother.',
     gameId: 'Bone Hunter Chief',
     img: () => <img src={Last_Claw} height={48} width={48} className="inline" alt="Last Claw" />,
     markers: [
@@ -1439,7 +1439,7 @@ export const Journal: {
   },
   {
     name: 'Skarrsinger Karmelita',
-    desc: 'TODO',
+    desc: 'Song queen of the Skarr and their most talented warrior.',
     gameId: 'Hunter Queen',
     img: () => (
       <img
@@ -1462,7 +1462,7 @@ export const Journal: {
   },
   {
     name: 'Mite',
-    desc: 'TODO',
+    desc: 'A verminous pest common throughout the dark corners of Greymoor.',
     gameId: 'Mite',
     img: () => <img src={Mite} height={48} width={48} className="inline" alt="Mite" />,
     markers: [
@@ -1477,7 +1477,7 @@ export const Journal: {
   },
   {
     name: 'Fluttermite',
-    desc: 'TODO',
+    desc: 'Airborne pest, less common than its grounded siblings. Attacks with sharp fangs if agitated.',
     gameId: 'Mitefly',
     img: () => (
       <img src={Fluttermite} height={48} width={48} className="inline" alt="Fluttermite" />
@@ -1494,7 +1494,7 @@ export const Journal: {
   },
   {
     name: 'Mitemother',
-    desc: 'TODO',
+    desc: 'An aged female mite, grown larger and stronger than most of its kin.',
     gameId: 'Gnat Giant',
     img: () => <img src={Mitemother} height={48} width={48} className="inline" alt="Mitemother" />,
     markers: [
@@ -1509,7 +1509,7 @@ export const Journal: {
   },
   {
     name: 'Dreg Catcher',
-    desc: 'TODO',
+    desc: 'A bug charged with catching dregs of Silk that fall from the Citadel.',
     gameId: 'Farmer Catcher',
     img: () => (
       <img src={Dreg_Catcher} height={48} width={48} className="inline" alt="Dreg Catcher" />
@@ -1526,7 +1526,7 @@ export const Journal: {
   },
   {
     name: 'Silk Snipper',
-    desc: 'TODO',
+    desc: 'A scissor-wielding bug charged to cut and spool fallen dregs of Silk for return to the Citadel above.',
     gameId: 'Farmer Scissors',
     img: () => (
       <img src={Silk_Snipper} height={48} width={48} className="inline" alt="Silk Snipper" />
@@ -1543,7 +1543,7 @@ export const Journal: {
   },
   {
     name: 'Thread Raker',
-    desc: 'TODO',
+    desc: 'A tall bug tasked with accumulating Silk dregs for respooling.',
     gameId: 'Farmer Centipede',
     img: () => (
       <img src={Thread_Raker} height={48} width={48} className="inline" alt="Thread Raker" />
@@ -1560,7 +1560,7 @@ export const Journal: {
   },
   {
     name: 'Moorwing',
-    desc: 'TODO',
+    desc: 'Winged mite-beast, bred large to catch workers who once tried to flee their tasks.',
     gameId: 'Vampire Gnat',
     img: () => <img src={Moorwing} height={48} width={48} className="inline" alt="Moorwing" />,
     markers: [
@@ -1579,7 +1579,7 @@ export const Journal: {
   },
   {
     name: 'Wisp',
-    desc: 'TODO',
+    desc: 'A short-lived sprite born of flickering flame.',
     gameId: 'Wisp',
     img: () => <img src={Wisp} height={48} width={48} className="inline" alt="Wisp" />,
     markers: [
@@ -1595,7 +1595,7 @@ export const Journal: {
   },
   {
     name: 'Burning Bug',
-    desc: 'TODO',
+    desc: 'A many-legged insect fanatically obsessed with flame.',
     gameId: 'Farmer Wisp',
     img: () => (
       <img src={Burning_Bug} height={48} width={48} className="inline" alt="Burning Bug" />
@@ -1613,7 +1613,7 @@ export const Journal: {
   },
   {
     name: 'Father of the Flame',
-    desc: 'TODO',
+    desc: 'Totem and god, built and worshipped by the Burning Bugs.',
     gameId: 'Wisp Pyre Effigy',
     img: () => (
       <img
@@ -1636,7 +1636,7 @@ export const Journal: {
   },
   {
     name: 'Craw',
-    desc: 'TODO',
+    desc: 'A screeching scavenger that roosts high in caverns and preys on passing pilgrims.',
     gameId: 'Crow',
     img: () => <img src={Craw} height={48} width={48} className="inline" alt="Craw" />,
     markers: [
@@ -1651,7 +1651,7 @@ export const Journal: {
   },
   {
     name: 'Tallcraw',
-    desc: 'TODO',
+    desc: 'A rag-winged adult crawbug that has scavenged a pin.',
     gameId: 'Crowman',
     img: () => <img src={Tallcraw} height={48} width={48} className="inline" alt="Tallcraw" />,
     markers: [
@@ -1666,7 +1666,7 @@ export const Journal: {
   },
   {
     name: 'Squatcraw',
-    desc: 'TODO',
+    desc: 'A stout adult crawbug bearing several short pins.',
     gameId: 'Crowman Dagger',
     img: () => <img src={Squatcraw} height={48} width={48} className="inline" alt="Squatcraw" />,
     markers: [
@@ -1681,7 +1681,7 @@ export const Journal: {
   },
   {
     name: 'Craw Juror',
-    desc: 'TODO',
+    desc: "A screeching scavenger dyed black in mourning at their land's collapse.",
     gameId: 'Crowman Juror Tiny',
     img: () => <img src={Craw_Juror} height={48} width={48} className="inline" alt="Craw Juror" />,
     markers: [
@@ -1696,7 +1696,7 @@ export const Journal: {
   },
   {
     name: 'Tallcraw Juror',
-    desc: 'TODO',
+    desc: 'An elder crawbug that serves in a sacred ceremony.',
     gameId: 'Crowman Juror',
     img: () => (
       <img src={Tallcraw_Juror} height={48} width={48} className="inline" alt="Tallcraw Juror" />
@@ -1713,7 +1713,7 @@ export const Journal: {
   },
   {
     name: 'Squatcraw Juror',
-    desc: 'TODO',
+    desc: 'A short elder crawbug eagerly serving in their court.',
     gameId: 'Crowman Dagger Juror',
     img: () => (
       <img src={Squatcraw_Juror} height={48} width={48} className="inline" alt="Squatcraw Juror" />
@@ -1730,7 +1730,7 @@ export const Journal: {
   },
   {
     name: 'Crawfather',
-    desc: 'TODO',
+    desc: "Lord and justice of Pharloom's craws.",
     gameId: 'Crawfather',
     img: () => <img src={Crawfather} height={48} width={48} className="inline" alt="Crawfather" />,
     markers: [
@@ -1745,7 +1745,7 @@ export const Journal: {
   },
   {
     name: 'Muckmaggot',
-    desc: 'TODO',
+    desc: 'Mindless infant larva, coated in thick slime.',
     gameId: 'Maggots',
     img: () => <img src={Muckmaggot} height={48} width={48} className="inline" alt="Muckmaggot" />,
     markers: [
@@ -1760,7 +1760,7 @@ export const Journal: {
   },
   {
     name: 'Slubberlug',
-    desc: 'TODO',
+    desc: 'The younger form of a Muckroach. Attacks prey by leaping from the water and snapping with its flexible jaws.',
     gameId: 'Dustroach Pollywog',
     img: () => <img src={Slubberlug} height={48} width={48} className="inline" alt="Slubberlug" />,
     markers: [
@@ -1775,7 +1775,7 @@ export const Journal: {
   },
   {
     name: 'Muckroach',
-    desc: 'TODO',
+    desc: 'Starved pack bugs with an insatiable appetite.',
     gameId: 'Dustroach',
     img: () => <img src={Muckroach} height={48} width={48} className="inline" alt="Muckroach" />,
     markers: [
@@ -1790,7 +1790,7 @@ export const Journal: {
   },
   {
     name: 'Bloatroach',
-    desc: 'TODO',
+    desc: "Obese offshoot of Muckroaches, born of the Citadel's exhaust smog. The winged roach's sagging stomach is filled with sizzling bile.",
     gameId: 'Bloat Roach',
     img: () => <img src={Bloatroach} height={48} width={48} className="inline" alt="Bloatroach" />,
     markers: [
@@ -1805,7 +1805,7 @@ export const Journal: {
   },
   {
     name: 'Roachcatcher',
-    desc: 'TODO',
+    desc: 'A short, nimble bug that uses barbed bolas to keep beasts corralled and caged.',
     gameId: 'Roachfeeder Short',
     img: () => (
       <img src={Roachcatcher} height={48} width={48} className="inline" alt="Roachcatcher" />
@@ -1822,7 +1822,7 @@ export const Journal: {
   },
   {
     name: 'Roachfeeder',
-    desc: 'TODO',
+    desc: 'A tall roach tender charged with feeding Muckroaches a lean diet of maggot gruel.',
     gameId: 'Roachfeeder Tall',
     img: () => (
       <img src={Roachfeeder} height={48} width={48} className="inline" alt="Roachfeeder" />
@@ -1839,7 +1839,7 @@ export const Journal: {
   },
   {
     name: 'Roachkeeper',
-    desc: 'TODO',
+    desc: 'A grizzled older roach tender weighted with a lasso of heavy chain.',
     gameId: 'Roachkeeper',
     img: () => (
       <img src={Roachkeeper} height={48} width={48} className="inline" alt="Roachkeeper" />
@@ -1856,7 +1856,7 @@ export const Journal: {
   },
   {
     name: 'Roachserver',
-    desc: 'TODO',
+    desc: 'A brutish cook responsible for dicing Muckroach meat into edible portions.',
     gameId: 'Roachkeeper Chef Tiny',
     img: () => (
       <img src={Roachserver} height={48} width={48} className="inline" alt="Roachserver" />
@@ -1873,7 +1873,7 @@ export const Journal: {
   },
   {
     name: 'Disgraced Chef Lugoli',
-    desc: 'TODO',
+    desc: 'Once an exulted chef, exiled from the Citadel for repeated culinary crimes.',
     gameId: 'Roachkeeper Chef',
     img: () => (
       <img
@@ -1896,7 +1896,7 @@ export const Journal: {
   },
   {
     name: 'Wraith',
-    desc: 'TODO',
+    desc: "An anguished spectre composed of lingering thread, the Wraith is a projection of another's will cast in smog and Silk.",
     gameId: 'Wraith',
     img: () => <img src={Wraith} height={48} width={48} className="inline" alt="Wraith" />,
     markers: [
@@ -1912,7 +1912,7 @@ export const Journal: {
   },
   {
     name: 'Mothleaf Lagnia',
-    desc: 'TODO',
+    desc: 'A rare, calmer bug found in Bilewater, it survives its hazardous surroundings by hiding as a plant.',
     gameId: 'Swamp Drifter',
     img: () => (
       <img src={Mothleaf_Lagnia} height={48} width={48} className="inline" alt="Mothleaf Lagnia" />
@@ -1929,7 +1929,7 @@ export const Journal: {
   },
   {
     name: 'Miremite',
-    desc: 'TODO',
+    desc: 'A crawling insect with a sizzling bile sack in its abdomen.',
     gameId: 'Swamp Goomba',
     img: () => <img src={Miremite} height={48} width={48} className="inline" alt="Miremite" />,
     markers: [
@@ -1944,7 +1944,7 @@ export const Journal: {
   },
   {
     name: 'Swamp Squit',
-    desc: 'TODO',
+    desc: 'A plentiful pest with a sharp proboscis and a belly full of bile.',
     gameId: 'Swamp Mosquito',
     img: () => (
       <img src={Swamp_Squit} height={48} width={48} className="inline" alt="Swamp Squit" />
@@ -1961,7 +1961,7 @@ export const Journal: {
   },
   {
     name: 'Spit Squit',
-    desc: 'TODO',
+    desc: 'A hovering pest with a hollowed proboscis capable of spitting gobs of sizzling bile.',
     gameId: 'Swamp Mosquito Skinny',
     img: () => <img src={Spit_Squit} height={48} width={48} className="inline" alt="Spit Squit" />,
     markers: [
@@ -1976,7 +1976,7 @@ export const Journal: {
   },
   {
     name: 'Stilkin',
-    desc: 'TODO',
+    desc: 'A cunning bug that hunts with darts fashioned from stake and bile.',
     gameId: 'Swamp Muckman',
     img: () => <img src={Stilkin} height={48} width={48} className="inline" alt="Stilkin" />,
     markers: [
@@ -1991,7 +1991,7 @@ export const Journal: {
   },
   {
     name: 'Stilkin Trapper',
-    desc: 'TODO',
+    desc: 'A bug that sets traps, carrying a pouch of sharpened long-stakes.',
     gameId: 'Swamp Muckman Tall',
     img: () => (
       <img src={Stilkin_Trapper} height={48} width={48} className="inline" alt="Stilkin Trapper" />
@@ -2008,7 +2008,7 @@ export const Journal: {
   },
   {
     name: 'Groal the Great',
-    desc: 'TODO',
+    desc: 'Chief and chaplain of the Stilkin, forever raging against the Citadel that chokes their caves and sees them suffer.',
     gameId: 'Swamp Shaman',
     img: () => (
       <img src={Groal_the_Great} height={48} width={48} className="inline" alt="Groal the Great" />
@@ -2025,7 +2025,7 @@ export const Journal: {
   },
   {
     name: 'Barnak',
-    desc: 'TODO',
+    desc: 'A toothy growth that lives on cave roofs. It wraps wayward bugs with its long tongue and drags them up to be consumed.',
     gameId: 'Swamp Barnacle',
     img: () => <img src={Barnak} height={48} width={48} className="inline" alt="Barnak" />,
     markers: [
@@ -2040,7 +2040,7 @@ export const Journal: {
   },
   {
     name: 'Ductsucker',
-    desc: 'TODO',
+    desc: 'A suction creature that survives on the thick slime coating its caves.',
     gameId: 'Swamp Ductsucker',
     img: () => <img src={Ductsucker} height={48} width={48} className="inline" alt="Ductsucker" />,
     markers: [
@@ -2055,7 +2055,7 @@ export const Journal: {
   },
   {
     name: 'Pond Skipper',
-    desc: 'TODO',
+    desc: 'A hard-shelled insect common upon the surface of Shellwood Pond.',
     gameId: 'Pond Skater',
     img: () => (
       <img src={Pond_Skipper} height={48} width={48} className="inline" alt="Pond Skipper" />
@@ -2072,7 +2072,7 @@ export const Journal: {
   },
   {
     name: 'Pondcatcher',
-    desc: 'TODO',
+    desc: 'An old catcher found near Shellwood Pond, distinguished by a longpin and affliction from the Haunting.',
     gameId: 'Pilgrim Fisher',
     img: () => (
       <img src={Pondcatcher} height={48} width={48} className="inline" alt="Pondcatcher" />
@@ -2089,7 +2089,7 @@ export const Journal: {
   },
   {
     name: 'Shellwood Gnat',
-    desc: 'TODO',
+    desc: 'Tiny, soft creatures that armor themselves using the hard, hollow growths of Shellwood.',
     gameId: 'Shellwood Gnat',
     img: () => (
       <img src={Shellwood_Gnat} height={48} width={48} className="inline" alt="Shellwood Gnat" />
@@ -2106,7 +2106,7 @@ export const Journal: {
   },
   {
     name: 'Wood Wasp',
-    desc: 'TODO',
+    desc: 'A pointed, darting insect that constructs a sturdy hive from the dried bark of Shellwood.',
     gameId: 'Shellwood Wasp',
     img: () => <img src={Wood_Wasp} height={48} width={48} className="inline" alt="Wood Wasp" />,
     markers: [
@@ -2121,7 +2121,7 @@ export const Journal: {
   },
   {
     name: 'Splinter',
-    desc: 'TODO',
+    desc: 'An insect that imitates a branch, capable of remaining perfectly still for long periods before becoming unexpectedly swift when roused.',
     gameId: 'Stick Insect',
     img: () => <img src={Splinter} height={48} width={48} className="inline" alt="Splinter" />,
     markers: [
@@ -2136,7 +2136,7 @@ export const Journal: {
   },
   {
     name: 'Splinterhorn',
-    desc: 'TODO',
+    desc: 'An insect that imitates a branch, born with sharp, retractable horns atop its head.',
     gameId: 'Stick Insect Charger',
     img: () => (
       <img src={Splinterhorn} height={48} width={48} className="inline" alt="Splinterhorn" />
@@ -2153,7 +2153,7 @@ export const Journal: {
   },
   {
     name: 'Splinterbark',
-    desc: 'TODO',
+    desc: 'A winged insect with a flakey shell that perfectly mimics its environment.',
     gameId: 'Stick Insect Flyer',
     img: () => (
       <img src={Splinterbark} height={48} width={48} className="inline" alt="Splinterbark" />
@@ -2170,7 +2170,7 @@ export const Journal: {
   },
   {
     name: 'Sister Splinter',
-    desc: 'TODO',
+    desc: 'An imposing old insect nesting in the heights of Shellwood.',
     gameId: 'Splinter Queen',
     img: () => (
       <img src={Sister_Splinter} height={48} width={48} className="inline" alt="Sister Splinter" />
@@ -2187,7 +2187,7 @@ export const Journal: {
   },
   {
     name: 'Phacia',
-    desc: 'TODO',
+    desc: 'A drifting bug disguised as a flower. If threatened, it disperses crackling clouds of pollen.',
     gameId: 'Flower Drifter',
     img: () => <img src={Phacia} height={48} width={48} className="inline" alt="Phacia" />,
     markers: [
@@ -2202,7 +2202,7 @@ export const Journal: {
   },
   {
     name: 'Pollenica',
-    desc: 'TODO',
+    desc: 'A floral foe that reacts instinctively to movement nearby, spitting pellets of crackling pollen that burst on impact.',
     gameId: 'Bloom Shooter',
     img: () => <img src={Pollenica} height={48} width={48} className="inline" alt="Pollenica" />,
     markers: [
@@ -2217,7 +2217,7 @@ export const Journal: {
   },
   {
     name: 'Gahlia',
-    desc: 'TODO',
+    desc: 'A floral foe with a core shaped to mimic a mask. The core can be thrust forth to bludgeon unwary bugs.',
     gameId: 'Bloom Puncher',
     img: () => <img src={Gahlia} height={48} width={48} className="inline" alt="Gahlia" />,
     markers: [
@@ -2232,7 +2232,7 @@ export const Journal: {
   },
   {
     name: 'Shrine Guardian Seth',
-    desc: 'TODO',
+    desc: 'Eternal defender of Shellwood Shrine.',
     gameId: 'Seth',
     img: () => (
       <img
@@ -2255,7 +2255,7 @@ export const Journal: {
   },
   {
     name: 'Nyleth',
-    desc: 'TODO',
+    desc: 'Ancient heart of Shellwood, connected to all its living things.',
     gameId: 'Flower Queen',
     img: () => <img src={Nyleth} height={48} width={48} className="inline" alt="Nyleth" />,
     markers: [
@@ -2270,7 +2270,7 @@ export const Journal: {
   },
   {
     name: 'Furm',
-    desc: 'TODO',
+    desc: 'A burrower that nests in the Bellvein, seeking out hard bells to protect its soft body.',
     gameId: 'Bell Goomba',
     img: () => <img src={Furm} height={48} width={48} className="inline" alt="Furm" />,
     markers: [
@@ -2285,7 +2285,7 @@ export const Journal: {
   },
   {
     name: 'Winged Furm',
-    desc: 'TODO',
+    desc: 'A furred bug that has grown too large to burrow, developing small wings in its maturity.',
     gameId: 'Bell Fly',
     img: () => (
       <img src={Winged_Furm} height={48} width={48} className="inline" alt="Winged Furm" />
@@ -2302,7 +2302,7 @@ export const Journal: {
   },
   {
     name: 'Pharlid',
-    desc: 'TODO',
+    desc: 'Small arachnids found in many crevices and caves throughout Pharloom.',
     gameId: 'Blade Spider',
     img: () => <img src={Pharlid} height={48} width={48} className="inline" alt="Pharlid" />,
     markers: [
@@ -2317,7 +2317,7 @@ export const Journal: {
   },
   {
     name: 'Pharlid Diver',
-    desc: 'TODO',
+    desc: 'Arachnids that nestle within dark holes in cavern roofs. They pounce on prey from far above.',
     gameId: 'Blade Spider Hang',
     img: () => (
       <img src={Pharlid_Diver} height={48} width={48} className="inline" alt="Pharlid Diver" />
@@ -2334,7 +2334,7 @@ export const Journal: {
   },
   {
     name: 'Shardillard',
-    desc: 'TODO',
+    desc: 'A devious ambusher that poses as a fossil. Once roused, the bug will crash its steely shell into walls, floors, and foes.',
     gameId: 'Shell Fossil Mimic',
     img: () => (
       <img src={Shardillard} height={48} width={48} className="inline" alt="Shardillard" />
@@ -2363,7 +2363,7 @@ export const Journal: {
   },
   {
     name: 'Sandcarver',
-    desc: 'TODO',
+    desc: 'A shell-plated worm that lives beneath pools of shifting sand. It bursts forth when movement is sensed nearby and will consume any object or bug careless enough to fall into its maw.',
     gameId: 'Sand Centipede',
     img: () => <img src={Sandcarver} height={48} width={48} className="inline" alt="Sandcarver" />,
     markers: [
@@ -2378,7 +2378,7 @@ export const Journal: {
   },
   {
     name: 'Squirrm',
-    desc: 'TODO',
+    desc: 'A wriggling young grub that lives in darkness.',
     gameId: 'Coral Judge Child',
     img: () => <img src={Squirrm} height={48} width={48} className="inline" alt="Squirrm" />,
     markers: [
@@ -2394,7 +2394,7 @@ export const Journal: {
   },
   {
     name: 'Judge',
-    desc: 'TODO',
+    desc: 'A gilded guardian of the Blasted Steps, bearing a cymbal and mallet.',
     gameId: 'Coral Judge',
     img: () => <img src={Judge} height={48} width={48} className="inline" alt="Judge" />,
     markers: [
@@ -2409,7 +2409,7 @@ export const Journal: {
   },
   {
     name: 'Last Judge',
-    desc: 'TODO',
+    desc: 'The final arbiter of the Blasted Steps, tasked to ensure only the sinless ever step beyond the Grand Gate.',
     gameId: 'Last Judge',
     img: () => <img src={Last_Judge} height={48} width={48} className="inline" alt="Last Judge" />,
     markers: [
@@ -2424,7 +2424,7 @@ export const Journal: {
   },
   {
     name: 'Coral Furm',
-    desc: 'TODO',
+    desc: 'A dark-furred bug that protects itself with a spiked coral nut.',
     gameId: 'Coral Spike Goomba',
     img: () => <img src={Coral_Furm} height={48} width={48} className="inline" alt="Coral Furm" />,
     markers: [
@@ -2439,7 +2439,7 @@ export const Journal: {
   },
   {
     name: 'Driznit',
-    desc: 'TODO',
+    desc: 'A nesting creature that fuses its face with sharpened coral.',
     gameId: 'Coral Conch Shooter',
     img: () => <img src={Driznit} height={48} width={48} className="inline" alt="Driznit" />,
     markers: [
@@ -2454,7 +2454,7 @@ export const Journal: {
   },
   {
     name: 'Driznarga',
-    desc: 'TODO',
+    desc: 'A large, male Driznit that is ferocious and territorial. It fires its heavy coral mask at intruders.',
     gameId: 'Coral Conch Shooter Heavy',
     img: () => <img src={Driznarga} height={48} width={48} className="inline" alt="Driznarga" />,
     markers: [
@@ -2469,7 +2469,7 @@ export const Journal: {
   },
   {
     name: 'Pokenabbin',
-    desc: 'TODO',
+    desc: 'A drifting creature with a wide coral mask and a hard proboscis used to stab its prey.',
     gameId: 'Coral Conch Stabber',
     img: () => <img src={Pokenabbin} height={48} width={48} className="inline" alt="Pokenabbin" />,
     markers: [
@@ -2484,7 +2484,7 @@ export const Journal: {
   },
   {
     name: 'Conchfly',
-    desc: 'TODO',
+    desc: 'A small bug that crafts a shell of sharpened coral. It spins its shell at rapid speed to cut through crust and bone.',
     gameId: 'Coral Conch Driller',
     img: () => <img src={Conchfly} height={48} width={48} className="inline" alt="Conchfly" />,
     markers: [
@@ -2499,7 +2499,7 @@ export const Journal: {
   },
   {
     name: 'Great Conchfly',
-    desc: 'TODO',
+    desc: 'An elder Conchfly adorned with a massive coral horn.',
     gameId: 'Coral Conch Driller Giant',
     img: () => (
       <img src={Great_Conchfly} height={48} width={48} className="inline" alt="Great Conchfly" />
@@ -2520,7 +2520,7 @@ export const Journal: {
   },
   {
     name: 'Crustcrawler',
-    desc: 'TODO',
+    desc: 'A soft-shelled scrambler encased in coral.',
     gameId: 'Coral Goombas',
     img: () => (
       <img src={Crustcrawler} height={48} width={48} className="inline" alt="Crustcrawler" />
@@ -2537,7 +2537,7 @@ export const Journal: {
   },
   {
     name: 'Crustcrag',
-    desc: 'TODO',
+    desc: "A coral hulk with a dense shell, bred to immense size by the Citadel's Memorium.",
     gameId: 'Coral Goomba Large',
     img: () => <img src={Crustcrag} height={48} width={48} className="inline" alt="Crustcrag" />,
     markers: [
@@ -2552,7 +2552,7 @@ export const Journal: {
   },
   {
     name: 'Kai',
-    desc: 'TODO',
+    desc: 'Plump, plentiful drifter of a coral past.',
     gameId: 'Coral Swimmer Fat',
     img: () => <img src={Kai} height={48} width={48} className="inline" alt="Kai" />,
     markers: [
@@ -2568,7 +2568,7 @@ export const Journal: {
   },
   {
     name: 'Spinebeak Kai',
-    desc: 'TODO',
+    desc: 'A steel-horned floater that can defend itself and its companions.',
     gameId: 'Poke Swimmer',
     img: () => (
       <img src={Spinebeak_Kai} height={48} width={48} className="inline" alt="Spinebeak Kai" />
@@ -2586,7 +2586,7 @@ export const Journal: {
   },
   {
     name: 'Steelspine Kai',
-    desc: 'TODO',
+    desc: 'Toughened Kai capable of extending sharp spikes from within its shellsack.',
     gameId: 'Spike Swimmer',
     img: () => (
       <img src={Steelspine_Kai} height={48} width={48} className="inline" alt="Steelspine Kai" />
@@ -2604,7 +2604,7 @@ export const Journal: {
   },
   {
     name: 'Yuma',
-    desc: 'TODO',
+    desc: 'A gelatinous coral drifter of simple mind and placid demeanor.',
     gameId: 'Coral Swimmer Small',
     img: () => <img src={Yuma} height={48} width={48} className="inline" alt="Yuma" />,
     markers: [
@@ -2620,7 +2620,7 @@ export const Journal: {
   },
   {
     name: 'Yumama',
-    desc: 'TODO',
+    desc: 'A large, gelatinous drifter that chases away threats by hurling its bulk around.',
     gameId: 'Coral Big Jellyfish',
     img: () => <img src={Yumama} height={48} width={48} className="inline" alt="Yumama" />,
     markers: [
@@ -2636,7 +2636,7 @@ export const Journal: {
   },
   {
     name: 'Karaka',
-    desc: 'TODO',
+    desc: 'Staunch and skilled bladebug of a once flourishing land lost to time. The core member of a powerful order, trained fearless and faithful.',
     gameId: 'Coral Warrior',
     img: () => <img src={Karaka} height={48} width={48} className="inline" alt="Karaka" />,
     markers: [
@@ -2652,7 +2652,7 @@ export const Journal: {
   },
   {
     name: 'Kakri',
-    desc: 'TODO',
+    desc: 'Lithe, winged scouts frequently paired with their heavier brethren.',
     gameId: 'Coral Flyer',
     img: () => <img src={Kakri} height={48} width={48} className="inline" alt="Kakri" />,
     markers: [
@@ -2668,7 +2668,7 @@ export const Journal: {
   },
   {
     name: 'Yago',
-    desc: 'TODO',
+    desc: 'A wide-masked aerial attacker trained to act as support for its grounded companions while remaining at range.',
     gameId: 'Coral Flyer Throw',
     img: () => <img src={Yago} height={48} width={48} className="inline" alt="Yago" />,
     markers: [
@@ -2684,7 +2684,7 @@ export const Journal: {
   },
   {
     name: 'Karak Gor',
-    desc: 'TODO',
+    desc: 'A heavy, hard-shelled charger that relies on its weight and strength.',
     gameId: 'Coral Brawler',
     img: () => <img src={Karak_Gor} height={48} width={48} className="inline" alt="Karak Gor" />,
     markers: [
@@ -2700,7 +2700,7 @@ export const Journal: {
   },
   {
     name: 'Alita',
-    desc: 'TODO',
+    desc: 'A leaping hunter of a bygone age, Alita is the swiftest of their sect and is deftly skilled with spinning foreblades.',
     gameId: 'Coral Hunter',
     img: () => <img src={Alita} height={48} width={48} className="inline" alt="Alita" />,
     markers: [
@@ -2716,7 +2716,7 @@ export const Journal: {
   },
   {
     name: 'Corrcrust Karaka',
-    desc: 'TODO',
+    desc: 'An overgrown elder that can spawn burning bubbles from within its coral-cased shell.',
     gameId: 'Coral Bubble Brute',
     img: () => (
       <img
@@ -2740,7 +2740,7 @@ export const Journal: {
   },
   {
     name: 'Crust King Khann',
-    desc: 'TODO',
+    desc: 'A hardened warrior lord from a bygone age, the Crust King Khann commands the coral crust to his bidding.',
     gameId: 'Coral King',
     img: () => (
       <img
@@ -2764,7 +2764,7 @@ export const Journal: {
   },
   {
     name: 'Watcher at the Edge',
-    desc: 'TODO',
+    desc: 'An old warrior who has long guarded the border of their domain, stiffened by time but awoken by song.',
     gameId: 'Coral Warrior Grey',
     img: () => (
       <img
@@ -2795,7 +2795,7 @@ export const Journal: {
   },
   {
     name: 'Voltvyrm',
-    desc: 'TODO',
+    desc: 'A coiled nest of charged worms that assaults intruders with bolts of crackling electricity.',
     gameId: 'Zap Core Enemy',
     img: () => <img src={Voltvyrm} height={48} width={48} className="inline" alt="Voltvyrm" />,
     markers: [
@@ -2810,7 +2810,7 @@ export const Journal: {
   },
   {
     name: 'Drapefly',
-    desc: 'TODO',
+    desc: 'Erratic, flying pest that nests in rags and curtains.',
     gameId: 'Citadel Bat',
     img: () => <img src={Drapefly} height={48} width={48} className="inline" alt="Drapefly" />,
     markers: [
@@ -2825,7 +2825,7 @@ export const Journal: {
   },
   {
     name: 'Drapelord',
-    desc: 'TODO',
+    desc: 'Elder Drapefly grown big from age and consumption. Its heavy body allows it to hit much harder than its younger companions.',
     gameId: 'Citadel Bat Large',
     img: () => <img src={Drapelord} height={48} width={48} className="inline" alt="Drapelord" />,
     markers: [
@@ -2841,7 +2841,7 @@ export const Journal: {
   },
   {
     name: 'Drapemite',
-    desc: 'TODO',
+    desc: 'A cloth-covered crawler with sharpened forelimbs that lives and breeds in dark places.',
     gameId: 'Mite Heavy',
     img: () => <img src={Drapemite} height={48} width={48} className="inline" alt="Drapemite" />,
     markers: [
@@ -2856,7 +2856,7 @@ export const Journal: {
   },
   {
     name: 'Giant Drapemite',
-    desc: 'TODO',
+    desc: 'A full-sized mite found in the Citadel, cloaked in an old curtain.',
     gameId: 'Understore Mite Giant',
     img: () => (
       <img src={Giant_Drapemite} height={48} width={48} className="inline" alt="Giant Drapemite" />
@@ -2873,7 +2873,7 @@ export const Journal: {
   },
   {
     name: 'Underworker',
-    desc: 'TODO',
+    desc: 'A feeble servant of the Underworks, characterized by its long twistpin and hard shell.',
     gameId: 'Understore Small',
     img: () => (
       <img src={Underworker} height={48} width={48} className="inline" alt="Underworker" />
@@ -2890,7 +2890,7 @@ export const Journal: {
   },
   {
     name: 'Underscrub',
-    desc: 'TODO',
+    desc: 'A drained yet dedicated labourer, wielding a coarse steel brush.',
     gameId: 'Pilgrim 03 Understore',
     img: () => <img src={Underscrub} height={48} width={48} className="inline" alt="Underscrub" />,
     markers: [
@@ -2905,7 +2905,7 @@ export const Journal: {
   },
   {
     name: 'Undersweep',
-    desc: 'TODO',
+    desc: 'Uses their steel-bristled pin to scrub the soot from vents and pipes.',
     gameId: 'Pilgrim Staff Understore',
     img: () => <img src={Undersweep} height={48} width={48} className="inline" alt="Undersweep" />,
     markers: [
@@ -2920,7 +2920,7 @@ export const Journal: {
   },
   {
     name: 'Underpoke',
-    desc: 'TODO',
+    desc: 'A drained worker on the verge of collapse, consumed by the Haunting and continuing to work far beyond their mortal limits.',
     gameId: 'Understore Poker',
     img: () => <img src={Underpoke} height={48} width={48} className="inline" alt="Underpoke" />,
     markers: [
@@ -2935,7 +2935,7 @@ export const Journal: {
   },
   {
     name: 'Underloft',
-    desc: 'TODO',
+    desc: "An exhausted bug, grown sickly from the smog of the Underworks. The worker's twistpins, once tools of repair, now serve as spun projectiles.",
     gameId: 'Understore Thrower',
     img: () => <img src={Underloft} height={48} width={48} className="inline" alt="Underloft" />,
     markers: [
@@ -2950,7 +2950,7 @@ export const Journal: {
   },
   {
     name: 'Undercrank',
-    desc: 'TODO',
+    desc: "A heavy, hard-shelled worker perpetually engaged in the repair of the Citadel's decaying Underworks.",
     gameId: 'Understore Heavy',
     img: () => <img src={Undercrank} height={48} width={48} className="inline" alt="Undercrank" />,
     markers: [
@@ -2965,7 +2965,7 @@ export const Journal: {
   },
   {
     name: 'Envoy',
-    desc: 'TODO',
+    desc: "A guide and often leader within the Citadel's Choir.",
     gameId: 'Song Pilgrim 01',
     img: () => <img src={Envoy} height={48} width={48} className="inline" alt="Envoy" />,
     markers: [
@@ -2980,7 +2980,7 @@ export const Journal: {
   },
   {
     name: 'Choir Pouncer',
-    desc: 'TODO',
+    desc: 'Agile bug, and one of few hardy pilgrims to have reached the Citadel.',
     gameId: 'Pilgrim 01 Song',
     img: () => (
       <img src={Choir_Pouncer} height={48} width={48} className="inline" alt="Choir Pouncer" />
@@ -2997,7 +2997,7 @@ export const Journal: {
   },
   {
     name: 'Choir Hornhead',
-    desc: 'TODO',
+    desc: 'A full-grown former pilgrim serving the Citadel.',
     gameId: 'Pilgrim 02 Song',
     img: () => (
       <img src={Choir_Hornhead} height={48} width={48} className="inline" alt="Choir Hornhead" />
@@ -3014,7 +3014,7 @@ export const Journal: {
   },
   {
     name: 'Choir Bellbearer',
-    desc: 'TODO',
+    desc: 'Winged devout of the Citadel, carrying a brace of gilded bells.',
     gameId: 'Pilgrim 03 Song',
     img: () => (
       <img
@@ -3037,7 +3037,7 @@ export const Journal: {
   },
   {
     name: 'Choir Flyer',
-    desc: 'TODO',
+    desc: 'Aerial bug of the Citadel, unarmed but for its short horn.',
     gameId: 'Pilgrim 04 Song',
     img: () => (
       <img src={Choir_Flyer} height={48} width={48} className="inline" alt="Choir Flyer" />
@@ -3054,7 +3054,7 @@ export const Journal: {
   },
   {
     name: 'Choir Elder',
-    desc: 'TODO',
+    desc: 'An aged former pilgrim that uses their wings to position themselves above threats and crush them under their large, thick shell, which has grown with time all the better for battering their targets.',
     gameId: 'Pilgrim Stomper Song',
     img: () => (
       <img src={Choir_Elder} height={48} width={48} className="inline" alt="Choir Elder" />
@@ -3071,7 +3071,7 @@ export const Journal: {
   },
   {
     name: 'Choristor',
-    desc: 'TODO',
+    desc: 'Disciple of the Choir, elevated above other pilgrims, and forced to cowl their face forever more.',
     gameId: 'Song Pilgrim 03',
     img: () => <img src={Choristor} height={48} width={48} className="inline" alt="Choristor" />,
     markers: [
@@ -3086,7 +3086,7 @@ export const Journal: {
   },
   {
     name: 'Reed',
-    desc: 'TODO',
+    desc: 'A disciple of the Choir, charged to maintain its perfect order, by sharp pin if necessary.',
     gameId: 'Song Reed',
     img: () => <img src={Reed} height={48} width={48} className="inline" alt="Reed" />,
     markers: [
@@ -3101,7 +3101,7 @@ export const Journal: {
   },
   {
     name: 'Grand Reed',
-    desc: 'TODO',
+    desc: 'A high-standing insect of the Choir, bearing a bow.',
     gameId: 'Song Reed Grand',
     img: () => <img src={Grand_Reed} height={48} width={48} className="inline" alt="Grand Reed" />,
     markers: [
@@ -3116,7 +3116,7 @@ export const Journal: {
   },
   {
     name: 'Choir Clapper',
-    desc: 'TODO',
+    desc: 'A mighty percussive disciple of the Choir, wielding a mallet and a Silk spool to wrap and enhance its attacks.',
     gameId: 'Song Heavy Sentry',
     img: () => (
       <img src={Choir_Clapper} height={48} width={48} className="inline" alt="Choir Clapper" />
@@ -3133,7 +3133,7 @@ export const Journal: {
   },
   {
     name: 'Clawmaiden',
-    desc: 'TODO',
+    desc: 'Puppet servant of the Citadel, suspended on strings of Silk.',
     gameId: 'Song Handmaiden',
     img: () => <img src={Clawmaiden} height={48} width={48} className="inline" alt="Clawmaiden" />,
     markers: [
@@ -3150,7 +3150,7 @@ export const Journal: {
   },
   {
     name: 'Memoria',
-    desc: 'TODO',
+    desc: "A learned disciple of the Choir, tasked with maintaining the Citadel's Memorium.",
     gameId: 'Arborium Keeper',
     img: () => <img src={Memoria} height={48} width={48} className="inline" alt="Memoria" />,
     markers: [
@@ -3165,7 +3165,7 @@ export const Journal: {
   },
   {
     name: 'Minister',
-    desc: 'TODO',
+    desc: "A gold-ranked disciple of the Choir and a direct servant to the Citadel's Conductors.",
     gameId: 'Song Administrator',
     img: () => <img src={Minister} height={48} width={48} className="inline" alt="Minister" />,
     markers: [
@@ -3180,7 +3180,7 @@ export const Journal: {
   },
   {
     name: 'Maestro',
-    desc: 'TODO',
+    desc: 'The choir commander of the High Halls, capable of summoning and commanding cogflies with a flick of their baton.',
     gameId: 'Song Pilgrim Maestro',
     img: () => <img src={Maestro} height={48} width={48} className="inline" alt="Maestro" />,
     markers: [
@@ -3195,7 +3195,7 @@ export const Journal: {
   },
   {
     name: 'Second Sentinel',
-    desc: 'TODO',
+    desc: 'Cogwork knight of Pharloom, once protector of its pilgrims, and master of the scissor blade.',
     gameId: 'Song Knight',
     img: () => (
       <img src={Second_Sentinel} height={48} width={48} className="inline" alt="Second Sentinel" />
@@ -3207,7 +3207,7 @@ export const Journal: {
   },
   {
     name: 'Dreg Husk',
-    desc: 'See the Unravelled for more details.',
+    desc: 'Remains of a Citadel bug possessed by Silk dregs. The husk will lash out wildly with the many sharp pins caught inside its thread. See the Unravelled for more details on obtaining.',
     gameId: 'Song Threaded Husk',
     img: () => <img src={Dreg_Husk} height={48} width={48} className="inline" alt="Dreg Husk" />,
     markers: [
@@ -3223,7 +3223,7 @@ export const Journal: {
   },
   {
     name: 'Dregwheel',
-    desc: 'See the Unravelled for more details.',
+    desc: 'Shell of a small bug possessed by Silk dregs. The husk will stretch its Silk to form a crude, crushing wheel. See the Unravelled for more details on obtaining.',
     gameId: 'Song Threaded Husk Spin',
     img: () => <img src={Dregwheel} height={48} width={48} className="inline" alt="Dregwheel" />,
     markers: [
@@ -3239,7 +3239,7 @@ export const Journal: {
   },
   {
     name: 'Surgeon',
-    desc: 'TODO',
+    desc: "A cruel physician residing in Whiteward, responsible for various operations and modifications performed on the Citadel's bugs.",
     gameId: 'Song Pilgrim 02',
     img: () => <img src={Surgeon} height={48} width={48} className="inline" alt="Surgeon" />,
     markers: [
@@ -3254,7 +3254,7 @@ export const Journal: {
   },
   {
     name: 'Mortician',
-    desc: 'TODO',
+    desc: "An altered servant of the Citadel's Whiteward, responsible for the cremation of husks and the recycling of Silk from their shells.",
     gameId: 'Song Creeper',
     img: () => <img src={Mortician} height={48} width={48} className="inline" alt="Mortician" />,
     markers: [
@@ -3269,7 +3269,7 @@ export const Journal: {
   },
   {
     name: 'The Unravelled',
-    desc: 'TODO',
+    desc: 'The tormented will of countless husks, made manifest in a pit of Silk dregs.',
     gameId: 'Conductor Boss',
     img: () => (
       <img src={The_Unravelled} height={48} width={48} className="inline" alt="The Unravelled" />
@@ -3281,7 +3281,7 @@ export const Journal: {
   },
   {
     name: 'Cogwork Underfly',
-    desc: 'TODO',
+    desc: "A small automaton constructed to tirelessly operate within the intense heat of the Underworks' Cauldron.",
     gameId: 'Understore Automaton',
     img: () => (
       <img
@@ -3304,7 +3304,7 @@ export const Journal: {
   },
   {
     name: 'Cogwork Hauler',
-    desc: 'TODO',
+    desc: 'A small automaton with a shielded shell, designed to carry loads of dangerous flintflame.',
     gameId: 'Understore Automaton EX',
     img: () => (
       <img src={Cogwork_Hauler} height={48} width={48} className="inline" alt="Cogwork Hauler" />
@@ -3321,7 +3321,7 @@ export const Journal: {
   },
   {
     name: 'Cogwork Crawler',
-    desc: 'TODO',
+    desc: 'An automaton built in the shape of a scuttling bug. Its back contains retractable pins, intended to cut song cylinders free of any obstruction.',
     gameId: 'Song Automaton Goomba',
     img: () => (
       <img src={Cogwork_Crawler} height={48} width={48} className="inline" alt="Cogwork Crawler" />
@@ -3338,7 +3338,7 @@ export const Journal: {
   },
   {
     name: 'Cogworker',
-    desc: 'TODO',
+    desc: 'A flighted automaton responsible for repairing and extending the Core.',
     gameId: 'Song Automaton Fly',
     img: () => <img src={Cogworker} height={48} width={48} className="inline" alt="Cogworker" />,
     markers: [
@@ -3353,7 +3353,7 @@ export const Journal: {
   },
   {
     name: 'Cogwork Spine',
-    desc: 'TODO',
+    desc: 'A spherical, winged automaton housing many sharp spikes.',
     gameId: 'Song Automaton Fly Spike',
     img: () => (
       <img src={Cogwork_Spine} height={48} width={48} className="inline" alt="Cogwork Spine" />
@@ -3370,7 +3370,7 @@ export const Journal: {
   },
   {
     name: 'Cogwork Choirbug',
-    desc: 'TODO',
+    desc: 'A bug forged of iron, rotor, and cog.',
     gameId: 'Song Automaton 01',
     img: () => (
       <img
@@ -3393,7 +3393,7 @@ export const Journal: {
   },
   {
     name: 'Cogwork Cleanser',
-    desc: 'TODO',
+    desc: 'A steam-shooting automaton, forged to clean the Cogwork Core and keep it free of infestation.',
     gameId: 'Song Automaton 02',
     img: () => (
       <img
@@ -3416,7 +3416,7 @@ export const Journal: {
   },
   {
     name: 'Cogwork Defender',
-    desc: 'TODO',
+    desc: "A cogwork construct forged primarily for the Core's protection.",
     gameId: 'Song Automaton Shield',
     img: () => (
       <img
@@ -3439,7 +3439,7 @@ export const Journal: {
   },
   {
     name: 'Cogwork Clapper',
-    desc: 'TODO',
+    desc: 'A rare automaton intended to perform the ringing of bells and cymbals in the depths of the Core.',
     gameId: 'Song Automaton Ball',
     img: () => (
       <img src={Cogwork_Clapper} height={48} width={48} className="inline" alt="Cogwork Clapper" />
@@ -3460,7 +3460,7 @@ export const Journal: {
   },
   {
     name: 'Cogwork Dancers',
-    desc: 'TODO',
+    desc: 'Automatons of impeccable construction, welcoming entrants to their chamber with a display of deadly dance.',
     gameId: 'Clockwork Dancer',
     img: () => (
       <img src={Cogwork_Dancers} height={48} width={48} className="inline" alt="Cogwork Dancers" />
@@ -3477,7 +3477,7 @@ export const Journal: {
   },
   {
     name: 'Vaultborn',
-    desc: 'TODO',
+    desc: 'A young acolyte raised in the darkest vaults, destined to ascend to the rank of Scrollreader.',
     gameId: 'Song Scholar Acolyte',
     img: () => <img src={Vaultborn} height={48} width={48} className="inline" alt="Vaultborn" />,
     markers: [
@@ -3492,7 +3492,7 @@ export const Journal: {
   },
   {
     name: 'Lampbearer',
-    desc: 'TODO',
+    desc: 'A disciple of the Whispering Vaults, tasked with navigating its dim recesses to retrieve old scrolls.',
     gameId: 'Lightbearer',
     img: () => <img src={Lampbearer} height={48} width={48} className="inline" alt="Lampbearer" />,
     markers: [
@@ -3507,7 +3507,7 @@ export const Journal: {
   },
   {
     name: 'Scrollreader',
-    desc: 'TODO',
+    desc: 'A gilded servant of the Whispering Vaults, born to read and recall the near endless scrolls of prayer.',
     gameId: 'Scrollkeeper',
     img: () => (
       <img src={Scrollreader} height={48} width={48} className="inline" alt="Scrollreader" />
@@ -3524,7 +3524,7 @@ export const Journal: {
   },
   {
     name: 'Vaultkeeper',
-    desc: 'TODO',
+    desc: 'A high-caste bug responsible for delivering sermons and leading prayer for those beyond the walls of the Whispering Vaults.',
     gameId: 'Scholar',
     img: () => (
       <img src={Vaultkeeper} height={48} width={48} className="inline" alt="Vaultkeeper" />
@@ -3541,7 +3541,7 @@ export const Journal: {
   },
   {
     name: 'Trobbio',
-    desc: 'TODO',
+    desc: 'A haughty thespian convinced that only a dazzling performance can raise Pharloom from the throes of death.',
     gameId: 'Trobbio',
     img: () => <img src={Trobbio} height={48} width={48} className="inline" alt="Trobbio" />,
     markers: [
@@ -3556,7 +3556,7 @@ export const Journal: {
   },
   {
     name: 'Tormented Trobbio',
-    desc: 'TODO',
+    desc: 'A depressed thespian consumed by the melancholy of a collapsing world.',
     gameId: 'Tormented Trobbio',
     img: () => (
       <img
@@ -3579,7 +3579,7 @@ export const Journal: {
   },
   {
     name: 'Penitent',
-    desc: 'TODO',
+    desc: 'A humbled prisoner serving their sentence for sins committed within the Citadel.',
     gameId: 'Slab Prisoner Leaper New',
     img: () => <img src={Penitent} height={48} width={48} className="inline" alt="Penitent" />,
     markers: [
@@ -3594,7 +3594,7 @@ export const Journal: {
   },
   {
     name: 'Puny Penitent',
-    desc: 'TODO',
+    desc: 'A small, shackled, and cowled bug that committed a sin within the Citadel.',
     gameId: 'Slab Prisoner Fly New',
     img: () => (
       <img src={Puny_Penitent} height={48} width={48} className="inline" alt="Puny Penitent" />
@@ -3611,7 +3611,7 @@ export const Journal: {
   },
   {
     name: 'Freshfly',
-    desc: 'TODO',
+    desc: 'An infant fly, freshly hatched. Can be found during the Broodmother fight.',
     gameId: 'Slab Fly Small Fresh',
     img: () => <img src={Freshfly} height={48} width={48} className="inline" alt="Freshfly" />,
     markers: [
@@ -3626,7 +3626,7 @@ export const Journal: {
   },
   {
     name: 'Scabfly',
-    desc: 'TODO',
+    desc: 'Sticky young flies, born and grown in service to the Slab.',
     gameId: 'Slab Fly Small',
     img: () => <img src={Scabfly} height={48} width={48} className="inline" alt="Scabfly" />,
     markers: [
@@ -3641,7 +3641,7 @@ export const Journal: {
   },
   {
     name: 'Guardfly',
-    desc: 'TODO',
+    desc: 'A starved servant of the Slab, bearing a hooked longpin.',
     gameId: 'Slab Fly Mid',
     img: () => <img src={Guardfly} height={48} width={48} className="inline" alt="Guardfly" />,
     markers: [
@@ -3656,7 +3656,7 @@ export const Journal: {
   },
   {
     name: 'Wardenfly',
-    desc: 'TODO',
+    desc: 'A heavy, hairy jailer responsible for capturing sinners and punishing prisoners.',
     gameId: 'Slab Fly Large',
     img: () => <img src={Wardenfly} height={48} width={48} className="inline" alt="Wardenfly" />,
     markers: [
@@ -3671,7 +3671,7 @@ export const Journal: {
   },
   {
     name: 'Broodmother',
-    desc: 'TODO',
+    desc: 'Mad matriarch of the Slab, rarely seen outside her warren. From her, all jailers are born and bred.',
     gameId: 'Slab Fly Broodmother',
     img: () => (
       <img src={Broodmother} height={48} width={48} className="inline" alt="Broodmother" />
@@ -3688,7 +3688,7 @@ export const Journal: {
   },
   {
     name: 'Driftlin',
-    desc: 'TODO',
+    desc: 'A gentle glider found in Mount Fay. Its downy wings and cowl provide resistance to extremely cold temperatures.',
     gameId: 'Peaks Drifter',
     img: () => <img src={Driftlin} height={48} width={48} className="inline" alt="Driftlin" />,
     markers: [
@@ -3703,7 +3703,7 @@ export const Journal: {
   },
   {
     name: 'Mnemonid',
-    desc: 'TODO',
+    desc: 'A flighted creature formed from coldshard that will quickly reform if shattered.',
     gameId: 'Crystal Drifter',
     img: () => <img src={Mnemonid} height={48} width={48} className="inline" alt="Mnemonid" />,
     markers: [
@@ -3718,7 +3718,7 @@ export const Journal: {
   },
   {
     name: 'Mnemonord',
-    desc: 'TODO',
+    desc: 'A huge, flighted creature formed from coldshard.',
     gameId: 'Crystal Drifter Giant',
     img: () => <img src={Mnemonord} height={48} width={48} className="inline" alt="Mnemonord" />,
     markers: [
@@ -3733,7 +3733,7 @@ export const Journal: {
   },
   {
     name: 'Servitor Ignim',
-    desc: 'TODO',
+    desc: 'Small constructs built by Weavers past, brought to life through Silk runes threaded within.',
     gameId: 'Weaver Servitor',
     img: () => (
       <img src={Servitor_Ignim} height={48} width={48} className="inline" alt="Servitor Ignim" />
@@ -3750,7 +3750,7 @@ export const Journal: {
   },
   {
     name: 'Servitor Boran',
-    desc: 'TODO',
+    desc: 'A broken construct built by Weavers of the past, the Servitor Boran is able to fire a focused beam of silklight to carve halls and chambers through ice and bone.',
     gameId: 'Weaver Servitor Large',
     img: () => (
       <img src={Servitor_Boran} height={48} width={48} className="inline" alt="Servitor Boran" />
@@ -3767,7 +3767,7 @@ export const Journal: {
   },
   {
     name: 'Winged Lifeseed',
-    desc: 'TODO',
+    desc: 'A mindless sack filled with Plasmium. When broken, the Plasmium can be consumed for temporary health benefits.',
     gameId: 'Lifeblood Fly',
     img: () => (
       <img src={Winged_Lifeseed} height={48} width={48} className="inline" alt="Winged Lifeseed" />
@@ -3784,7 +3784,7 @@ export const Journal: {
   },
   {
     name: 'Plasmid',
-    desc: 'TODO',
+    desc: 'A mutated young worm infected with Plasmium.',
     gameId: 'Bone Worm BlueBlood',
     img: () => <img src={Plasmid} height={48} width={48} className="inline" alt="Plasmid" />,
     markers: [
@@ -3799,7 +3799,7 @@ export const Journal: {
   },
   {
     name: 'Plasmidas',
-    desc: 'TODO',
+    desc: 'A large worm heavily mutated by Plasmium, fused to the roof of its cave and no longer able to move freely.',
     gameId: 'Bone Worm BlueTurret',
     img: () => <img src={Plasmidas} height={48} width={48} className="inline" alt="Plasmidas" />,
     markers: [
@@ -3814,7 +3814,7 @@ export const Journal: {
   },
   {
     name: 'Plasmified Zango',
-    desc: 'TODO',
+    desc: "Husk of an alchemist's assistant granted false life by Plasmium.",
     gameId: 'Blue Assistant',
     img: () => (
       <img
@@ -3837,7 +3837,7 @@ export const Journal: {
   },
   {
     name: 'Leaf Glider',
-    desc: 'TODO',
+    desc: "A fine winged flyer that survives in flocks. They are so light they can rest atop still water's surface.",
     gameId: 'Lilypad Fly',
     img: () => (
       <img src={Leaf_Glider} height={48} width={48} className="inline" alt="Leaf Glider" />
@@ -3855,7 +3855,7 @@ export const Journal: {
   },
   {
     name: 'Leaf Roller',
-    desc: 'TODO',
+    desc: 'A pointed scurrier that poses as plant life.',
     gameId: 'Grass Goomba',
     img: () => (
       <img src={Leaf_Roller} height={48} width={48} className="inline" alt="Leaf Roller" />
@@ -3873,7 +3873,7 @@ export const Journal: {
   },
   {
     name: 'Pendra',
-    desc: 'TODO',
+    desc: 'A flighty insect that lives beside still waters. Though generally passive, their sharp masks can cause injury if carelessly blundered into.',
     gameId: 'Hornet Dragonfly',
     img: () => <img src={Pendra} height={48} width={48} className="inline" alt="Pendra" />,
     markers: [
@@ -3889,7 +3889,7 @@ export const Journal: {
   },
   {
     name: 'Pendragor',
-    desc: 'TODO',
+    desc: 'A heavy insect that lives near large bodies of water. Its weighty body is best avoided.',
     gameId: 'Dragonfly Large',
     img: () => <img src={Pendragor} height={48} width={48} className="inline" alt="Pendragor" />,
     markers: [
@@ -3905,7 +3905,7 @@ export const Journal: {
   },
   {
     name: 'Nuphar',
-    desc: 'TODO',
+    desc: 'A predatory plant with a powerful jaw shaped to resemble a lily pad.',
     gameId: 'Lilypad Trap',
     img: () => <img src={Nuphar} height={48} width={48} className="inline" alt="Nuphar" />,
     markers: [
@@ -3921,7 +3921,7 @@ export const Journal: {
   },
   {
     name: 'Cloverstag',
-    desc: 'TODO',
+    desc: "A placid native of Verdania, the Cloverstag's hide closely mimics the flora of its territory.",
     gameId: 'Cloverstag',
     img: () => <img src={Cloverstag} height={48} width={48} className="inline" alt="Cloverstag" />,
     markers: [
@@ -3937,7 +3937,7 @@ export const Journal: {
   },
   {
     name: 'Palestag',
-    desc: 'TODO',
+    desc: "Fabled first Cloverstag of Verdania's wilds. Commands the grass and leaves to aid its attack.",
     gameId: 'Cloverstag White',
     img: () => <img src={Palestag} height={48} width={48} className="inline" alt="Palestag" />,
     markers: [
@@ -3957,7 +3957,7 @@ export const Journal: {
   },
   {
     name: 'Kindanir',
-    desc: 'TODO',
+    desc: 'Child of Verdania, fully capable to fight despite its young age. Fierce and fast, and defending their lands even from birth.',
     gameId: 'Grasshopper Child',
     img: () => <img src={Kindanir} height={48} width={48} className="inline" alt="Kindanir" />,
     markers: [
@@ -3973,7 +3973,7 @@ export const Journal: {
   },
   {
     name: 'Verdanir',
-    desc: 'TODO',
+    desc: 'A darting warrior with sharpened forelimbs and heightened senses.',
     gameId: 'Grasshopper Slasher',
     img: () => <img src={Verdanir} height={48} width={48} className="inline" alt="Verdanir" />,
     markers: [
@@ -3989,7 +3989,7 @@ export const Journal: {
   },
   {
     name: 'Escalion',
-    desc: 'TODO',
+    desc: 'A blindingly fast, winged warrior able to launch pointed pinions from its forelimbs.',
     gameId: 'Grasshopper Fly',
     img: () => <img src={Escalion} height={48} width={48} className="inline" alt="Escalion" />,
     markers: [
@@ -4005,7 +4005,7 @@ export const Journal: {
   },
   {
     name: 'Clover Dancers',
-    desc: 'TODO',
+    desc: 'Dual princes of old Verdania, beloved by their subjects for their grace and for the ballet of death they delivered upon outsiders.',
     gameId: 'Clover Dancer',
     img: () => (
       <img src={Clover_Dancers} height={48} width={48} className="inline" alt="Clover Dancers" />
@@ -4022,7 +4022,7 @@ export const Journal: {
   },
   {
     name: 'Shadow Creeper',
-    desc: 'TODO',
+    desc: 'A shell-plated worm found only in the deepest depths.',
     gameId: 'Abyss Crawler',
     img: () => (
       <img src={Shadow_Creeper} height={48} width={48} className="inline" alt="Shadow Creeper" />
@@ -4039,7 +4039,7 @@ export const Journal: {
   },
   {
     name: 'Shadow Charger',
-    desc: 'TODO',
+    desc: 'A bulky worm that inhabits the deepest depths, living in tight crevices and using its weighty body to batter foes.',
     gameId: 'Abyss Crawler Large',
     img: () => (
       <img src={Shadow_Charger} height={48} width={48} className="inline" alt="Shadow Charger" />
@@ -4056,7 +4056,7 @@ export const Journal: {
   },
   {
     name: 'Gloomsac',
-    desc: 'TODO',
+    desc: 'A tiny, empty creature that is barely a bug. It swallows its prey whole and sucks their nutrients until nothing remains.',
     gameId: 'Gloomfly',
     img: () => <img src={Gloomsac} height={48} width={48} className="inline" alt="Gloomsac" />,
     markers: [
@@ -4071,7 +4071,7 @@ export const Journal: {
   },
   {
     name: 'Gargant Gloom',
-    desc: 'TODO',
+    desc: 'An enormous tubular beast uniquely suited to living close to the void below.',
     gameId: 'Gloom Beast',
     img: () => (
       <img src={Gargant_Gloom} height={48} width={48} className="inline" alt="Gargant Gloom" />
@@ -4088,7 +4088,7 @@ export const Journal: {
   },
   {
     name: 'Void Tendrils',
-    desc: 'TODO',
+    desc: 'Lashing fragments of pure darkness, shaped into sharpened tentacles.',
     gameId: 'Void Tendrils',
     img: () => (
       <img src={Void_Tendrils} height={48} width={48} className="inline" alt="Void Tendrils" />
@@ -4105,22 +4105,17 @@ export const Journal: {
   },
   {
     name: 'Void Mass',
-    desc: 'TODO',
+    desc: "A dense knot of husks bound tight by void-soaked Silk. There are 41 across Pharloom; locations will be updated when I'm less lazy.", // TODO
     gameId: 'Black Thread Core',
     img: () => <img src={Void_Mass} height={48} width={48} className="inline" alt="Void Mass" />,
-    markers: [
-      {
-        label: 'Can be found here.',
-        // TODO
-      },
-    ],
+    markers: [],
     isCounted: true,
     required: 8,
     act: 3,
   },
   {
     name: 'Summoned Saviour',
-    desc: 'TODO',
+    desc: "A creature born of a bug's desperate hope for strength.",
     gameId: 'Abyss Mass',
     img: () => (
       <img
@@ -4131,19 +4126,14 @@ export const Journal: {
         alt="Summoned Saviour"
       />
     ),
-    markers: [
-      {
-        label: 'Can be found here.',
-        // TODO
-      },
-    ],
+    markers: [],
     isCounted: 'steel',
     required: 1,
     act: 3,
   },
   {
     name: 'Wingmould',
-    desc: 'Can only be found in the Red Memory.',
+    desc: 'A false fly with a rune-etched shell, representing a tortured mix of soul and void. Can only be found in the Red Memory.',
     gameId: 'White Palace Fly',
     img: () => <img src={Wingmould} height={48} width={48} className="inline" alt="Wingmould" />,
     markers: [
@@ -4158,7 +4148,7 @@ export const Journal: {
   },
   {
     name: 'Garpid',
-    desc: 'TODO',
+    desc: 'A sightless burrower that reacts violently to the slightest sound.',
     gameId: 'Centipede Trap',
     img: () => <img src={Garpid} height={48} width={48} className="inline" alt="Garpid" />,
     markers: [
@@ -4173,7 +4163,7 @@ export const Journal: {
   },
   {
     name: 'Imoba',
-    desc: 'TODO',
+    desc: 'A slow drifting bug with a heavy top shell.',
     gameId: 'Spike Lazy Flyer',
     img: () => <img src={Imoba} height={48} width={48} className="inline" alt="Imoba" />,
     markers: [
@@ -4188,7 +4178,7 @@ export const Journal: {
   },
   {
     name: 'Skrill',
-    desc: 'TODO',
+    desc: 'A common crawler that lives beneath the sand.',
     gameId: 'Surface Scuttler',
     img: () => <img src={Skrill} height={48} width={48} className="inline" alt="Skrill" />,
     markers: [
@@ -4203,7 +4193,7 @@ export const Journal: {
   },
   {
     name: 'Bell Eater',
-    desc: 'Can be fought at any Bellway in Act III.',
+    desc: "A long dormant centipede, awoken and enraged by Pharloom's crumbling collapse. Can be fought at any Bellway in Act III.",
     gameId: 'Giant Centipede',
     img: () => <img src={Bell_Eater} height={48} width={48} className="inline" alt="Bell Eater" />,
     markers: [],
@@ -4213,7 +4203,7 @@ export const Journal: {
   },
   {
     name: 'Huge Flea',
-    desc: 'TODO',
+    desc: 'An oversized flea, briefly consumed by anger after its long confinement in a cage.',
     gameId: 'Giant Flea',
     img: () => <img src={Huge_Flea} height={48} width={48} className="inline" alt="Huge Flea" />,
     markers: [
@@ -4228,7 +4218,7 @@ export const Journal: {
   },
   {
     name: 'Shakra',
-    desc: 'TODO',
+    desc: "Warrior cartographer of a tribe from Pharloom's edge.",
     gameId: 'Shakra',
     img: () => <img src={Shakra} height={48} width={48} className="inline" alt="Shakra" />,
     markers: [
@@ -4248,7 +4238,7 @@ export const Journal: {
   },
   {
     name: 'Garmond & Zaza',
-    desc: 'TODO',
+    desc: 'Vigorous old knight and their noble companion, working together to see their lands cut free from haunted madness.',
     gameId: 'Garmond_Zaza',
     img: () => (
       <img src={Garmond_Zaza} height={48} width={48} className="inline" alt="Garmond & Zaza" />
@@ -4270,7 +4260,7 @@ export const Journal: {
   },
   {
     name: 'Lost Garmond',
-    desc: 'TODO',
+    desc: 'Old knight consumed by black thread.',
     gameId: 'Garmond',
     img: () => (
       <img src={Lost_Garmond} height={48} width={48} className="inline" alt="Lost Garmond" />
@@ -4287,7 +4277,7 @@ export const Journal: {
   },
   {
     name: 'Pinstress',
-    desc: 'TODO',
+    desc: 'Blade maiden of a once renown warrior sect, survived long beyond the rest of her order.',
     gameId: 'Pinstress Boss',
     img: () => <img src={Pinstress} height={48} width={48} className="inline" alt="Pinstress" />,
     markers: [
@@ -4306,7 +4296,7 @@ export const Journal: {
   },
   {
     name: 'Widow',
-    desc: 'TODO',
+    desc: 'A crazed fanatic able to guide Pharloom’s haunted Silk by music played upon it.',
     gameId: 'Spinner Boss',
     img: () => <img src={Widow} height={48} width={48} className="inline" alt="Widow" />,
     markers: [
@@ -4321,7 +4311,7 @@ export const Journal: {
   },
   {
     name: 'First Sinner',
-    desc: 'TODO',
+    desc: 'Ancient Weaver condemned for a transgression lost to time.',
     gameId: 'First Weaver',
     img: () => (
       <img src={First_Sinner} height={48} width={48} className="inline" alt="First Sinner" />
@@ -4346,7 +4336,7 @@ export const Journal: {
   },
   {
     name: 'Phantom',
-    desc: 'TODO',
+    desc: "A mournful creature tasked alone to expel the Citadel's choking refuse. Their talent with a longpin is unmatched.",
     gameId: 'Phantom',
     img: () => <img src={Phantom} height={48} width={48} className="inline" alt="Phantom" />,
     markers: [
@@ -4361,7 +4351,7 @@ export const Journal: {
   },
   {
     name: 'Lace',
-    desc: 'TODO',
+    desc: 'Manic fencer who delights in battle.',
     gameId: 'Lace',
     img: () => <img src={Lace} height={48} width={48} className="inline" alt="Lace" />,
     markers: [
@@ -4380,7 +4370,7 @@ export const Journal: {
   },
   {
     name: 'Grand Mother Silk',
-    desc: 'TODO',
+    desc: 'Monarch of Pharloom, and the primal source of Silk. The heart of the haunting, long lulled to slumber and desperate to wake.',
     gameId: 'Silk Boss',
     img: () => (
       <img
@@ -4403,7 +4393,7 @@ export const Journal: {
   },
   {
     name: 'Lost Lace',
-    desc: 'TODO',
+    desc: 'Silk-spun child possessed by the void.',
     gameId: 'Lost Lace',
     img: () => <img src={Lost_Lace} height={48} width={48} className="inline" alt="Lost Lace" />,
     markers: [
