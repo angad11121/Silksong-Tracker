@@ -1,6 +1,5 @@
-import { Locations } from '@/info/locations';
+import { Locations, JournalMarkers } from '@/info/locations';
 import { Items } from '@/info/items';
-import { SecondSentinel } from '@/info/journal';
 import type { ReactElement } from 'react';
 import type { MapLocation } from '@/ui/components/map';
 import type { SaveData } from '@/parser/types';
@@ -721,7 +720,7 @@ export const Tools: Record<
     type: 1,
     isCounted: true,
     desc: 'Reward for defeating the ||<2>Second Sentinel in the High Halls||.',
-    markers: SecondSentinel,
+    markers: JournalMarkers.SecondSentinel,
   },
   'Revenge Crystal': {
     id: 'Revenge Crystal',

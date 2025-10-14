@@ -1,4 +1,4 @@
-import { AutoJournal, Journal } from '@/info';
+import { AutoJournal, Journal } from '@/info/journal';
 import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 import { missingFirstSortComparator } from '@/ui/tabs/utils';
 import { markSpoilers } from '@/ui/tabs/SpoilerRenderer';

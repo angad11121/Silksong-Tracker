@@ -1,16 +1,12 @@
-import {
-  AncestralArts,
-  CraftingKits,
-  Crests,
-  MaskFragments,
-  NeedleUpgrades,
-  SpoolFragments,
-  ToolPouches,
-  ToolType,
-  Unravelled,
-} from '@/info';
 import { getScene } from '@/parser/metadata';
-import { Locations } from '@/info';
+import { JournalMarkers, Locations } from '@/info/locations';
+import { MaskFragments } from '@/info/masks';
+import { SpoolFragments } from '@/info/spools';
+import { NeedleUpgrades } from '@/info/needle';
+import { AncestralArts } from '@/info/arts';
+import { Crests } from '@/info/crests';
+import { ToolType } from '@/info/tools';
+import { CraftingKits, ToolPouches } from '@/info/toolkits';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 import {
@@ -22,7 +18,7 @@ import {
 
 import MaskShard from '@/assets/mask_shard.png';
 import SpoolFragment from '@/assets/spool_fragment.png';
-import SilkHeart from '@/assets/silk_heart.png';  
+import SilkHeart from '@/assets/silk_heart.png';
 import Everbloom from '@/assets/everbloom.png';
 import NeedleStrike from '@/assets/arts/needle_strike.png';
 
@@ -177,7 +173,7 @@ export const getSections = (
                     check={entry.has}
                     hint={entry.subtext}
                     data={saveData}
-                    markers={Unravelled}
+                    markers={JournalMarkers.Unravelled}
                     icon={() => (
                       <img
                         src={SilkHeart}

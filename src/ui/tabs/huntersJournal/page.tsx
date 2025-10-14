@@ -5,7 +5,7 @@ import { SectionRenderer } from '@/ui/tabs/SectionRenderer';
 import { getSections } from '@/ui/tabs/huntersJournal/sections';
 import { useSettings } from '@/ui/components/Settings';
 import { getSectionDisplayProps } from '@/ui/tabs/trueCompletion/page';
-import { Locations } from '@/info';
+import { Locations } from '@/info/locations';
 import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 import HuntersJournal from '@/assets/journal.png';
 

@@ -1,4 +1,6 @@
-import { Crests, MemoryLockets, Mementos } from '@/info';
+import { Crests } from '@/info/crests';
+import { MemoryLockets } from '@/info/lockets';
+import { Mementos } from '@/info/mementos';
 import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 import { mapPercentageSectionToTrueCompletion, missingFirstSortComparator } from '@/ui/tabs/utils';
 import { getSections as getPercentageSectionGenerator } from '@/ui/tabs/percentage/sections';

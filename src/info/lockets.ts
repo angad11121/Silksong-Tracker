@@ -1,6 +1,5 @@
-import { getQuest, getScene, type MetadataKey } from '@/parser/metadata';
-import { Locations } from '@/info/locations';
-import { Flintbeetles } from '@/info/journal';
+import { getQuest, getScene } from '@/parser/metadata';
+import { Locations, JournalMarkers } from '@/info/locations';
 import type { SaveData } from '@/parser/types';
 import type { MapLocation } from '@/ui/components/map';
 
@@ -16,7 +15,7 @@ export const MemoryLockets: {
     desc: 'Complete the Volatile Flintbeetles quest in Bone Bottom.',
     act: 1,
     has: saveData => getQuest('Rock Rollers', saveData)?.Data.IsCompleted ?? false,
-    markers: Flintbeetles,
+    markers: JournalMarkers.Flintbeetles,
   },
   {
     id: 2,

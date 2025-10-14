@@ -79,12 +79,17 @@ function getHeaders(
   }
 
   if (tab === TabType.HuntersJournalData) {
-    const sections = getHuntersJournalSections(
-      showMissingFirst,
-      spoilerLevel,
-      saveData.playerData.permadeathMode > 0,
-    );
-    return extractSidebarItems(sections, saveData, 0, 1);
+    // Hardcoding instead of importing the whole journal
+    return [
+      {
+        name: 'Missable Entries',
+        id: 'missable-entries',
+      },
+      {
+        name: 'All Entries',
+        id: 'all-entries',
+      },
+    ];
   }
 
   return [];

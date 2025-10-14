@@ -1,4 +1,4 @@
-import { SilkshotVariants, ToolType, Tools } from '@/info/index';
+import { SilkshotVariants, ToolType, Tools } from '@/info/tools';
 import { hasTool } from '@/parser/metadata';
 import { getPercentageFromEntry } from '@/parser/percentage';
 import { CustomHas, type LeafSection, type Section } from '@/ui/tabs/types';

@@ -1,6 +1,5 @@
 import { CustomHas } from '@/ui/tabs/types';
-import { Locations } from '@/info/locations';
-import type { MetadataKey } from '@/parser/metadata';
+import { JournalMarkers, Locations } from '@/info/locations';
 import type { ReactElement } from 'react';
 import type { MapLocation } from '@/ui/components/map/types';
 import type { SaveData } from '@/parser/types';
@@ -242,97 +241,6 @@ import Phantom from '@/assets/journal/Phantom.png';
 import Lace from '@/assets/journal/Lace.png';
 import Grand_Mother_Silk from '@/assets/journal/Grand_Mother_Silk.png';
 import Lost_Lace from '@/assets/journal/Lost_Lace.png';
-
-export const Flintbeetles: (saveData: SaveData) => MapLocation[] = saveData => [
-  {
-    label: 'Promise the Volatile Flintbeetles wish.',
-    location: Locations.BoneBottom,
-  },
-  ...(
-    [
-      {
-        key: 'rockRollerDefeated_bone01',
-        getMarker: () => [
-          {
-            label: 'Defeat the Flintbeetle and collect the Flintgem.',
-            location: { x: 1304, y: 2598 },
-          },
-        ],
-      },
-      {
-        key: 'rockRollerDefeated_bone06',
-        getMarker: () => [
-          {
-            label: 'Defeat the Flintbeetle and collect the Flintgem.',
-            location: { x: 1610, y: 2316 },
-          },
-        ],
-      },
-      // TODO: This location is different depending on playerData.bone03_openedTrapdoorForRockRoller
-      {
-        key: 'rockRollerDefeated_bone07',
-        getMarker: () => [
-          {
-            label: 'Defeat the Flintbeetle and collect the Flintgem.',
-            location: { x: 2024, y: 2451 },
-          },
-        ],
-      },
-    ] satisfies { key: MetadataKey; getMarker: (saveData: SaveData) => MapLocation[] }[]
-  )
-    .filter(beetle => !saveData.playerData[beetle.key])
-    .flatMap(beetle => beetle.getMarker()),
-  {
-    label: 'Turn over the Flintgems to receive a Memory Locket.',
-    location: Locations.BoneBottom,
-  },
-];
-
-export const SecondSentinel: MapLocation[] = [
-  {
-    label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
-    location: { x: 1918, y: 898 },
-  },
-  {
-    label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
-    location: { x: 3070, y: 1122 },
-  },
-  {
-    label: 'Collect the Cogheart Piece by hitting the bells in the correct order.',
-    location: { x: 3050, y: 690 },
-  },
-  {
-    label: 'Revive the Second Sentinel.',
-    location: { x: 2462, y: 848 },
-  },
-  {
-    label: 'Encounter the Second Sentinel.',
-    location: { x: 2527, y: 1077 },
-  },
-  {
-    label: 'Encounter the Second Sentinel.',
-    location: { x: 2859, y: 789 },
-  },
-  {
-    label: "Accept the Second Sentinel's challenge.",
-    location: Locations.Songclave,
-  },
-  {
-    label: 'Defeat the Second Sentinel.',
-    location: { x: 2421, y: 703 },
-  },
-];
-
-export const Unravelled: MapLocation[] = [
-  {
-    label: "Acquire the Surgeon's Key.",
-    location: { x: 2624, y: 1214 },
-  },
-  {
-    label: 'Defeat the Unravelled.',
-    location: { x: 2156, y: 1355 },
-  },
-];
 
 export enum AutoJournal {
   Coral = 'coral',
@@ -701,7 +609,7 @@ export const Journal: {
     img: () => (
       <img src={Flintbeetle} height={48} width={48} className="inline" alt="Flintbeetle" />
     ),
-    markers: Flintbeetles,
+    markers: JournalMarkers.Flintbeetles,
     isCounted: false,
     required: 3,
     act: 1,
@@ -3200,7 +3108,7 @@ export const Journal: {
     img: () => (
       <img src={Second_Sentinel} height={48} width={48} className="inline" alt="Second Sentinel" />
     ),
-    markers: SecondSentinel,
+    markers: JournalMarkers.SecondSentinel,
     isCounted: true,
     required: 1,
     act: 2,
@@ -3274,7 +3182,7 @@ export const Journal: {
     img: () => (
       <img src={The_Unravelled} height={48} width={48} className="inline" alt="The Unravelled" />
     ),
-    markers: Unravelled,
+    markers: JournalMarkers.Unravelled,
     isCounted: true,
     required: 1,
     act: 2,
