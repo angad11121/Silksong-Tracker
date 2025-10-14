@@ -83,7 +83,7 @@ export const getSections = (
                         title: 'Crest of the Hunter',
                         subtext: 'The Crest of the Hunter is acquired at the start of the game.',
                         has: () => true,
-                        render: ({ saveData, entry }) => {
+                        render: ({ saveData, entry, parents }) => {
                           const crest = Crests.find(entry => entry.gameId === 'Hunter')!;
                           return (
                             <LeafRenderer
@@ -93,6 +93,7 @@ export const getSections = (
                               data={saveData}
                               markers={crest.markers}
                               icon={crest.img!}
+                              parents={parents}
                             />
                           );
                         },
@@ -118,7 +119,7 @@ export const getSections = (
                 has: locket.has,
                 title: 'Memory Locket',
                 subtext: locket.desc,
-                render: ({ entry }) => (
+                render: ({ entry, parents }) => (
                   <LeafRenderer
                     id={locket.id}
                     check={entry.has}
@@ -134,6 +135,7 @@ export const getSections = (
                         className="inline"
                       />
                     )}
+                    parents={parents}
                   />
                 ),
               })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),

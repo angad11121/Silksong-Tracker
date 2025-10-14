@@ -133,7 +133,7 @@ function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
       hasTool(tool.id, saveData) ||
       (tool.upgradesTo && hasTool(tool.upgradesTo!, saveData) ? CustomHas.ToolUpgrade : false) ||
       (tool.isUpgrade && hasTool(tool.isUpgrade!, saveData) ? CustomHas.MissingUpgrade : false),
-    render: ({ saveData, entry }) => (
+    render: ({ saveData, entry, parents }) => (
       <LeafRenderer
         id={tool.upgradesTo || tool.isUpgrade ? tool.displayName : null}
         data={saveData}
@@ -141,6 +141,7 @@ function getToolChild(tool: (typeof Tools)[keyof typeof Tools]): LeafSection {
         check={entry.has}
         hint={tool.desc}
         markers={tool.markers}
+        parents={parents}
       />
     ),
   };

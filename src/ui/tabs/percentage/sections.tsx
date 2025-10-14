@@ -36,12 +36,17 @@ export const getSections = (
           'There are 20 Mask Fragments available. All of them are required for 100% completion.',
         layout: 'grid',
         children: saveData =>
-          MaskFragments.map(fragment => ({
+          MaskFragments.map<LeafSection>(fragment => ({
             title: fragment.hint,
             subtext: fragment.hint,
             has: fragment.check,
-            render: () => (
-              <LeafRenderer {...fragment} data={saveData} icon={LeafRendererType.Mask} />
+            render: ({ parents }) => (
+              <LeafRenderer
+                {...fragment}
+                data={saveData}
+                icon={LeafRendererType.Mask}
+                parents={parents}
+              />
             ),
           })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
@@ -55,12 +60,17 @@ export const getSections = (
           'There are 18 spool fragments available, for a total of 9 extra spool extensions. All of them are required for 100% completion.',
         layout: 'grid',
         children: saveData =>
-          SpoolFragments.map(fragment => ({
+          SpoolFragments.map<LeafSection>(fragment => ({
             title: fragment.hint,
             subtext: fragment.hint,
             has: fragment.check,
-            render: () => (
-              <LeafRenderer {...fragment} data={saveData} icon={LeafRendererType.Spool} />
+            render: ({ parents }) => (
+              <LeafRenderer
+                {...fragment}
+                data={saveData}
+                icon={LeafRendererType.Spool}
+                parents={parents}
+              />
             ),
           })).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
         ctx: {
@@ -80,7 +90,7 @@ export const getSections = (
                 subtext: 'A Silk Heart is awarded for defeating the Bell Beast.',
                 has: () =>
                   getScene('Memory_Silk_Heart_BellBeast', 'glow_rim_Remasker', saveData)?.Value,
-                render: ({ entry }) => (
+                render: ({ entry, parents }) => (
                   <LeafRenderer
                     id={1}
                     check={entry.has}
@@ -93,6 +103,7 @@ export const getSections = (
                       },
                     ]}
                     icon={LeafRendererType.SilkHeart}
+                    parents={parents}
                   />
                 ),
               },
@@ -102,7 +113,7 @@ export const getSections = (
                 act: 2,
                 has: () =>
                   getScene('Memory_Silk_Heart_LaceTower', 'glow_rim_Remasker', saveData)?.Value,
-                render: ({ entry }) => (
+                render: ({ entry, parents }) => (
                   <LeafRenderer
                     id={2}
                     check={entry.has}
@@ -115,6 +126,7 @@ export const getSections = (
                       },
                     ]}
                     icon={LeafRendererType.SilkHeart}
+                    parents={parents}
                   />
                 ),
               },
@@ -125,7 +137,7 @@ export const getSections = (
                 act: 2,
                 has: () =>
                   getScene('Memory_Silk_Heart_WardBoss', 'glow_rim_Remasker', saveData)?.Value,
-                render: ({ entry }) => (
+                render: ({ entry, parents }) => (
                   <LeafRenderer
                     id={3}
                     check={entry.has}
@@ -133,6 +145,7 @@ export const getSections = (
                     data={saveData}
                     markers={Unravelled}
                     icon={LeafRendererType.SilkHeart}
+                    parents={parents}
                   />
                 ),
               },
@@ -166,7 +179,7 @@ export const getSections = (
               subtext: level.desc,
               act: upgrade.act,
               has: () => upgrade.done,
-              render: ({ saveData }) => (
+              render: ({ saveData, parents }) => (
                 <LeafRenderer
                   id={
                     spoilerLevel >= upgrade.act ? level.name : `||<${upgrade.act}>${level.name}||`
@@ -176,6 +189,7 @@ export const getSections = (
                   markers={upgrade.markers}
                   data={saveData}
                   icon={level.img}
+                  parents={parents}
                 />
               ),
             };
@@ -203,7 +217,7 @@ export const getSections = (
                     title: art.name,
                     subtext: art.desc,
                     has: () => computePercentage(art.has, saveData) === art.percentage,
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={null}
                         check={entry.has}
@@ -211,6 +225,7 @@ export const getSections = (
                         data={saveData}
                         markers={art.markers}
                         icon={art.img}
+                        parents={parents}
                       />
                     ),
                   },
@@ -251,7 +266,7 @@ export const getSections = (
                       saveData.playerData.ToolEquips.savedData.some(
                         gameCrest => gameCrest.Name === crest.gameId,
                       ),
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={null}
                         check={entry.has}
@@ -259,6 +274,7 @@ export const getSections = (
                         data={saveData}
                         markers={crest.markers}
                         icon={crest.img!}
+                        parents={parents}
                       />
                     ),
                   },
@@ -305,7 +321,7 @@ export const getSections = (
             title: 'Needle Strike',
             subtext:
               'The Needle Strike is acquired by talking to the Pinstress in the Blasted Steps. The Great Conchflies must be fought to access her.',
-            render: ({ saveData, entry }) => (
+            render: ({ saveData, entry, parents }) => (
               <LeafRenderer
                 id={null}
                 check={saveData => saveData.playerData.hasChargeSlash}
@@ -318,6 +334,7 @@ export const getSections = (
                   },
                 ]}
                 icon={LeafRendererType.NeedleStrike}
+                parents={parents}
               />
             ),
           },
@@ -336,7 +353,7 @@ export const getSections = (
             title: 'Everbloom',
             subtext:
               'The Everbloom is acquired by talking to the Snail Shamans in the Ruined Chapel after acquiring three Hearts in Act III.',
-            render: ({ saveData, entry }) => (
+            render: ({ saveData, entry, parents }) => (
               <LeafRenderer
                 id={null}
                 check={getPercentageFromEntry('Collectables', saveData) === 1}
@@ -349,6 +366,7 @@ export const getSections = (
                   },
                 ]}
                 icon={LeafRendererType.Everbloom}
+                parents={parents}
               />
             ),
           },
@@ -440,7 +458,7 @@ export const getSections = (
                     title: 'Crafting Kit #1',
                     subtext:
                       'A Crafting Kit can be purchased from Forge Daughter for 180 rosaries.',
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={1}
                         check={() => saveData.playerData.PurchasedForgeToolKit}
@@ -453,6 +471,7 @@ export const getSections = (
                           },
                         ]}
                         icon={LeafRendererType.CraftingKit}
+                        parents={parents}
                       />
                     ),
                   },
@@ -460,7 +479,7 @@ export const getSections = (
                     title: 'Crafting Kit #2',
                     subtext:
                       "A Crafting Kit is rewarded by Creige in Greymoor's Halfway Home for completing the Crawbug Clearing quest.",
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={2}
                         check={() =>
@@ -476,6 +495,7 @@ export const getSections = (
                           },
                         ]}
                         icon={LeafRendererType.CraftingKit}
+                        parents={parents}
                       />
                     ),
                   },
@@ -484,7 +504,7 @@ export const getSections = (
                     subtext:
                       'A Crafting Kit can be purchased from the ||<2>Twelfth Architect in the Underworks for 450 rosaries||.',
                     act: 2,
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={3}
                         check={() => saveData.playerData.PurchasedArchitectToolKit}
@@ -497,6 +517,7 @@ export const getSections = (
                           },
                         ]}
                         icon={LeafRendererType.CraftingKit}
+                        parents={parents}
                       />
                     ),
                   },
@@ -505,7 +526,7 @@ export const getSections = (
                     subtext:
                       'A Crafting Kit can be purchased from ||<2>Grindle in the Blasted Steps for 700 rosaries||.',
                     act: 2,
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={4}
                         check={() => saveData.playerData.purchasedGrindleToolKit}
@@ -518,6 +539,7 @@ export const getSections = (
                           },
                         ]}
                         icon={LeafRendererType.CraftingKit}
+                        parents={parents}
                       />
                     ),
                   },
@@ -540,7 +562,7 @@ export const getSections = (
                     title: 'Tool Pouch Upgrade #1',
                     subtext:
                       'A Tool Pouch can be won from Loddie in the Marrow by hitting 15 targets in a row. ||<3>It can be picked up from a table in the same room in Act III||.',
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={1}
                         check={
@@ -559,6 +581,7 @@ export const getSections = (
                           },
                         ]}
                         icon={LeafRendererType.ToolPouch}
+                        parents={parents}
                       />
                     ),
                   },
@@ -566,7 +589,7 @@ export const getSections = (
                     title: 'Tool Pouch Upgrade #2',
                     subtext:
                       "A Tool Pouch can be purchased from Mort in the Pilgrim's Rest in Far Fields for 220 rosaries.",
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={2}
                         check={() => saveData.playerData.PurchasedPilgrimsRestToolPouch}
@@ -579,6 +602,7 @@ export const getSections = (
                           },
                         ]}
                         icon={LeafRendererType.ToolPouch}
+                        parents={parents}
                       />
                     ),
                   },
@@ -586,7 +610,7 @@ export const getSections = (
                     title: 'Tool Pouch Upgrade #3',
                     subtext:
                       'Given by Nuu in Halfway Home in Greymoor after completing the Bugs of Pharloom quest.',
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={4}
                         check={() => getQuest('Journal', saveData)?.Data.IsCompleted}
@@ -599,6 +623,7 @@ export const getSections = (
                           },
                         ]}
                         icon={LeafRendererType.ToolPouch}
+                        parents={parents}
                       />
                     ),
                   },
@@ -607,7 +632,7 @@ export const getSections = (
                     subtext:
                       '||<2>Mooshka gives you a Tool Pouch upgrade after moving to Fleatopia||.',
                     act: 2,
-                    render: ({ entry }) => (
+                    render: ({ entry, parents }) => (
                       <LeafRenderer
                         id={3}
                         check={() =>
@@ -623,6 +648,7 @@ export const getSections = (
                           },
                         ]}
                         icon={LeafRendererType.ToolPouch}
+                        parents={parents}
                       />
                     ),
                   },

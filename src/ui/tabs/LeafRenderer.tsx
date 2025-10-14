@@ -1,10 +1,10 @@
-import { useState, type ReactElement } from 'react';
+import { useState, type ReactElement, useCallback } from 'react';
 import { MapIcon, SilksongMap, type MapLocation } from '@/ui/components/map';
 import { SpoilerRenderer } from '@/ui/tabs/SpoilerRenderer';
-import { Tooltip } from '@/ui/components/Tooltip';
-import { useSectionLayout } from '@/ui/tabs/SectionRenderer';
-import type { SaveData } from '@/parser/types';
+import { useSetSpanningSections } from '@/ui/hooks/useSpanningSection';
 import { CustomHas, type Section } from '@/ui/tabs/types';
+import { Tooltip } from '@/ui/components/Tooltip';
+import type { SaveData } from '@/parser/types';
 
 import MaskShard from '@/assets/mask_shard.png';
 import SpoolFragment from '@/assets/spool_fragment.png';
@@ -58,10 +58,10 @@ export function LeafRenderer({
   hint,
   data,
   markers,
-  parent,
+  parents,
 }: {
   id: number | string | null;
-  parent?: Section | null;
+  parents: Section<any>[];
   check: ((data: SaveData) => boolean | CustomHas | undefined) | boolean | CustomHas | undefined;
   hint: string;
   data: SaveData;
@@ -72,10 +72,29 @@ export function LeafRenderer({
   const [showMap, setShowMap] = useState(false);
   const Image = typeof type === 'function' ? type : Images[type];
 
-  const layout = useSectionLayout();
+  const { addSpanningSection, removeSpanningSection } = useSetSpanningSections();
+  const [selfSpan, setSelfSpan] = useState(false);
+
+  const onMapToggle = useCallback(() => {
+    const newShowMap = !showMap;
+
+    const parentGridIndex = parents.findLastIndex(p => p.layout === 'grid');
+    const parentGridChild = parents[parentGridIndex + 1];
+    if (parentGridChild) {
+      if (newShowMap) {
+        addSpanningSection(parentGridChild);
+      } else {
+        removeSpanningSection(parentGridChild);
+      }
+    } else if (parentGridIndex !== -1) {
+      // The LeafSection is the one that needs the colspan
+      setSelfSpan(newShowMap);
+    }
+    setShowMap(newShowMap);
+  }, [showMap, parents, addSpanningSection, removeSpanningSection]);
 
   return (
-    <div className={`pl-1 my-4 ${layout === 'grid' && showMap ? 'col-span-2' : ''}`}>
+    <div className="pl-1 my-4" style={selfSpan ? { gridColumn: '1/-1' } : undefined}>
       <div>
         <Image />
         {typeof id === 'number' || typeof id === 'string' ? (
@@ -108,7 +127,7 @@ export function LeafRenderer({
         {markers?.length > 0 ? (
           <Tooltip content={showMap ? 'Hide Map' : 'Show Map'}>
             <button
-              onClick={() => setShowMap(!showMap)}
+              onClick={onMapToggle}
               className="mx-2 cursor-pointer bg-[#eee6] hover:bg-[#eee8] hover:scale-110 duration-200 rounded-full p-1"
               data-unstyled
             >

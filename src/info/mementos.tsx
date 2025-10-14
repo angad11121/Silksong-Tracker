@@ -36,7 +36,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
         'The Surface Memento can be acquired from the Surface. Play the Needolin in the Nameless Town to receive it.',
       act: 3,
       has: saveData => hasMemento('Memento Surface', saveData),
-      render: ({ entry }) => (
+      render: ({ entry, parents }) => (
         <LeafRenderer
           icon={() => (
             <img
@@ -61,6 +61,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
               location: { x: 2644, y: -65 },
             },
           ]}
+          parents={parents}
         />
       ),
     },
@@ -70,7 +71,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
         "The Hero's Memento can be acquired from Garmond in the Blasted Steps after defeating Lost Garmond from the Hero's Call wish.",
       act: 3,
       has: saveData => hasMemento('Memento Garmond', saveData),
-      render: ({ entry }) => (
+      render: ({ entry, parents }) => (
         <LeafRenderer
           icon={() => (
             <img src={HeroMemento} height={60} width={60} alt="Hero's Memento" className="inline" />
@@ -90,6 +91,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
               location: { x: 551, y: 1643 },
             },
           ]}
+          parents={parents}
         />
       ),
     },
@@ -99,7 +101,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
         'The Craw Memento can be acquired after defeating the Crawfather in the Court of Craws in Greymoor.',
       act: 3,
       has: saveData => hasMemento('Crowman Memento', saveData),
-      render: ({ entry }) => (
+      render: ({ entry, parents }) => (
         <LeafRenderer
           icon={() => (
             <img src={CrawMemento} height={60} width={60} alt="Craw Memento" className="inline" />
@@ -118,6 +120,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
               location: { x: 3952, y: 2067 },
             },
           ]}
+          parents={parents}
         />
       ),
     },
@@ -127,7 +130,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
         'The Grey Memento can be acquired after defeating the Watcher at the Edge in the Sands of Karak.',
       act: 3,
       has: saveData => hasMemento('Grey Memento', saveData),
-      render: ({ entry }) => (
+      render: ({ entry, parents }) => (
         <LeafRenderer
           icon={() => (
             <img src={GreyMemento} height={60} width={60} alt="Grey Memento" className="inline" />
@@ -150,6 +153,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
               location: { x: 336, y: 1418 },
             },
           ]}
+          parents={parents}
         />
       ),
     },
@@ -159,7 +163,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
         'The Sprintmaster Memento can be acquired after defeating Sprintmaster Swift in the final race in the Frontier. This may only be done after obtaining the Everbloom.',
       act: 3,
       has: saveData => hasMemento('Sprintmaster Memento', saveData),
-      render: ({ entry }) => (
+      render: ({ entry, parents }) => (
         <LeafRenderer
           icon={() => (
             <img
@@ -180,6 +184,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
               location: { x: 4499, y: 2412 },
             },
           ]}
+          parents={parents}
         />
       ),
     },
@@ -189,7 +194,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
         "The Hunter's Memento can be acquired after completing the full Hunter's Journal. See the Hunter's Journal tab for more details.",
       act: 3,
       has: saveData => hasMemento('Hunter Memento', saveData),
-      render: ({ entry }) => (
+      render: ({ entry, parents }) => (
         <LeafRenderer
           icon={() => (
             <img
@@ -211,6 +216,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
               location: Locations.HalfwayHome,
             },
           ]}
+          parents={parents}
         />
       ),
     },
@@ -220,7 +226,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
         "The Guardian's Memento can be acquired after defeating all three of Seth's high scores in the Flea Games.",
       act: 3,
       has: saveData => hasMemento('Memento Seth', saveData),
-      render: ({ entry }) => (
+      render: ({ entry, parents }) => (
         <LeafRenderer
           icon={() => (
             <img
@@ -250,6 +256,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
               location: Locations.Fleatopia,
             },
           ]}
+          parents={parents}
         />
       ),
     },
@@ -265,7 +272,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
             'The Conjoined Heart can be acquired after defeating the Clover Dancers in Lost Verdania. Requires Elegy of the Deep.',
           act: 3,
           has: saveData => hasMemento('Clover Heart', saveData),
-          render: ({ entry }) => (
+          render: ({ entry, parents }) => (
             <LeafRenderer
               icon={() => (
                 <img
@@ -296,6 +303,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
                   location: { x: 4241, y: 2039 },
                 },
               ]}
+              parents={parents}
             />
           ),
         },
@@ -305,7 +313,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
             'The Encrusted Heart can be acquired after defeating the Crust King Khann in the Coral Tower. Requires Elegy of the Deep.',
           act: 3,
           has: saveData => hasMemento('Coral Heart', saveData),
-          render: ({ entry }) => (
+          render: ({ entry, parents }) => (
             <LeafRenderer
               icon={() => (
                 <img
@@ -326,6 +334,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
                   location: Locations.CoralTower,
                 },
               ]}
+              parents={parents}
             />
           ),
         },
@@ -335,7 +344,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
             'The Pollen Heart can be acquired after defeating Nyleth in Shellwood. Requires Elegy of the Deep.',
           act: 3,
           has: saveData => hasMemento('Flower Heart', saveData),
-          render: ({ entry }) => (
+          render: ({ entry, parents }) => (
             <LeafRenderer
               icon={() => (
                 <img
@@ -360,6 +369,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
                   location: { x: 1217, y: 1700 },
                 },
               ]}
+              parents={parents}
             />
           ),
         },
@@ -370,7 +380,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
             "The Hunter's Heart can be acquired after defeating Skarrsinger Karmelita in the Frontier. Requires Elegy of the Deep.",
           act: 3,
           has: saveData => hasMemento('Hunter Heart', saveData),
-          render: ({ entry }) => (
+          render: ({ entry, parents }) => (
             <LeafRenderer
               icon={() => (
                 <img
@@ -395,6 +405,7 @@ export const Mementos: Section<TrueCompletionSectionCtx> = {
                   location: { x: 4093, y: 2304 },
                 },
               ]}
+              parents={parents}
             />
           ),
         },

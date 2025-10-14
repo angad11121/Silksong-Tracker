@@ -14,15 +14,7 @@ export type LeafSection = {
   subtext: string;
   act?: 1 | 2 | 3;
   has?: (saveData: SaveData) => boolean | CustomHas | undefined;
-  render: ({
-    saveData,
-    depth,
-    entry,
-  }: {
-    saveData: SaveData;
-    depth: number;
-    entry: LeafSection;
-  }) => ReactNode;
+  render: (props: { saveData: SaveData; entry: LeafSection; parents: Section<any>[] }) => ReactNode;
 };
 
 export type Section<ExtraData = null> = {

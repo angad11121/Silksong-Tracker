@@ -47,7 +47,7 @@ export const getSections = (
           title: markSpoilers(journalEntry.name, journalEntry.act),
           subtext: markSpoilers(journalEntry.desc, journalEntry.act),
           has: () => journalEntry.missable!(saveData, obtained),
-          render: ({ entry }) => (
+          render: ({ entry, parents }) => (
             <div>
               <h3>{journalEntry.name}</h3>
               <LeafRenderer
@@ -61,6 +61,7 @@ export const getSections = (
                     ? journalEntry.markers(saveData)
                     : journalEntry.markers
                 }
+                parents={parents}
               />
             </div>
           ),
@@ -96,7 +97,7 @@ export const getSections = (
                 has: () =>
                   (dataEntry?.Record.Kills ?? 0) >= journalEntry.required ||
                   (journalEntry.auto && checkAuto(saveData, journalEntry.auto)),
-                render: ({ entry }) => (
+                render: ({ entry, parents }) => (
                   <LeafRenderer
                     id={null}
                     icon={journalEntry.img}
@@ -104,6 +105,7 @@ export const getSections = (
                     hint={entry.subtext}
                     data={saveData}
                     markers={journalEntry.markers}
+                    parents={parents}
                   />
                 ),
               },
