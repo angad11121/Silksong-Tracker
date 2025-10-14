@@ -6,7 +6,7 @@ header {
       Very opaque, for unsupported browsers.
       Overwritten in the feature queries below.
     */
-  background: hsl(0, 16.9%, 6.9% / 0.95);
+  background: hsl(0, 16.9%, 4.2% / 0.95);
 }
 
 /*
@@ -15,7 +15,7 @@ header {
   */
 @supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
   header {
-    background: hsla(0, 16.9%, 6.9% / 0.5);
+    background: hsla(0, 16.9%, 4.2% / 0.5);
   }
 
   .backdrop {
@@ -27,7 +27,7 @@ header {
       */
     -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
-    background: linear-gradient(to bottom, hsl(0, 16.9%, 6.9%), transparent 50%);
+    background: linear-gradient(to bottom, hsl(0, 16.9%, 4.2%), transparent 50%);
     pointer-events: none;
   }
 
@@ -37,7 +37,7 @@ header {
     right: 0;
     bottom: 0;
     height: var(--thickness);
-    background: hsl(0, 16.9%, 6.9% / 0.1);
+    background: hsl(0, 16.9%, 4.2% / 0.1);
     -webkit-backdrop-filter: blur(12px) brightness(0.96);
     backdrop-filter: blur(12px) brightness(0.96);
     transform: translateY(100%);
