@@ -1,4 +1,5 @@
 import { type ReactElement, useState } from 'react';
+import '@/ui/header.css';
 
 import { TabRenderer } from '@/ui/tabs';
 import { Footer } from '@/ui/components/Footer';
@@ -30,16 +31,17 @@ export default function App(): ReactElement {
   return (
     <SaveDataProvider saveData={decoded}>
       <TabStateProvider>
-        <div className="flex flex-col p-6 min-h-screen">
+        <div className="flex flex-col pb-6 min-h-screen">
           <Preload />
-          {/* TODO: Use a blackglass effect here  */}
-          <div className="bg-black flex justify-center sticky top-0 z-1">
-            <div className="flex justify-between p-6 items-center shrink w-6xl self-center">
+          <header className="flex justify-center sticky top-0 z-1 isolate">
+            <div className="backdrop" />
+            <div className="backdrop-edge" />
+            <div className="flex justify-between p-6 items-center shrink w-6xl self-center z-1">
               <h1>Silksong Progress Tracker</h1>
               <div className="grow" />
               <Settings settings={settings} onSettingsChange={settings => setSettings(settings)} />
             </div>
-          </div>
+          </header>
           <div className="flex gap-6 self-center px-6 relative max-w-screen">
             <div className="flex flex-col gap-8 py-6 flex-1 min-w-0 max-w-5xl w-5xl">
               <div className="flex gap-4 px-8 items-center">

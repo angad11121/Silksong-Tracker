@@ -398,7 +398,7 @@ export function SilksongMap({ markers }: { markers: MapLocation[] }): ReactEleme
     >
       <div
         ref={containerRef}
-        className="relative overflow-hidden bg-[#010101] cursor-grab active:cursor-grabbing h-full w-full touch-none"
+        className="relative overflow-hidden bg-[#010101] cursor-grab active:cursor-grabbing h-full w-full touch-none isolate"
         onContextMenu={handleRightClick}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
