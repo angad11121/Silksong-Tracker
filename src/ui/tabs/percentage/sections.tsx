@@ -1,22 +1,30 @@
 import {
   AncestralArts,
+  CraftingKits,
   Crests,
   MaskFragments,
   NeedleUpgrades,
   SpoolFragments,
+  ToolPouches,
   ToolType,
   Unravelled,
 } from '@/info';
-import { getScene, getQuest } from '@/parser/metadata';
+import { getScene } from '@/parser/metadata';
 import { Locations } from '@/info';
 import { getPercentageFromEntry } from '@/parser/percentage';
-import { LeafRenderer, LeafRendererType } from '@/ui/tabs/LeafRenderer';
+import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 import {
   missingFirstSortComparator,
   renderToolChildren,
   computePercentage,
   getToolPercentage,
 } from '@/ui/tabs/utils';
+
+import MaskShard from '@/assets/mask_shard.png';
+import SpoolFragment from '@/assets/spool_fragment.png';
+import SilkHeart from '@/assets/silk_heart.png';  
+import Everbloom from '@/assets/everbloom.png';
+import NeedleStrike from '@/assets/arts/needle_strike.png';
 
 import type { LeafSection, Section } from '@/ui/tabs/types';
 import type { PercentageSectionCtx } from '@/ui/tabs/percentage/types';
@@ -44,7 +52,9 @@ export const getSections = (
               <LeafRenderer
                 {...fragment}
                 data={saveData}
-                icon={LeafRendererType.Mask}
+                icon={() => (
+                  <img src={MaskShard} height={30} width={30} alt="Mask Shard" className="inline" />
+                )}
                 parents={parents}
               />
             ),
@@ -68,7 +78,15 @@ export const getSections = (
               <LeafRenderer
                 {...fragment}
                 data={saveData}
-                icon={LeafRendererType.Spool}
+                icon={() => (
+                  <img
+                    src={SpoolFragment}
+                    height={36}
+                    width={36}
+                    alt="Spool Fragment"
+                    className="inline"
+                  />
+                )}
                 parents={parents}
               />
             ),
@@ -102,7 +120,15 @@ export const getSections = (
                         location: { x: 1363, y: 2441 },
                       },
                     ]}
-                    icon={LeafRendererType.SilkHeart}
+                    icon={() => (
+                      <img
+                        src={SilkHeart}
+                        height={36}
+                        width={36}
+                        alt="Silk Heart"
+                        className="inline"
+                      />
+                    )}
                     parents={parents}
                   />
                 ),
@@ -125,7 +151,15 @@ export const getSections = (
                         location: { x: 2526, y: 328 },
                       },
                     ]}
-                    icon={LeafRendererType.SilkHeart}
+                    icon={() => (
+                      <img
+                        src={SilkHeart}
+                        height={36}
+                        width={36}
+                        alt="Silk Heart"
+                        className="inline"
+                      />
+                    )}
                     parents={parents}
                   />
                 ),
@@ -144,7 +178,15 @@ export const getSections = (
                     hint={entry.subtext}
                     data={saveData}
                     markers={Unravelled}
-                    icon={LeafRendererType.SilkHeart}
+                    icon={() => (
+                      <img
+                        src={SilkHeart}
+                        height={36}
+                        width={36}
+                        alt="Silk Heart"
+                        className="inline"
+                      />
+                    )}
                     parents={parents}
                   />
                 ),
@@ -333,7 +375,15 @@ export const getSections = (
                     location: Locations.Pinstress,
                   },
                 ]}
-                icon={LeafRendererType.NeedleStrike}
+                icon={() => (
+                  <img
+                    src={NeedleStrike}
+                    height={72}
+                    width={72}
+                    alt="Needle Strike"
+                    className="inline"
+                  />
+                )}
                 parents={parents}
               />
             ),
@@ -365,7 +415,9 @@ export const getSections = (
                     location: Locations.RuinedChapel,
                   },
                 ]}
-                icon={LeafRendererType.Everbloom}
+                icon={() => (
+                  <img src={Everbloom} height={30} width={30} alt="Everbloom" className="inline" />
+                )}
                 parents={parents}
               />
             ),
@@ -452,103 +504,10 @@ export const getSections = (
               'There are four Crafting Kits available. All of them are required for 100% completion.',
             layout: 'grid',
             children: saveData =>
-              (
-                [
-                  {
-                    title: 'Crafting Kit #1',
-                    subtext:
-                      'A Crafting Kit can be purchased from Forge Daughter for 180 rosaries.',
-                    render: ({ entry, parents }) => (
-                      <LeafRenderer
-                        id={1}
-                        check={() => saveData.playerData.PurchasedForgeToolKit}
-                        hint={entry.subtext}
-                        data={saveData}
-                        markers={[
-                          {
-                            label: 'Purchased from Forge Daughter for 180 rosaries.',
-                            location: Locations.ForgeDaughter,
-                          },
-                        ]}
-                        icon={LeafRendererType.CraftingKit}
-                        parents={parents}
-                      />
-                    ),
-                  },
-                  {
-                    title: 'Crafting Kit #2',
-                    subtext:
-                      "A Crafting Kit is rewarded by Creige in Greymoor's Halfway Home for completing the Crawbug Clearing quest.",
-                    render: ({ entry, parents }) => (
-                      <LeafRenderer
-                        id={2}
-                        check={() =>
-                          getQuest('Crow Feathers', saveData)?.Data.IsCompleted ||
-                          getQuest('Crow Feathers Pre', saveData)?.Data.IsCompleted
-                        }
-                        hint={entry.subtext}
-                        data={saveData}
-                        markers={[
-                          {
-                            label: 'Hand over 25 Ragpelts to Creig after accepting the quest.',
-                            location: Locations.HalfwayHome,
-                          },
-                        ]}
-                        icon={LeafRendererType.CraftingKit}
-                        parents={parents}
-                      />
-                    ),
-                  },
-                  {
-                    title: 'Crafting Kit #3',
-                    subtext:
-                      'A Crafting Kit can be purchased from the ||<2>Twelfth Architect in the Underworks for 450 rosaries||.',
-                    act: 2,
-                    render: ({ entry, parents }) => (
-                      <LeafRenderer
-                        id={3}
-                        check={() => saveData.playerData.PurchasedArchitectToolKit}
-                        hint={entry.subtext}
-                        data={saveData}
-                        markers={[
-                          {
-                            label: 'Purchased from the Twelfth Architect for 450 rosaries.',
-                            location: Locations.TwelfthArchitect,
-                          },
-                        ]}
-                        icon={LeafRendererType.CraftingKit}
-                        parents={parents}
-                      />
-                    ),
-                  },
-                  {
-                    title: 'Crafting Kit #4',
-                    subtext:
-                      'A Crafting Kit can be purchased from ||<2>Grindle in the Blasted Steps for 700 rosaries||.',
-                    act: 2,
-                    render: ({ entry, parents }) => (
-                      <LeafRenderer
-                        id={4}
-                        check={() => saveData.playerData.purchasedGrindleToolKit}
-                        hint={entry.subtext}
-                        data={saveData}
-                        markers={[
-                          {
-                            label: 'Purchased from Grindle for 700 rosaries.',
-                            location: Locations.Grindle,
-                          },
-                        ]}
-                        icon={LeafRendererType.CraftingKit}
-                        parents={parents}
-                      />
-                    ),
-                  },
-                ] satisfies LeafSection[]
-              ).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
-            ctx: {
-              getPercentage: 'ToolKitUpgrades',
-              maxPercentage: 4,
-            },
+              CraftingKits.sort(
+                missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel),
+              ),
+            ctx: { getPercentage: 'ToolKitUpgrades', maxPercentage: 4 },
           },
           {
             title: 'Tool Pouch Upgrades',
@@ -556,108 +515,10 @@ export const getSections = (
               'There are four Tool Pouch upgrades available. All of them are required for 100% completion.',
             layout: 'grid',
             children: saveData =>
-              (
-                [
-                  {
-                    title: 'Tool Pouch Upgrade #1',
-                    subtext:
-                      'A Tool Pouch can be won from Loddie in the Marrow by hitting 15 targets in a row. ||<3>It can be picked up from a table in the same room in Act III||.',
-                    render: ({ entry, parents }) => (
-                      <LeafRenderer
-                        id={1}
-                        check={
-                          () =>
-                            !!getScene<number>('Bone_12', 'Pin Challenge', saveData) ||
-                            getScene('Bone_12', 'Ladybug Craft Pickup', saveData)?.Value
-                          // saveData.playerData.pinGalleriesCompleted >= 1, maybe?
-                        }
-                        hint={entry.subtext}
-                        data={saveData}
-                        markers={[
-                          {
-                            label:
-                              'Won from Loddie by hitting 15 targets in a row. ||<3>It can be picked up from a table in the same room in Act III||.',
-                            location: { x: 2106, y: 2539 },
-                          },
-                        ]}
-                        icon={LeafRendererType.ToolPouch}
-                        parents={parents}
-                      />
-                    ),
-                  },
-                  {
-                    title: 'Tool Pouch Upgrade #2',
-                    subtext:
-                      "A Tool Pouch can be purchased from Mort in the Pilgrim's Rest in Far Fields for 220 rosaries.",
-                    render: ({ entry, parents }) => (
-                      <LeafRenderer
-                        id={2}
-                        check={() => saveData.playerData.PurchasedPilgrimsRestToolPouch}
-                        hint={entry.subtext}
-                        data={saveData}
-                        markers={[
-                          {
-                            label: 'Purchased from Mort for 220 rosaries.',
-                            location: Locations.Mort,
-                          },
-                        ]}
-                        icon={LeafRendererType.ToolPouch}
-                        parents={parents}
-                      />
-                    ),
-                  },
-                  {
-                    title: 'Tool Pouch Upgrade #3',
-                    subtext:
-                      'Given by Nuu in Halfway Home in Greymoor after completing the Bugs of Pharloom quest.',
-                    render: ({ entry, parents }) => (
-                      <LeafRenderer
-                        id={4}
-                        check={() => getQuest('Journal', saveData)?.Data.IsCompleted}
-                        hint={entry.subtext}
-                        data={saveData}
-                        markers={[
-                          {
-                            label: 'Given by Nuu after completing the Bugs of Pharloom quest.',
-                            location: Locations.HalfwayHome,
-                          },
-                        ]}
-                        icon={LeafRendererType.ToolPouch}
-                        parents={parents}
-                      />
-                    ),
-                  },
-                  {
-                    title: 'Tool Pouch Upgrade #4',
-                    subtext:
-                      '||<2>Mooshka gives you a Tool Pouch upgrade after moving to Fleatopia||.',
-                    act: 2,
-                    render: ({ entry, parents }) => (
-                      <LeafRenderer
-                        id={3}
-                        check={() =>
-                          getScene('Aqueduct_05', 'Caravan Troupe Leader Fleatopia NPC', saveData)
-                            ?.Value
-                        }
-                        hint={entry.subtext}
-                        data={saveData}
-                        markers={[
-                          {
-                            label: 'Move the Flea Caravan to Fleatopia.',
-                            location: Locations.Fleatopia,
-                          },
-                        ]}
-                        icon={LeafRendererType.ToolPouch}
-                        parents={parents}
-                      />
-                    ),
-                  },
-                ] satisfies LeafSection[]
-              ).sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
-            ctx: {
-              getPercentage: 'ToolPouchUpgrades',
-              maxPercentage: 4,
-            },
+              ToolPouches.sort(
+                missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel),
+              ),
+            ctx: { getPercentage: 'ToolPouchUpgrades', maxPercentage: 4 },
           },
         ],
         ctx: {

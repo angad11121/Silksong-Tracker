@@ -6,54 +6,9 @@ import { CustomHas, type Section } from '@/ui/tabs/types';
 import { Tooltip } from '@/ui/components/Tooltip';
 import type { SaveData } from '@/parser/types';
 
-import MaskShard from '@/assets/mask_shard.png';
-import SpoolFragment from '@/assets/spool_fragment.png';
-import SilkHeart from '@/assets/silk_heart.png';
-import CraftingKit from '@/assets/crafting_kit.png';
-import ToolPouch from '@/assets/tool_pouch.png';
-import Everbloom from '@/assets/everbloom.png';
-import NeedleStrike from '@/assets/arts/needle_strike.png';
-
-export enum LeafRendererType {
-  Mask = 'mask',
-  Spool = 'spool',
-  SilkHeart = 'silk_heart',
-  CraftingKit = 'crafting_kit',
-  ToolPouch = 'tool_pouch',
-  Everbloom = 'everbloom',
-  NeedleStrike = 'needle_strike',
-}
-
-// TODO: Move these to the info files
-const Images: Record<LeafRendererType, () => ReactElement> = {
-  [LeafRendererType.Mask]: () => (
-    <img src={MaskShard} height={30} width={30} alt="Mask Shard" className="inline" />
-  ),
-  [LeafRendererType.Spool]: () => (
-    <img src={SpoolFragment} height={36} width={36} alt="Spool Fragment" className="inline" />
-  ),
-  [LeafRendererType.SilkHeart]: () => (
-    <img src={SilkHeart} height={36} width={36} alt="Silk Heart" className="inline" />
-  ),
-
-  [LeafRendererType.NeedleStrike]: () => (
-    <img src={NeedleStrike} height={72} width={72} alt="Needle Strike" className="inline" />
-  ),
-  [LeafRendererType.Everbloom]: () => (
-    <img src={Everbloom} height={30} width={30} alt="Everbloom" className="inline" />
-  ),
-
-  [LeafRendererType.CraftingKit]: () => (
-    <img src={CraftingKit} height={30} width={30} alt="Crafting Kit" className="inline" />
-  ),
-  [LeafRendererType.ToolPouch]: () => (
-    <img src={ToolPouch} height={36} width={36} alt="Tool Pouch" className="inline" />
-  ),
-};
-
 export function LeafRenderer({
   id,
-  icon: type,
+  icon: Image,
   check,
   hint,
   data,
@@ -66,11 +21,10 @@ export function LeafRenderer({
   hint: string;
   data: SaveData;
   markers: MapLocation[] | ((saveData: SaveData) => MapLocation[]);
-  icon: LeafRendererType | (() => ReactElement);
+  icon: () => ReactElement;
 }): ReactElement {
   const hasAcquired = typeof check === 'function' ? check(data) : check;
   const [showMap, setShowMap] = useState(false);
-  const Image = typeof type === 'function' ? type : Images[type];
 
   const { addSpanningSection, removeSpanningSection } = useSetSpanningSections();
   const [selfSpan, setSelfSpan] = useState(false);
