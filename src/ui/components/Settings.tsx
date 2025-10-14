@@ -12,7 +12,7 @@ import {
   useInteractions,
 } from '@floating-ui/react';
 
-import Cogwheel from '@/assets/tools/cogwork_saw.png';
+import SettingsIcon from '@/assets/settings.png';
 
 export type Settings = {
   spoilers: 'auto' | 'none' | 'all';
@@ -66,12 +66,12 @@ export function Settings({
         {...getReferenceProps()}
         data-secondary
         aria-label="Show Settings"
-        className="m-0 !p-0 !pt-0.5 !pl-0.5 flex items-center justify-center h-12 w-12 group"
+        className="m-0 !p-0 flex items-center justify-center h-12 w-12 group"
       >
         <img
-          src={Cogwheel}
+          src={SettingsIcon}
           alt="Settings"
-          className={`w-8 h-8 duration-400 grayscale ${isOpen ? 'rotate-45 group-active:rotate-0 group-hover:rotate-30' : 'group-active:rotate-90 group-hover:rotate-60'}`}
+          className={`w-10 h-10 duration-400 grayscale ${isOpen ? 'rotate-45 group-active:rotate-0 group-hover:rotate-30' : 'group-active:rotate-90 group-hover:rotate-60'}`}
         />
       </button>
 
