@@ -45,21 +45,24 @@ export const getSections = (
           )?.Record.Kills ?? 0) >= journalEntry.required;
         return {
           title: markSpoilers(journalEntry.name, journalEntry.act),
-          subtext: journalEntry.desc,
+          subtext: markSpoilers(journalEntry.desc, journalEntry.act),
           has: () => journalEntry.missable!(saveData, obtained),
           render: ({ entry }) => (
-            <LeafRenderer
-              id={null}
-              icon={journalEntry.img}
-              check={entry.has}
-              hint={entry.subtext}
-              data={saveData}
-              markers={
-                typeof journalEntry.markers === 'function'
-                  ? journalEntry.markers(saveData)
-                  : journalEntry.markers
-              }
-            />
+            <div>
+              <h3>{journalEntry.name}</h3>
+              <LeafRenderer
+                id={null}
+                icon={journalEntry.img}
+                check={entry.has}
+                hint={entry.subtext}
+                data={saveData}
+                markers={
+                  typeof journalEntry.markers === 'function'
+                    ? journalEntry.markers(saveData)
+                    : journalEntry.markers
+                }
+              />
+            </div>
           ),
         };
       }),
@@ -86,7 +89,9 @@ export const getSections = (
             children: saveData => [
               {
                 title: journalEntry.name,
-                subtext: journalEntry.desc + (!journalEntry.isCounted ? ' (Optional)' : ''),
+                subtext:
+                  markSpoilers(journalEntry.desc, journalEntry.act) +
+                  (!journalEntry.isCounted ? ' (Optional)' : ''),
                 markers: journalEntry.markers,
                 has: () =>
                   (dataEntry?.Record.Kills ?? 0) >= journalEntry.required ||
