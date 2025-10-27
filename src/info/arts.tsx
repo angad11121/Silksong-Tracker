@@ -106,6 +106,20 @@ export const AncestralArts: Record<
       },
     ],
   },
+  sylphsong: {
+    name: '||<2>Sylphsong||',
+    desc: 'The ||<2>Sylphsong|| is acquired by ||<3>binding Eva in Weavenest Atla after acquiring all crests and having 32 unlocked non-Hunter Crest slots||.',
+    act: 2,
+    has: 'HasSeenEvaHeal',
+    percentage: 1,
+    img: () => <img src={Sylphsong} height={72} width={72} alt="Sylphsong" className="inline" />,
+    markers: [
+      {
+        label: 'Bind Eva here.',
+        location: { x: 1450, y: 2889 },
+      },
+    ],
+  },
   silk_soar: {
     name: '||<3>Silk Soar||',
     desc: 'The ||<3>Silk Soar|| is acquired in ||<3>Weavenest Absolom in the Abyss||.',
@@ -117,20 +131,6 @@ export const AncestralArts: Record<
       {
         label: 'Bind the Silk Soar here.',
         location: { x: 2868, y: 3513 },
-      },
-    ],
-  },
-  sylphsong: {
-    name: '||<3>Sylphsong||',
-    desc: 'The ||<3>Sylphsong|| is acquired by ||<3>binding Eva in Weavenest Atla after acquiring all crests and having 32 unlocked non-Hunter Crest slots||.',
-    act: 3,
-    has: 'HasSeenEvaHeal',
-    percentage: 1,
-    img: () => <img src={Sylphsong} height={72} width={72} alt="Sylphsong" className="inline" />,
-    markers: [
-      {
-        label: 'Bind Eva here.',
-        location: { x: 1450, y: 2889 },
       },
     ],
   },
