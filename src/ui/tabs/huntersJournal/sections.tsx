@@ -1,4 +1,4 @@
-import { AutoJournal, Journal } from '@/info/journal';
+import { AutoJournal, Journal, type JournalEntry } from '@/info/journal';
 import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
 import { missingFirstSortComparator } from '@/ui/tabs/utils';
 import { markSpoilers } from '@/ui/tabs/SpoilerRenderer';
@@ -27,6 +27,46 @@ function checkAuto(saveData: SaveData, auto: AutoJournal): boolean {
   }
 }
 
+function getJournalEntry(journalEntry: JournalEntry): Section<HuntersJournalSectionCtx> {
+  const getDataEntry = (saveData: SaveData) =>
+    saveData.playerData.EnemyJournalKillData.list.find(entry => entry.Name === journalEntry.gameId);
+
+  return {
+    title: markSpoilers(journalEntry.name, journalEntry.act),
+    subtext: null,
+    children: [
+      {
+        title: journalEntry.name,
+        subtext:
+          markSpoilers(journalEntry.desc, journalEntry.act) +
+          (!journalEntry.isCounted ? ' (Optional)' : ''),
+        has: saveData => {
+          const dataEntry = getDataEntry(saveData);
+          const obtained = (dataEntry?.Record.Kills ?? 0) >= journalEntry.required;
+          if (journalEntry.missable) return journalEntry.missable(saveData, obtained);
+          return obtained;
+        },
+        render: ({ saveData, entry, parents }) => (
+          <LeafRenderer
+            id={null}
+            icon={journalEntry.img}
+            check={entry.has}
+            hint={entry.subtext}
+            data={saveData}
+            markers={journalEntry.markers}
+            parents={parents}
+          />
+        ),
+      },
+    ],
+    ctx: {
+      getCount: 'auto',
+      maxCount: journalEntry.required,
+      optional: !journalEntry.isCounted,
+    },
+  };
+}
+
 export const getSections = (
   showMissingFirst: boolean,
   spoilerLevel: number,
@@ -37,36 +77,7 @@ export const getSections = (
     subtext: "Three entries can be permanently missed in the Hunter's Journal.",
     layout: 'grid',
     gridCols: 3,
-    children: saveData =>
-      Journal.filter(journalEntry => journalEntry.missable).map<LeafSection>(journalEntry => {
-        const obtained =
-          (saveData.playerData.EnemyJournalKillData.list.find(
-            entry => entry.Name === journalEntry.gameId,
-          )?.Record.Kills ?? 0) >= journalEntry.required;
-        return {
-          title: markSpoilers(journalEntry.name, journalEntry.act),
-          subtext: markSpoilers(journalEntry.desc, journalEntry.act),
-          has: () => journalEntry.missable!(saveData, obtained),
-          render: ({ entry, parents }) => (
-            <div>
-              <h3>{journalEntry.name}</h3>
-              <LeafRenderer
-                id={null}
-                icon={journalEntry.img}
-                check={entry.has}
-                hint={entry.subtext}
-                data={saveData}
-                markers={
-                  typeof journalEntry.markers === 'function'
-                    ? journalEntry.markers(saveData)
-                    : journalEntry.markers
-                }
-                parents={parents}
-              />
-            </div>
-          ),
-        };
-      }),
+    children: Journal.filter(journalEntry => journalEntry.missable).map(getJournalEntry),
     ctx: { getCount: 'auto', maxCount: 'auto' },
   },
   {
@@ -79,44 +90,7 @@ export const getSections = (
         if (!isSteelSoul && journalEntry.isCounted === 'steel') return false;
         return true;
       })
-        .map<Section<HuntersJournalSectionCtx>>(journalEntry => {
-          const dataEntry = saveData.playerData.EnemyJournalKillData.list.find(
-            entry => entry.Name === journalEntry.gameId,
-          );
-
-          return {
-            title: markSpoilers(journalEntry.name, journalEntry.act),
-            subtext: null,
-            children: saveData => [
-              {
-                title: journalEntry.name,
-                subtext:
-                  markSpoilers(journalEntry.desc, journalEntry.act) +
-                  (!journalEntry.isCounted ? ' (Optional)' : ''),
-                markers: journalEntry.markers,
-                has: () =>
-                  (dataEntry?.Record.Kills ?? 0) >= journalEntry.required ||
-                  (journalEntry.auto && checkAuto(saveData, journalEntry.auto)),
-                render: ({ entry, parents }) => (
-                  <LeafRenderer
-                    id={null}
-                    icon={journalEntry.img}
-                    check={entry.has}
-                    hint={entry.subtext}
-                    data={saveData}
-                    markers={journalEntry.markers}
-                    parents={parents}
-                  />
-                ),
-              },
-            ],
-            ctx: {
-              getCount: dataEntry?.Record.Kills ?? 0,
-              maxCount: journalEntry.required,
-              optional: !journalEntry.isCounted,
-            },
-          };
-        })
+        .map(getJournalEntry)
         .sort(missingFirstSortComparator(saveData, showMissingFirst, spoilerLevel)),
     ctx: { getCount: 'auto', maxCount: 'auto' },
   },

@@ -27,7 +27,7 @@ export function calculateCurrentCount(
   const { mode = 'current', cumulative = true, skipOptional = true } = options;
 
   if (mode === 'current' && 'has' in section)
-    return section.has?.(data)
+    return section.has?.(data) === true
       ? calculateCurrentCount(section, data, { ...options, mode: 'max' })
       : 0;
   if (!('children' in section)) return 1;

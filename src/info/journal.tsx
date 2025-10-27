@@ -252,7 +252,7 @@ export enum AutoJournal {
   Mist = 'mist',
 }
 
-export const Journal: {
+export type JournalEntry = {
   name: string;
   desc: string;
   gameId: string;
@@ -264,7 +264,9 @@ export const Journal: {
   /** Entries that are auto-completed under certain situations. */
   auto?: AutoJournal;
   act: 1 | 2 | 3;
-}[] = [
+};
+
+export const Journal: JournalEntry[] = [
   {
     name: 'Mossgrub',
     desc: 'A fur-covered crawler with a series of sharp spikes along its back.',
