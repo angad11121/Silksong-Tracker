@@ -182,21 +182,35 @@ export function renderToolChildren<
               getToolChild(tool),
               ...(tool.upgradesTo ? [getToolChild(Tools[tool.upgradesTo]!)] : []),
             ],
-            ctx: percentageMode
-              ? {
-                  maxPercentage: 1,
-                  getPercentage: saveData =>
-                    hasTool(tool.id, saveData) ||
-                    (tool.upgradesTo ? hasTool(tool.upgradesTo!, saveData) : false)
-                      ? 1
-                      : 0,
-                }
-              : {
-                  maxCount: tool.upgradesTo ? 2 : 1,
-                  getCount: saveData =>
-                    (hasTool(tool.id, saveData) ? 1 : 0) +
-                    (tool.upgradesTo && hasTool(tool.upgradesTo!, saveData) ? 1 : 0),
-                },
+            ctx:
+              (tool.upgradesTo
+                ? console.log(
+                    'donotpush',
+                    { percentageMode },
+                    tool.id,
+                    hasTool(tool.id, saveData),
+                    tool.upgradesTo,
+                    tool.upgradesTo && hasTool(tool.upgradesTo!, saveData),
+                  )
+                : 0,
+              percentageMode
+                ? {
+                    maxPercentage: 1,
+                    getPercentage: saveData =>
+                      hasTool(tool.id, saveData) ||
+                      (tool.upgradesTo ? hasTool(tool.upgradesTo!, saveData) : false)
+                        ? 1
+                        : 0,
+                  }
+                : {
+                    maxCount: tool.upgradesTo ? 2 : 1,
+                    getCount: saveData =>
+                      tool.upgradesTo && hasTool(tool.upgradesTo!, saveData)
+                        ? 2
+                        : hasTool(tool.id, saveData)
+                          ? 1
+                          : 0,
+                  }),
           }) as S,
       ),
     ...(type === ToolType.Red

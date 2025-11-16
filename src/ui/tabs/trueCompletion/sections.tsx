@@ -2,7 +2,12 @@ import { Crests } from '@/info/crests';
 import { MemoryLockets } from '@/info/lockets';
 import { Mementos } from '@/info/mementos';
 import { LeafRenderer } from '@/ui/tabs/LeafRenderer';
-import { mapPercentageSectionToTrueCompletion, missingFirstSortComparator } from '@/ui/tabs/utils';
+import { ToolType } from '@/info/tools';
+import {
+  mapPercentageSectionToTrueCompletion,
+  missingFirstSortComparator,
+  renderToolChildren,
+} from '@/ui/tabs/utils';
 import { getSections as getPercentageSectionGenerator } from '@/ui/tabs/percentage/sections';
 
 import MemoryLocket from '@/assets/memory_locket.png';
@@ -158,28 +163,67 @@ export const getSections = (
           subtext: 'There are 6 Silk Skills available.',
         }),
       ),
-      mapPercentageSectionToTrueCompletion(
-        getPercentageSection(['Tools'], saveData, showMissingFirst, spoilerLevel)!,
-        _section => {
-          const section = _section as Section<PercentageSectionCtx>;
-          const children =
-            typeof section.children === 'function' ? section.children(saveData) : section.children;
-          return {
-            subtext: 'There are 51 Tools permanently available, with three that can be upgraded.',
-            children: children.map(child => ({
-              ...child,
-              ctx: {
-                maxCount: 'auto',
-                getCount: 'auto',
-              },
-            })),
+      {
+        title: 'Tools',
+        subtext: 'There are 51 tools that are permanently available, with 3 that can be upgraded.',
+        children: [
+          {
+            title: 'Red Tools',
+            subtext: 'Red tools are mainly used actively for combat.',
+            layout: 'grid',
+            children: saveData =>
+              renderToolChildren<Section<TrueCompletionSectionCtx>>(
+                ToolType.Red,
+                saveData,
+                showMissingFirst,
+                spoilerLevel,
+                false,
+              ),
             ctx: {
               maxCount: 'auto',
               getCount: 'auto',
             },
-          };
+          },
+          {
+            title: 'Blue Tools',
+            subtext: 'Blue tools are mainly used passively for combat utility.',
+            layout: 'grid',
+            children: saveData =>
+              renderToolChildren<Section<TrueCompletionSectionCtx>>(
+                ToolType.Blue,
+                saveData,
+                showMissingFirst,
+                spoilerLevel,
+                false,
+              ),
+            ctx: {
+              maxCount: 'auto',
+              getCount: 'auto',
+            },
+          },
+          {
+            title: 'Yellow Tools',
+            subtext: 'Yellow tools are mainly used as passive movement and utility tools.',
+            layout: 'grid',
+            children: saveData =>
+              renderToolChildren<Section<TrueCompletionSectionCtx>>(
+                ToolType.Yellow,
+                saveData,
+                showMissingFirst,
+                spoilerLevel,
+                false,
+              ),
+            ctx: {
+              getCount: 'auto',
+              maxCount: 'auto',
+            },
+          },
+        ],
+        ctx: {
+          maxCount: 54,
+          getCount: 'auto',
         },
-      ),
+      },
       Mementos,
     ],
     ctx: {
